@@ -183,7 +183,6 @@
       place-items: center;
       background: var(--header-bg);
       overflow: hidden;
-      opacity: 0;
       visibility: hidden;
       pointer-events: none;
       --intro-move-x: 0px;
@@ -191,15 +190,21 @@
       --intro-scale: 1;
       --intro-target-height: 68px;
       clip-path: inset(0 0 0 0);
-      transition: opacity 0.36s ease, visibility 0s linear 0.36s, clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
-      will-change: clip-path, opacity;
+      transition: clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+      will-change: clip-path;
     }
 
     .intro-splash.is-active {
-      opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.36s ease, clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+      transition: clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+    }
+
+    body.intro-pending main,
+    body.intro-pending .site-header,
+    body.intro-pending .site-footer,
+    body.intro-pending .top-button {
+      visibility: hidden;
     }
 
     .page-loader {
@@ -1876,7 +1881,7 @@
     }
   </style>
 </head>
-<body>
+<body class="intro-pending">
   <div class="page-loader" id="pageLoader" aria-hidden="true">
     <div class="page-loader-inner">
       <span class="page-loader-mark"></span>
@@ -2569,6 +2574,7 @@
 
         if (reducedMotion) {
           hideLoader();
+          document.body.classList.remove("intro-pending");
           introSplash.remove();
         } else {
           const introLogo = introSplash.querySelector(".intro-logo");
@@ -2584,6 +2590,7 @@
               introSplash.remove();
             }
             document.body.classList.remove("intro-lock");
+            document.body.classList.remove("intro-pending");
           };
 
           const collapseIntro = () => {
