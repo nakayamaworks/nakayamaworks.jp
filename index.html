@@ -1412,6 +1412,12 @@
       box-shadow: 0 20px 40px rgba(6, 16, 11, 0.26);
     }
 
+    .cta-final-head {
+      display: grid;
+      gap: 20px;
+      align-items: center;
+    }
+
     .cta-final h2 {
       margin: 0;
       font-size: clamp(1.4rem, 3.2vw, 2rem);
@@ -1431,6 +1437,111 @@
 
     .cta-final .btn-outline {
       border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .contact-form {
+      margin-top: 24px;
+      padding: clamp(18px, 3vw, 24px);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(232, 244, 235, 0.28);
+      background: rgba(245, 251, 247, 0.09);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-grid.two-col {
+      grid-template-columns: 1fr;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-field label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: rgba(245, 250, 246, 0.96);
+    }
+
+    .form-field select,
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(207, 224, 212, 0.58);
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--charcoal);
+      padding: 11px 12px;
+      font: inherit;
+      line-height: 1.6;
+    }
+
+    .form-field textarea {
+      min-height: 138px;
+      resize: vertical;
+    }
+
+    .form-field select:focus,
+    .form-field input:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: rgba(208, 235, 217, 0.96);
+      box-shadow: 0 0 0 3px rgba(180, 220, 193, 0.22);
+    }
+
+    .form-help {
+      margin: 0;
+      font-size: 0.81rem;
+      color: rgba(231, 245, 236, 0.8);
+      line-height: 1.7;
+    }
+
+    .contact-checkbox {
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(240, 249, 244, 0.94);
+      font-size: 0.86rem;
+      line-height: 1.75;
+      cursor: pointer;
+    }
+
+    .contact-checkbox input {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      accent-color: #2f5a47;
+      flex-shrink: 0;
+    }
+
+    .contact-submit {
+      margin-top: 4px;
+      display: inline-flex;
+      justify-content: center;
+      min-width: 180px;
+    }
+
+    .contact-status {
+      margin: 12px 0 0;
+      font-size: 0.88rem;
+      color: rgba(238, 247, 241, 0.9);
+      line-height: 1.8;
+      min-height: 1.8em;
+    }
+
+    .contact-status.is-success {
+      color: #d8f6de;
+    }
+
+    .contact-status.is-error {
+      color: #ffe4e4;
     }
 
     .site-footer {
@@ -1578,7 +1689,7 @@
         align-items: center;
       }
 
-      .cta-final {
+      .cta-final-head {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 20px;
@@ -1587,6 +1698,10 @@
 
       .cta-final .hero-actions {
         margin: 0;
+      }
+
+      .contact-grid.two-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -2141,14 +2256,62 @@
     <section class="section" id="cta-final">
       <div class="container">
         <div class="cta-final fade-in">
-          <div>
-            <h2>まずは無料相談から。<br>「今の課題」を一緒に整理しましょう。</h2>
-            <p>必要なことだけ、分かりやすくご案内します。</p>
+          <div class="cta-final-head">
+            <div>
+              <h2>まずは無料相談から。<br>「今の課題」を一緒に整理しましょう。</h2>
+              <p>必要なことだけ、分かりやすくご案内します。</p>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="mailto:contact@nakayamaworks.jp">無料相談</a>
+              <a class="btn btn-outline btn-line" href="https://page.line.me/261lefdl" target="_blank" rel="noopener noreferrer">LINE相談</a>
+            </div>
           </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:contact@nakayamaworks.jp">無料相談</a>
-            <a class="btn btn-outline btn-line" href="https://page.line.me/261lefdl" target="_blank" rel="noopener noreferrer">LINE相談</a>
-          </div>
+          <form id="lpContactForm" class="contact-form" novalidate>
+            <div class="contact-grid two-col">
+              <div class="form-field">
+                <label for="lpSubject">ご相談内容 *</label>
+                <select id="lpSubject" name="subject" required>
+                  <option value="" selected>選択してください</option>
+                  <option value="公式サイト制作のご相談">公式サイト制作のご相談</option>
+                  <option value="予約システム導入のご相談">予約システム導入のご相談</option>
+                  <option value="運用・改善のご相談">運用・改善のご相談</option>
+                  <option value="料金・見積もり・納期について">料金・見積もり・納期について</option>
+                  <option value="その他">その他</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="lpName">お名前（任意）</label>
+                <input id="lpName" name="name" type="text" autocomplete="name" placeholder="例：中山 太郎">
+              </div>
+            </div>
+            <div class="contact-grid two-col">
+              <div class="form-field">
+                <label for="lpEmail">メールアドレス *</label>
+                <input id="lpEmail" name="email" type="email" required autocomplete="email" placeholder="例：contact@nakayamaworks.jp">
+              </div>
+              <div class="form-field">
+                <label for="lpSalon">店舗名（任意）</label>
+                <input id="lpSalon" name="salon" type="text" autocomplete="organization" placeholder="例：○○美容室">
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="lpMessage">ご相談内容の詳細 *</label>
+              <textarea id="lpMessage" name="message" required maxlength="1200" placeholder="現在の状況・ご希望・いつ頃開始したいかなどをご記入ください。"></textarea>
+              <p class="form-help">通常1〜2営業日以内にご連絡します。</p>
+            </div>
+            <div class="form-field">
+              <label class="contact-checkbox" for="lpAgree">
+                <input id="lpAgree" name="agree" type="checkbox" required>
+                <span>個人情報の取り扱いに同意して送信します。</span>
+              </label>
+            </div>
+            <div class="form-field" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
+              <label for="lpWebsite">website</label>
+              <input id="lpWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="btn btn-primary contact-submit" id="lpContactSubmit" type="submit">フォームから相談する</button>
+            <p class="contact-status" id="lpContactStatus" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -2161,6 +2324,12 @@
   </footer>
 
   <button class="top-button" id="backToTop" type="button" aria-label="ページ上部へ戻る"></button>
+
+  <script>
+    window.NAKAYAMA_WORKS = {
+      CONTACT_ENDPOINT: "https://script.google.com/macros/s/AKfycbxbguo7-MsXn4ntg4CQUOYtgr7_1KiyGEPsOuTx0C5Ms5mTVZDPWyls-vKnG2oHTeWt/exec"
+    };
+  </script>
 
   <script>
     (function () {
@@ -2355,6 +2524,107 @@
         );
 
         targets.forEach((node) => observer.observe(node));
+      }
+
+      const contactForm = document.getElementById("lpContactForm");
+      const contactStatus = document.getElementById("lpContactStatus");
+      const contactSubmit = document.getElementById("lpContactSubmit");
+      const contactEndpoint =
+        (window.NAKAYAMA_WORKS && window.NAKAYAMA_WORKS.CONTACT_ENDPOINT) ||
+        "";
+
+      if (contactForm && contactStatus && contactSubmit) {
+        const setStatus = (message, type) => {
+          contactStatus.textContent = message;
+          contactStatus.classList.remove("is-success", "is-error");
+          if (type) {
+            contactStatus.classList.add(type);
+          }
+        };
+
+        const subjectToType = {
+          "公式サイト制作のご相談": "service",
+          "予約システム導入のご相談": "setup",
+          "運用・改善のご相談": "other",
+          "料金・見積もり・納期について": "pricing",
+          "その他": "other"
+        };
+
+        contactForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          setStatus("", "");
+
+          const formData = new FormData(contactForm);
+          const subject = String(formData.get("subject") || "").trim();
+          const name = String(formData.get("name") || "").trim();
+          const salon = String(formData.get("salon") || "").trim();
+          const email = String(formData.get("email") || "").trim();
+          const message = String(formData.get("message") || "").trim();
+          const website = String(formData.get("website") || "").trim();
+          const agree = Boolean(contactForm.querySelector("#lpAgree")?.checked);
+
+          if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
+          }
+
+          if (website) {
+            return;
+          }
+
+          const payload = {
+            type: subjectToType[subject] || "other",
+            subject,
+            name,
+            salon,
+            email,
+            message,
+            privacyAccepted: agree,
+            lang: "ja",
+            source: "nakayama_works_lp/index.html",
+            website
+          };
+
+          contactSubmit.disabled = true;
+          contactSubmit.textContent = "送信中...";
+
+          try {
+            if (contactEndpoint) {
+              const response = await fetch(contactEndpoint, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+              });
+
+              const succeeded = response.ok || response.type === "opaque";
+              if (!succeeded) {
+                throw new Error("send_failed");
+              }
+
+              contactForm.reset();
+              setStatus("送信しました。通常1〜2営業日以内にご連絡します。", "is-success");
+            } else {
+              const mailSubject = `[Nakayama Works] ${subject}`;
+              const mailBody = [
+                `ご相談内容: ${subject}`,
+                `お名前: ${name || "未入力"}`,
+                `店舗名: ${salon || "未入力"}`,
+                `メールアドレス: ${email}`,
+                "",
+                message
+              ].join("\n");
+              window.location.href =
+                `mailto:contact@nakayamaworks.jp?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+              setStatus("メール作成画面を開きました。内容をご確認のうえ送信してください。", "is-success");
+            }
+          } catch (_) {
+            setStatus("送信に失敗しました。お手数ですが LINE相談 または contact@nakayamaworks.jp へご連絡ください。", "is-error");
+          } finally {
+            contactSubmit.disabled = false;
+            contactSubmit.textContent = "フォームから相談する";
+          }
+        });
       }
 
       const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
