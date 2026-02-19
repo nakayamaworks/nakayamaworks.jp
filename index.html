@@ -1,0 +1,2414 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nakayama Works | サロン向け公式サイト制作</title>
+  <meta name="description" content="沖縄の個人IT職人 Nakayama Works。サロン向けに予約システム付き公式サイトを、安心して任せられる形で制作します。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="Nakayama Works | サロン向け公式サイト制作">
+  <meta property="og:description" content="予約・ホームページ・集客導線まで、サロン向けにまとめて整えます。">
+  <meta property="og:image" content="assets/images/common/brand-logo.png">
+  <meta name="theme-color" content="#1b3328">
+  <link rel="icon" type="image/png" href="assets/images/common/brand-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest-deep: #1f3d31;
+      --forest-main: #2f5a47;
+      --moss-soft: #b4c8a8;
+      --moss-light: #d2e0c8;
+      --mist-white: #f7faf6;
+      --header-bg: #f2f6f3;
+      --kinari: #f3ede1;
+      --charcoal: #2f3432;
+      --charcoal-soft: #4b5350;
+      --line-soft: rgba(47, 90, 71, 0.16);
+      --card-shadow: 0 12px 36px rgba(12, 24, 19, 0.1);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --container: min(1120px, 92vw);
+      --service-image: url("assets/images/backgrounds/service-yanbaru-forest.jpg");
+      --profile-image: url("assets/images/backgrounds/profile-okinawa-sunset.jpg");
+      --flow-image: url("assets/images/backgrounds/flow-okinawa-sea.jpg");
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: var(--charcoal);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(168, 188, 157, 0.32) 0%, rgba(168, 188, 157, 0) 35%),
+        radial-gradient(circle at 88% 14%, rgba(243, 237, 225, 0.5) 0%, rgba(243, 237, 225, 0) 32%),
+        var(--mist-white);
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    body.intro-lock {
+      overflow: hidden;
+    }
+
+    body.intro-lock .brand-logo {
+      opacity: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 72px 0;
+      position: relative;
+    }
+
+    .section .container > * {
+      min-width: 0;
+    }
+
+    .section-title-wrap {
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--forest-main);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.62;
+    }
+
+    .section-title {
+      margin: 10px 0 0;
+      font-size: clamp(1.45rem, 3vw, 2.1rem);
+      line-height: 1.45;
+      font-weight: 800;
+      color: var(--forest-deep);
+    }
+
+    .section-lead {
+      margin: 10px 0 0;
+      color: var(--charcoal-soft);
+      font-size: 1rem;
+      line-height: 1.95;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(31, 63, 49, 0.18);
+      background: var(--header-bg);
+      box-shadow: 0 8px 20px rgba(28, 41, 35, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transform: translateY(0);
+      opacity: 1;
+      transform-origin: top center;
+      transition: transform 0.64s cubic-bezier(0.22, 0.7, 0.2, 1), opacity 0.44s ease, box-shadow 0.32s ease;
+      will-change: transform, opacity;
+    }
+
+    .site-header.is-hidden {
+      transform: translateY(calc(-100% - 12px));
+      opacity: 0.01;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .site-header.is-revealed {
+      animation: headerSlideDown 0.72s cubic-bezier(0.2, 0.76, 0.2, 1);
+    }
+
+    @keyframes headerSlideDown {
+      0% {
+        transform: translateY(calc(-100% - 10px)) scaleY(0.88);
+        opacity: 0.06;
+      }
+      62% {
+        transform: translateY(2px) scaleY(1.02);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    .intro-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: grid;
+      place-items: center;
+      background: var(--header-bg);
+      overflow: hidden;
+      --intro-move-x: 0px;
+      --intro-move-y: 0px;
+      --intro-scale: 1;
+      --intro-target-height: 68px;
+      clip-path: inset(0 0 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+      will-change: clip-path;
+    }
+
+    .intro-splash::before {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .intro-splash::before {
+      inset: -20% -12%;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(47, 90, 71, 0.18) 0%, rgba(47, 90, 71, 0) 42%),
+        radial-gradient(circle at 82% 74%, rgba(180, 200, 168, 0.22) 0%, rgba(180, 200, 168, 0) 44%);
+      filter: blur(6px);
+      opacity: 0.9;
+      transition: opacity 0.44s ease 0.68s;
+    }
+
+    .intro-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .intro-logo-shadow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 0;
+      width: min(700px, 82vw);
+      height: auto;
+      opacity: 0;
+      transform: translate(-60%, -82%) scale(1.1);
+      filter: blur(1.6px) saturate(0.86);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      animation: introShadowIn 0.92s ease forwards 0.34s;
+      transition: opacity 0.4s ease 0.56s;
+    }
+
+    .intro-logo {
+      width: min(440px, 76vw);
+      height: auto;
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+      filter: blur(8px);
+      animation: introLogoIn 1.2s cubic-bezier(0.18, 0.74, 0.2, 1) forwards 0.18s;
+      transform-origin: center center;
+      transition: transform 0.96s cubic-bezier(0.18, 0.78, 0.2, 1), opacity 0.96s ease, filter 0.96s ease;
+      will-change: transform, opacity, filter;
+    }
+
+    .intro-splash.is-collapse {
+      clip-path: inset(0 0 calc(100% - var(--intro-target-height)) 0);
+    }
+
+    .intro-splash.is-collapse::before,
+    .intro-splash.is-collapse .intro-logo-shadow {
+      opacity: 0;
+    }
+
+    .intro-splash.is-collapse .intro-logo {
+      transform: translate(var(--intro-move-x), var(--intro-move-y)) scale(var(--intro-scale));
+      opacity: 0.96;
+      filter: blur(0);
+    }
+
+    @keyframes introLogoIn {
+      0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+        filter: blur(8px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes introShadowIn {
+      0% {
+        opacity: 0;
+        transform: translate(-60%, -82%) scale(1.1);
+      }
+      100% {
+        opacity: 0.09;
+        transform: translate(-70%, -92%) scale(1);
+      }
+    }
+
+    .header-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      color: #fff;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      display: block;
+      height: 42px;
+      transition: opacity 0.25s ease;
+    }
+
+    .brand-logo img {
+      display: block;
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.22));
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(31, 63, 49, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .header-nav a:not(.header-cta) {
+      display: none;
+      opacity: 0.88;
+      transition: opacity 0.22s ease;
+    }
+
+    .header-nav a:not(.header-cta):hover {
+      opacity: 1;
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--forest-main);
+      color: #fff;
+      font-weight: 700;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-1px);
+      background: #274b3b;
+      box-shadow: 0 8px 24px rgba(26, 41, 34, 0.22);
+    }
+
+    .hero {
+      position: relative;
+      min-height: min(900px, 100svh);
+      display: flex;
+      align-items: center;
+      isolation: isolate;
+      color: #fff;
+      padding-top: 120px;
+      padding-bottom: 72px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(10, 22, 17, 0.34) 0%, rgba(16, 34, 26, 0.62) 100%),
+        url("assets/images/backgrounds/hero-background.jpg") center / cover no-repeat,
+        linear-gradient(135deg, #244737 0%, #376753 54%, #4f7e66 100%);
+    }
+
+    .hero.has-video {
+      background:
+        linear-gradient(180deg, rgba(10, 22, 17, 0.34) 0%, rgba(16, 34, 26, 0.62) 100%),
+        linear-gradient(135deg, #244737 0%, #376753 54%, #4f7e66 100%);
+    }
+
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      filter: saturate(1.02) contrast(1.06) brightness(0.9);
+      transform: scale(1.03);
+      transition: opacity 0.8s ease;
+    }
+
+    .hero.has-video .hero-video {
+      opacity: 0.78;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -18% -12% 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse at 30% 18%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.05) 48%, rgba(255, 255, 255, 0) 70%),
+        linear-gradient(180deg, rgba(247, 250, 246, 0.14) 0%, rgba(247, 250, 246, 0) 54%);
+      filter: blur(0.4px);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -10%;
+      top: -24%;
+      width: 72vw;
+      max-width: 800px;
+      aspect-ratio: 1 / 1;
+      z-index: 1;
+      background:
+        radial-gradient(circle, rgba(247, 250, 246, 0.48) 0%, rgba(247, 250, 246, 0.16) 24%, rgba(247, 250, 246, 0) 64%);
+      mix-blend-mode: screen;
+      opacity: 0.58;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+    }
+
+    .media-section {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(180deg, rgba(247, 250, 246, 0.48) 0%, rgba(247, 250, 246, 0.62) 100%),
+        var(--section-image) center / cover no-repeat;
+    }
+
+    .media-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(247, 250, 246, 0.94) 0%, rgba(247, 250, 246, 0) 22%),
+        linear-gradient(to top, rgba(247, 250, 246, 0.94) 0%, rgba(247, 250, 246, 0) 22%);
+      background-repeat: no-repeat;
+      background-size: 100% 24%, 100% 24%;
+      background-position: top, bottom;
+      filter: blur(10px);
+      opacity: 0.9;
+    }
+
+    .media-section > .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .section-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      filter: saturate(1.08) contrast(1.08) brightness(0.96);
+      transform: scale(1.04);
+      transition: opacity 0.8s ease;
+    }
+
+    .media-section.has-video .section-video {
+      opacity: 0.68;
+    }
+
+    .service-section {
+      --section-image: var(--service-image);
+    }
+
+    .service-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(239, 246, 239, 0.5) 0%, rgba(239, 246, 239, 0.64) 100%);
+      pointer-events: none;
+    }
+
+    .flow-section {
+      --section-image: var(--flow-image);
+    }
+
+    .flow-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(241, 247, 250, 0.42) 0%, rgba(241, 247, 250, 0.56) 100%);
+      pointer-events: none;
+    }
+
+    .flow-section.has-video .section-video {
+      opacity: 0.76;
+    }
+
+    .flow-section .flow-soft-highlight {
+      display: inline-block;
+      position: relative;
+      z-index: 0;
+      border-radius: 12px;
+    }
+
+    .flow-section .flow-soft-highlight::before {
+      content: "";
+      position: absolute;
+      inset: -0.16em -0.42em;
+      z-index: -1;
+      border-radius: 14px;
+      background: rgba(225, 231, 232, 0.54);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    .flow-section .flow-soft-eyebrow {
+      display: inline-flex;
+      padding: 0.02em 0.24em;
+    }
+
+    .flow-section .flow-soft-title {
+      display: block;
+      width: fit-content;
+      padding: 0.06em 0.34em;
+    }
+
+    .flow-section .flow-soft-lead {
+      display: block;
+      width: fit-content;
+      padding: 0.08em 0.42em;
+      color: #334642;
+      font-weight: 500;
+    }
+
+    .profile-section {
+      --section-image: var(--profile-image);
+    }
+
+    .profile-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(250, 242, 232, 0.48) 0%, rgba(250, 242, 232, 0.6) 100%);
+      pointer-events: none;
+    }
+
+    .profile-section.has-video .section-video {
+      opacity: 0.7;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 26px;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(247, 250, 246, 0.8);
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 16px 0 0;
+      font-size: clamp(1.2rem, 5.4vw, 3.6rem);
+      line-height: 1.35;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-wrap: balance;
+    }
+
+    .hero-title-line {
+      display: block;
+    }
+
+    .hero-title-line:first-child {
+      white-space: nowrap;
+    }
+
+    .hero-sub {
+      margin: 22px 0 0;
+      color: rgba(245, 250, 245, 0.95);
+      font-size: clamp(1rem, 2.2vw, 1.16rem);
+      max-width: 640px;
+      line-height: 2;
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 11px 26px;
+      border-radius: 999px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--kinari), #fff);
+      color: var(--forest-deep);
+      box-shadow: 0 14px 26px rgba(6, 16, 11, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 34px rgba(6, 16, 11, 0.34);
+    }
+
+    .btn-outline {
+      border-color: rgba(255, 255, 255, 0.7);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 16px 28px rgba(8, 20, 14, 0.24);
+    }
+
+    .btn-line {
+      background: #06c755;
+      border-color: #06c755;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(6, 199, 85, 0.28);
+    }
+
+    .btn-line:hover {
+      background: #05b24b;
+      border-color: #05b24b;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(5, 178, 75, 0.32);
+    }
+
+    .hero-meta {
+      margin-top: 26px;
+      display: grid;
+      gap: 10px;
+      max-width: 640px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .hero-meta-item {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .hero-meta-item strong {
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 3px;
+      color: rgba(255, 255, 255, 0.96);
+    }
+
+    .hero-meta-item span {
+      font-size: 0.86rem;
+      color: rgba(244, 249, 244, 0.88);
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.84);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .problem-panel {
+      padding: clamp(22px, 3.8vw, 34px);
+      background: linear-gradient(140deg, rgba(247, 250, 246, 0.95) 0%, rgba(243, 237, 225, 0.94) 100%);
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 16px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .checklist li {
+      position: relative;
+      padding: 10px 12px 10px 44px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line-soft);
+      color: var(--charcoal);
+      font-weight: 500;
+      line-height: 1.8;
+      transform-origin: left center;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease, border-color 0.28s ease;
+    }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(140deg, #8cab84 0%, #6e8f66 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.46);
+    }
+
+    .checklist li::after {
+      content: "";
+      position: absolute;
+      left: 21px;
+      top: 50%;
+      width: 6px;
+      height: 10px;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: translateY(-62%) rotate(45deg);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .checklist li:hover {
+        transform: scale(1.045);
+        background: rgba(255, 255, 255, 0.96);
+        border-color: rgba(47, 90, 71, 0.3);
+        box-shadow: 0 14px 28px rgba(18, 33, 27, 0.14);
+        z-index: 1;
+      }
+    }
+
+    .service-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .service-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.94) 0%, rgba(241, 247, 240, 0.86) 100%);
+      border: 1px solid var(--line-soft);
+      box-shadow: 0 8px 24px rgba(11, 23, 18, 0.08);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--forest-deep);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .service-card p {
+      margin: 10px 0 0;
+      font-size: 0.95rem;
+      color: var(--charcoal-soft);
+      line-height: 1.85;
+    }
+
+    .service-showcase {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .service-showcase:has(> figure:only-child) {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+    }
+
+    .service-showcase figure {
+      margin: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(31, 63, 49, 0.16);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 8px 18px rgba(14, 28, 22, 0.12);
+    }
+
+    .service-showcase:has(> figure:only-child) figure {
+      width: min(100%, 420px);
+    }
+
+    .service-showcase img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+    }
+
+    .service-showcase--stack {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .service-showcase--stack figure {
+      width: 100%;
+    }
+
+    .service-showcase--stack img {
+      aspect-ratio: 16 / 9;
+    }
+
+    .service-showcase--center {
+      margin-top: auto;
+      margin-bottom: auto;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      align-items: center;
+    }
+
+    .service-showcase--center figure {
+      width: min(100%, 420px);
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .cloud-card {
+      padding: clamp(22px, 3.6vw, 34px);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 63, 49, 0.2);
+      background:
+        linear-gradient(160deg, rgba(31, 63, 49, 0.07) 0%, rgba(255, 255, 255, 0.96) 36%, rgba(243, 237, 225, 0.46) 100%);
+      box-shadow: var(--card-shadow);
+      min-width: 0;
+    }
+
+    .reservation-cards {
+      display: grid;
+      gap: 14px;
+    }
+
+    .reservation-card-kicker {
+      margin: 0;
+      color: var(--forest-main);
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .cloud-heading {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cloud-card h3 {
+      margin: 0;
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      color: var(--forest-main);
+      line-height: 1.5;
+    }
+
+    .cloud-brand-logo {
+      height: clamp(26px, 4vw, 34px);
+      width: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .cloud-card p {
+      margin: 14px 0 0;
+      color: var(--charcoal-soft);
+      line-height: 1.95;
+    }
+
+    .reservation-url {
+      margin: 8px 0 0;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reservation-url a {
+      color: #1f5f44;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(31, 95, 68, 0.52);
+    }
+
+    .reservation-url a:hover {
+      color: #164a34;
+      text-decoration-color: rgba(22, 74, 52, 0.82);
+    }
+
+    .reservation-url-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      object-position: center;
+      flex: 0 0 auto;
+    }
+
+    .stores-card {
+      padding: clamp(22px, 3.6vw, 34px);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(155, 102, 48, 0.24);
+      background:
+        linear-gradient(160deg, rgba(183, 128, 71, 0.1) 0%, rgba(255, 255, 255, 0.95) 42%, rgba(243, 237, 225, 0.5) 100%);
+      box-shadow: var(--card-shadow);
+      min-width: 0;
+    }
+
+    .stores-card p {
+      margin: 12px 0 0;
+      color: var(--charcoal-soft);
+      line-height: 1.9;
+    }
+
+    .stores-card h3 {
+      margin: 0;
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      color: var(--forest-main);
+      line-height: 1.5;
+    }
+
+    .stores-list {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .stores-list li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--charcoal-soft);
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    .stores-list li::before {
+      content: "■";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #9a6b3a;
+      font-size: 0.72em;
+      line-height: 2.2;
+    }
+
+    .stores-note {
+      margin: 14px 0 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 245, 235, 0.88);
+      border: 1px solid rgba(155, 102, 48, 0.26);
+      color: #6e4c2b;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .cloud-link {
+      color: #1f5f44;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(31, 95, 68, 0.55);
+    }
+
+    .cloud-link:hover {
+      color: #164a34;
+      text-decoration-color: rgba(22, 74, 52, 0.82);
+    }
+
+    .cloud-note {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-left: 3px solid rgba(31, 63, 49, 0.5);
+      background: rgba(247, 250, 246, 0.82);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      color: var(--charcoal-soft);
+    }
+
+    .cloud-gallery {
+      margin-top: 18px;
+    }
+
+    .cloud-gallery-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .cloud-gallery-grid.pc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cloud-gallery-grid.sp {
+      display: none;
+    }
+
+    .cloud-gallery figure {
+      margin: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(31, 63, 49, 0.18);
+      box-shadow: 0 10px 22px rgba(16, 30, 24, 0.14);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .cloud-gallery img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .flow-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 8px 18px rgba(10, 20, 15, 0.06);
+    }
+
+    .flow-step {
+      font-family: "Inter", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: rgba(31, 63, 49, 0.74);
+      letter-spacing: 0.08em;
+    }
+
+    .flow-num {
+      margin-top: 4px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-family: "Inter", sans-serif;
+      font-weight: 800;
+      color: var(--forest-main);
+      background: linear-gradient(150deg, rgba(168, 188, 157, 0.36) 0%, rgba(243, 237, 225, 0.56) 100%);
+      border: 1px solid rgba(31, 63, 49, 0.16);
+    }
+
+    .flow-body h3 {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .flow-body p {
+      margin: 8px 0 0;
+      color: var(--charcoal-soft);
+      font-size: 0.93rem;
+      line-height: 1.85;
+    }
+
+    .support-card {
+      padding: clamp(22px, 4vw, 34px);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 63, 49, 0.16);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--card-shadow);
+      min-width: 0;
+    }
+
+    #support {
+      background:
+        radial-gradient(circle at 10% 14%, rgba(180, 200, 168, 0.28) 0%, rgba(180, 200, 168, 0) 32%),
+        linear-gradient(180deg, rgba(243, 248, 242, 0.92) 0%, rgba(236, 244, 237, 0.96) 100%);
+    }
+
+    .support-card .section-title-wrap {
+      margin-bottom: 18px;
+    }
+
+    .support-message {
+      margin: 0;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 63, 49, 0.14);
+      background: rgba(247, 250, 246, 0.86);
+      color: var(--forest-deep);
+      font-weight: 700;
+      line-height: 1.85;
+    }
+
+    .support-list-title {
+      margin: 16px 0 0;
+      color: var(--forest-main);
+      font-size: 0.96rem;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .support-list {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .support-list li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--charcoal-soft);
+      line-height: 1.8;
+    }
+
+    .support-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--forest-main);
+      font-weight: 700;
+    }
+
+    .support-footer {
+      margin: 14px 0 0;
+      color: var(--charcoal);
+      font-weight: 600;
+      line-height: 1.8;
+    }
+
+    #pricing {
+      background:
+        radial-gradient(circle at 86% 10%, rgba(180, 200, 168, 0.26) 0%, rgba(180, 200, 168, 0) 34%),
+        linear-gradient(180deg, rgba(220, 233, 223, 0.98) 0%, rgba(208, 224, 214, 0.98) 100%);
+    }
+
+    .pricing-layout {
+      display: grid;
+      gap: 16px;
+    }
+
+    .pricing-block {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 63, 49, 0.16);
+      box-shadow: 0 12px 26px rgba(9, 19, 15, 0.08);
+      background: rgba(255, 255, 255, 0.92);
+      min-width: 0;
+    }
+
+    .pricing-block-title {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+      line-height: 1.55;
+      font-weight: 800;
+    }
+
+    .pricing-initial-label {
+      margin: 10px 0 0;
+      color: var(--forest-main);
+      font-weight: 700;
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
+    }
+
+    .pricing-initial-value {
+      margin-top: 8px;
+      font-family: "Inter", sans-serif;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--forest-deep);
+    }
+
+    .pricing-initial-value .yen {
+      font-size: 0.48em;
+      margin-right: 2px;
+      color: rgba(31, 63, 49, 0.8);
+    }
+
+    .pricing-initial-value .fixed {
+      font-size: 0.38em;
+      margin-left: 8px;
+      color: rgba(31, 63, 49, 0.86);
+      font-weight: 700;
+    }
+
+    .pricing-initial-desc {
+      margin: 12px 0 0;
+      font-size: 0.93rem;
+      color: var(--charcoal-soft);
+      line-height: 1.85;
+    }
+
+    .pricing-table-wrap {
+      border-radius: 16px;
+      border: 1px solid rgba(31, 63, 49, 0.14);
+      background: rgba(255, 255, 255, 0.84);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      max-width: 100%;
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(31, 63, 49, 0.12);
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.7;
+      font-size: 0.93rem;
+    }
+
+    .pricing-table thead th {
+      background: rgba(47, 90, 71, 0.08);
+      color: var(--forest-deep);
+      font-weight: 700;
+    }
+
+    .pricing-table tbody th {
+      text-align: left;
+      background: rgba(247, 250, 246, 0.9);
+      color: var(--forest-main);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pricing-table tr:last-child th,
+    .pricing-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pricing-notes {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .pricing-note-card {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 63, 49, 0.14);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .pricing-note-card h4 {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .pricing-note-list {
+      margin: 10px 0 0;
+      padding-left: 1.15em;
+      color: var(--charcoal-soft);
+      line-height: 1.9;
+      font-size: 0.92rem;
+    }
+
+    .pricing-note-example {
+      list-style: none;
+      margin-left: -1.15em;
+      padding-left: 0;
+      color: rgba(75, 83, 80, 0.8);
+      font-size: 0.86rem;
+      line-height: 1.75;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.35em;
+      row-gap: 2px;
+    }
+
+    .pricing-example-prefix {
+      grid-column: 1;
+      grid-row: 1;
+      white-space: nowrap;
+    }
+
+    .pricing-example-head {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .pricing-example-body {
+      grid-column: 2;
+      grid-row: 2;
+      font-family: "Inter", sans-serif;
+    }
+
+    .profile-card {
+      display: grid;
+      gap: 18px;
+      padding: clamp(22px, 4vw, 34px);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 63, 49, 0.16);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--card-shadow);
+    }
+
+    .profile-media {
+      width: min(200px, 55vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 30px;
+      border: 1px solid rgba(31, 63, 49, 0.28);
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 12px 28px rgba(14, 30, 23, 0.16);
+      overflow: hidden;
+    }
+
+    .profile-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 24%;
+      display: block;
+    }
+
+    .profile-body h3 {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+      line-height: 1.55;
+    }
+
+    .profile-body p {
+      margin: 10px 0 0;
+      color: var(--charcoal-soft);
+      line-height: 1.95;
+    }
+
+    .signature {
+      margin-top: 14px;
+      font-family: "Inter", sans-serif;
+      color: var(--forest-main);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .cta-final {
+      padding: clamp(30px, 5vw, 46px);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(150deg, rgba(31, 60, 47, 0.94) 0%, rgba(47, 90, 71, 0.93) 62%, rgba(74, 118, 95, 0.92) 100%);
+      color: #fff;
+      box-shadow: 0 20px 40px rgba(6, 16, 11, 0.26);
+    }
+
+    .cta-final h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 3.2vw, 2rem);
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .cta-final p {
+      margin: 12px 0 0;
+      color: rgba(245, 250, 245, 0.88);
+      line-height: 1.9;
+    }
+
+    .cta-final .hero-actions {
+      margin-top: 24px;
+    }
+
+    .cta-final .btn-outline {
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .site-footer {
+      margin-top: 80px;
+      border-top: 1px solid rgba(31, 63, 49, 0.18);
+      background: rgba(31, 58, 47, 0.96);
+      color: rgba(243, 248, 243, 0.88);
+    }
+
+    .footer-inner {
+      padding: 28px 0 36px;
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .footer-title {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: #fff;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.92rem;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: rgba(245, 250, 245, 0.95);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(245, 250, 245, 0.52);
+    }
+
+    .footer-note {
+      margin: 0;
+      font-size: 0.82rem;
+      color: rgba(243, 248, 243, 0.7);
+    }
+
+    .top-button {
+      position: fixed;
+      right: clamp(14px, 2.8vw, 28px);
+      bottom: clamp(16px, 3vw, 28px);
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 63, 49, 0.28);
+      background: linear-gradient(150deg, rgba(31, 63, 49, 0.94) 0%, rgba(47, 90, 71, 0.96) 100%);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 14px 28px rgba(10, 19, 15, 0.22);
+      opacity: 0;
+      transform: translateY(12px) scale(0.94);
+      pointer-events: none;
+      z-index: 56;
+      cursor: pointer;
+      transition: opacity 0.34s ease, transform 0.34s ease, box-shadow 0.26s ease, background-color 0.26s ease;
+    }
+
+    .top-button::before {
+      content: "↑";
+      font-family: "Inter", sans-serif;
+      font-size: 1.22rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .top-button.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .top-button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(242, 246, 243, 0.85), 0 14px 28px rgba(10, 19, 15, 0.22);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .top-button:hover {
+        transform: translateY(-2px) scale(1.06);
+        background: linear-gradient(150deg, rgba(36, 72, 57, 0.98) 0%, rgba(57, 104, 82, 0.98) 100%);
+        box-shadow: 0 18px 32px rgba(10, 19, 15, 0.3);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 700px) {
+      .hero-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pricing-notes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 900px) {
+      .section {
+        padding: 92px 0;
+      }
+
+      .header-nav a:not(.header-cta) {
+        display: inline-flex;
+      }
+
+      .flow-list {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .flow-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        min-height: 100%;
+      }
+
+      .flow-num {
+        margin-top: 6px;
+      }
+
+      .profile-card {
+        grid-template-columns: 220px minmax(0, 1fr);
+        align-items: center;
+      }
+
+      .cta-final {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .cta-final .hero-actions {
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 899px) {
+      .site-header {
+        border-bottom-color: rgba(31, 63, 49, 0.14);
+      }
+
+      .header-inner {
+        min-height: 64px;
+      }
+
+      .brand-logo {
+        height: 36px;
+      }
+
+      .cloud-gallery-grid.pc {
+        display: none;
+      }
+
+      .cloud-gallery-grid.sp {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .service-showcase {
+        margin-top: 16px;
+      }
+
+      .pricing-block {
+        padding: 18px;
+      }
+
+      .pricing-table-wrap {
+        margin-inline: -2px;
+        border-radius: 12px;
+      }
+
+      .pricing-table {
+        min-width: 640px;
+      }
+
+      .pricing-table th,
+      .pricing-table td {
+        padding: 10px 12px;
+        font-size: 0.88rem;
+      }
+
+      .top-button {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .fade-in {
+        opacity: 1;
+        transform: none;
+      }
+
+      .hero-video,
+      .section-video {
+        display: none;
+      }
+
+      .intro-splash {
+        display: none;
+        animation: none;
+      }
+
+      .intro-logo-shadow {
+        display: none;
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="intro-splash" id="introSplash" aria-hidden="true">
+    <img class="intro-logo-shadow" src="assets/images/common/brand-logo.png" alt="">
+    <div class="intro-inner">
+      <img class="intro-logo" src="assets/images/common/brand-logo.png" alt="">
+    </div>
+  </div>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Nakayama Works トップへ">
+        <span class="brand-logo" aria-hidden="true">
+          <img src="assets/images/common/brand-logo.png" alt="">
+        </span>
+      </a>
+      <nav class="header-nav" aria-label="主要メニュー">
+        <a href="#service">サービス</a>
+        <a href="#flow">制作の流れ</a>
+        <a href="#pricing">料金</a>
+        <a href="#profile">自己紹介</a>
+        <a class="header-cta" href="#cta-final">無料相談</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-video-wrap" aria-hidden="true">
+        <video
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/images/backgrounds/hero-background.jpg"
+          tabindex="-1"
+          disablepictureinpicture
+        >
+          <source data-src="assets/video/hero-background.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy fade-in">
+          <p class="hero-kicker">Official Site For Salon Owners</p>
+          <h1>
+            <span class="hero-title-line">予約システム付きの公式サイト</span>
+            <span class="hero-title-line">制作・運用します</span>
+          </h1>
+          <p class="hero-sub">
+            ITが苦手でも大丈夫。<br>
+            サロン専用の仕組みを、長く使える形で提供します。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cta-final">無料相談</a>
+            <a class="btn btn-outline btn-line" href="https://line.me/R/ti/p/@your_line_id" target="_blank" rel="noopener noreferrer">LINE相談</a>
+          </div>
+          <div class="hero-meta" aria-label="安心ポイント">
+            <div class="hero-meta-item">
+              <strong>サロンの魅力を伝える</strong>
+              <span>お店の良さ・雰囲気・こだわりを形に</span>
+            </div>
+            <div class="hero-meta-item">
+              <strong>開発者と直接相談できる</strong>
+              <span>認識のズレなくスムーズに進行</span>
+            </div>
+            <div class="hero-meta-item">
+              <strong>作って終わりにしない</strong>
+              <span>公開後も、あなたのIT担当としてサポート</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="container">
+        <div class="panel problem-panel fade-in">
+          <div class="section-title-wrap">
+            <span class="eyebrow">Problem</span>
+            <h2 class="section-title">こんなお悩みありませんか？</h2>
+          </div>
+          <ul class="checklist">
+            <li>公式サイトがお店の魅力をきちんと伝えられていない</li>
+            <li>予約システムを導入したいが初期設定や運用が難しそう</li>
+            <li>ポータルサイトに依存しない予約導線を整えたい</li>
+            <li>他業者のサイト制作費が高すぎて、依頼を諦めたことがある</li>
+            <li>ITのことを長く相談できる人がほしい</li>
+          </ul>
+          <h3>そのお悩み、解決します。</h4>
+        </div>
+      </div>
+    </section>
+
+    <section class="section media-section service-section" id="service">
+      <div class="section-video-wrap" aria-hidden="true">
+        <video
+          class="section-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/images/backgrounds/service-yanbaru-forest.jpg"
+          tabindex="-1"
+          disablepictureinpicture
+        >
+          <source data-src="assets/video/yanbaru-hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Service</span>
+          <h2 class="section-title">予約システム付き公式サイト制作</h2>
+          <p class="section-lead">見た目だけでなく、予約が入りやすい導線設計まで含めて制作します。</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card fade-in">
+            <h3>サロンの空気感を伝えるデザイン</h3>
+            <p>業種や客層に合わせ、写真・文言・余白まで設計。お店の雰囲気やこだわりが正しく伝わる構成に仕上げます。</p>
+            <div class="service-showcase service-showcase--stack" aria-label="サロンデザイン実績イメージ">
+              <figure>
+                <img src="assets/images/service/service-salon-interior.png" alt="サロン内装イメージ" loading="lazy" decoding="async">
+              </figure>
+              <figure>
+                <img src="assets/images/service/service-design-pc.png" alt="デザインPC表示イメージ" loading="lazy" decoding="async">
+              </figure>
+            </div>
+          </article>
+          <article class="service-card fade-in">
+            <h3>予約まで迷わない導線設計</h3>
+            <p>「見て終わり」ではなく、予約まで自然に進める構成に。スマホでも操作しやすく、離脱しにくい設計を行います。</p>
+            <div class="service-showcase service-showcase--center" aria-label="予約導線イメージ">
+              <figure>
+                <img src="assets/images/service/service-reservation-flow.png" alt="予約導線イメージ" loading="lazy" decoding="async">
+              </figure>
+            </div>
+          </article>
+          <article class="service-card fade-in">
+            <h3>続けられる運用と料金設計</h3>
+            <p>無駄なコストをかけず、長く使い続けられる構成。公開後の更新・設定変更・トラブルにも継続対応します。</p>
+            <div class="service-showcase service-showcase--center" aria-label="継続メンテナンスイメージ">
+              <figure>
+                <img src="assets/images/service/service-maintenance-support.png" alt="継続メンテナンスイメージ" loading="lazy" decoding="async">
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="misemaru-cloud">
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Reservation System</span>
+          <h2 class="section-title">予約システムは用途に合わせて選べます</h2>
+          <p class="section-lead">サロンの運用方法に合わせて、最適な予約システムをご提案します。</p>
+        </div>
+        <div class="reservation-cards">
+          <article class="cloud-card fade-in">
+            <div class="cloud-heading">
+              <h3>サロン向け予約システム みせまるクラウド</h3>
+            </div>
+            <p>
+              予約システム利用料がかからない、Googleサービス使った予約システム「みせまるクラウド」を組み合わせることができます。<br>
+              専門知識は必要ありません。現場で使いやすい形を前提に設計されています。
+            </p>
+            <p class="reservation-url"><img class="reservation-url-logo" src="assets/images/reservation/misemaru-cloud-logo.png" alt="みせまるクラウド ロゴ"><a href="https://misemaru.cloud/" target="_blank" rel="noopener noreferrer">https://misemaru.cloud/</a></p>
+            <div class="cloud-gallery" aria-label="みせまるクラウド画面イメージ">
+              <div class="cloud-gallery-grid pc">
+                <figure>
+                  <img src="assets/images/reservation/misemaru-pc-admin.png" alt="みせまるクラウド 管理画面（PC）" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img src="assets/images/reservation/misemaru-pc-booking.png" alt="みせまるクラウド 予約画面（PC）" loading="lazy" decoding="async">
+                </figure>
+              </div>
+              <div class="cloud-gallery-grid sp">
+                <figure>
+                  <img src="assets/images/reservation/misemaru-mobile-admin.png" alt="みせまるクラウド 管理画面（スマホ）" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img src="assets/images/reservation/misemaru-mobile-booking.png" alt="みせまるクラウド 予約画面（スマホ）" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </div>
+            <p class="cloud-note">
+              ■ システム利用料は無料<br>
+              予約システム自体の利用料金はかかりません。初期料金と月々の運用サポート費のみでご利用いただけます。<br><br>
+              ■ 外国人のお客様にも対応できます<br>
+              多言語表示に対応しているため、海外からのお客様の予約にも対応できます。<br><br>
+              ■ オンライン決済には対応していません<br>
+              現地でのお支払い（来店時決済）を前提としています。シンプルな運用を重視した構成です。
+            </p>
+          </article>
+          <article class="stores-card fade-in">
+            <h3>決済対応予約システム STORES 予約</h3>
+            <p>
+              STORES 株式会社が提供する、決済対応型の予約システムです。<br>
+              事前決済・複数スタッフ運用・リピーター向け機能などに対応しており、店舗の運用スタイルに合わせて柔軟に設定できます。<br>
+              専門的な設定はすべてこちらで対応します。
+            </p>
+            <p class="reservation-url"><img class="reservation-url-logo" src="assets/images/reservation/stores-booking-logo.svg" alt="STORES予約 ロゴ"><a href="https://stores.fun/" target="_blank" rel="noopener noreferrer">https://stores.fun/</a></p>
+            <div class="cloud-gallery" aria-label="STORES予約 画面イメージ">
+              <div class="cloud-gallery-grid pc">
+                <figure>
+                  <img src="assets/images/reservation/stores-booking-screen-1.png" alt="STORES予約 画面イメージ1" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img src="assets/images/reservation/stores-booking-screen-2.png" alt="STORES予約 画面イメージ2" loading="lazy" decoding="async">
+                </figure>
+              </div>
+              <div class="cloud-gallery-grid sp">
+                <figure>
+                  <img src="assets/images/reservation/stores-booking-screen-1.png" alt="STORES予約 画面イメージ1" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img src="assets/images/reservation/stores-booking-screen-2.png" alt="STORES予約 画面イメージ2" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </div>
+            <p class="cloud-note">
+              ■ オンライン決済に対応<br>
+              来店前に支払いを完了できるため、無断キャンセル対策や当日の会計時間短縮に役立ちます。<br>
+              前払いが必要なメニューや高単価サービスにも対応できます。<br><br>
+              ■ リピーター施策に対応<br>
+              回数券や会員向け機能により、継続来店を促す仕組みを作ることができます。<br>
+              常連のお客様が多いサロンにも適しています。<br><br>
+              ■ 複数スタッフ体制に対応<br>
+              スタッフ指名や同時予約の管理など、複数名で運営するサロンでもスムーズに運用できます。<br>
+              店舗規模に応じた柔軟な設定が可能です。<br><br>
+              ※ STORES予約の月額利用料が別途必要になります
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section media-section flow-section" id="flow">
+      <div class="section-video-wrap" aria-hidden="true">
+        <video
+          class="section-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/images/backgrounds/flow-okinawa-sea.jpg"
+          tabindex="-1"
+          disablepictureinpicture
+        >
+          <source data-src="assets/video/okinawa-sea-flow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow flow-soft-highlight flow-soft-eyebrow">Flow</span>
+          <h2 class="section-title flow-soft-highlight flow-soft-title">制作の流れ（5ステップ）</h2>
+          <p class="section-lead flow-soft-highlight flow-soft-lead">専門用語は使いすぎず、要点を一緒に確認しながら進めます。</p>
+        </div>
+        <ol class="flow-list">
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">1</div>
+            </div>
+            <div class="flow-body">
+              <h3>無料相談</h3>
+              <p>現状の課題と希望をヒアリングし、お見積りと公開までの日程を検討します。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">2</div>
+            </div>
+            <div class="flow-body">
+              <h3>構成提案</h3>
+              <p>ページ構成・導線・必要素材をまとめ、制作方針を決定します。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">3</div>
+            </div>
+            <div class="flow-body">
+              <h3>デザイン制作</h3>
+              <p>世界観を反映したデザインと文章を作成し、確認を重ねます。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">4</div>
+            </div>
+            <div class="flow-body">
+              <h3>実装・公開準備</h3>
+              <p>スマホ最適化・表示速度・基本SEOを整え、公開前チェックを行います。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">5</div>
+            </div>
+            <div class="flow-body">
+              <h3>公開・運用サポート</h3>
+              <p>公開後の更新案内と改善提案で、予約導線を継続して育てます。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="container">
+        <article class="support-card fade-in">
+          <div class="section-title-wrap">
+            <span class="eyebrow">Support</span>
+            <h2 class="section-title">公開後も、公式サイトの運用を支援します</h2>
+          </div>
+          <p class="support-message">
+            公式サイトや予約システムは、公開後の設定変更やトラブル対応が必ず発生します。<br>
+            Nakayama Worksがその対応を行い、運用が止まらない体制を作ります。
+          </p>
+          <h3 class="support-list-title">■ 対応内容</h3>
+          <ul class="support-list">
+            <li>公式サイトの内容修正</li>
+            <li>予約システムの運用</li>
+            <li>操作方法の相談</li>
+            <li>ITに関するご相談</li>
+          </ul>
+          <p class="support-footer">IT担当者がいないサロンでも安心して運用できます。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Pricing</span>
+          <h2 class="section-title">料金プラン</h2>
+          <p class="section-lead">サロンの規模や運用方法に合わせて最適な構成をご提案します</p>
+        </div>
+        <div class="pricing-layout">
+          <article class="pricing-block fade-in">
+            <h3 class="pricing-block-title">■ 初期料金</h3>
+            <div class="pricing-initial-value"><span class="yen">¥</span>29,800</div>
+            <p class="pricing-initial-desc">公式サイト制作と予約システムを連携</p>
+          </article>
+          <article class="pricing-block fade-in">
+            <h3 class="pricing-block-title">■ 運用サポート料金（月額）</h3>
+            <div class="pricing-initial-value"><span class="yen">¥</span>9,980</div>
+            <p class="pricing-initial-desc">公式サイトと予約システムの運用を継続支援</p>
+          </article>
+          <article class="pricing-block fade-in">
+            <h3 class="pricing-block-title">■ 予約システム料金（月額）</h3>
+            <p class="pricing-initial-desc">予約システム料金比較表</p>
+            <div class="pricing-table-wrap" role="region" aria-label="料金プラン比較表">
+              <table class="pricing-table">
+                <thead>
+                  <tr>
+                    <th scope="col">項目</th>
+                    <th scope="col">みせまるクラウド</th>
+                    <th scope="col">STORES予約 スモール</th>
+                    <th scope="col">STORES予約 チーム</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">予約システム利用料</th>
+                    <td>¥0</td>
+                    <td>¥12,980</td>
+                    <td>¥22,880</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">予約件数目安</th>
+                    <td>実質無制限</td>
+                    <td>200件/月</td>
+                    <td>300件/月</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">事前決済</th>
+                    <td>×</td>
+                    <td>◎</td>
+                    <td>◎</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">スタッフ指名予約</th>
+                    <td>○</td>
+                    <td>☓</td>
+                    <td>○</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">スタッフ複数</th>
+                    <td>○</td>
+                    <td>△</td>
+                    <td>◎</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">おすすめ</th>
+                    <td>コスト重視</td>
+                    <td>個人＋事前決済</td>
+                    <td>複数スタッフ＋事前決済</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pricing-notes">
+              <article class="pricing-note-card">
+                <h4>■ 月額料金について</h4>
+                <ul class="pricing-note-list">
+                  <li>月額料金は「運用サポート料金」 ＋ 「予約システム料金」　となります</li>
+                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例①：</span><span class="pricing-example-head">みせまるクラウド利用の場合</span><span class="pricing-example-body">9,980円/月（運用サポート料金のみ）</span></li>
+                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例②：</span><span class="pricing-example-head">STORES予約 スモールの場合</span><span class="pricing-example-body">9,980円 + 12,980円 = 22,960円/月</span></li>
+                </ul>
+              </article>
+              <article class="pricing-note-card">
+                <h4>■ ドメイン料金について</h4>
+                <ul class="pricing-note-list">
+                  <li>独自ドメインを使用する場合のみ必要です（年払い）</li>
+                  <li>お名前.com想定：年間 約1,500〜3,000円</li>
+                  <li>月額換算：約125〜250円</li>
+                </ul>
+              </article>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section media-section profile-section" id="profile">
+      <div class="section-video-wrap" aria-hidden="true">
+        <video
+          class="section-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/images/backgrounds/profile-okinawa-sunset.jpg"
+          tabindex="-1"
+          disablepictureinpicture
+        >
+          <source data-src="assets/video/okinawa-sunset-profile.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Profile</span>
+          <h2 class="section-title">沖縄のITエンジニアが、末長く寄り添います</h2>
+        </div>
+        <article class="profile-card fade-in">
+          <div class="profile-media">
+            <img src="assets/images/profile/nakayama-profile.jpg" alt="Nakayama Works 中山のプロフィール画像" loading="lazy" decoding="async">
+          </div>
+          <div class="profile-body">
+            <h3>Nakayama Works 代表 / 中山</h3>
+            <p>
+              沖縄でサロン向けのWEB制作を専門にしています。<br>
+              「難しい説明より、運用しやすさ」を大切に、制作から公開後まで一貫して対応します。<br>
+              相談しやすく、長く頼れるパートナーであることを約束します。
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="cta-final">
+      <div class="container">
+        <div class="cta-final fade-in">
+          <div>
+            <h2>まずは無料相談から。<br>「今の課題」を一緒に整理しましょう。</h2>
+            <p>必要なことだけ、分かりやすくご案内します。</p>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:info@nakayamaworks.jp">無料相談</a>
+            <a class="btn btn-outline btn-line" href="https://line.me/R/ti/p/@your_line_id" target="_blank" rel="noopener noreferrer">LINE相談</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <p class="footer-note">© <span id="currentYear"></span> Nakayama Works. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <button class="top-button" id="backToTop" type="button" aria-label="ページ上部へ戻る"></button>
+
+  <script>
+    (function () {
+      const yearNode = document.getElementById("currentYear");
+      if (yearNode) {
+        yearNode.textContent = String(new Date().getFullYear());
+      }
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const backToTopButton = document.getElementById("backToTop");
+      if (backToTopButton) {
+        const toggleBackToTop = () => {
+          const shouldShow = window.scrollY > Math.max(window.innerHeight * 0.35, 220);
+          backToTopButton.classList.toggle("is-visible", shouldShow);
+        };
+
+        toggleBackToTop();
+        window.addEventListener("scroll", toggleBackToTop, { passive: true });
+
+        backToTopButton.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+        });
+      }
+
+      const siteHeader = document.querySelector(".site-header");
+      if (siteHeader) {
+        const revealDelay = 950;
+        let revealTimer = null;
+        let headerHidden = false;
+        let lastScrollY = window.scrollY;
+
+        const clearRevealTimer = () => {
+          if (revealTimer) {
+            window.clearTimeout(revealTimer);
+            revealTimer = null;
+          }
+        };
+
+        const hideHeader = () => {
+          if (document.body.classList.contains("intro-lock")) {
+            return;
+          }
+
+          if (window.scrollY <= 36) {
+            return;
+          }
+
+          if (!headerHidden) {
+            siteHeader.classList.remove("is-revealed");
+            siteHeader.classList.add("is-hidden");
+            headerHidden = true;
+          }
+        };
+
+        const scheduleReveal = () => {
+          clearRevealTimer();
+          if (window.scrollY <= 36) {
+            return;
+          }
+          revealTimer = window.setTimeout(() => {
+            showHeader(true);
+          }, revealDelay);
+        };
+
+        const showHeader = (withReveal) => {
+          const wasHidden = headerHidden;
+          siteHeader.classList.remove("is-hidden");
+          headerHidden = false;
+
+          if (withReveal && wasHidden && !reducedMotion) {
+            siteHeader.classList.remove("is-revealed");
+            void siteHeader.offsetWidth;
+            siteHeader.classList.add("is-revealed");
+          }
+        };
+
+        const onHeaderScroll = () => {
+          const currentScrollY = window.scrollY;
+          const scrollDelta = currentScrollY - lastScrollY;
+
+          if (currentScrollY <= 36) {
+            clearRevealTimer();
+            siteHeader.classList.remove("is-hidden");
+            siteHeader.classList.remove("is-revealed");
+            headerHidden = false;
+          } else if (scrollDelta > 1) {
+            hideHeader();
+            scheduleReveal();
+          } else if (scrollDelta < -1) {
+            showHeader(true);
+            scheduleReveal();
+          } else {
+            scheduleReveal();
+          }
+
+          lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener("scroll", onHeaderScroll, { passive: true });
+        siteHeader.addEventListener("mouseenter", () => {
+          clearRevealTimer();
+          showHeader(false);
+        });
+        siteHeader.addEventListener("mouseleave", scheduleReveal);
+        onHeaderScroll();
+      }
+
+      const introSplash = document.getElementById("introSplash");
+      if (introSplash) {
+        if (reducedMotion) {
+          introSplash.remove();
+        } else {
+          const introLogo = introSplash.querySelector(".intro-logo");
+          const headerLogo = document.querySelector(".brand-logo img");
+          const headerBar = document.querySelector(".site-header");
+          document.body.classList.add("intro-lock");
+          let isIntroRemoved = false;
+          const removeIntro = () => {
+            if (isIntroRemoved) {
+              return;
+            }
+            isIntroRemoved = true;
+            if (introSplash.parentNode) {
+              introSplash.remove();
+            }
+            document.body.classList.remove("intro-lock");
+          };
+
+          const collapseIntro = () => {
+            if (!introLogo || !headerLogo) {
+              removeIntro();
+              return;
+            }
+
+            const introRect = introLogo.getBoundingClientRect();
+            const targetRect = headerLogo.getBoundingClientRect();
+            if (!introRect.width || !targetRect.width) {
+              removeIntro();
+              return;
+            }
+
+            const introCenterX = introRect.left + introRect.width / 2;
+            const introCenterY = introRect.top + introRect.height / 2;
+            const targetCenterX = targetRect.left + targetRect.width / 2;
+            const targetCenterY = targetRect.top + targetRect.height / 2;
+
+            const moveX = targetCenterX - introCenterX;
+            const moveY = targetCenterY - introCenterY;
+            const scale = targetRect.width / introRect.width;
+            const targetHeight = headerBar ? Math.round(headerBar.getBoundingClientRect().height) : 68;
+
+            introSplash.style.setProperty("--intro-move-x", `${moveX}px`);
+            introSplash.style.setProperty("--intro-move-y", `${moveY}px`);
+            introSplash.style.setProperty("--intro-scale", `${scale}`);
+            introSplash.style.setProperty("--intro-target-height", `${targetHeight}px`);
+            introSplash.classList.add("is-collapse");
+
+            setTimeout(removeIntro, 1080);
+          };
+
+          // Wait for logo fade-in, then collapse into the header logo position.
+          setTimeout(() => {
+            requestAnimationFrame(collapseIntro);
+          }, 2320);
+
+          // Fallback cleanup.
+          setTimeout(() => {
+            if (!isIntroRemoved) {
+                removeIntro();
+              }
+          }, 4500);
+        }
+      }
+
+      if (reducedMotion) {
+        document.querySelectorAll(".fade-in").forEach((node) => node.classList.add("is-visible"));
+      } else {
+        const targets = document.querySelectorAll(".fade-in");
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            rootMargin: "0px 0px -10% 0px",
+            threshold: 0.16
+          }
+        );
+
+        targets.forEach((node) => observer.observe(node));
+      }
+
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const saveData = Boolean(connection && connection.saveData);
+      const effectiveType = connection && connection.effectiveType ? connection.effectiveType.toLowerCase() : "";
+      const isSlowNetwork = ["slow-2g", "2g", "3g"].includes(effectiveType);
+      const canPlayBackgroundVideo = !reducedMotion && !saveData && !isSlowNetwork;
+
+      if (!canPlayBackgroundVideo) {
+        return;
+      }
+
+      const hero = document.querySelector(".hero");
+      const heroVideo = hero ? hero.querySelector(".hero-video") : null;
+      if (hero && heroVideo) {
+        const heroSource = heroVideo.querySelector("source");
+        if (heroSource && heroSource.dataset.src) {
+          heroSource.src = heroSource.dataset.src;
+        }
+
+        heroVideo.load();
+        hero.classList.add("has-video");
+
+        const heroPlayPromise = heroVideo.play();
+        if (heroPlayPromise && typeof heroPlayPromise.catch === "function") {
+          heroPlayPromise.catch(() => {
+            hero.classList.remove("has-video");
+          });
+        }
+      }
+
+      const mediaSections = document.querySelectorAll(".media-section");
+      mediaSections.forEach((section) => {
+        const video = section.querySelector(".section-video");
+        if (!video) {
+          return;
+        }
+
+        const source = video.querySelector("source");
+        if (source && source.dataset.src) {
+          source.src = source.dataset.src;
+        }
+
+        video.load();
+        section.classList.add("has-video");
+
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {
+            section.classList.remove("has-video");
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
