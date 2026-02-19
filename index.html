@@ -301,7 +301,7 @@
       filter: blur(1.6px) saturate(0.86);
       mix-blend-mode: multiply;
       pointer-events: none;
-      animation: introShadowIn 0.92s ease forwards 0.34s;
+      animation: none;
       transition: opacity 0.4s ease 0.56s;
     }
 
@@ -311,10 +311,18 @@
       opacity: 0;
       transform: translateY(16px) scale(0.96);
       filter: blur(8px);
-      animation: introLogoIn 1.2s cubic-bezier(0.18, 0.74, 0.2, 1) forwards 0.18s;
+      animation: none;
       transform-origin: center center;
       transition: transform 0.96s cubic-bezier(0.18, 0.78, 0.2, 1), opacity 0.96s ease, filter 0.96s ease;
       will-change: transform, opacity, filter;
+    }
+
+    .intro-splash.is-active .intro-logo {
+      animation: introLogoIn 1.2s cubic-bezier(0.18, 0.74, 0.2, 1) forwards 0.08s;
+    }
+
+    .intro-splash.is-active .intro-logo-shadow {
+      animation: introShadowIn 0.92s ease forwards 0.38s;
     }
 
     .intro-splash.is-collapse {
