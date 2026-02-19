@@ -205,6 +205,18 @@
     body.intro-pending .site-footer,
     body.intro-pending .top-button {
       visibility: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    body.intro-pending.intro-revealing main,
+    body.intro-pending.intro-revealing .site-header,
+    body.intro-pending.intro-revealing .site-footer,
+    body.intro-pending.intro-revealing .top-button {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.62s ease, transform 0.62s ease;
     }
 
     .page-loader {
@@ -2574,6 +2586,7 @@
 
         if (reducedMotion) {
           hideLoader();
+          document.body.classList.remove("intro-revealing");
           document.body.classList.remove("intro-pending");
           introSplash.remove();
         } else {
@@ -2590,6 +2603,7 @@
               introSplash.remove();
             }
             document.body.classList.remove("intro-lock");
+            document.body.classList.remove("intro-revealing");
             document.body.classList.remove("intro-pending");
           };
 
@@ -2620,6 +2634,9 @@
             introSplash.style.setProperty("--intro-move-y", `${moveY}px`);
             introSplash.style.setProperty("--intro-scale", `${scale}`);
             introSplash.style.setProperty("--intro-target-height", `${targetHeight}px`);
+
+            // Reveal page content while the intro collapses into the nav.
+            document.body.classList.add("intro-revealing");
             introSplash.classList.add("is-collapse");
 
             setTimeout(removeIntro, 1080);
