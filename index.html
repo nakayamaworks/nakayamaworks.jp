@@ -183,13 +183,85 @@
       place-items: center;
       background: var(--header-bg);
       overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
       --intro-move-x: 0px;
       --intro-move-y: 0px;
       --intro-scale: 1;
       --intro-target-height: 68px;
       clip-path: inset(0 0 0 0);
-      transition: clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
-      will-change: clip-path;
+      transition: opacity 0.36s ease, visibility 0s linear 0.36s, clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+      will-change: clip-path, opacity;
+    }
+
+    .intro-splash.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.36s ease, clip-path 0.9s cubic-bezier(0.2, 0.76, 0.2, 1);
+    }
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      display: grid;
+      place-items: center;
+      background: var(--header-bg);
+      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+    }
+
+    .page-loader.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .page-loader-inner {
+      display: grid;
+      gap: 12px;
+      place-items: center;
+    }
+
+    .page-loader-mark {
+      width: min(200px, 42vw);
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(47, 90, 71, 0.16);
+      overflow: hidden;
+    }
+
+    .page-loader-mark::after {
+      content: "";
+      display: block;
+      width: 45%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(47, 90, 71, 0.55) 0%, rgba(180, 200, 168, 0.82) 100%);
+      animation: loaderSlide 1.18s ease-in-out infinite;
+    }
+
+    .page-loader-text {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      color: rgba(47, 90, 71, 0.72);
+      text-transform: uppercase;
+    }
+
+    @keyframes loaderSlide {
+      0% {
+        transform: translateX(-110%);
+      }
+      100% {
+        transform: translateX(230%);
+      }
     }
 
     .intro-splash::before {
@@ -1789,6 +1861,13 @@
   </style>
 </head>
 <body>
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="page-loader-inner">
+      <span class="page-loader-mark"></span>
+      <p class="page-loader-text">Loading</p>
+    </div>
+  </div>
+
   <div class="intro-splash" id="introSplash" aria-hidden="true">
     <img class="intro-logo-shadow" src="assets/images/common/brand-logo.png" alt="">
     <div class="intro-inner">
@@ -2438,14 +2517,48 @@
       }
 
       const introSplash = document.getElementById("introSplash");
+      const pageLoader = document.getElementById("pageLoader");
       if (introSplash) {
+        const hideLoader = () => {
+          if (!pageLoader) {
+            return;
+          }
+          pageLoader.classList.add("is-hidden");
+          window.setTimeout(() => {
+            if (pageLoader.parentNode) {
+              pageLoader.remove();
+            }
+          }, 520);
+        };
+
+        const waitForPageReady = () => {
+          return new Promise((resolve) => {
+            let done = false;
+            const finish = () => {
+              if (done) {
+                return;
+              }
+              done = true;
+              resolve();
+            };
+
+            if (document.readyState === "complete") {
+              finish();
+              return;
+            }
+
+            window.addEventListener("load", finish, { once: true });
+            window.setTimeout(finish, 6200);
+          });
+        };
+
         if (reducedMotion) {
+          hideLoader();
           introSplash.remove();
         } else {
           const introLogo = introSplash.querySelector(".intro-logo");
           const headerLogo = document.querySelector(".brand-logo img");
           const headerBar = document.querySelector(".site-header");
-          document.body.classList.add("intro-lock");
           let isIntroRemoved = false;
           const removeIntro = () => {
             if (isIntroRemoved) {
@@ -2490,17 +2603,23 @@
             setTimeout(removeIntro, 1080);
           };
 
-          // Wait for logo fade-in, then collapse into the header logo position.
-          setTimeout(() => {
-            requestAnimationFrame(collapseIntro);
-          }, 2320);
+          waitForPageReady().then(() => {
+            hideLoader();
+            introSplash.classList.add("is-active");
+            document.body.classList.add("intro-lock");
 
-          // Fallback cleanup.
-          setTimeout(() => {
-            if (!isIntroRemoved) {
+            // Wait for logo fade-in, then collapse into the header logo position.
+            setTimeout(() => {
+              requestAnimationFrame(collapseIntro);
+            }, 2320);
+
+            // Fallback cleanup.
+            setTimeout(() => {
+              if (!isIntroRemoved) {
                 removeIntro();
               }
-          }, 4500);
+            }, 4500);
+          });
         }
       }
 

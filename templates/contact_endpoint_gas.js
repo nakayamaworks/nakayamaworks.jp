@@ -25,8 +25,8 @@
  * }
  */
 
-const DESTINATION_EMAIL = "contact@nakayamaworks.jp";
-const CC_EMAIL = ""; // Optional: e.g. "support@misemaru.cloud"
+const DESTINATION_EMAIL = "support@misemaru.cloud";
+const CC_EMAIL = "contact@nakayamaworks.jp";
 const DEFAULT_ALLOWED_ORIGIN = "https://nakayamaworks.jp";
 const ALLOWED_ORIGINS = [
   "https://nakayamaworks.jp",
@@ -46,19 +46,19 @@ function doPost(e) {
   const origin = extractOrigin(e);
 
   if (!e || !e.postData || !e.postData.contents) {
-    return withCors(jsonOutput({ ok: false, error: "Invalid payload" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Invalid payload" });
   }
 
   let body;
   try {
     body = JSON.parse(e.postData.contents);
   } catch (_) {
-    return withCors(jsonOutput({ ok: false, error: "Invalid JSON" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Invalid JSON" });
   }
 
   if (sanitize(body.website)) {
     // Honeypot filled: return success silently.
-    return withCors(jsonOutput({ ok: true }), origin);
+    return jsonOutput({ ok: true });
   }
 
   const email = sanitize(body.email);
@@ -72,16 +72,16 @@ function doPost(e) {
   const privacyAccepted = Boolean(body.privacyAccepted);
 
   if (!email || !isValidEmail(email)) {
-    return withCors(jsonOutput({ ok: false, error: "Invalid email" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Invalid email" });
   }
   if (!subject || ALLOWED_SUBJECTS.indexOf(subject) === -1) {
-    return withCors(jsonOutput({ ok: false, error: "Invalid subject" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Invalid subject" });
   }
   if (!message) {
-    return withCors(jsonOutput({ ok: false, error: "Message required" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Message required" });
   }
   if (!privacyAccepted) {
-    return withCors(jsonOutput({ ok: false, error: "Privacy consent required" }), origin, 400);
+    return jsonOutput({ ok: false, error: "Privacy consent required" });
   }
 
   const mailSubject = "[Nakayama Works] " + subject + " / " + email;
@@ -90,7 +90,15 @@ function doPost(e) {
     name: name,
     salon: salon,
     email: email,
-    type: type,
+    lang: lang,
+    source: source,
+    message: message,
+  });
+  const mailHtml = formatEmailHtml({
+    subject: subject,
+    name: name,
+    salon: salon,
+    email: email,
     lang: lang,
     source: source,
     message: message,
@@ -100,25 +108,24 @@ function doPost(e) {
     to: DESTINATION_EMAIL,
     subject: mailSubject,
     replyTo: email,
-    name: name || "Nakayama Works Contact",
+    name: "Nakayama Works Contact",
     body: mailBody,
+    htmlBody: mailHtml,
   };
   if (CC_EMAIL) {
     sendOptions.cc = CC_EMAIL;
   }
 
   MailApp.sendEmail(sendOptions);
-  return withCors(jsonOutput({ ok: true }), origin);
+  return jsonOutput({ ok: true });
 }
 
 function doGet(e) {
-  const origin = extractOrigin(e);
-  return withCors(jsonOutput({ ok: true, message: "Healthy" }), origin);
+  return jsonOutput({ ok: true, message: "Healthy" });
 }
 
 function doOptions(e) {
-  const origin = extractOrigin(e);
-  return withCors(jsonOutput({ ok: true }), origin);
+  return jsonOutput({ ok: true });
 }
 
 function formatEmail(payload) {
@@ -130,13 +137,51 @@ function formatEmail(payload) {
     "お名前     : " + (payload.name || "(未入力)") + "\n" +
     "店舗名     : " + (payload.salon || "(未入力)") + "\n" +
     "メール     : " + payload.email + "\n" +
-    "種別(type) : " + payload.type + "\n" +
     "言語       : " + payload.lang + "\n" +
     "送信元     : " + payload.source + "\n" +
     "受信時刻   : " + new Date().toISOString() + "\n" +
     "------------------------------\n" +
     payload.message + "\n" +
     "------------------------------\n"
+  );
+}
+
+function formatEmailHtml(payload) {
+  const lines = [
+    ["件名", payload.subject],
+    ["お名前", payload.name || "(未入力)"],
+    ["店舗名", payload.salon || "(未入力)"],
+    ["メール", payload.email],
+    ["言語", payload.lang],
+    ["送信元", payload.source],
+    ["受信時刻", new Date().toISOString()],
+  ];
+
+  const rows = lines
+    .map(function (pair) {
+      return (
+        '<tr>' +
+        '<th style="padding:6px 10px;text-align:left;white-space:nowrap;font-weight:700;color:#111111;border-bottom:1px solid #e5e7eb;">' +
+        escapeHtml(pair[0]) +
+        '</th>' +
+        '<td style="padding:6px 10px;color:#111111;border-bottom:1px solid #e5e7eb;">' +
+        escapeHtml(pair[1]) +
+        "</td>" +
+        "</tr>"
+      );
+    })
+    .join("");
+
+  return (
+    '<div style="margin:0;padding:18px;background:#ffffff;color:#111111;font-family:\'Noto Sans JP\',\'Hiragino Kaku Gothic ProN\',\'Yu Gothic\',sans-serif;line-height:1.7;">' +
+    '<h2 style="margin:0 0 12px 0;font-size:18px;color:#111111;">Nakayama Works お問い合わせ</h2>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;max-width:760px;background:#ffffff;color:#111111;">' +
+    rows +
+    "</table>" +
+    '<div style="margin-top:14px;padding:12px;border:1px solid #e5e7eb;background:#ffffff;color:#111111;white-space:pre-wrap;">' +
+    escapeHtml(payload.message) +
+    "</div>" +
+    "</div>"
   );
 }
 
@@ -148,6 +193,15 @@ function isValidEmail(value) {
   return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(value || ""));
 }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function jsonOutput(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
@@ -157,14 +211,4 @@ function extractOrigin(e) {
     (e && e.parameter && e.parameter.origin) ||
     DEFAULT_ALLOWED_ORIGIN;
   return ALLOWED_ORIGINS.indexOf(origin) >= 0 ? origin : DEFAULT_ALLOWED_ORIGIN;
-}
-
-function withCors(output, origin, status) {
-  if (typeof status === "number") {
-    output.setHeader("X-Status-Code", String(status));
-  }
-  output.setHeader("Access-Control-Allow-Origin", origin || DEFAULT_ALLOWED_ORIGIN);
-  output.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  output.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-  return output;
 }
