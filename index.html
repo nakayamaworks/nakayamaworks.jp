@@ -15,6 +15,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get("skipIntro") === "1") {
+        document.documentElement.classList.add("skip-intro");
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+      }
+    })();
+  </script>
   <style>
     :root {
       --forest-deep: #1f3d31;
@@ -219,6 +230,15 @@
       transition: opacity 0.62s ease, transform 0.62s ease;
     }
 
+    html.skip-intro body.intro-pending main,
+    html.skip-intro body.intro-pending .site-header,
+    html.skip-intro body.intro-pending .site-footer,
+    html.skip-intro body.intro-pending .top-button {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+
     .page-loader {
       position: fixed;
       inset: 0;
@@ -230,6 +250,11 @@
       opacity: 1;
       visibility: visible;
       transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+    }
+
+    html.skip-intro .page-loader,
+    html.skip-intro .intro-splash {
+      display: none !important;
     }
 
     .page-loader.is-hidden {
@@ -432,14 +457,76 @@
       font-size: 0.9rem;
     }
 
-    .header-nav a:not(.header-cta) {
-      display: none;
+    .header-nav a {
+      display: inline-flex;
       opacity: 0.88;
       transition: opacity 0.22s ease;
     }
 
-    .header-nav a:not(.header-cta):hover {
+    .header-nav a:hover {
       opacity: 1;
+    }
+
+    .header-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(31, 63, 49, 0.22);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--forest-deep);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .header-toggle-line {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      position: relative;
+      transition: background-color 0.18s ease;
+    }
+
+    .header-toggle-line::before,
+    .header-toggle-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.22s ease, top 0.22s ease, opacity 0.18s ease;
+    }
+
+    .header-toggle-line::before {
+      top: -6px;
+    }
+
+    .header-toggle-line::after {
+      top: 6px;
+    }
+
+    .header-toggle[aria-expanded="true"] .header-toggle-line {
+      background: transparent;
+    }
+
+    .header-toggle[aria-expanded="true"] .header-toggle-line::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .header-toggle[aria-expanded="true"] .header-toggle-line::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .header-overlay {
+      display: none;
     }
 
     .header-cta {
@@ -1237,10 +1324,6 @@
         linear-gradient(180deg, rgba(243, 248, 242, 0.92) 0%, rgba(236, 244, 237, 0.96) 100%);
     }
 
-    .support-card .section-title-wrap {
-      margin-bottom: 18px;
-    }
-
     .support-message {
       margin: 0;
       padding: 14px 16px;
@@ -1362,7 +1445,7 @@
       background: rgba(255, 255, 255, 0.84);
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior-x: contain;
+      overscroll-behavior-x: none;
       max-width: 100%;
     }
 
@@ -1536,6 +1619,10 @@
       line-height: 1.9;
     }
 
+    .cta-final .eyebrow {
+      color: rgba(236, 247, 239, 0.92);
+    }
+
     .cta-final .hero-actions {
       margin-top: 24px;
     }
@@ -1572,6 +1659,12 @@
       font-size: 0.92rem;
       font-weight: 700;
       color: rgba(245, 250, 246, 0.96);
+    }
+
+    .required-mark {
+      color: #ffb9b9;
+      font-weight: 800;
+      margin-left: 2px;
     }
 
     .form-field select,
@@ -1626,8 +1719,21 @@
       flex-shrink: 0;
     }
 
+    .contact-privacy-link {
+      color: rgba(233, 246, 238, 0.98);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(233, 246, 238, 0.65);
+      font-weight: 700;
+    }
+
+    .contact-privacy-link:hover {
+      color: #ffffff;
+      text-decoration-color: rgba(255, 255, 255, 0.95);
+    }
+
     .contact-submit {
-      margin-top: 4px;
+      margin-top: 18px;
       display: inline-flex;
       justify-content: center;
       min-width: 180px;
@@ -1771,8 +1877,8 @@
         padding: 92px 0;
       }
 
-      .header-nav a:not(.header-cta) {
-        display: inline-flex;
+      .header-overlay {
+        display: none !important;
       }
 
       .flow-list {
@@ -1821,6 +1927,83 @@
 
       .brand-logo {
         height: 36px;
+      }
+
+      .header-toggle {
+        display: inline-flex;
+      }
+
+      .header-nav {
+        position: fixed;
+        top: 64px;
+        left: 12px;
+        right: 12px;
+        z-index: 58;
+        display: grid;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(31, 63, 49, 0.14);
+        background: rgba(242, 246, 243, 0.98);
+        box-shadow: 0 18px 30px rgba(12, 24, 19, 0.16);
+        transform: translateY(-6px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+      }
+
+      .header-nav.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 0.22s ease, transform 0.22s ease;
+      }
+
+      .header-nav a {
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: var(--forest-deep);
+        background: rgba(255, 255, 255, 0.72);
+        font-weight: 600;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .header-nav .header-cta {
+        width: 100%;
+        justify-content: center;
+        margin-top: 2px;
+        color: #fff;
+        background: var(--forest-main);
+        border: 1px solid rgba(31, 63, 49, 0.25);
+        box-shadow: 0 8px 18px rgba(16, 33, 26, 0.2);
+        font-weight: 700;
+      }
+
+      .header-nav .header-cta:hover {
+        background: #274b3b;
+        color: #fff;
+      }
+
+      .header-overlay {
+        position: fixed;
+        inset: 64px 0 0;
+        z-index: 57;
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        background: rgba(8, 16, 13, 0.2);
+        transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+      }
+
+      .header-overlay.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 0.22s ease;
       }
 
       .cloud-gallery-grid.pc {
@@ -1915,14 +2098,19 @@
           <img src="assets/images/common/brand-logo.png" alt="">
         </span>
       </a>
-      <nav class="header-nav" aria-label="主要メニュー">
+      <button class="header-toggle" id="headerToggle" type="button" aria-expanded="false" aria-controls="headerNav" aria-label="メニューを開く">
+        <span class="header-toggle-line" aria-hidden="true"></span>
+      </button>
+      <nav class="header-nav" id="headerNav" aria-label="主要メニュー">
         <a href="#service">サービス</a>
+        <a href="#misemaru-cloud">予約システム</a>
         <a href="#flow">制作の流れ</a>
         <a href="#pricing">料金</a>
         <a href="#profile">自己紹介</a>
         <a class="header-cta" href="#cta-final">無料相談</a>
       </nav>
     </div>
+    <div class="header-overlay" id="headerOverlay" aria-hidden="true"></div>
   </header>
 
   <main>
@@ -1976,11 +2164,11 @@
 
     <section class="section" id="problem">
       <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Problem</span>
+          <h2 class="section-title">こんなお悩みありませんか？</h2>
+        </div>
         <div class="panel problem-panel fade-in">
-          <div class="section-title-wrap">
-            <span class="eyebrow">Problem</span>
-            <h2 class="section-title">こんなお悩みありませんか？</h2>
-          </div>
           <ul class="checklist">
             <li>公式サイトがお店の魅力をきちんと伝えられていない</li>
             <li>予約システムを導入したいが初期設定や運用が難しそう</li>
@@ -2011,7 +2199,7 @@
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Service</span>
-          <h2 class="section-title">予約システム付き公式サイト制作</h2>
+          <h2 class="section-title">予約が入るサイト設計</h2>
           <p class="section-lead">見た目だけでなく、予約が入りやすい導線設計まで含めて制作します。</p>
         </div>
         <div class="service-grid">
@@ -2053,7 +2241,7 @@
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Reservation System</span>
-          <h2 class="section-title">予約システムは用途に合わせて選べます</h2>
+          <h2 class="section-title">選べる予約システム</h2>
           <p class="section-lead">サロンの運用方法に合わせて、最適な予約システムをご提案します。</p>
         </div>
         <div class="reservation-cards">
@@ -2214,11 +2402,12 @@
 
     <section class="section" id="support">
       <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Support</span>
+          <h2 class="section-title">公開後も、公式サイトの運用を支援します</h2>
+          <p class="section-lead">更新や設定変更、トラブル対応まで継続して伴走します。</p>
+        </div>
         <article class="support-card fade-in">
-          <div class="section-title-wrap">
-            <span class="eyebrow">Support</span>
-            <h2 class="section-title">公開後も、公式サイトの運用を支援します</h2>
-          </div>
           <p class="support-message">
             公式サイトや予約システムは、公開後の設定変更やトラブル対応が必ず発生します。<br>
             Nakayama Worksがその対応を行い、運用が止まらない体制を作ります。
@@ -2370,6 +2559,7 @@
         <div class="cta-final fade-in">
           <div class="cta-final-head">
             <div>
+              <span class="eyebrow">Contact</span>
               <h2>まずは無料相談から。<br>「今の課題」を一緒に整理しましょう。</h2>
               <p>必要なことだけ、分かりやすくご案内します。</p>
             </div>
@@ -2380,7 +2570,7 @@
           <form id="lpContactForm" class="contact-form" novalidate>
             <div class="contact-grid two-col">
               <div class="form-field">
-                <label for="lpSubject">ご相談内容 *</label>
+                <label for="lpSubject">ご相談内容 <span class="required-mark">*</span></label>
                 <select id="lpSubject" name="subject" required>
                   <option value="" selected>選択してください</option>
                   <option value="公式サイト制作のご相談">公式サイト制作のご相談</option>
@@ -2392,13 +2582,13 @@
               </div>
               <div class="form-field">
                 <label for="lpName">お名前（任意）</label>
-                <input id="lpName" name="name" type="text" autocomplete="name" placeholder="例：中山 太郎">
+                <input id="lpName" name="name" type="text" autocomplete="name" placeholder="例：田中 太郎">
               </div>
             </div>
             <div class="contact-grid two-col">
               <div class="form-field">
-                <label for="lpEmail">メールアドレス *</label>
-                <input id="lpEmail" name="email" type="email" required autocomplete="email" placeholder="例：contact@nakayamaworks.jp">
+                <label for="lpEmail">メールアドレス <span class="required-mark">*</span></label>
+                <input id="lpEmail" name="email" type="email" required autocomplete="email" placeholder="例：info@example.com">
               </div>
               <div class="form-field">
                 <label for="lpSalon">店舗名（任意）</label>
@@ -2406,21 +2596,21 @@
               </div>
             </div>
             <div class="form-field">
-              <label for="lpMessage">ご相談内容の詳細 *</label>
+              <label for="lpMessage">ご相談内容の詳細 <span class="required-mark">*</span></label>
               <textarea id="lpMessage" name="message" required maxlength="1200" placeholder="現在の状況・ご希望・いつ頃開始したいかなどをご記入ください。"></textarea>
               <p class="form-help">通常1〜2営業日以内にご連絡します。</p>
             </div>
             <div class="form-field">
               <label class="contact-checkbox" for="lpAgree">
                 <input id="lpAgree" name="agree" type="checkbox" required>
-                <span>個人情報の取り扱いに同意して送信します。</span>
+                <span><a class="contact-privacy-link" href="privacy.html" target="_blank">個人情報の取り扱いについて</a><span class="required-mark">*</span> に同意の上、送信します。</span>
               </label>
             </div>
             <div class="form-field" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
               <label for="lpWebsite">website</label>
               <input id="lpWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
-            <button class="btn btn-primary contact-submit" id="lpContactSubmit" type="submit">フォームから相談する</button>
+            <button class="btn btn-primary contact-submit" id="lpContactSubmit" type="submit">送信する</button>
             <p class="contact-status" id="lpContactStatus" aria-live="polite"></p>
           </form>
         </div>
@@ -2430,7 +2620,16 @@
 
   <footer class="site-footer" id="contact">
     <div class="container footer-inner">
-      <p class="footer-note">© <span id="currentYear"></span> Nakayama Works. All Rights Reserved.</p>
+      <p class="footer-links" aria-label="フッターリンク">
+        <a href="terms.html" target="_blank" rel="noopener noreferrer">利用規約</a>
+        <span aria-hidden="true">|</span>
+        <a href="privacy.html" target="_blank" rel="noopener noreferrer">個人情報の取り扱い</a>
+        <span aria-hidden="true">|</span>
+        <a href="tokushoho.html" target="_blank" rel="noopener noreferrer">特定商取引法表記</a>
+        <span aria-hidden="true">|</span>
+        <a href="disclaimer.html" target="_blank" rel="noopener noreferrer">免責事項</a>
+      </p>
+      <p class="footer-note">© 2026 Nakayama Works. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -2467,6 +2666,66 @@
 
       const siteHeader = document.querySelector(".site-header");
       if (siteHeader) {
+        const headerNav = document.getElementById("headerNav");
+        const headerToggle = document.getElementById("headerToggle");
+        const headerOverlay = document.getElementById("headerOverlay");
+        const mobileMedia = window.matchMedia("(max-width: 899px)");
+        let menuOpen = false;
+
+        const closeMenu = () => {
+          if (!headerNav || !headerToggle || !headerOverlay) {
+            return;
+          }
+          headerNav.classList.remove("is-open");
+          headerOverlay.classList.remove("is-open");
+          headerToggle.setAttribute("aria-expanded", "false");
+          headerToggle.setAttribute("aria-label", "メニューを開く");
+          menuOpen = false;
+        };
+
+        const openMenu = () => {
+          if (!headerNav || !headerToggle || !headerOverlay) {
+            return;
+          }
+          headerNav.classList.add("is-open");
+          headerOverlay.classList.add("is-open");
+          headerToggle.setAttribute("aria-expanded", "true");
+          headerToggle.setAttribute("aria-label", "メニューを閉じる");
+          menuOpen = true;
+        };
+
+        if (headerToggle && headerNav && headerOverlay) {
+          headerToggle.addEventListener("click", () => {
+            if (menuOpen) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          });
+
+          headerOverlay.addEventListener("click", closeMenu);
+          headerNav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+          });
+
+          window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              closeMenu();
+            }
+          });
+
+          const onViewportChange = () => {
+            if (!mobileMedia.matches) {
+              closeMenu();
+            }
+          };
+          if (typeof mobileMedia.addEventListener === "function") {
+            mobileMedia.addEventListener("change", onViewportChange);
+          } else if (typeof mobileMedia.addListener === "function") {
+            mobileMedia.addListener(onViewportChange);
+          }
+        }
+
         const revealDelay = 950;
         let revealTimer = null;
         let headerHidden = false;
@@ -2518,6 +2777,9 @@
         };
 
         const onHeaderScroll = () => {
+          if (menuOpen) {
+            closeMenu();
+          }
           const currentScrollY = window.scrollY;
           const scrollDelta = currentScrollY - lastScrollY;
 
@@ -2550,7 +2812,34 @@
 
       const introSplash = document.getElementById("introSplash");
       const pageLoader = document.getElementById("pageLoader");
+      const skipIntro = document.documentElement.classList.contains("skip-intro");
+      const jumpToCtaTop = () => {
+        const target = document.getElementById("cta-final");
+        if (!target) {
+          return;
+        }
+        const header = document.querySelector(".site-header");
+        const headerOffset = header ? Math.round(header.getBoundingClientRect().height) + 8 : 76;
+        const previousBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = "auto";
+        const top = Math.max(0, Math.round(window.scrollY + target.getBoundingClientRect().top - headerOffset));
+        window.scrollTo(0, top);
+        document.documentElement.style.scrollBehavior = previousBehavior;
+      };
       if (introSplash) {
+        if (skipIntro) {
+          if (pageLoader && pageLoader.parentNode) {
+            pageLoader.remove();
+          }
+          introSplash.remove();
+          document.body.classList.remove("intro-lock");
+          document.body.classList.remove("intro-revealing");
+          document.body.classList.remove("intro-pending");
+          jumpToCtaTop();
+          window.requestAnimationFrame(jumpToCtaTop);
+          window.setTimeout(jumpToCtaTop, 120);
+          window.setTimeout(jumpToCtaTop, 420);
+        } else {
         const hideLoader = () => {
           if (!pageLoader) {
             return;
@@ -2664,6 +2953,7 @@
               }
             }, 4500);
           });
+        }
         }
       }
 
@@ -2788,6 +3078,44 @@
             contactSubmit.textContent = "フォームから相談する";
           }
         });
+      }
+
+      const pricingTableWrap = document.querySelector(".pricing-table-wrap");
+      if (pricingTableWrap) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        pricingTableWrap.addEventListener("touchstart", (event) => {
+          const touch = event.touches && event.touches[0];
+          if (!touch) {
+            return;
+          }
+          touchStartX = touch.clientX;
+          touchStartY = touch.clientY;
+        }, { passive: true });
+
+        pricingTableWrap.addEventListener("touchmove", (event) => {
+          const touch = event.touches && event.touches[0];
+          if (!touch) {
+            return;
+          }
+
+          const deltaX = touch.clientX - touchStartX;
+          const deltaY = touch.clientY - touchStartY;
+          if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+            return;
+          }
+
+          const maxScrollLeft = pricingTableWrap.scrollWidth - pricingTableWrap.clientWidth;
+          const atLeftEdge = pricingTableWrap.scrollLeft <= 0;
+          const atRightEdge = pricingTableWrap.scrollLeft >= maxScrollLeft - 1;
+          const pullingPastLeft = atLeftEdge && deltaX > 0;
+          const pullingPastRight = atRightEdge && deltaX < 0;
+
+          if (pullingPastLeft || pullingPastRight) {
+            event.preventDefault();
+          }
+        }, { passive: false });
       }
 
       const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
