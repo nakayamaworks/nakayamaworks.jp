@@ -46,6 +46,7 @@
       --service-image: url("assets/images/backgrounds/service-yanbaru-forest.jpg");
       --profile-image: url("assets/images/backgrounds/profile-okinawa-sunset.jpg");
       --flow-image: url("assets/images/backgrounds/flow-okinawa-sea.jpg");
+      --support-image: url("assets/images/backgrounds/support-overseas.jpg");
     }
 
     *, *::before, *::after {
@@ -705,47 +706,6 @@
       pointer-events: none;
     }
 
-    .flow-section.has-video .section-video {
-      opacity: 0.76;
-    }
-
-    .flow-section .flow-soft-highlight {
-      display: inline-block;
-      position: relative;
-      z-index: 0;
-      border-radius: 12px;
-    }
-
-    .flow-section .flow-soft-highlight::before {
-      content: "";
-      position: absolute;
-      inset: -0.16em -0.42em;
-      z-index: -1;
-      border-radius: 14px;
-      background: rgba(225, 231, 232, 0.54);
-      filter: blur(6px);
-      pointer-events: none;
-    }
-
-    .flow-section .flow-soft-eyebrow {
-      display: inline-flex;
-      padding: 0.02em 0.24em;
-    }
-
-    .flow-section .flow-soft-title {
-      display: block;
-      width: fit-content;
-      padding: 0.06em 0.34em;
-    }
-
-    .flow-section .flow-soft-lead {
-      display: block;
-      width: fit-content;
-      padding: 0.08em 0.42em;
-      color: #334642;
-      font-weight: 500;
-    }
-
     .profile-section {
       --section-image: var(--profile-image);
     }
@@ -1310,6 +1270,7 @@
       color: var(--forest-deep);
       font-size: 1rem;
       line-height: 1.6;
+      min-height: 1.6em;
     }
 
     .flow-body p {
@@ -1317,6 +1278,20 @@
       color: var(--charcoal-soft);
       font-size: 0.93rem;
       line-height: 1.85;
+    }
+
+    #flow {
+      background:
+        radial-gradient(circle at 12% 14%, rgba(198, 219, 232, 0.22) 0%, rgba(198, 219, 232, 0) 36%),
+        linear-gradient(180deg, rgba(240, 247, 250, 0.96) 0%, rgba(234, 244, 248, 0.98) 100%);
+      border-top: 1px solid rgba(136, 164, 180, 0.2);
+      border-bottom: 1px solid rgba(136, 164, 180, 0.2);
+    }
+
+    #misemaru-cloud {
+      background:
+        radial-gradient(circle at 86% 10%, rgba(180, 200, 168, 0.24) 0%, rgba(180, 200, 168, 0) 34%),
+        linear-gradient(180deg, rgba(246, 250, 246, 0.98) 0%, rgba(240, 247, 241, 0.98) 100%);
     }
 
     .support-card {
@@ -1328,10 +1303,21 @@
       min-width: 0;
     }
 
-    #support {
-      background:
-        radial-gradient(circle at 10% 14%, rgba(180, 200, 168, 0.28) 0%, rgba(180, 200, 168, 0) 32%),
-        linear-gradient(180deg, rgba(243, 248, 242, 0.92) 0%, rgba(236, 244, 237, 0.96) 100%);
+    .support-section {
+      --section-image: var(--support-image);
+    }
+
+    .support-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(243, 248, 242, 0.62) 0%, rgba(236, 244, 237, 0.74) 100%);
+      pointer-events: none;
+    }
+
+    .support-section.has-video .section-video {
+      opacity: 0.74;
     }
 
     .support-message {
@@ -1899,10 +1885,35 @@
         grid-template-columns: 1fr;
         gap: 12px;
         min-height: 100%;
+        align-content: start;
       }
 
       .flow-num {
-        margin-top: 6px;
+        margin-top: 0;
+      }
+
+      .flow-item > div:first-child {
+        min-height: 74px;
+        display: grid;
+        align-content: start;
+        gap: 6px;
+      }
+
+      .flow-step {
+        line-height: 1.2;
+      }
+
+      .flow-body h3 {
+        white-space: nowrap;
+        font-size: 0.95rem;
+        line-height: 1.55;
+        min-height: 1.55em;
+      }
+
+      .flow-body {
+        display: grid;
+        grid-template-rows: minmax(1.55em, auto) 1fr;
+        align-content: start;
       }
 
       .profile-card {
@@ -2194,7 +2205,8 @@
           <ul class="checklist">
             <li>公式サイトがお店の魅力をきちんと伝えられていない</li>
             <li>予約システムを導入したいが初期設定や運用が難しそう</li>
-            <li>ポータルサイトに依存しない予約導線を整えたい</li>
+            <li>SNSの更新は行なっているけど、予約につながっていない</li>
+            <li>ポータルサイトに頼らず、自分のお店で予約を管理したい</li>
             <li>ITのことを長く相談できる人がほしい</li>
           </ul>
           <h3>そのお悩み、解決します。</h4>
@@ -2220,7 +2232,7 @@
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Service</span>
-          <h2 class="section-title">予約が入るサイト設計</h2>
+          <h2 class="section-title">お店に直接予約が入る仕組みを作ります</h2>
           <p class="section-lead">見た目だけでなく、予約が入りやすい導線設計まで含めて制作します。</p>
         </div>
         <div class="service-grid">
@@ -2258,12 +2270,74 @@
       </div>
     </section>
 
+    <section class="section flow-section" id="flow">
+      <div class="container">
+        <div class="section-title-wrap fade-in">
+          <span class="eyebrow">Flow</span>
+          <h2 class="section-title">制作の流れ（5ステップ）</h2>
+          <p class="section-lead">専門用語は使いすぎず、要点を一緒に確認しながら進めます。</p>
+        </div>
+        <ol class="flow-list">
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">1</div>
+            </div>
+            <div class="flow-body">
+              <h3>無料相談</h3>
+              <p>お店の状況やご希望をお聞きします。分からないことがあっても大丈夫です。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">2</div>
+            </div>
+            <div class="flow-body">
+              <h3>内容のご提案</h3>
+              <p>必要なページや機能、費用、スケジュールを分かりやすくご説明します。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">3</div>
+            </div>
+            <div class="flow-body">
+              <h3>制作開始</h3>
+              <p>写真や文章など、必要なものを一緒に準備しながら制作します。難しい作業はすべてこちらで対応します。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">4</div>
+            </div>
+            <div class="flow-body">
+              <h3>公開前の確認</h3>
+              <p>実際の画面を見ながら、修正点を確認します。スマホでの見え方や予約の流れもチェックします。</p>
+            </div>
+          </li>
+          <li class="flow-item fade-in">
+            <div>
+              <div class="flow-step">STEP</div>
+              <div class="flow-num">5</div>
+            </div>
+            <div class="flow-body">
+              <h3>公開・運用サポート</h3>
+              <p>公開後も、更新や設定変更など継続してサポートします。あなたのお店のIT担当として支えます。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <section class="section" id="misemaru-cloud">
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Reservation System</span>
           <h2 class="section-title">選べる予約システム</h2>
-          <p class="section-lead">サロンの運用方法に合わせて、２つの予約システムから選べます。</p>
+          <p class="section-lead">運用方法に合わせて、２つの予約システムから選べます。</p>
         </div>
         <div class="reservation-cards">
           <article class="cloud-card fade-in">
@@ -2345,7 +2419,7 @@
       </div>
     </section>
 
-    <section class="section media-section flow-section" id="flow">
+    <section class="section media-section support-section" id="support">
       <div class="section-video-wrap" aria-hidden="true">
         <video
           class="section-video"
@@ -2353,75 +2427,13 @@
           loop
           playsinline
           preload="none"
-          poster="assets/images/backgrounds/flow-okinawa-sea.jpg"
+          poster="assets/images/backgrounds/support-overseas.jpg"
           tabindex="-1"
           disablepictureinpicture
         >
-          <source data-src="assets/video/okinawa-sea-flow.mp4" type="video/mp4">
+          <source data-src="assets/video/support-overseas.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="container">
-        <div class="section-title-wrap fade-in">
-          <span class="eyebrow flow-soft-highlight flow-soft-eyebrow">Flow</span>
-          <h2 class="section-title flow-soft-highlight flow-soft-title">制作の流れ（5ステップ）</h2>
-          <p class="section-lead flow-soft-highlight flow-soft-lead">専門用語は使いすぎず、要点を一緒に確認しながら進めます。</p>
-        </div>
-        <ol class="flow-list">
-          <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">1</div>
-            </div>
-            <div class="flow-body">
-              <h3>無料相談</h3>
-              <p>現状の課題と希望をヒアリングし、お見積りと公開までの日程を検討します。</p>
-            </div>
-          </li>
-          <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">2</div>
-            </div>
-            <div class="flow-body">
-              <h3>構成提案</h3>
-              <p>ページ構成・導線・必要素材をまとめ、制作方針を決定します。</p>
-            </div>
-          </li>
-          <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">3</div>
-            </div>
-            <div class="flow-body">
-              <h3>デザイン制作</h3>
-              <p>世界観を反映したデザインと文章を作成し、確認を重ねます。</p>
-            </div>
-          </li>
-          <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">4</div>
-            </div>
-            <div class="flow-body">
-              <h3>実装・公開準備</h3>
-              <p>スマホ最適化・表示速度・基本SEOを整え、公開前チェックを行います。</p>
-            </div>
-          </li>
-          <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">5</div>
-            </div>
-            <div class="flow-body">
-              <h3>公開・運用サポート</h3>
-              <p>公開後の更新案内と改善提案で、予約導線を継続して育てます。</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section" id="support">
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Support</span>
