@@ -1234,8 +1234,8 @@
 
     .flow-item {
       display: grid;
-      grid-template-columns: 54px minmax(0, 1fr);
-      gap: 14px;
+      grid-template-columns: 1fr;
+      gap: 12px;
       padding: 16px;
       border: 1px solid var(--line-soft);
       border-radius: var(--radius-md);
@@ -1243,41 +1243,61 @@
       box-shadow: 0 8px 18px rgba(10, 20, 15, 0.06);
     }
 
+    .flow-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+    }
+
     .flow-step {
-      font-family: "Inter", sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: rgba(31, 63, 49, 0.74);
-      letter-spacing: 0.08em;
+      display: none;
     }
 
     .flow-num {
-      margin-top: 4px;
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 63, 49, 0.16);
+      background: linear-gradient(150deg, rgba(168, 188, 157, 0.36) 0%, rgba(243, 237, 225, 0.56) 100%);
       font-family: "Inter", sans-serif;
       font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.07em;
       color: var(--forest-main);
-      background: linear-gradient(150deg, rgba(168, 188, 157, 0.36) 0%, rgba(243, 237, 225, 0.56) 100%);
-      border: 1px solid rgba(31, 63, 49, 0.16);
+      line-height: 1;
+      white-space: nowrap;
     }
 
-    .flow-body h3 {
+    .flow-head h3 {
       margin: 0;
       color: var(--forest-deep);
       font-size: 1rem;
-      line-height: 1.6;
-      min-height: 1.6em;
+      line-height: 1.5;
+      font-weight: 800;
     }
 
     .flow-body p {
-      margin: 8px 0 0;
+      margin: 0;
       color: var(--charcoal-soft);
       font-size: 0.93rem;
       line-height: 1.85;
+    }
+
+    .flow-icon-wrap {
+      margin: 12px 0 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .flow-icon-wrap img {
+      width: min(108px, 52%);
+      max-width: 108px;
+      height: auto;
+      object-fit: contain;
     }
 
     #flow {
@@ -1888,34 +1908,6 @@
         align-content: start;
       }
 
-      .flow-num {
-        margin-top: 0;
-      }
-
-      .flow-item > div:first-child {
-        min-height: 74px;
-        display: grid;
-        align-content: start;
-        gap: 6px;
-      }
-
-      .flow-step {
-        line-height: 1.2;
-      }
-
-      .flow-body h3 {
-        white-space: nowrap;
-        font-size: 0.95rem;
-        line-height: 1.55;
-        min-height: 1.55em;
-      }
-
-      .flow-body {
-        display: grid;
-        grid-template-rows: minmax(1.55em, auto) 1fr;
-        align-content: start;
-      }
-
       .profile-card {
         grid-template-columns: 220px minmax(0, 1fr);
         align-items: center;
@@ -2038,6 +2030,15 @@
 
       .service-showcase {
         margin-top: 16px;
+      }
+
+      .flow-head h3 {
+        font-size: 0.94rem;
+        line-height: 1.45;
+      }
+
+      .flow-icon-wrap img {
+        width: min(96px, 44%);
       }
 
       .pricing-block {
@@ -2279,52 +2280,62 @@
         </div>
         <ol class="flow-list">
           <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">1</div>
+            <div class="flow-head">
+              <div class="flow-num">STEP 1</div>
+              <h3>無料相談</h3>
+            </div>
+            <div class="flow-icon-wrap">
+              <img src="assets/images/flow/flow-step-1-free-consultation.png" alt="無料相談アイコン" loading="lazy" decoding="async">
             </div>
             <div class="flow-body">
-              <h3>無料相談</h3>
               <p>お店の状況やご希望をお聞きします。分からないことがあっても大丈夫です。</p>
             </div>
           </li>
           <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">2</div>
+            <div class="flow-head">
+              <div class="flow-num">STEP 2</div>
+              <h3>内容のご提案</h3>
+            </div>
+            <div class="flow-icon-wrap">
+              <img src="assets/images/flow/flow-step-2-proposal.png" alt="内容のご提案アイコン" loading="lazy" decoding="async">
             </div>
             <div class="flow-body">
-              <h3>内容のご提案</h3>
               <p>必要なページや機能、費用、スケジュールを分かりやすくご説明します。</p>
             </div>
           </li>
           <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">3</div>
+            <div class="flow-head">
+              <div class="flow-num">STEP 3</div>
+              <h3>制作開始</h3>
+            </div>
+            <div class="flow-icon-wrap">
+              <img src="assets/images/flow/flow-step-3-start-production.png" alt="制作開始アイコン" loading="lazy" decoding="async">
             </div>
             <div class="flow-body">
-              <h3>制作開始</h3>
               <p>写真や文章など、必要なものを一緒に準備しながら制作します。難しい作業はすべてこちらで対応します。</p>
             </div>
           </li>
           <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">4</div>
+            <div class="flow-head">
+              <div class="flow-num">STEP 4</div>
+              <h3>公開前の確認</h3>
+            </div>
+            <div class="flow-icon-wrap">
+              <img src="assets/images/flow/flow-step-4-prelaunch-check.png" alt="公開前の確認アイコン" loading="lazy" decoding="async">
             </div>
             <div class="flow-body">
-              <h3>公開前の確認</h3>
               <p>実際の画面を見ながら、修正点を確認します。スマホでの見え方や予約の流れもチェックします。</p>
             </div>
           </li>
           <li class="flow-item fade-in">
-            <div>
-              <div class="flow-step">STEP</div>
-              <div class="flow-num">5</div>
+            <div class="flow-head">
+              <div class="flow-num">STEP 5</div>
+              <h3>公開・運用</h3>
+            </div>
+            <div class="flow-icon-wrap">
+              <img src="assets/images/flow/flow-step-5-support.png" alt="公開・運用サポートアイコン" loading="lazy" decoding="async">
             </div>
             <div class="flow-body">
-              <h3>公開・運用サポート</h3>
               <p>公開後も、更新や設定変更など継続してサポートします。あなたのお店のIT担当として支えます。</p>
             </div>
           </li>
@@ -2472,7 +2483,7 @@
           </article>
           <article class="pricing-block fade-in">
             <h3 class="pricing-block-title">■ 運用サポート料金（月額）</h3>
-            <div class="pricing-initial-value"><span class="yen">¥</span>9,980</div>
+            <div class="pricing-initial-value"><span class="yen">¥</span>3,980</div>
             <p class="pricing-initial-desc">公式サイトと予約システムの運用を継続支援</p>
           </article>
           <article class="pricing-block fade-in">
@@ -2533,8 +2544,8 @@
                 <h4>■ 月額料金について</h4>
                 <ul class="pricing-note-list">
                   <li>月額料金は「運用サポート料金」 ＋ 「予約システム料金」　となります</li>
-                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例①：</span><span class="pricing-example-head">みせまるクラウド利用の場合</span><span class="pricing-example-body">9,980円/月（運用サポート料金のみ）</span></li>
-                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例②：</span><span class="pricing-example-head">STORES予約 スモールの場合</span><span class="pricing-example-body">9,980円 + 12,980円 = 22,960円/月</span></li>
+                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例①：</span><span class="pricing-example-head">みせまるクラウド利用の場合</span><span class="pricing-example-body">3,980円/月（運用サポート料金のみ）</span></li>
+                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例②：</span><span class="pricing-example-head">STORES予約 スモールの場合</span><span class="pricing-example-body">3,980円 + 12,980円 = 16,960円/月</span></li>
                 </ul>
               </article>
               <article class="pricing-note-card">
