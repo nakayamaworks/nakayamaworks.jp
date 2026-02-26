@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Beauty Salon MISEMARU CLOUD | Demo</title>
   <meta name="description" content="Beauty Salon MISEMARU CLOUD の営業デモサイト" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,7 +11,8 @@
   <style>
     :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8}
+    html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior:none}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8;-webkit-overflow-scrolling:touch}
     :lang(ja) body{font-family:'Noto Serif JP', serif}
     .hidden{display:none!important}
 
@@ -186,6 +187,10 @@
     }
 
     @media (max-width:991.98px){
+      html,body{
+        overflow-x:hidden !important;
+        touch-action:pan-y;
+      }
       .hero h1,
       .welcome-title{
         font-size:clamp(1.68rem,7.5vw,2.2rem);
@@ -686,6 +691,11 @@
       document.getElementById('welcome')?.classList.add('hidden');
       document.body.classList.remove('welcome-lock');
     }, 12000);
+
+    // Mobile hardening: block pinch zoom gestures on Safari/iOS.
+    document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+    document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
+    document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
   </script>
 </body>
 </html>
