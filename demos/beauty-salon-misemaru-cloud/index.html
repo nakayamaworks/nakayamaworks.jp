@@ -147,7 +147,8 @@
     .feature-item{text-align:center}
     .feature-icon{width:100px;height:100px;object-fit:contain;display:block;margin:.35rem auto 0}
     .menu-item h3,.staff-card h3{margin:0;color:#fff5d6}
-    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:.5rem 0}
+    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:.5rem 0;cursor:zoom-in;transition:transform .24s ease,filter .24s ease}
+    .menu-item img:hover,.menu-item img:focus-visible{transform:translateY(-1px);filter:brightness(1.05)}
     .menu-desc,.staff-role,.staff-desc{margin:.45rem 0 0;color:rgba(245,240,226,.82);font-size:.92rem}
     .staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
     .avatar{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#241a0d;font-family:'Cinzel',serif;font-weight:700;margin-bottom:.6rem}
@@ -157,6 +158,17 @@
 
     .cta{width:min(920px,calc(100% - 1.4rem));margin:0 auto 1.8rem;padding:1.2rem;border-radius:18px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(215,178,74,.2),rgba(28,23,13,.76));text-align:center}
     .footer{width:min(1160px,calc(100% - 1.4rem));margin:0 auto 2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;color:rgba(245,240,226,.72);font-size:.82rem}
+    .image-lightbox{position:fixed;inset:0;z-index:460;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.82);backdrop-filter:blur(6px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+    .image-lightbox.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
+    .image-lightbox-frame{position:relative}
+    .image-lightbox-img{width:min(980px,84vw);max-height:78vh;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 56px rgba(0,0,0,.45);display:block;object-fit:contain}
+    .image-lightbox-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
+    .image-lightbox-close:hover,.image-lightbox-close:focus-visible{background:rgba(215,178,74,.2)}
+    body.lightbox-lock{overflow:hidden}
+    @media (max-width:991.98px){
+      .image-lightbox-img{width:min(700px,90vw);max-height:68vh}
+      .image-lightbox-close{top:8px;right:8px;width:34px;height:34px}
+    }
 
     .reveal{opacity:1;transform:none}
     .will-reveal{opacity:0;transform:translateY(16px);transition:opacity .62s ease,transform .62s ease}
@@ -188,6 +200,7 @@
         transform:translate(-0.03em,0.02em);
       }
       .concept-grid,.store-grid{grid-template-columns:1fr}
+      #salonGallery.section{width:min(1160px,calc(100% - .9rem))}
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .staff-grid{grid-template-columns:1fr}
       .welcome-inner{transform:translate3d(-12px,-48px,0)}
@@ -312,20 +325,47 @@
   <section id="features" class="section reveal">
     <h2 class="title" id="featuresTitle">Our Strengths</h2>
     <div class="grid4">
-      <article class="feature-item"><p id="f1">✦ 完全予約制</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_reserve.png" alt="完全予約制" /></article>
-      <article class="feature-item"><p id="f2">✦ 女性専用</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_only_lady.png" alt="女性専用" /></article>
-      <article class="feature-item"><p id="f3">✦ ホテルスパ品質</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_quality.png" alt="ホテルスパ品質" /></article>
-      <article class="feature-item"><p id="f4">✦ 夜21時まで営業</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_business_hours.png" alt="営業時間" /></article>
+      <article class="feature-item"><p id="f1">✦ 完全予約制</p><img class="feature-icon" src="./images/icon_reserve.png" alt="完全予約制" /></article>
+      <article class="feature-item"><p id="f2">✦ 女性専用</p><img class="feature-icon" src="./images/icon_only_lady.png" alt="女性専用" /></article>
+      <article class="feature-item"><p id="f3">✦ ホテルスパ品質</p><img class="feature-icon" src="./images/icon_quality.png" alt="ホテルスパ品質" /></article>
+      <article class="feature-item"><p id="f4">✦ 夜21時まで営業</p><img class="feature-icon" src="./images/icon_business_hours.png" alt="営業時間" /></article>
+    </div>
+  </section>
+
+  <section id="salonGallery" class="section reveal">
+    <h2 class="title" id="galleryTitle">Salon Interior</h2>
+    <p id="galleryLead" style="margin:.12rem 0 .95rem;color:rgba(245,240,226,.8)">上質なプライベート空間を、施術シーンに合わせてご用意しています。</p>
+    <div class="grid4">
+      <article class="menu-item">
+        <h3 id="galleryCardTitle1">Treatment Bed</h3>
+        <img src="./images/salon-concept-optimized/treatment-bed-1.webp" alt="施術ベッド" loading="lazy" decoding="async" />
+        <p id="galleryCap1" class="menu-desc">静かな個室で、深くリラックスできる施術空間です。</p>
+      </article>
+      <article class="menu-item">
+        <h3 id="galleryCardTitle2">Waiting Lounge</h3>
+        <img src="./images/salon-concept-optimized/waiting-lounge.webp" alt="待合ラウンジ" loading="lazy" decoding="async" />
+        <p id="galleryCap2" class="menu-desc">ご来店から施術前まで、上質に過ごせる寛ぎの空間です。</p>
+      </article>
+      <article class="menu-item">
+        <h3 id="galleryCardTitle3">Powder Room</h3>
+        <img src="./images/salon-concept-optimized/powder-room.webp" alt="パウダールーム" loading="lazy" decoding="async" />
+        <p id="galleryCap3" class="menu-desc">施術後のお直しまで美しく整えられる専用スペースです。</p>
+      </article>
+      <article class="menu-item">
+        <h3 id="galleryCardTitle4">Treatment Bed</h3>
+        <img src="./images/salon-concept-optimized/treatment-bed-2.webp" alt="施術ベッド" loading="lazy" decoding="async" />
+        <p id="galleryCap4" class="menu-desc">ブライダルケアにも対応する落ち着いた完全個室です。</p>
+      </article>
     </div>
   </section>
 
   <section id="menu" class="section reveal">
     <h2 class="title" id="menuTitle">Treatment Menu</h2>
     <div class="grid4">
-      <article class="menu-item"><h3>Premium Facial</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
-      <article class="menu-item"><h3>Body Treatment</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
-      <article class="menu-item"><h3>Bridal Course</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
-      <article class="menu-item"><h3>Relaxation Therapy</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
+      <article class="menu-item"><h3>Premium Facial</h3><img src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
+      <article class="menu-item"><h3>Body Treatment</h3><img src="./images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
+      <article class="menu-item"><h3>Bridal Course</h3><img src="./images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
+      <article class="menu-item"><h3>Relaxation Therapy</h3><img src="./images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
     </div>
   </section>
 
@@ -369,12 +409,23 @@
     <p id="footerCredit" style="margin:.6rem 0 0">Produced by Nakayama Works</p>
   </footer>
 
+  <div id="imageLightbox" class="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="image-lightbox-frame">
+      <button id="imageLightboxClose" class="image-lightbox-close" type="button" aria-label="Close">×</button>
+      <img id="imageLightboxImg" class="image-lightbox-img" src="" alt="" />
+    </div>
+  </div>
+
   <script src="./i18n-demo.js"></script>
   <script>
     const map = {
       navConcept:'nav_concept',navFeatures:'nav_features',navMenu:'nav_menu',navStaff:'nav_staff',navStore:'nav_store',navReserve:'reserve',heroReserve:'reserve',ctaReserve:'reserve',
       heroTag:'hero_tag',heroLead:'hero_lead',conceptTitle:'concept_title',conceptBody:'concept_body',conceptItem1:'concept_item_1',conceptItem2:'concept_item_2',conceptItem3:'concept_item_3',conceptItem4:'concept_item_4',
-      featuresTitle:'features_title',f1:'f1',f2:'f2',f3:'f3',f4:'f4',menuTitle:'menu_title',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
+      featuresTitle:'features_title',f1:'f1',f2:'f2',f3:'f3',f4:'f4',
+      galleryTitle:'gallery_title',galleryLead:'gallery_lead',
+      galleryCardTitle1:'gallery_card_title_1',galleryCardTitle2:'gallery_card_title_2',galleryCardTitle3:'gallery_card_title_3',galleryCardTitle4:'gallery_card_title_4',
+      galleryCap1:'gallery_cap_1',galleryCap2:'gallery_cap_2',galleryCap3:'gallery_cap_3',galleryCap4:'gallery_cap_4',
+      menuTitle:'menu_title',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
       staffTitle:'staff_title',s1Role:'s1_role',s1Desc:'s1_desc',s2Role:'s2_role',s2Desc:'s2_desc',s3Role:'s3_role',s3Desc:'s3_desc',
       storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
@@ -486,15 +537,46 @@
       cards.forEach((c) => fx.observe(c));
     })();
 
+    (function imageLightboxFx() {
+      const lightbox = document.getElementById('imageLightbox');
+      const closeBtn = document.getElementById('imageLightboxClose');
+      const lightboxImg = document.getElementById('imageLightboxImg');
+      if (!lightbox || !closeBtn || !lightboxImg) return;
+      const targets = Array.from(document.querySelectorAll('#menu .menu-item img, #salonGallery .menu-item img'));
+      const open = (img) => {
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-lock');
+      };
+      const close = () => {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-lock');
+        window.setTimeout(() => { lightboxImg.src = ''; }, 180);
+      };
+      targets.forEach((img) => {
+        img.addEventListener('click', () => open(img));
+      });
+      closeBtn.addEventListener('click', close);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) close();
+      });
+    })();
+
     (function heroBgFx() {
       const layerA = document.getElementById('heroBgA');
       const layerB = document.getElementById('heroBgB');
       if (!layerA || !layerB) return;
       const sources = [
-        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/premium-facial.jpg',
-        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/body-treatment.jpg',
-        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/bridal-course.jpg',
-        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/relaxation-therapy.jpg'
+        './images/service-optimized/premium-facial.jpg',
+        './images/service-optimized/body-treatment.jpg',
+        './images/service-optimized/bridal-course.jpg',
+        './images/service-optimized/relaxation-therapy.jpg'
       ];
       const paint = (el, url) => {
         el.style.backgroundImage = "linear-gradient(120deg,rgba(7,7,7,.74),rgba(7,7,7,.55)),url('" + url + "')";

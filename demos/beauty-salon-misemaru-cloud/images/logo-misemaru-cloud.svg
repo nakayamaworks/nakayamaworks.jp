@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Beauty Salon MISEMARU CLOUD Logo">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7e08a"/>
+      <stop offset="0.45" stop-color="#d7b24a"/>
+      <stop offset="0.75" stop-color="#b98722"/>
+      <stop offset="1" stop-color="#ffe9a8"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0
+                0 0.9 0 0 0
+                0 0 0.3 0 0
+                0 0 0 0.9 0" result="goldBlur"/>
+      <feMerge>
+        <feMergeNode in="goldBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="s"/>
+      <feOffset in="s" dx="0" dy="2" result="o"/>
+      <feColorMatrix in="o" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.35 0" result="c"/>
+      <feMerge>
+        <feMergeNode in="c"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(0,0)">
+    <path d="M 520 120 C 450 125, 395 170, 372 230 C 360 262, 365 300, 388 326 C 404 345, 424 352, 442 356 C 430 372, 420 384, 412 400 C 403 418, 404 440, 418 456 C 432 472, 456 479, 476 478 C 502 476, 520 462, 533 448 C 542 474, 552 504, 548 540 C 544 580, 520 614, 488 636 C 452 661, 404 674, 356 676"
+      fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M 515 128 C 610 150, 668 210, 694 280 C 722 354, 720 430, 700 502 C 684 560, 652 618, 610 660"
+      fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M 480 480 C 456 520, 452 564, 468 606 C 490 664, 550 704, 622 714"
+      fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M 635 365 C 690 430, 720 505, 730 585 C 738 650, 720 710, 680 760"
+      fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M 610 520 C 590 505, 575 500, 560 506 C 542 514, 536 536, 552 552 C 568 568, 598 566, 610 548 C 624 528, 606 506, 582 508 C 562 510, 548 528, 556 544"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M 708 300 C 736 290, 760 300, 778 320"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M 720 340 C 750 338, 774 352, 792 374"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M 706 380 C 736 388, 756 408, 770 432"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M 690 420 C 716 438, 730 462, 734 490"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M 600 610 C 570 620, 550 640, 542 668"
+      fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+  </g>
+
+  <text x="512" y="740" text-anchor="middle"
+        font-family="Great Vibes, Allura, Pinyon Script, 'Times New Roman', serif"
+        font-size="190"
+        fill="#0b0b0b"
+        filter="url(#softShadow)">
+    Beauty
+  </text>
+
+  <text x="512" y="840" text-anchor="middle"
+        font-family="Cinzel, Trajan Pro, 'Times New Roman', serif"
+        font-size="90"
+        letter-spacing="8"
+        fill="url(#gold)">
+    SALON
+  </text>
+
+  <text x="512" y="910" text-anchor="middle"
+        font-family="Cinzel, 'Times New Roman', serif"
+        font-size="48"
+        letter-spacing="6"
+        fill="url(#gold)">
+    MISEMARU CLOUD
+  </text>
+</svg>
