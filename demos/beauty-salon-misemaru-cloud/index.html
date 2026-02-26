@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); }
+    :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); --welcome-mobile-shift:0px; }
     *{box-sizing:border-box}
-    html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior:none}
+    html,body{width:100%;max-width:100%;overflow-x:hidden}
     body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8;-webkit-overflow-scrolling:touch}
     :lang(ja) body{font-family:'Noto Serif JP', serif}
     .hidden{display:none!important}
@@ -128,6 +128,7 @@
     :lang(ja) .hero-tag,
     :lang(ja) .welcome-sub,
     :lang(ja) #storeInfoTitle,
+    :lang(ja) #salonGallery .menu-item h3,
     :lang(ja) .menu-link,
     :lang(ja) #navConcept,
     :lang(ja) #navFeatures,
@@ -148,7 +149,10 @@
     .feature-item{text-align:center}
     .feature-icon{width:100px;height:100px;object-fit:contain;display:block;margin:.35rem auto 0}
     .menu-item h3,.staff-card h3{margin:0;color:#fff5d6}
-    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:.5rem 0;cursor:zoom-in;transition:transform .24s ease,filter .24s ease}
+    .image-zoom-wrap{position:relative;margin:.5rem 0}
+    .zoom-hint{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:999px;display:grid;place-items:center;background:rgba(7,7,7,.6);border:1px solid rgba(255,241,204,.5);color:#f3dca8;pointer-events:none;backdrop-filter:blur(2px)}
+    .zoom-hint svg{width:16px;height:16px;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:0;cursor:zoom-in;transition:transform .24s ease,filter .24s ease}
     .menu-item img:hover,.menu-item img:focus-visible{transform:translateY(-1px);filter:brightness(1.05)}
     .menu-desc,.staff-role,.staff-desc{margin:.45rem 0 0;color:rgba(245,240,226,.82);font-size:.92rem}
     .staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
@@ -187,10 +191,7 @@
     }
 
     @media (max-width:991.98px){
-      html,body{
-        overflow-x:hidden !important;
-        touch-action:pan-y;
-      }
+      html,body{overflow-x:hidden !important}
       .hero h1,
       .welcome-title{
         font-size:clamp(1.68rem,7.5vw,2.2rem);
@@ -202,13 +203,13 @@
         margin-right:auto;
       }
       #w-title .title-line:last-child{
-        transform:translate(-0.03em,0.02em);
+        transform:translate(0,0.02em);
       }
       .concept-grid,.store-grid{grid-template-columns:1fr}
       #salonGallery.section{width:min(1160px,calc(100% - .9rem))}
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .staff-grid{grid-template-columns:1fr}
-      .welcome-inner{transform:translate3d(-12px,-48px,0)}
+      .welcome-inner{transform:translate3d(0,calc(-44px + var(--welcome-mobile-shift)),0)}
       .menu-toggle{display:inline-block}
       .top-nav-right{
         position:absolute;
@@ -342,23 +343,23 @@
     <p id="galleryLead" style="margin:.12rem 0 .95rem;color:rgba(245,240,226,.8)">上質なプライベート空間を、施術シーンに合わせてご用意しています。</p>
     <div class="grid4">
       <article class="menu-item">
-        <h3 id="galleryCardTitle1">Treatment Bed</h3>
-        <img src="./images/salon-concept-optimized/treatment-bed-1.webp" alt="施術ベッド" loading="lazy" decoding="async" />
+        <h3 id="galleryCardTitle1">施術ベッド①</h3>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-1.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap1" class="menu-desc">静かな個室で、深くリラックスできる施術空間です。</p>
       </article>
       <article class="menu-item">
         <h3 id="galleryCardTitle2">Waiting Lounge</h3>
-        <img src="./images/salon-concept-optimized/waiting-lounge.webp" alt="待合ラウンジ" loading="lazy" decoding="async" />
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/waiting-lounge.webp" alt="待合ラウンジ" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap2" class="menu-desc">ご来店から施術前まで、上質に過ごせる寛ぎの空間です。</p>
       </article>
       <article class="menu-item">
         <h3 id="galleryCardTitle3">Powder Room</h3>
-        <img src="./images/salon-concept-optimized/powder-room.webp" alt="パウダールーム" loading="lazy" decoding="async" />
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/powder-room.webp" alt="パウダールーム" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap3" class="menu-desc">施術後のお直しまで美しく整えられる専用スペースです。</p>
       </article>
       <article class="menu-item">
-        <h3 id="galleryCardTitle4">Treatment Bed</h3>
-        <img src="./images/salon-concept-optimized/treatment-bed-2.webp" alt="施術ベッド" loading="lazy" decoding="async" />
+        <h3 id="galleryCardTitle4">施術ベッド②</h3>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-2.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap4" class="menu-desc">ブライダルケアにも対応する落ち着いた完全個室です。</p>
       </article>
     </div>
@@ -367,10 +368,10 @@
   <section id="menu" class="section reveal">
     <h2 class="title" id="menuTitle">Treatment Menu</h2>
     <div class="grid4">
-      <article class="menu-item"><h3>Premium Facial</h3><img src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
-      <article class="menu-item"><h3>Body Treatment</h3><img src="./images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
-      <article class="menu-item"><h3>Bridal Course</h3><img src="./images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
-      <article class="menu-item"><h3>Relaxation Therapy</h3><img src="./images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
+      <article class="menu-item"><h3 id="menuItemTitle1">Premium Facial</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
+      <article class="menu-item"><h3 id="menuItemTitle2">Body Treatment</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
+      <article class="menu-item"><h3 id="menuItemTitle3">Bridal Course</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
+      <article class="menu-item"><h3 id="menuItemTitle4">Relaxation Therapy</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
     </div>
   </section>
 
@@ -430,7 +431,7 @@
       galleryTitle:'gallery_title',galleryLead:'gallery_lead',
       galleryCardTitle1:'gallery_card_title_1',galleryCardTitle2:'gallery_card_title_2',galleryCardTitle3:'gallery_card_title_3',galleryCardTitle4:'gallery_card_title_4',
       galleryCap1:'gallery_cap_1',galleryCap2:'gallery_cap_2',galleryCap3:'gallery_cap_3',galleryCap4:'gallery_cap_4',
-      menuTitle:'menu_title',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
+      menuTitle:'menu_title',menuItemTitle1:'menu_item_title_1',menuItemTitle2:'menu_item_title_2',menuItemTitle3:'menu_item_title_3',menuItemTitle4:'menu_item_title_4',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
       staffTitle:'staff_title',s1Role:'s1_role',s1Desc:'s1_desc',s2Role:'s2_role',s2Desc:'s2_desc',s3Role:'s3_role',s3Desc:'s3_desc',
       storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
@@ -470,6 +471,19 @@
 
     const topNav = document.getElementById('topNav');
     const menuToggle = document.getElementById('menuToggle');
+    const updateWelcomeMobileShift = () => {
+      if (window.innerWidth > 991) {
+        document.documentElement.style.setProperty('--welcome-mobile-shift', '0px');
+        return;
+      }
+      const navInner = document.querySelector('.top-nav-inner');
+      const navH = navInner ? navInner.getBoundingClientRect().height : 0;
+      const shift = Math.round(navH * 0.42);
+      document.documentElement.style.setProperty('--welcome-mobile-shift', `${shift}px`);
+    };
+    updateWelcomeMobileShift();
+    window.addEventListener('resize', updateWelcomeMobileShift, { passive: true });
+
     menuToggle.addEventListener('click', () => {
       const open = topNav.classList.toggle('is-mobile-open');
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -606,6 +620,7 @@
     (function boot() {
       const welcome = document.getElementById('welcome');
       const gate = document.getElementById('langGate');
+      const lightbox = document.getElementById('imageLightbox');
       const saved = localStorage.getItem('demo_lang');
       const lang = saved || 'ja';
       const url = new URL(location.href);
@@ -628,6 +643,15 @@
       const hideLangGate = () => {
         gate.classList.remove('show');
         document.body.classList.remove('welcome-lock');
+      };
+
+      const releaseLocksIfIdle = () => {
+        const gateOpen = gate.classList.contains('show');
+        const welcomeOpen = !welcome.classList.contains('hidden');
+        const lightboxOpen = !!lightbox && lightbox.classList.contains('is-open');
+        if (!gateOpen && !welcomeOpen && !lightboxOpen) {
+          document.body.classList.remove('welcome-lock', 'lightbox-lock');
+        }
       };
 
       const waitReadyForWelcome = async () => {
@@ -682,20 +706,21 @@
             await playWelcome();
           }
           hideLangGate();
+          releaseLocksIfIdle();
         });
       });
+
+      window.addEventListener('pageshow', releaseLocksIfIdle);
+      window.addEventListener('load', releaseLocksIfIdle);
+      window.setInterval(releaseLocksIfIdle, 800);
     })();
 
     // Hard fallback: never leave the page blocked by welcome overlay.
     window.setTimeout(() => {
       document.getElementById('welcome')?.classList.add('hidden');
-      document.body.classList.remove('welcome-lock');
+      document.body.classList.remove('welcome-lock', 'lightbox-lock');
     }, 12000);
 
-    // Mobile hardening: block pinch zoom gestures on Safari/iOS.
-    document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
-    document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
-    document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
   </script>
 </body>
 </html>
