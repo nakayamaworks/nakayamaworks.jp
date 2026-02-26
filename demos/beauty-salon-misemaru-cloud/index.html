@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beauty Salon MISEMARU CLOUD | Demo</title>
+  <meta name="description" content="Beauty Salon MISEMARU CLOUD の営業デモサイト" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8}
+    :lang(ja) body{font-family:'Noto Serif JP', serif}
+    .hidden{display:none!important}
+
+    .welcome{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;min-height:92vh;padding:5rem 1.2rem 3rem;background:radial-gradient(circle at 20% 20%, rgba(215,178,74,.22), transparent 40%),#070707;transition:opacity .5s ease}
+    .welcome.play{animation:welcomeHide .72s ease 2.1s forwards}
+    .welcome.is-out{opacity:0;pointer-events:none}
+    .welcome-inner{width:100%;max-width:760px;margin:0 auto;text-align:center;transform:translate3d(0,-36px,0)}
+    .welcome-loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:12px;transition:opacity .3s ease}
+    .welcome-loading-mark{width:min(200px,42vw);height:3px;border-radius:999px;background:rgba(215,178,74,.22);overflow:hidden}
+    .welcome-loading-mark::after{content:"";display:block;width:45%;height:100%;border-radius:inherit;background:linear-gradient(90deg,rgba(215,178,74,.55) 0%,rgba(247,224,138,.88) 100%);animation:loaderSlide 1.18s ease-in-out infinite}
+    .welcome-loading-text{margin:0;font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;letter-spacing:.09em;color:rgba(245,240,226,.72);text-transform:uppercase}
+    .welcome-inner{opacity:0;transition:opacity .3s ease}
+    html.fonts-ready .welcome-inner{opacity:1}
+    html.fonts-ready .welcome-loading{opacity:0;visibility:hidden}
+    .welcome-sub,.welcome-title{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease}
+    .welcome.play .welcome-sub,.welcome.play .welcome-title{animation:welcomeUp .82s ease .08s forwards}
+    .welcome-sub{margin:0 0 .65rem;color:var(--gold);letter-spacing:.13em;font-size:20px}
+    .welcome-title{margin:.2rem 0 .95rem;color:#fff6dd;font-family:'Cinzel',serif}
+    .welcome-line{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease;margin:1.15rem auto 0;max-width:620px;font-size:20px;color:rgba(245,240,226,.82)}
+    .welcome.play .welcome-line{animation:welcomeLine .92s ease .48s forwards}
+    @keyframes welcomeUp { to { opacity:1; transform:none; } }
+    @keyframes welcomeLine { to { opacity:1; transform:none; } }
+    @keyframes welcomeHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
+    @keyframes loaderSlide { 0% { transform:translateX(-110%);} 100% { transform:translateX(230%);} }
+    body.welcome-lock{overflow:hidden}
+
+    .lang-gate{position:fixed;inset:0;z-index:310;display:none;place-items:center;background:#070707;backdrop-filter:blur(6px)}
+    .lang-gate.show{display:grid}
+    .lang-card{width:min(680px,calc(100% - 1.6rem));padding:1.2rem;border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(15,15,15,.92));text-align:center}
+    .lang-title{margin:.2rem 0 .5rem;font-family:'Cinzel',serif;color:#fff6de}
+    .lang-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
+    .lang-btn{border:1px solid rgba(255,236,186,.5);background:rgba(255,255,255,.05);color:#fff3cf;border-radius:999px;padding:.58rem .9rem;cursor:pointer;transition:transform .18s ease,background .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease}
+    .lang-btn:hover,.lang-btn:focus-visible{transform:translateY(-1px);border-color:rgba(255,236,186,.78);background:rgba(255,255,255,.11);box-shadow:0 8px 20px rgba(0,0,0,.24)}
+    .lang-btn:active{transform:translateY(0) scale(.985)}
+    .lang-btn.is-selecting{background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;border-color:rgba(255,236,186,.92);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+
+    .top-nav{position:sticky;top:0;z-index:200;background:linear-gradient(180deg,rgba(7,7,7,.86),rgba(7,7,7,.64));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+    .top-nav-inner{width:min(1160px,calc(100% - 1.2rem));margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.8rem;padding:.45rem 0;position:relative}
+    .brand{font-family:'Cinzel',serif;color:#fff4d2;letter-spacing:.08em;font-size:clamp(.78rem,1.7vw,1.03rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .menu-toggle{display:none;width:40px;height:36px;border-radius:10px;border:1px solid rgba(255,242,207,.4);background:rgba(255,255,255,.06);color:#f2ddab}
+    .menu-toggle span{display:block;width:18px;height:2px;background:currentColor;border-radius:99px;margin:4px auto;transition:transform .22s ease,opacity .2s ease}
+    .top-nav-right{display:flex;gap:.42rem;flex-wrap:wrap;justify-content:flex-end}
+    .menu-link,.reserve-link{border:1px solid rgba(255,242,207,.35);background:rgba(255,255,255,.04);color:#f1ddad;border-radius:999px;padding:.32rem .66rem;font-size:.74rem;line-height:1.2;text-decoration:none;cursor:pointer}
+    .reserve-link{background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;font-weight:700}
+
+    .hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.2rem 3rem}
+    .hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;will-change:opacity}
+    .hero-bg.is-visible{opacity:1}
+    .hero-copy{text-align:center;max-width:760px;position:relative;z-index:1}
+    .hero-tag{color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.13em;margin:0 0 .65rem;font-size:20px}
+    .hero h1{font-family:'Cinzel',serif}
+    .hero-lead{margin:1.15rem auto 0;color:rgba(245,240,226,.82);max-width:620px;font-size:20px}
+    .hero-cta,.reserve-link{
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-cta{
+      margin-top:1.5rem;display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.4rem;border-radius:999px;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;text-decoration:none;font-weight:700;min-width:260px
+    }
+    .hero-cta::before,.reserve-link::before{
+      content:"";
+      position:absolute;
+      top:0;left:-120%;
+      width:72%;height:100%;
+      background:linear-gradient(100deg,transparent,rgba(255,255,255,.48),transparent);
+      transition:left .52s ease;
+    }
+    .hero-cta:hover::before,.hero-cta:focus::before,.reserve-link:hover::before,.reserve-link:focus::before{left:135%}
+
+    .section{width:min(1160px,calc(100% - 1.4rem));margin:0 auto;padding:2.2rem 0}
+    .title{
+      font-family:'Cinzel','Noto Sans JP',serif;
+      color:var(--gold);
+      letter-spacing:.08em;
+      margin:0 0 .75rem;
+      font-size:clamp(1.4rem,2.7vw,2rem);
+    }
+    .brand,
+    .hero-tag,
+    .welcome-sub,
+    .hero h1,
+    .welcome-title,
+    .title,
+    .menu-item h3,
+    .staff-card h3,
+    #storeInfoTitle,
+    #mapTitle,
+    #ctaTitle {
+      font-family:'Cinzel','Noto Sans JP',serif;
+      font-weight:600;
+      letter-spacing:.08em;
+      line-height:1.15;
+    }
+    .hero-copy,
+    .welcome-inner{
+      width:100%;
+      max-width:760px;
+      margin:0 auto;
+    }
+    .hero h1,
+    .welcome-title{
+      font-size:clamp(2.1rem,5.5vw,4.2rem);
+      margin:.2rem 0 .95rem;
+      text-wrap:balance;
+      word-break:keep-all;
+      overflow-wrap:normal;
+    }
+    .title-line{display:block;white-space:nowrap}
+    .hero h1 .title-line + .title-line,
+    .welcome-title .title-line + .title-line{
+      margin-top:.04em;
+    }
+    :lang(ja) .hero-tag,
+    :lang(ja) .welcome-sub,
+    :lang(ja) #storeInfoTitle,
+    :lang(ja) .menu-link,
+    :lang(ja) #navConcept,
+    :lang(ja) #navFeatures,
+    :lang(ja) #navMenu,
+    :lang(ja) #navStaff,
+    :lang(ja) #navStore {
+      font-family:'Noto Serif JP',serif !important;
+      letter-spacing:.02em;
+      font-weight:500;
+    }
+    .panel{border:1px solid rgba(255,255,255,.09);border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(10,10,10,.9));padding:1rem}
+
+    .concept-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:center}
+    .concept-photo{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.12)}
+
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem}
+    .feature-item,.menu-item,.staff-card{border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:.9rem;background:rgba(255,255,255,.03)}
+    .feature-item{text-align:center}
+    .feature-icon{width:100px;height:100px;object-fit:contain;display:block;margin:.35rem auto 0}
+    .menu-item h3,.staff-card h3{margin:0;color:#fff5d6}
+    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:.5rem 0}
+    .menu-desc,.staff-role,.staff-desc{margin:.45rem 0 0;color:rgba(245,240,226,.82);font-size:.92rem}
+    .staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
+    .avatar{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#241a0d;font-family:'Cinzel',serif;font-weight:700;margin-bottom:.6rem}
+
+    .store-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .map{width:100%;height:320px;border:1px solid rgba(255,255,255,.1);border-radius:12px}
+
+    .cta{width:min(920px,calc(100% - 1.4rem));margin:0 auto 1.8rem;padding:1.2rem;border-radius:18px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(215,178,74,.2),rgba(28,23,13,.76));text-align:center}
+    .footer{width:min(1160px,calc(100% - 1.4rem));margin:0 auto 2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;color:rgba(245,240,226,.72);font-size:.82rem}
+
+    .reveal{opacity:1;transform:none}
+    .will-reveal{opacity:0;transform:translateY(16px);transition:opacity .62s ease,transform .62s ease}
+    .will-reveal.on{opacity:1;transform:none}
+
+    .feature-item,.menu-item,.staff-card{opacity:1;transform:none}
+    .feature-item.fx-hidden{opacity:0;transform:translateY(14px)}
+    .feature-item.fx-show{opacity:1;transform:none;transition:opacity .82s ease,transform .82s cubic-bezier(.22,.9,.32,1)}
+    .menu-item.fx-hidden{opacity:0;transform:translateY(16px)}
+    .menu-item.fx-show{opacity:1;transform:none;transition:opacity .72s ease,transform .72s cubic-bezier(.22,.9,.32,1)}
+    @media (max-width:991.98px){
+      .staff-card.fx-hidden-left{opacity:0;transform:translateX(-34px)}
+      .staff-card.fx-hidden-right{opacity:0;transform:translateX(34px)}
+      .staff-card.fx-show{opacity:1;transform:none;transition:opacity .96s ease,transform .96s cubic-bezier(.22,.9,.32,1)}
+    }
+
+    @media (max-width:991.98px){
+      .hero h1,
+      .welcome-title{
+        font-size:clamp(1.68rem,7.5vw,2.2rem);
+      }
+      .hero h1,
+      .welcome-title{
+        max-width:none;
+        margin-left:auto;
+        margin-right:auto;
+      }
+      #w-title .title-line:last-child{
+        transform:translate(-0.03em,0.02em);
+      }
+      .concept-grid,.store-grid{grid-template-columns:1fr}
+      .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .staff-grid{grid-template-columns:1fr}
+      .welcome-inner{transform:translate3d(-12px,-48px,0)}
+      .menu-toggle{display:inline-block}
+      .top-nav-right{
+        position:absolute;
+        top:calc(100% + 8px);
+        right:0;
+        width:max-content;
+        max-width:calc(100vw - 0.8rem);
+        display:grid;
+        align-items:stretch;
+        gap:0.5rem;
+        border-radius:14px;
+        border:1px solid var(--line);
+        background:linear-gradient(165deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.92));
+        box-shadow:0 16px 36px rgba(0,0,0,.42);
+        padding:0.6rem;
+        z-index:210;
+        opacity:0;
+        transform:translateY(-10px);
+        visibility:hidden;
+        pointer-events:none;
+        transition:opacity 0.24s ease, transform 0.28s ease, visibility 0s linear 0.28s;
+      }
+      .top-nav.is-mobile-open .top-nav-right{
+        opacity:1;
+        transform:translateY(0);
+        visibility:visible;
+        pointer-events:auto;
+        transition:opacity 0.24s ease, transform 0.28s ease, visibility 0s;
+      }
+      .top-nav.is-mobile-open .menu-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+      .top-nav.is-mobile-open .menu-toggle span:nth-child(2){opacity:0}
+      .top-nav.is-mobile-open .menu-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+      .top-nav-right .menu-link,
+      .top-nav-right .reserve-link{
+        width:auto;
+        min-width:240px;
+        display:block;
+        text-align:left;
+        padding:.62rem .95rem;
+        border-radius:999px;
+        font-size:.88rem;
+      }
+    }
+    @media (max-width:575.98px){ .lang-actions{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <div id="welcome" class="welcome" aria-hidden="true">
+    <div class="welcome-loading" id="welcomeLoading">
+      <span class="welcome-loading-mark"></span>
+      <p class="welcome-loading-text">Loading</p>
+    </div>
+    <div class="welcome-inner">
+      <p id="w-sub" class="welcome-sub">高級エステサロン</p>
+      <h1 id="w-title" class="welcome-title"><span class="title-line">Beauty Salon</span><span class="title-line">MISEMARU CLOUD</span></h1>
+      <p id="w-line" class="welcome-line">あなたの美しさを、静かに引き出す</p>
+    </div>
+  </div>
+
+  <div id="langGate" class="lang-gate" role="dialog" aria-modal="true">
+    <div class="lang-card">
+      <p style="margin:0;color:#e6c772;letter-spacing:.14em">WELCOME</p>
+      <h2 class="lang-title">Language / 言語</h2>
+      <p id="lang-copy" style="margin:.2rem 0 .9rem;color:rgba(245,240,226,.8)">Please select your language</p>
+      <div class="lang-actions">
+        <button class="lang-btn" data-lang="ja">日本語</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="zh-TW">繁體中文</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+        <button class="lang-btn" data-lang="ko">한국어</button>
+      </div>
+    </div>
+  </div>
+
+  <nav id="topNav" class="top-nav">
+    <div class="top-nav-inner">
+      <div class="brand" id="navBrand">Beauty Salon MISEMARU CLOUD</div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div id="menuPanel" class="top-nav-right">
+        <button class="menu-link" type="button" data-scroll="concept" id="navConcept">コンセプト</button>
+        <button class="menu-link" type="button" data-scroll="features" id="navFeatures">特徴</button>
+        <button class="menu-link" type="button" data-scroll="menu" id="navMenu">メニュー</button>
+        <button class="menu-link" type="button" data-scroll="staff" id="navStaff">スタッフ</button>
+        <button class="menu-link" type="button" data-scroll="store" id="navStore">店舗情報</button>
+        <a class="reserve-link" id="navReserve" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero reveal" id="hero">
+    <div class="hero-bg is-visible" id="heroBgA" aria-hidden="true"></div>
+    <div class="hero-bg" id="heroBgB" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p id="heroTag" class="hero-tag">高級エステサロン</p>
+      <h1 id="heroTitle"><span class="title-line">Beauty Salon</span><span class="title-line">MISEMARU CLOUD</span></h1>
+      <p id="heroLead" class="hero-lead">あなたの美しさを、静かに引き出す</p>
+      <a id="heroReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+    </div>
+  </header>
+
+  <section id="concept" class="section reveal">
+    <div class="panel concept-grid">
+      <div>
+        <h2 class="title" id="conceptTitle">Salon Concept</h2>
+        <p id="conceptBody">静寂と上質に包まれた空間で、肌と心に寄り添うラグジュアリーエステをご提供します。</p>
+        <ul style="margin:.9rem 0 0;padding-left:1.1rem">
+          <li id="conceptItem1">完全個室でのプライベート施術</li>
+          <li id="conceptItem2">最新美容機器を導入したフェイシャルケア</li>
+          <li id="conceptItem3">ホテルスパ品質の空間設計</li>
+          <li id="conceptItem4">ブライダル対応の集中プログラム</li>
+        </ul>
+      </div>
+      <img class="concept-photo" src="https://images.unsplash.com/photo-1503236823255-94609f598e71?auto=format&fit=crop&w=1400&q=80" alt="サロン個室" loading="lazy" decoding="async" />
+    </div>
+  </section>
+
+  <section id="features" class="section reveal">
+    <h2 class="title" id="featuresTitle">Our Strengths</h2>
+    <div class="grid4">
+      <article class="feature-item"><p id="f1">✦ 完全予約制</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_reserve.png" alt="完全予約制" /></article>
+      <article class="feature-item"><p id="f2">✦ 女性専用</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_only_lady.png" alt="女性専用" /></article>
+      <article class="feature-item"><p id="f3">✦ ホテルスパ品質</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_quality.png" alt="ホテルスパ品質" /></article>
+      <article class="feature-item"><p id="f4">✦ 夜21時まで営業</p><img class="feature-icon" src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/icon_business_hours.png" alt="営業時間" /></article>
+    </div>
+  </section>
+
+  <section id="menu" class="section reveal">
+    <h2 class="title" id="menuTitle">Treatment Menu</h2>
+    <div class="grid4">
+      <article class="menu-item"><h3>Premium Facial</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
+      <article class="menu-item"><h3>Body Treatment</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
+      <article class="menu-item"><h3>Bridal Course</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
+      <article class="menu-item"><h3>Relaxation Therapy</h3><img src="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
+    </div>
+  </section>
+
+  <section id="staff" class="section reveal">
+    <h2 class="title" id="staffTitle">Our Specialists</h2>
+    <div class="staff-grid">
+      <article class="staff-card"><div class="avatar">AY</div><h3 id="s1Name">Ayaka Yamamoto</h3><p id="s1Role" class="staff-role">Chief Esthetician</p><p id="s1Desc" class="staff-desc">フェイシャル専門。肌状態に合わせた繊細なケアで透明感を引き出します。お客様一人ひとりの肌と丁寧に向き合い、安心して任せていただける施術を心がけています。</p></article>
+      <article class="staff-card"><div class="avatar">MN</div><h3 id="s2Name">Mio Nakahara</h3><p id="s2Role" class="staff-role">Body Therapist</p><p id="s2Desc" class="staff-desc">ボディラインと巡りを整える施術を担当。深いリラクゼーションへ導きます。日常の疲れを忘れられるような、静かで心地よい時間を大切にしています。</p></article>
+      <article class="staff-card"><div class="avatar">RK</div><h3 id="s3Name">Rina Kudo</h3><p id="s3Role" class="staff-role">Bridal Specialist</p><p id="s3Desc" class="staff-desc">ブライダルケア専任。挙式当日に向けて最適なプランをご提案します。大切な一日を最高のコンディションで迎えられるよう、細やかなサポートを行っています。</p></article>
+    </div>
+  </section>
+
+  <section id="store" class="section reveal">
+    <h2 class="title" id="storeTitle">Salon Information</h2>
+    <div class="store-grid">
+      <div class="panel">
+        <h3 id="storeInfoTitle" style="margin:0 0 .6rem">店舗情報</h3>
+        <ul style="margin:0;padding-left:1.1rem">
+          <li id="storeAddress">住所：〒100-0001 東京都千代田区丸の内1-2-3</li>
+          <li id="storeHours">営業時間：10:00 - 21:00（最終受付 19:30）</li>
+          <li id="storeAccess">アクセス：JR東京駅 徒歩5分 / 地下鉄大手町駅 徒歩3分</li>
+          <li id="storeTel">TEL：03-1234-5678</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3 id="mapTitle" style="margin:0 0 .6rem">Google Map</h3>
+        <iframe class="map" title="map" src="https://www.google.com/maps?q=Tokyo%20Station&output=embed" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <h2 id="ctaTitle" style="margin:0 0 .45rem;font-family:'Cinzel',serif">ご予約はこちら</h2>
+    <p id="ctaBody" style="margin:0 0 .9rem;color:rgba(245,240,226,.84)">初回カウンセリングからご予約まで、オンラインでスムーズにご案内します。</p>
+    <a id="ctaReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+  </section>
+
+  <footer class="footer">
+    <p id="footerBrand" style="margin:.2rem 0">Beauty Salon MISEMARU CLOUD | Luxury Esthetic & Bridal Care</p>
+    <p id="footerAddress" style="margin:.2rem 0">〒100-0001 東京都千代田区丸の内1-2-3 / TEL 03-1234-5678</p>
+    <p id="footerCredit" style="margin:.6rem 0 0">Produced by Nakayama Works</p>
+  </footer>
+
+  <script src="./i18n-demo.js"></script>
+  <script>
+    const map = {
+      navConcept:'nav_concept',navFeatures:'nav_features',navMenu:'nav_menu',navStaff:'nav_staff',navStore:'nav_store',navReserve:'reserve',heroReserve:'reserve',ctaReserve:'reserve',
+      heroTag:'hero_tag',heroLead:'hero_lead',conceptTitle:'concept_title',conceptBody:'concept_body',conceptItem1:'concept_item_1',conceptItem2:'concept_item_2',conceptItem3:'concept_item_3',conceptItem4:'concept_item_4',
+      featuresTitle:'features_title',f1:'f1',f2:'f2',f3:'f3',f4:'f4',menuTitle:'menu_title',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
+      staffTitle:'staff_title',s1Role:'s1_role',s1Desc:'s1_desc',s2Role:'s2_role',s2Desc:'s2_desc',s3Role:'s3_role',s3Desc:'s3_desc',
+      storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
+      ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
+    };
+
+    function applyLang(lang) {
+      const dict = window.DEMO_I18N || {};
+      const t = dict[lang] || dict.ja || {};
+      document.documentElement.lang = lang;
+      Object.entries(map).forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el || !t[key]) return;
+        el.textContent = t[key];
+      });
+    }
+
+    document.querySelectorAll('[data-scroll]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.getElementById(btn.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (window.innerWidth <= 991) {
+          topNav.classList.remove('is-mobile-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    const revealNodes = Array.from(document.querySelectorAll('.reveal'));
+    revealNodes.forEach((n) => n.classList.add('will-reveal'));
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('on');
+        obs.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.16 });
+    revealNodes.forEach((n) => io.observe(n));
+
+    const topNav = document.getElementById('topNav');
+    const menuToggle = document.getElementById('menuToggle');
+    menuToggle.addEventListener('click', () => {
+      const open = topNav.classList.toggle('is-mobile-open');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 991) return;
+      if (!topNav.classList.contains('is-mobile-open')) return;
+      if (topNav.contains(e.target)) return;
+      topNav.classList.remove('is-mobile-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+
+    // Feature cards: auto sequence 1->4 when section enters viewport.
+    (function featureFx() {
+      const section = document.getElementById('features');
+      const cards = Array.from(section?.querySelectorAll('.feature-item') || []);
+      if (!section || !cards.length) return;
+      cards.forEach((c) => c.classList.add('fx-hidden'));
+      const fx = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          cards.forEach((card, i) => {
+            window.setTimeout(() => {
+              card.classList.remove('fx-hidden');
+              card.classList.add('fx-show');
+            }, i * 220);
+          });
+          obs.unobserve(section);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.3 });
+      fx.observe(section);
+    })();
+
+    // Menu cards: reveal per card on individual scroll position.
+    (function menuFx() {
+      const cards = Array.from(document.querySelectorAll('#menu .menu-item'));
+      if (!cards.length) return;
+      cards.forEach((c) => c.classList.add('fx-hidden'));
+      let serialDelay = 0;
+      const fx = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const target = entry.target;
+          window.setTimeout(() => {
+            target.classList.remove('fx-hidden');
+            target.classList.add('fx-show');
+          }, serialDelay);
+          serialDelay += 120;
+          obs.unobserve(target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.48 });
+      cards.forEach((c) => fx.observe(c));
+    })();
+
+    // Staff cards: mobile left/right/left slide in.
+    (function staffFx() {
+      const cards = Array.from(document.querySelectorAll('#staff .staff-card'));
+      if (!cards.length || window.innerWidth > 991) return;
+      cards.forEach((card, i) => {
+        card.classList.add(i % 2 === 0 ? 'fx-hidden-left' : 'fx-hidden-right');
+      });
+      const fx = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.remove('fx-hidden-left', 'fx-hidden-right');
+          entry.target.classList.add('fx-show');
+          obs.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.55 });
+      cards.forEach((c) => fx.observe(c));
+    })();
+
+    (function heroBgFx() {
+      const layerA = document.getElementById('heroBgA');
+      const layerB = document.getElementById('heroBgB');
+      if (!layerA || !layerB) return;
+      const sources = [
+        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/premium-facial.jpg',
+        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/body-treatment.jpg',
+        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/bridal-course.jpg',
+        'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/images/service-optimized/relaxation-therapy.jpg'
+      ];
+      const paint = (el, url) => {
+        el.style.backgroundImage = "linear-gradient(120deg,rgba(7,7,7,.74),rgba(7,7,7,.55)),url('" + url + "')";
+      };
+      sources.forEach((src) => { const img = new Image(); img.src = src; });
+      let currentLayer = layerA;
+      let nextLayer = layerB;
+      let index = 0;
+      paint(currentLayer, sources[index]);
+      currentLayer.classList.add('is-visible');
+      window.setInterval(() => {
+        index = (index + 1) % sources.length;
+        paint(nextLayer, sources[index]);
+        nextLayer.classList.add('is-visible');
+        currentLayer.classList.remove('is-visible');
+        const prev = currentLayer;
+        currentLayer = nextLayer;
+        nextLayer = prev;
+      }, 4000);
+    })();
+
+    (function boot() {
+      const welcome = document.getElementById('welcome');
+      const gate = document.getElementById('langGate');
+      const saved = localStorage.getItem('demo_lang');
+      const lang = saved || 'ja';
+      const url = new URL(location.href);
+      const skipByQuery = url.searchParams.get('skipWelcome') === '1';
+      const skipBySession = sessionStorage.getItem('skip_demo_welcome') === '1';
+      const shouldSkipWelcome = skipByQuery || skipBySession;
+      if (skipBySession) sessionStorage.removeItem('skip_demo_welcome');
+      applyLang(lang);
+
+      // Future transition hook: call this before navigating back to skip welcome once.
+      window.skipDemoWelcomeOnce = function () {
+        try { sessionStorage.setItem('skip_demo_welcome', '1'); } catch (_) {}
+      };
+
+      const showLangGate = () => {
+        gate.classList.add('show');
+        document.body.classList.add('welcome-lock');
+      };
+
+      const hideLangGate = () => {
+        gate.classList.remove('show');
+        document.body.classList.remove('welcome-lock');
+      };
+
+      const waitReadyForWelcome = async () => {
+        const loadingShownAt = performance.now();
+        const fontReady = (document.fonts && document.fonts.ready)
+          ? Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 2000))])
+          : Promise.resolve();
+        await fontReady;
+        const elapsed = performance.now() - loadingShownAt;
+        const remain = Math.max(0, 1000 - elapsed);
+        if (remain > 0) await new Promise((resolve) => setTimeout(resolve, remain));
+        document.documentElement.classList.add('fonts-ready');
+      };
+
+      let welcomeStarted = false;
+      const playWelcome = async () => {
+        if (welcomeStarted || shouldSkipWelcome) return;
+        welcomeStarted = true;
+        await waitReadyForWelcome();
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        welcome.classList.remove('hidden');
+        document.body.classList.add('welcome-lock');
+        requestAnimationFrame(() => welcome.classList.add('play'));
+        setTimeout(() => {
+          welcome.classList.add('hidden');
+          document.body.classList.remove('welcome-lock');
+        }, 2720);
+      };
+
+      if (shouldSkipWelcome) {
+        document.documentElement.classList.add('fonts-ready');
+        welcome.classList.add('hidden');
+        if (!saved) showLangGate();
+      } else if (saved) {
+        playWelcome();
+      } else {
+        welcome.classList.add('hidden');
+        showLangGate();
+      }
+
+      gate.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          gate.querySelectorAll('.lang-btn').forEach((b) => {
+            b.disabled = true;
+            b.classList.toggle('is-selecting', b === btn);
+          });
+          const next = btn.dataset.lang;
+          localStorage.setItem('demo_lang', next);
+          applyLang(next);
+          if (!shouldSkipWelcome) {
+            await playWelcome();
+          }
+          hideLangGate();
+        });
+      });
+    })();
+
+    // Hard fallback: never leave the page blocked by welcome overlay.
+    window.setTimeout(() => {
+      document.getElementById('welcome')?.classList.add('hidden');
+      document.body.classList.remove('welcome-lock');
+    }, 12000);
+  </script>
+</body>
+</html>
