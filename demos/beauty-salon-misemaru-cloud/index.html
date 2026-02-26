@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); --welcome-mobile-shift:0px; }
+    :root { --bg:#070707; --text:#f4efdf; --gold:#d7b24a; --line:rgba(215,178,74,.28); }
     *{box-sizing:border-box}
     html,body{width:100%;max-width:100%;overflow-x:hidden}
     body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8;-webkit-overflow-scrolling:touch}
@@ -19,7 +19,7 @@
     .welcome{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;min-height:92vh;padding:5rem 1.2rem 3rem;background:radial-gradient(circle at 20% 20%, rgba(215,178,74,.22), transparent 40%),#070707;transition:opacity .5s ease}
     .welcome.play{animation:welcomeHide .72s ease 2.1s forwards}
     .welcome.is-out{opacity:0;pointer-events:none}
-    .welcome-inner{width:100%;max-width:760px;margin:0 auto;text-align:center;transform:translate3d(0,-36px,0)}
+    .welcome-inner{width:100%;max-width:760px;margin:0 auto;text-align:center;transform:translate3d(0,-86px,0)}
     .welcome-loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:12px;transition:opacity .3s ease}
     .welcome-loading-mark{width:min(200px,42vw);height:3px;border-radius:999px;background:rgba(215,178,74,.22);overflow:hidden}
     .welcome-loading-mark::after{content:"";display:block;width:45%;height:100%;border-radius:inherit;background:linear-gradient(90deg,rgba(215,178,74,.55) 0%,rgba(247,224,138,.88) 100%);animation:loaderSlide 1.18s ease-in-out infinite}
@@ -49,7 +49,8 @@
     .lang-btn:active{transform:translateY(0) scale(.985)}
     .lang-btn.is-selecting{background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;border-color:rgba(255,236,186,.92);box-shadow:0 10px 22px rgba(0,0,0,.28)}
 
-    .top-nav{position:sticky;top:0;z-index:200;background:linear-gradient(180deg,rgba(7,7,7,.86),rgba(7,7,7,.64));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+    .top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(7,7,7,.86),rgba(7,7,7,.64));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);transform:translateY(0);opacity:1;transition:transform .34s cubic-bezier(.22,.78,.22,1),opacity .24s ease}
+    .top-nav.is-hidden{transform:translateY(calc(-100% - 10px));opacity:.01;pointer-events:none}
     .top-nav-inner{width:min(1160px,calc(100% - 1.2rem));margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.8rem;padding:.45rem 0;position:relative}
     .brand{font-family:'Cinzel',serif;color:#fff4d2;letter-spacing:.08em;font-size:clamp(.78rem,1.7vw,1.03rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu-toggle{display:none;width:40px;height:36px;border-radius:10px;border:1px solid rgba(255,242,207,.4);background:rgba(255,255,255,.06);color:#f2ddab}
@@ -70,8 +71,10 @@
       overflow:hidden;
     }
     .hero-cta{
-      margin-top:1.5rem;display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.4rem;border-radius:999px;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;text-decoration:none;font-weight:700;min-width:260px
+      margin-top:1.5rem;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:.44rem;padding:1rem 1.55rem .92rem;border-radius:999px;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;text-decoration:none;font-weight:700;min-width:300px
     }
+    .hero-cta-main{font-weight:700;line-height:1.1;font-size:20px}
+    .hero-cta-sub{font-size:.92rem;line-height:1.12;opacity:.85;letter-spacing:.03em}
     .hero-cta::before,.reserve-link::before{
       content:"";
       position:absolute;
@@ -129,6 +132,8 @@
     :lang(ja) .welcome-sub,
     :lang(ja) #storeInfoTitle,
     :lang(ja) #salonGallery .menu-item h3,
+    :lang(ja) #menu .menu-item h3,
+    :lang(ja) #staff .staff-card h3,
     :lang(ja) .menu-link,
     :lang(ja) #navConcept,
     :lang(ja) #navFeatures,
@@ -150,29 +155,70 @@
     .feature-icon{width:100px;height:100px;object-fit:contain;display:block;margin:.35rem auto 0}
     .menu-item h3,.staff-card h3{margin:0;color:#fff5d6}
     .image-zoom-wrap{position:relative;margin:.5rem 0}
-    .zoom-hint{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:999px;display:grid;place-items:center;background:rgba(7,7,7,.6);border:1px solid rgba(255,241,204,.5);color:#f3dca8;pointer-events:none;backdrop-filter:blur(2px)}
-    .zoom-hint svg{width:16px;height:16px;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:0;cursor:zoom-in;transition:transform .24s ease,filter .24s ease}
-    .menu-item img:hover,.menu-item img:focus-visible{transform:translateY(-1px);filter:brightness(1.05)}
+    .menu-item img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin:0}
+    #menu .menu-item{display:flex;flex-direction:column;height:100%}
+    #menu .menu-desc{margin-bottom:.2rem}
+    #salonGallery .menu-item img{cursor:zoom-in;transition:transform .24s ease,filter .24s ease}
+    #salonGallery .menu-item img:hover,#salonGallery .menu-item img:focus-visible{transform:translateY(-1px);filter:brightness(1.05)}
+    .salon-zoom-hint{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:999px;display:grid;place-items:center;background:rgba(7,7,7,.6);border:1px solid rgba(255,241,204,.5);color:#f3dca8;pointer-events:none;backdrop-filter:blur(2px)}
+    .salon-zoom-hint svg{width:16px;height:16px;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .menu-desc,.staff-role,.staff-desc{margin:.45rem 0 0;color:rgba(245,240,226,.82);font-size:.92rem}
+    .menu-price{margin:.55rem 0 0;color:#f0d27e;font-family:'Cinzel','Noto Sans JP',serif;font-weight:600;letter-spacing:.04em}
+    #menu .menu-price{margin-top:auto}
+    .menu-detail-btn{margin-top:.72rem;width:100%;border:1px solid rgba(255,241,204,.45);background:rgba(255,255,255,.06);color:#f3ddad;border-radius:999px;padding:.48rem .85rem;font-size:.84rem;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .menu-detail-btn:hover,.menu-detail-btn:focus-visible{transform:translateY(-1px);background:rgba(255,255,255,.12);border-color:rgba(255,241,204,.8)}
     .staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
     .avatar{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#241a0d;font-family:'Cinzel',serif;font-weight:700;margin-bottom:.6rem}
 
-    .store-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .map{width:100%;height:320px;border:1px solid rgba(255,255,255,.1);border-radius:12px}
+    .store-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:stretch}
+    .store-grid .panel{display:flex;flex-direction:column}
+    .map{width:100%;height:auto;flex:1;min-height:320px;border:1px solid rgba(255,255,255,.1);border-radius:12px}
+    .store-photo{width:100%;margin-top:.8rem;aspect-ratio:16/10;object-fit:cover;object-position:center 70%;border-radius:12px;border:1px solid rgba(255,255,255,.12);display:block}
 
     .cta{width:min(920px,calc(100% - 1.4rem));margin:0 auto 1.8rem;padding:1.2rem;border-radius:18px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(215,178,74,.2),rgba(28,23,13,.76));text-align:center}
     .footer{width:min(1160px,calc(100% - 1.4rem));margin:0 auto 2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;color:rgba(245,240,226,.72);font-size:.82rem}
+    .footer-sns{display:flex;justify-content:center;gap:.55rem;margin:.5rem 0 .3rem}
+    .sns-link{width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,241,204,.42);background:rgba(255,255,255,.04);color:#f1ddad;display:grid;place-items:center;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .sns-link:hover,.sns-link:focus-visible{transform:translateY(-1px);background:rgba(255,255,255,.11);border-color:rgba(255,241,204,.75)}
+    .sns-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    body.modal-lock{overflow:hidden}
     .image-lightbox{position:fixed;inset:0;z-index:460;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.82);backdrop-filter:blur(6px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
     .image-lightbox.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
     .image-lightbox-frame{position:relative}
     .image-lightbox-img{width:min(980px,84vw);max-height:78vh;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 56px rgba(0,0,0,.45);display:block;object-fit:contain}
     .image-lightbox-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
     .image-lightbox-close:hover,.image-lightbox-close:focus-visible{background:rgba(215,178,74,.2)}
-    body.lightbox-lock{overflow:hidden}
+    .image-lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,241,204,.45);background:rgba(12,12,12,.72);color:#f6dfab;font-size:1.35rem;line-height:1;display:grid;place-items:center;cursor:pointer}
+    .image-lightbox-nav:hover,.image-lightbox-nav:focus-visible{background:rgba(215,178,74,.18)}
+    .image-lightbox-nav.prev{left:10px}
+    .image-lightbox-nav.next{right:10px}
+    .treatment-modal{position:fixed;inset:0;z-index:470;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.78);backdrop-filter:blur(7px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+    .treatment-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
+    .treatment-modal-card{position:relative;width:min(760px,94vw);max-height:88vh;overflow:auto;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(165deg,rgba(20,20,20,.96),rgba(10,10,10,.95));box-shadow:0 24px 54px rgba(0,0,0,.45);padding:1rem 1rem 1.15rem}
+    .treatment-modal-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
+    .treatment-modal-close:hover,.treatment-modal-close:focus-visible{background:rgba(215,178,74,.2)}
+    .treatment-modal-kicker{margin:0;color:#d8b556;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+    .treatment-modal-title{margin:.28rem 0 .2rem;color:#fff2ce;font-family:'Noto Serif JP','Cinzel',serif;font-size:1.35rem;line-height:1.35}
+    .treatment-modal-cat{margin:0 0 .75rem;color:rgba(245,240,226,.82);font-family:'Cinzel',serif;letter-spacing:.1em;font-size:.78rem}
+    .treatment-modal-layout{display:grid;grid-template-columns:minmax(310px,1.14fr) minmax(0,.86fr);gap:.65rem;align-items:start}
+    .treatment-modal-media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.14)}
+    .treatment-modal-intro{margin:.55rem 0 0;color:rgba(245,240,226,.88);font-size:.92rem;line-height:1.82}
+    .treatment-modal-body{color:rgba(245,240,226,.88);font-size:.93rem;line-height:1.9}
+    .treatment-modal-body h4{margin:.75rem 0 .2rem;color:#f4d88e;font-family:'Noto Serif JP','Cinzel',serif;font-size:1rem}
+    .treatment-modal-body h4:first-child{margin-top:0}
+    @media (min-width:992px){
+      .treatment-modal-body{padding-left:.95rem}
+    }
+    .treatment-modal-body ul{margin:.1rem 0 .4rem;padding-left:1.05rem}
     @media (max-width:991.98px){
       .image-lightbox-img{width:min(700px,90vw);max-height:68vh}
       .image-lightbox-close{top:8px;right:8px;width:34px;height:34px}
+      .image-lightbox-nav{width:38px;height:38px}
+      .image-lightbox-nav.prev{left:8px}
+      .image-lightbox-nav.next{right:8px}
+      .treatment-modal-card{padding:.95rem .82rem 1rem}
+      .treatment-modal-title{font-size:1.18rem;padding-right:2.1rem}
+      .treatment-modal-layout{grid-template-columns:1fr;gap:.7rem}
     }
 
     .reveal{opacity:1;transform:none}
@@ -202,14 +248,11 @@
         margin-left:auto;
         margin-right:auto;
       }
-      #w-title .title-line:last-child{
-        transform:translate(0,0.02em);
-      }
       .concept-grid,.store-grid{grid-template-columns:1fr}
       #salonGallery.section{width:min(1160px,calc(100% - .9rem))}
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .staff-grid{grid-template-columns:1fr}
-      .welcome-inner{transform:translate3d(0,calc(-44px + var(--welcome-mobile-shift)),0)}
+      .welcome-inner{transform:translate3d(0,-84px,0)}
       .menu-toggle{display:inline-block}
       .top-nav-right{
         position:absolute;
@@ -308,7 +351,7 @@
       <p id="heroTag" class="hero-tag">高級エステサロン</p>
       <h1 id="heroTitle"><span class="title-line">Beauty Salon</span><span class="title-line">MISEMARU CLOUD</span></h1>
       <p id="heroLead" class="hero-lead">あなたの美しさを、静かに引き出す</p>
-      <a id="heroReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+      <a id="heroReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener"><span id="heroReserveLabel" class="hero-cta-main">予約する</span><span id="heroReserveSub" class="hero-cta-sub">24時間オンライン受付</span></a>
     </div>
   </header>
 
@@ -344,22 +387,22 @@
     <div class="grid4">
       <article class="menu-item">
         <h3 id="galleryCardTitle1">施術ベッド①</h3>
-        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-1.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-1.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="salon-zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap1" class="menu-desc">静かな個室で、深くリラックスできる施術空間です。</p>
       </article>
       <article class="menu-item">
         <h3 id="galleryCardTitle2">Waiting Lounge</h3>
-        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/waiting-lounge.webp" alt="待合ラウンジ" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/waiting-lounge.webp" alt="待合ラウンジ" loading="lazy" decoding="async" /><span class="salon-zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap2" class="menu-desc">ご来店から施術前まで、上質に過ごせる寛ぎの空間です。</p>
       </article>
       <article class="menu-item">
         <h3 id="galleryCardTitle3">Powder Room</h3>
-        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/powder-room.webp" alt="パウダールーム" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/powder-room.webp" alt="パウダールーム" loading="lazy" decoding="async" /><span class="salon-zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap3" class="menu-desc">施術後のお直しまで美しく整えられる専用スペースです。</p>
       </article>
       <article class="menu-item">
         <h3 id="galleryCardTitle4">施術ベッド②</h3>
-        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-2.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
+        <div class="image-zoom-wrap"><img src="./images/salon-concept-optimized/treatment-bed-2.webp" alt="施術ベッド" loading="lazy" decoding="async" /><span class="salon-zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div>
         <p id="galleryCap4" class="menu-desc">ブライダルケアにも対応する落ち着いた完全個室です。</p>
       </article>
     </div>
@@ -368,10 +411,10 @@
   <section id="menu" class="section reveal">
     <h2 class="title" id="menuTitle">Treatment Menu</h2>
     <div class="grid4">
-      <article class="menu-item"><h3 id="menuItemTitle1">Premium Facial</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p></article>
-      <article class="menu-item"><h3 id="menuItemTitle2">Body Treatment</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/body-treatment.jpg" alt="Body Treatment" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p></article>
-      <article class="menu-item"><h3 id="menuItemTitle3">Bridal Course</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/bridal-course.jpg" alt="Bridal Course" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p></article>
-      <article class="menu-item"><h3 id="menuItemTitle4">Relaxation Therapy</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="M10 7v6"></path><path d="M7 10h6"></path><path d="M14.5 14.5L20 20"></path></svg></span></div><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p></article>
+      <article class="menu-item"><h3 id="menuItemTitle1">プレミアムフェイシャル</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" /></div><p id="m1" class="menu-desc">肌分析に基づくオーダーメイドフェイシャル。透明感とハリを引き出します。</p><p id="menuPrice1" class="menu-price">¥14,000~</p><button id="menuDetailBtn1" class="menu-detail-btn" type="button" data-treatment="premium-facial">詳細を見る</button></article>
+      <article class="menu-item"><h3 id="menuItemTitle2">ボディトリートメント</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/body-treatment.jpg" alt="Body Treatment" /></div><p id="m2" class="menu-desc">深部の疲れを解きほぐす全身トリートメント。めぐりを整え軽やかな身体へ。</p><p id="menuPrice2" class="menu-price">¥16,000~</p><button id="menuDetailBtn2" class="menu-detail-btn" type="button" data-treatment="body-treatment">詳細を見る</button></article>
+      <article class="menu-item"><h3 id="menuItemTitle3">ブライダルコース</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/bridal-course.jpg" alt="Bridal Course" /></div><p id="m3" class="menu-desc">挙式に向けて肌・ボディラインを整える短期集中プログラムです。</p><p id="menuPrice3" class="menu-price">¥28,000~</p><button id="menuDetailBtn3" class="menu-detail-btn" type="button" data-treatment="bridal-course">詳細を見る</button></article>
+      <article class="menu-item"><h3 id="menuItemTitle4">リラクゼーションセラピー</h3><div class="image-zoom-wrap"><img src="./images/service-optimized/relaxation-therapy.jpg" alt="Relaxation Therapy" /></div><p id="m4" class="menu-desc">アロマと手技を組み合わせた癒しのコース。心身の緊張を静かにオフします。</p><p id="menuPrice4" class="menu-price">¥12,000~</p><button id="menuDetailBtn4" class="menu-detail-btn" type="button" data-treatment="relaxation-therapy">詳細を見る</button></article>
     </div>
   </section>
 
@@ -395,6 +438,7 @@
           <li id="storeAccess">アクセス：JR東京駅 徒歩5分 / 地下鉄大手町駅 徒歩3分</li>
           <li id="storeTel">TEL：03-1234-5678</li>
         </ul>
+        <img class="store-photo" src="./images/information/salon-entrance.webp" alt="サロン入口" loading="lazy" decoding="async" />
       </div>
       <div class="panel">
         <h3 id="mapTitle" style="margin:0 0 .6rem">Google Map</h3>
@@ -405,18 +449,42 @@
 
   <section class="cta reveal">
     <h2 id="ctaTitle" style="margin:0 0 .45rem;font-family:'Cinzel',serif">ご予約はこちら</h2>
-    <p id="ctaBody" style="margin:0 0 .9rem;color:rgba(245,240,226,.84)">初回カウンセリングからご予約まで、オンラインでスムーズにご案内します。</p>
-    <a id="ctaReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+    <p id="ctaBody" style="margin:0 0 .9rem;color:rgba(245,240,226,.84);white-space:pre-line">施術のご予約は、
+専用オンライン予約システムより
+24時間受け付けております。</p>
+    <a id="ctaReserve" class="hero-cta" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener"><span id="ctaReserveLabel" class="hero-cta-main">予約する</span><span id="ctaReserveSub" class="hero-cta-sub">24時間オンライン受付</span></a>
   </section>
 
   <footer class="footer">
     <p id="footerBrand" style="margin:.2rem 0">Beauty Salon MISEMARU CLOUD | Luxury Esthetic & Bridal Care</p>
+    <div class="footer-sns" aria-label="SNS links">
+      <a class="sns-link" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="17.3" cy="6.7" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+      <a class="sns-link" href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M5 5l14 14"></path><path d="M19 5L5 19"></path></svg></a>
+      <a class="sns-link" href="#" aria-label="LINE"><svg viewBox="0 0 24 24"><path d="M5 9c0-3 3-5 7-5s7 2 7 5-3 5-7 5h-1.5L8 17v-3C6.2 13.5 5 11.4 5 9z"></path></svg></a>
+    </div>
     <p id="footerAddress" style="margin:.2rem 0">〒100-0001 東京都千代田区丸の内1-2-3 / TEL 03-1234-5678</p>
     <p id="footerCredit" style="margin:.6rem 0 0">Produced by Nakayama Works</p>
   </footer>
 
+  <div id="treatmentModal" class="treatment-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="treatment-modal-card">
+      <button id="treatmentModalClose" class="treatment-modal-close" type="button" aria-label="Close">×</button>
+      <p id="treatmentModalKicker" class="treatment-modal-kicker">SIGNATURE TREATMENT</p>
+      <h3 id="treatmentModalTitle" class="treatment-modal-title">プレミアムフェイシャル</h3>
+      <p id="treatmentModalCategory" class="treatment-modal-cat">FACIAL CARE</p>
+      <div class="treatment-modal-layout">
+        <div class="treatment-modal-media">
+          <img id="treatmentModalImage" src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" />
+          <p id="treatmentModalIntro" class="treatment-modal-intro"></p>
+        </div>
+        <div id="treatmentModalBody" class="treatment-modal-body"></div>
+      </div>
+    </div>
+  </div>
   <div id="imageLightbox" class="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="image-lightbox-frame">
+      <button id="imageLightboxPrev" class="image-lightbox-nav prev" type="button" aria-label="Previous image">‹</button>
+      <button id="imageLightboxNext" class="image-lightbox-nav next" type="button" aria-label="Next image">›</button>
       <button id="imageLightboxClose" class="image-lightbox-close" type="button" aria-label="Close">×</button>
       <img id="imageLightboxImg" class="image-lightbox-img" src="" alt="" />
     </div>
@@ -425,14 +493,17 @@
   <script src="./i18n-demo.js"></script>
   <script>
     const map = {
-      navConcept:'nav_concept',navFeatures:'nav_features',navMenu:'nav_menu',navStaff:'nav_staff',navStore:'nav_store',navReserve:'reserve',heroReserve:'reserve',ctaReserve:'reserve',
+      navConcept:'nav_concept',navFeatures:'nav_features',navMenu:'nav_menu',navStaff:'nav_staff',navStore:'nav_store',navReserve:'reserve',
+      heroReserveLabel:'reserve',ctaReserveLabel:'reserve',heroReserveSub:'reserve_note',ctaReserveSub:'reserve_note',
       heroTag:'hero_tag',heroLead:'hero_lead',conceptTitle:'concept_title',conceptBody:'concept_body',conceptItem1:'concept_item_1',conceptItem2:'concept_item_2',conceptItem3:'concept_item_3',conceptItem4:'concept_item_4',
       featuresTitle:'features_title',f1:'f1',f2:'f2',f3:'f3',f4:'f4',
       galleryTitle:'gallery_title',galleryLead:'gallery_lead',
       galleryCardTitle1:'gallery_card_title_1',galleryCardTitle2:'gallery_card_title_2',galleryCardTitle3:'gallery_card_title_3',galleryCardTitle4:'gallery_card_title_4',
       galleryCap1:'gallery_cap_1',galleryCap2:'gallery_cap_2',galleryCap3:'gallery_cap_3',galleryCap4:'gallery_cap_4',
       menuTitle:'menu_title',menuItemTitle1:'menu_item_title_1',menuItemTitle2:'menu_item_title_2',menuItemTitle3:'menu_item_title_3',menuItemTitle4:'menu_item_title_4',m1:'m1',m2:'m2',m3:'m3',m4:'m4',
-      staffTitle:'staff_title',s1Role:'s1_role',s1Desc:'s1_desc',s2Role:'s2_role',s2Desc:'s2_desc',s3Role:'s3_role',s3Desc:'s3_desc',
+      menuPrice1:'menu_price_1',menuPrice2:'menu_price_2',menuPrice3:'menu_price_3',menuPrice4:'menu_price_4',
+      menuDetailBtn1:'menu_detail_btn',menuDetailBtn2:'menu_detail_btn',menuDetailBtn3:'menu_detail_btn',menuDetailBtn4:'menu_detail_btn',
+      staffTitle:'staff_title',s1Name:'s1_name',s1Role:'s1_role',s1Desc:'s1_desc',s2Name:'s2_name',s2Role:'s2_role',s2Desc:'s2_desc',s3Name:'s3_name',s3Role:'s3_role',s3Desc:'s3_desc',
       storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
     };
@@ -471,18 +542,6 @@
 
     const topNav = document.getElementById('topNav');
     const menuToggle = document.getElementById('menuToggle');
-    const updateWelcomeMobileShift = () => {
-      if (window.innerWidth > 991) {
-        document.documentElement.style.setProperty('--welcome-mobile-shift', '0px');
-        return;
-      }
-      const navInner = document.querySelector('.top-nav-inner');
-      const navH = navInner ? navInner.getBoundingClientRect().height : 0;
-      const shift = Math.round(navH * 0.42);
-      document.documentElement.style.setProperty('--welcome-mobile-shift', `${shift}px`);
-    };
-    updateWelcomeMobileShift();
-    window.addEventListener('resize', updateWelcomeMobileShift, { passive: true });
 
     menuToggle.addEventListener('click', () => {
       const open = topNav.classList.toggle('is-mobile-open');
@@ -495,6 +554,41 @@
       topNav.classList.remove('is-mobile-open');
       menuToggle.setAttribute('aria-expanded', 'false');
     });
+
+    (function navAutoHideFx() {
+      if (!topNav) return;
+      const HIDE_DELAY = 3000;
+      let hideTimer = null;
+      const clearHideTimer = () => {
+        if (!hideTimer) return;
+        window.clearTimeout(hideTimer);
+        hideTimer = null;
+      };
+      const showNav = () => {
+        topNav.classList.remove('is-hidden');
+      };
+      const scheduleHide = () => {
+        clearHideTimer();
+        if (window.scrollY <= 0) return;
+        if (topNav.classList.contains('is-mobile-open')) return;
+        hideTimer = window.setTimeout(() => {
+          if (window.scrollY <= 0) return;
+          if (topNav.classList.contains('is-mobile-open')) return;
+          topNav.classList.add('is-hidden');
+        }, HIDE_DELAY);
+      };
+      window.addEventListener('scroll', () => {
+        showNav();
+        if (window.scrollY <= 0) {
+          clearHideTimer();
+          return;
+        }
+        scheduleHide();
+      }, { passive: true });
+      window.addEventListener('touchstart', showNav, { passive: true });
+      window.addEventListener('wheel', showNav, { passive: true });
+      scheduleHide();
+    })();
 
     // Feature cards: auto sequence 1->4 when section enters viewport.
     (function featureFx() {
@@ -556,34 +650,140 @@
       cards.forEach((c) => fx.observe(c));
     })();
 
-    (function imageLightboxFx() {
+    (function treatmentDetailFx() {
+      const modal = document.getElementById('treatmentModal');
+      const closeBtn = document.getElementById('treatmentModalClose');
+      const kickerEl = document.getElementById('treatmentModalKicker');
+      const titleEl = document.getElementById('treatmentModalTitle');
+      const catEl = document.getElementById('treatmentModalCategory');
+      const imgEl = document.getElementById('treatmentModalImage');
+      const introEl = document.getElementById('treatmentModalIntro');
+      const bodyEl = document.getElementById('treatmentModalBody');
+      if (!modal || !closeBtn || !kickerEl || !titleEl || !catEl || !imgEl || !introEl || !bodyEl) return;
+
+      const details = {
+        'premium-facial': {
+          kicker: 'SIGNATURE TREATMENT',
+          title: 'プレミアムフェイシャル',
+          category: 'FACIAL CARE',
+          image: './images/service-optimized/premium-facial.jpg',
+          intro: '肌状態・水分量・キメを丁寧に分析し、その日のコンディションに最適な施術を組み合わせるオーダーメイドフェイシャル。最新機器と熟練のハンドテクニックを融合し、透明感・ハリ・引き締まりを同時に引き出します。継続的なケアにより、肌本来の美しさを高めます。',
+          treatments: ['クレンジング', 'ディープ洗浄', '角質ケア', '美容液導入', 'リフトトリートメント', '高保湿パック'],
+          forWho: ['くすみや乾燥が気になる', '肌のハリ不足を感じる', '大切な予定を控えている'],
+          prices: ['60分　¥14,000', '90分　¥19,800', '120分 ¥24,000']
+        },
+        'body-treatment': {
+          kicker: 'SIGNATURE TREATMENT',
+          title: 'ボディトリートメント',
+          category: 'BODY CARE',
+          image: './images/service-optimized/body-treatment.jpg',
+          intro: '全身の筋肉とリンパに働きかけ、深部の疲れを解きほぐすトリートメント。滞った巡りを整え、軽やかでしなやかな身体へ導きます。日常のストレスや緊張を静かに解き放つ、上質なリラクゼーションを提供します。',
+          treatments: ['背面トリートメント', 'デコルテケア', '脚・足裏ケア', 'リンパドレナージュ', '仕上げの整え'],
+          forWho: ['慢性的な疲れを感じる', 'むくみや冷えが気になる', '深くリラックスしたい'],
+          prices: ['60分　¥16,000', '90分　¥24,000', '120分 ¥30,000']
+        },
+        'bridal-course': {
+          kicker: 'SIGNATURE TREATMENT',
+          title: 'ブライダルコース',
+          category: 'BRIDAL SPECIAL',
+          image: './images/service-optimized/bridal-course.jpg',
+          intro: '挙式に向けて肌とボディラインを整える短期集中プログラム。ドレスに映える美しいシルエットと透明感のある肌へ導きます。専任スタッフがカウンセリングを行い、最適な施術プランをご提案いたします。',
+          treatments: ['フェイシャルケア', 'デコルテケア', '背中トリートメント', 'ボディライン調整', '保湿・美肌仕上げ'],
+          forWho: ['挙式・前撮りを控えている', '短期間で仕上げたい', 'トータルケアを希望'],
+          prices: ['90分　¥28,000', '120分 ¥38,000', '150分 ¥46,000']
+        },
+        'relaxation-therapy': {
+          kicker: 'SIGNATURE TREATMENT',
+          title: 'リラクゼーションセラピー',
+          category: 'RELAXATION',
+          image: './images/service-optimized/relaxation-therapy.jpg',
+          intro: 'アロマと熟練の手技を組み合わせた癒しのコース。静かな空間の中で心身の緊張をゆるやかに解きほぐします。忙しい日常から離れ、深い安らぎに包まれる時間をお過ごしください。',
+          treatments: ['アロマトリートメント', 'ヘッドケア', '首・肩ケア', '呼吸を整えるリラク手技'],
+          forWho: ['ストレスを感じている', '眠りが浅い', '心身をリセットしたい'],
+          prices: ['60分　¥12,000', '90分　¥16,500', '120分 ¥21,000']
+        }
+      };
+
+      const listHtml = (arr) => `<ul>${arr.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+      const open = (key) => {
+        const d = details[key];
+        if (!d) return;
+        kickerEl.textContent = d.kicker;
+        titleEl.textContent = d.title;
+        catEl.textContent = d.category;
+        imgEl.src = d.image;
+        imgEl.alt = d.title;
+        introEl.textContent = d.intro;
+        bodyEl.innerHTML = `
+          <h4>■ 施術内容</h4>
+          ${listHtml(d.treatments)}
+          <h4>■ こんな方に</h4>
+          ${listHtml(d.forWho)}
+          <h4>■ 料金</h4>
+          ${listHtml(d.prices)}
+        `;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-lock');
+      };
+      const close = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-lock');
+      };
+      document.querySelectorAll('.menu-detail-btn[data-treatment]').forEach((btn) => {
+        btn.addEventListener('click', () => open(btn.dataset.treatment));
+      });
+      closeBtn.addEventListener('click', close);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+      });
+    })();
+
+    (function salonLightboxFx() {
       const lightbox = document.getElementById('imageLightbox');
       const closeBtn = document.getElementById('imageLightboxClose');
+      const prevBtn = document.getElementById('imageLightboxPrev');
+      const nextBtn = document.getElementById('imageLightboxNext');
       const lightboxImg = document.getElementById('imageLightboxImg');
-      if (!lightbox || !closeBtn || !lightboxImg) return;
-      const targets = Array.from(document.querySelectorAll('#menu .menu-item img, #salonGallery .menu-item img'));
-      const open = (img) => {
+      if (!lightbox || !closeBtn || !prevBtn || !nextBtn || !lightboxImg) return;
+      const targets = Array.from(document.querySelectorAll('#salonGallery .menu-item img'));
+      let currentIndex = 0;
+      const showAt = (idx) => {
+        if (!targets.length) return;
+        currentIndex = (idx + targets.length) % targets.length;
+        const img = targets[currentIndex];
         lightboxImg.src = img.currentSrc || img.src;
         lightboxImg.alt = img.alt || '';
+      };
+      const open = (img) => {
+        currentIndex = Math.max(0, targets.indexOf(img));
+        showAt(currentIndex);
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('lightbox-lock');
+        document.body.classList.add('modal-lock');
       };
       const close = () => {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('lightbox-lock');
+        document.body.classList.remove('modal-lock');
         window.setTimeout(() => { lightboxImg.src = ''; }, 180);
       };
-      targets.forEach((img) => {
-        img.addEventListener('click', () => open(img));
-      });
+      targets.forEach((img) => img.addEventListener('click', () => open(img)));
+      prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex - 1); });
+      nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex + 1); });
       closeBtn.addEventListener('click', close);
       lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) close();
       });
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) close();
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') showAt(currentIndex - 1);
+        if (e.key === 'ArrowRight') showAt(currentIndex + 1);
       });
     })();
 
@@ -650,7 +850,7 @@
         const welcomeOpen = !welcome.classList.contains('hidden');
         const lightboxOpen = !!lightbox && lightbox.classList.contains('is-open');
         if (!gateOpen && !welcomeOpen && !lightboxOpen) {
-          document.body.classList.remove('welcome-lock', 'lightbox-lock');
+          document.body.classList.remove('welcome-lock', 'modal-lock');
         }
       };
 
@@ -718,7 +918,7 @@
     // Hard fallback: never leave the page blocked by welcome overlay.
     window.setTimeout(() => {
       document.getElementById('welcome')?.classList.add('hidden');
-      document.body.classList.remove('welcome-lock', 'lightbox-lock');
+      document.body.classList.remove('welcome-lock', 'modal-lock');
     }, 12000);
 
   </script>
