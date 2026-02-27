@@ -26,7 +26,7 @@ window.DEMO_I18N = {
     lang_copy: 'ご希望の言語を選択してください。', welcome_sub: '高級エステサロン', welcome_line: 'あなたの美しさを、静かに引き出す'
   },
   en: {
-    nav_concept: 'Concept', nav_features: 'Features', nav_menu: 'Menu', nav_staff: 'Staff', nav_store: 'Store', reserve: 'Book Now',
+    nav_concept: 'Concept', nav_features: 'Features', nav_menu: 'Menu', nav_staff: 'Staff', nav_store: 'Store', reserve: 'Reservation',
     hero_tag: 'Luxury Esthetic Salon', hero_lead: 'Quietly bringing out your finest beauty.',
     concept_title: 'Salon Concept', concept_body: 'In a serene and refined space, we offer luxury esthetic care for both skin and mind.',
     concept_item_1: 'Private treatments in fully reserved rooms', concept_item_2: 'Advanced facial care with the latest beauty devices', concept_item_3: 'Sophisticated environment with hotel-spa quality', concept_item_4: 'Bridal-focused intensive care programs',
