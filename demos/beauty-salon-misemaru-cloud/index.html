@@ -42,9 +42,9 @@
     html.fonts-ready .welcome-loading{opacity:0;visibility:hidden}
     .welcome-sub,.welcome-title{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease}
     .welcome.play .welcome-sub,.welcome.play .welcome-title{animation:welcomeUp .82s ease .08s forwards}
-    .welcome-sub{margin:0 0 .65rem;color:var(--gold);letter-spacing:.13em;font-size:20px}
+    .welcome-sub{margin:0 0 .65rem;color:var(--gold);letter-spacing:.13em;font-size:clamp(15px,3.8vw,20px)}
     .welcome-title{margin:.2rem 0 .95rem;color:#fff6dd;font-family:'Cinzel',serif}
-    .welcome-line{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease;margin:1.15rem auto 0;max-width:620px;font-size:20px;color:rgba(245,240,226,.82)}
+    .welcome-line{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease;margin:1.15rem auto 0;max-width:620px;font-size:clamp(15px,3.9vw,20px);color:rgba(245,240,226,.82)}
     .welcome.play .welcome-line{animation:welcomeLine .92s ease .48s forwards}
     @keyframes welcomeUp { to { opacity:1; transform:none; } }
     @keyframes welcomeLine { to { opacity:1; transform:none; } }
@@ -133,9 +133,9 @@
     .hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;will-change:opacity}
     .hero-bg.is-visible{opacity:1}
     .hero-copy{text-align:center;max-width:760px;position:relative;z-index:1}
-    .hero-tag{color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.13em;margin:0 0 .65rem;font-size:20px}
+    .hero-tag{color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.13em;margin:0 0 .65rem;font-size:clamp(15px,3.8vw,20px)}
     .hero h1{font-family:'Cinzel',serif}
-    .hero-lead{margin:1.15rem auto 0;color:rgba(245,240,226,.82);max-width:620px;font-size:20px}
+    .hero-lead{margin:1.15rem auto 0;color:rgba(245,240,226,.82);max-width:620px;font-size:clamp(15px,3.9vw,20px)}
     .hero-cta,.reserve-link{
       position:relative;
       overflow:hidden;
