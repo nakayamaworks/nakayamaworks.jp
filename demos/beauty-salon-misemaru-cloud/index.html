@@ -15,6 +15,8 @@
     body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans', 'Noto Sans JP', sans-serif;line-height:1.8;-webkit-overflow-scrolling:touch}
     :lang(ja) body{font-family:'Noto Serif JP', serif}
     .hidden{display:none!important}
+    .boot-mask{position:fixed;inset:0;z-index:305;background:#070707;opacity:1;transition:opacity .3s ease}
+    .boot-mask.hide{opacity:0;pointer-events:none}
 
     .welcome{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;min-height:92vh;padding:5rem 1.2rem 3rem;background:radial-gradient(circle at 20% 20%, rgba(215,178,74,.22), transparent 40%),#070707;transition:opacity .5s ease}
     .welcome.play{animation:welcomeHide .72s ease 2.1s forwards}
@@ -39,10 +41,40 @@
     @keyframes loaderSlide { 0% { transform:translateX(-110%);} 100% { transform:translateX(230%);} }
     body.welcome-lock{overflow:hidden}
 
-    .lang-gate{position:fixed;inset:0;z-index:310;display:none;place-items:center;background:#070707;backdrop-filter:blur(6px)}
-    .lang-gate.show{display:grid}
-    .lang-card{width:min(680px,calc(100% - 1.6rem));padding:1.2rem;border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(15,15,15,.92));text-align:center}
-    .lang-title{margin:.2rem 0 .5rem;font-family:'Cinzel',serif;color:#fff6de}
+    .lang-gate{
+      position:fixed;inset:0;z-index:310;display:grid;place-items:center;
+      background:#070707;backdrop-filter:blur(6px);
+      opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity .28s ease,visibility 0s linear .28s;
+    }
+    .lang-gate.show{
+      opacity:1;visibility:visible;pointer-events:auto;
+      transition:opacity .28s ease,visibility 0s;
+    }
+    .lang-card{
+      width:min(680px,calc(100% - 1.6rem));padding:1.2rem;border:1px solid var(--line);border-radius:20px;
+      background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(15,15,15,.92));text-align:center;
+      transform:translateY(12px) scale(.985);opacity:.92;
+      transition:transform .3s cubic-bezier(.22,.9,.32,1),opacity .28s ease;
+    }
+    .lang-gate.show .lang-card{transform:translateY(0) scale(1);opacity:1}
+    .lang-title{margin:.2rem 0 .6rem;font-family:'Cinzel',serif;color:#fff6de}
+    .lang-loading{display:none;place-items:center;gap:10px;min-height:120px}
+    .lang-gate.is-preparing .lang-loading{display:grid}
+    .lang-gate.is-preparing .lang-content{display:none}
+    .lang-gate.is-preparing .lang-card{
+      width:auto;
+      max-width:none;
+      padding:0;
+      border-color:transparent;
+      background:transparent;
+      box-shadow:none;
+      transform:none;
+      opacity:1;
+    }
+    .lang-loading-mark{width:min(180px,48vw);height:3px;border-radius:999px;background:rgba(215,178,74,.2);overflow:hidden}
+    .lang-loading-mark::after{content:"";display:block;width:45%;height:100%;border-radius:inherit;background:linear-gradient(90deg,rgba(215,178,74,.55),rgba(247,224,138,.88));animation:loaderSlide 1.05s ease-in-out infinite}
+    .lang-loading-text{margin:0;font-family:'Cinzel',serif;font-size:.76rem;letter-spacing:.08em;color:rgba(245,240,226,.7);text-transform:uppercase}
     .lang-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
     .lang-btn{border:1px solid rgba(255,236,186,.5);background:rgba(255,255,255,.05);color:#fff3cf;border-radius:999px;padding:.58rem .9rem;cursor:pointer;transition:transform .18s ease,background .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease}
     .lang-btn:hover,.lang-btn:focus-visible{transform:translateY(-1px);border-color:rgba(255,236,186,.78);background:rgba(255,255,255,.11);box-shadow:0 8px 20px rgba(0,0,0,.24)}
@@ -56,8 +88,35 @@
     .menu-toggle{display:none;width:40px;height:36px;border-radius:10px;border:1px solid rgba(255,242,207,.4);background:rgba(255,255,255,.06);color:#f2ddab}
     .menu-toggle span{display:block;width:18px;height:2px;background:currentColor;border-radius:99px;margin:4px auto;transition:transform .22s ease,opacity .2s ease}
     .top-nav-right{display:flex;gap:.42rem;flex-wrap:wrap;justify-content:flex-end}
-    .menu-link,.reserve-link{border:1px solid rgba(255,242,207,.35);background:rgba(255,255,255,.04);color:#f1ddad;border-radius:999px;padding:.32rem .66rem;font-size:.74rem;line-height:1.2;text-decoration:none;cursor:pointer}
+    .menu-link,.reserve-link{border:1px solid rgba(255,242,207,.35);background:rgba(255,255,255,.04);color:#f1ddad;border-radius:999px;padding:.32rem .66rem;font-size:.74rem;line-height:1.2;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:33px}
     .reserve-link{background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;font-weight:700}
+    .lang-switch{position:relative}
+    .lang-toggle{
+      border:1px solid rgba(255,242,207,.35);
+      background:rgba(255,255,255,.04);
+      color:#f1ddad;
+      border-radius:999px;
+      padding:.32rem .66rem;
+      font-size:.74rem;
+      line-height:1.2;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      min-width:72px;
+      min-height:33px;
+      justify-content:center;
+    }
+    .lang-toggle .globe{font-size:.86em;line-height:1}
+    .lang-card-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+    .lang-close{
+      width:34px;height:34px;border-radius:10px;
+      border:1px solid rgba(255,241,204,.48);
+      background:rgba(18,18,18,.72);color:#f6dfab;cursor:pointer;
+      font-size:1.05rem;line-height:1;
+    }
+    .lang-close:hover,.lang-close:focus-visible{background:rgba(215,178,74,.2)}
+    .lang-gate[data-mode="initial"] .lang-close{display:none}
 
     .hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.2rem 3rem}
     .hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;will-change:opacity}
@@ -135,6 +194,7 @@
     :lang(ja) #menu .menu-item h3,
     :lang(ja) #staff .staff-card h3,
     :lang(ja) .menu-link,
+    :lang(ja) .lang-toggle,
     :lang(ja) #navConcept,
     :lang(ja) #navFeatures,
     :lang(ja) #navMenu,
@@ -167,6 +227,12 @@
     #menu .menu-price{margin-top:auto}
     .menu-detail-btn{margin-top:.72rem;width:100%;border:1px solid rgba(255,241,204,.45);background:rgba(255,255,255,.06);color:#f3ddad;border-radius:999px;padding:.48rem .85rem;font-size:.84rem;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease}
     .menu-detail-btn:hover,.menu-detail-btn:focus-visible{transform:translateY(-1px);background:rgba(255,255,255,.12);border-color:rgba(255,241,204,.8)}
+    .menu-link:hover,.menu-link:focus-visible,
+    .lang-toggle:hover,.lang-toggle:focus-visible{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.12);
+      border-color:rgba(255,241,204,.8);
+    }
     .staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
     .avatar{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#241a0d;font-family:'Cinzel',serif;font-weight:700;margin-bottom:.6rem}
 
@@ -310,11 +376,21 @@
         border-radius:999px;
         font-size:.88rem;
       }
+      .top-nav-right .lang-toggle{
+        width:auto;
+        min-width:240px;
+        display:block;
+        text-align:left;
+        padding:.62rem .95rem;
+        border-radius:999px;
+        font-size:.88rem;
+      }
     }
     @media (max-width:575.98px){ .lang-actions{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
+  <div id="bootMask" class="boot-mask" aria-hidden="true"></div>
   <div id="welcome" class="welcome" aria-hidden="true">
     <div class="welcome-loading" id="welcomeLoading">
       <span class="welcome-loading-mark"></span>
@@ -329,15 +405,22 @@
 
   <div id="langGate" class="lang-gate" role="dialog" aria-modal="true">
     <div class="lang-card">
-      <p style="margin:0;color:#e6c772;letter-spacing:.14em">WELCOME</p>
-      <h2 class="lang-title">Language / 言語</h2>
-      <p id="lang-copy" style="margin:.2rem 0 .9rem;color:rgba(245,240,226,.8)">Please select your language</p>
-      <div class="lang-actions">
-        <button class="lang-btn" data-lang="ja">日本語</button>
-        <button class="lang-btn" data-lang="en">English</button>
-        <button class="lang-btn" data-lang="zh-TW">繁體中文</button>
-        <button class="lang-btn" data-lang="es">Español</button>
-        <button class="lang-btn" data-lang="ko">한국어</button>
+      <div class="lang-loading" aria-hidden="true">
+        <span class="lang-loading-mark"></span>
+        <p class="lang-loading-text">Loading</p>
+      </div>
+      <div class="lang-content">
+        <div class="lang-card-head">
+          <h2 id="lang-title" class="lang-title">Select language</h2>
+          <button id="langGateClose" class="lang-close" type="button" aria-label="Close language picker">×</button>
+        </div>
+        <div class="lang-actions">
+          <button class="lang-btn" data-lang="ja">日本語</button>
+          <button class="lang-btn" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="zh-TW">繁體中文</button>
+          <button class="lang-btn" data-lang="es">Español</button>
+          <button class="lang-btn" data-lang="ko">한국어</button>
+        </div>
       </div>
     </div>
   </div>
@@ -355,6 +438,12 @@
         <button class="menu-link" type="button" data-scroll="staff" id="navStaff">スタッフ</button>
         <button class="menu-link" type="button" data-scroll="store" id="navStore">店舗情報</button>
         <a class="reserve-link" id="navReserve" href="https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/" target="_blank" rel="noopener">予約する</a>
+        <div id="navLangSwitch" class="lang-switch">
+          <button id="navLangToggle" class="lang-toggle" type="button" aria-label="Language">
+            <span class="globe" aria-hidden="true">🌐</span>
+            <span id="navLangCurrent">JP</span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -522,6 +611,7 @@
       storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
     };
+    const LANG_SHORT = { ja:'JP', en:'EN', 'zh-TW':'繁中', es:'ES', ko:'KO' };
 
     function applyLang(lang) {
       const dict = window.DEMO_I18N || {};
@@ -532,6 +622,14 @@
         if (!el || !t[key]) return;
         el.textContent = t[key];
       });
+      const current = document.getElementById('navLangCurrent');
+      if (current) current.textContent = LANG_SHORT[lang] || 'JP';
+      document.querySelectorAll('#langGate .lang-btn[data-lang]').forEach((btn) => {
+        btn.classList.toggle('is-selecting', btn.dataset.lang === lang);
+      });
+      if (typeof window.refreshTreatmentModalLang === 'function') {
+        window.refreshTreatmentModalLang();
+      }
     }
 
     document.querySelectorAll('[data-scroll]').forEach((btn) => {
@@ -583,17 +681,30 @@
 
     const topNav = document.getElementById('topNav');
     const menuToggle = document.getElementById('menuToggle');
+    const navLangToggle = document.getElementById('navLangToggle');
 
     menuToggle.addEventListener('click', () => {
       const open = topNav.classList.toggle('is-mobile-open');
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+
+    navLangToggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.openDemoLanguageGate?.();
+      if (window.innerWidth <= 991) {
+        topNav.classList.remove('is-mobile-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
     document.addEventListener('click', (e) => {
-      if (window.innerWidth > 991) return;
-      if (!topNav.classList.contains('is-mobile-open')) return;
-      if (topNav.contains(e.target)) return;
-      topNav.classList.remove('is-mobile-open');
-      menuToggle.setAttribute('aria-expanded', 'false');
+      const insideNav = topNav.contains(e.target);
+      if (window.innerWidth <= 991 && topNav.classList.contains('is-mobile-open')) {
+        if (!insideNav) {
+          topNav.classList.remove('is-mobile-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
     });
 
     (function navAutoHideFx() {
@@ -791,61 +902,34 @@
       const introEl = document.getElementById('treatmentModalIntro');
       const bodyEl = document.getElementById('treatmentModalBody');
       if (!modal || !closeBtn || !kickerEl || !titleEl || !catEl || !imgEl || !introEl || !bodyEl) return;
-
-      const details = {
-        'premium-facial': {
-          kicker: 'SIGNATURE TREATMENT',
-          title: 'プレミアムフェイシャル',
-          category: 'FACIAL CARE',
-          image: './images/service-optimized/premium-facial.jpg',
-          intro: '肌状態・水分量・キメを丁寧に分析し、その日のコンディションに最適な施術を組み合わせるオーダーメイドフェイシャル。最新機器と熟練のハンドテクニックを融合し、透明感・ハリ・引き締まりを同時に引き出します。継続的なケアにより、肌本来の美しさを高めます。',
-          treatments: ['クレンジング', 'ディープ洗浄', '角質ケア', '美容液導入', 'リフトトリートメント', '高保湿パック'],
-          forWho: ['くすみや乾燥が気になる', '肌のハリ不足を感じる', '大切な予定を控えている'],
-          prices: ['60分　¥14,000', '90分　¥19,800', '120分 ¥24,000']
-        },
-        'body-treatment': {
-          kicker: 'SIGNATURE TREATMENT',
-          title: 'ボディトリートメント',
-          category: 'BODY CARE',
-          image: './images/service-optimized/body-treatment.jpg',
-          intro: '全身の筋肉とリンパに働きかけ、深部の疲れを解きほぐすトリートメント。滞った巡りを整え、軽やかでしなやかな身体へ導きます。日常のストレスや緊張を静かに解き放つ、上質なリラクゼーションを提供します。',
-          treatments: ['背面トリートメント', 'デコルテケア', '脚・足裏ケア', 'リンパドレナージュ', '仕上げの整え'],
-          forWho: ['慢性的な疲れを感じる', 'むくみや冷えが気になる', '深くリラックスしたい'],
-          prices: ['60分　¥16,000', '90分　¥24,000', '120分 ¥30,000']
-        },
-        'bridal-course': {
-          kicker: 'SIGNATURE TREATMENT',
-          title: 'ブライダルコース',
-          category: 'BRIDAL SPECIAL',
-          image: './images/service-optimized/bridal-course.jpg',
-          intro: '挙式に向けて肌とボディラインを整える短期集中プログラム。ドレスに映える美しいシルエットと透明感のある肌へ導きます。専任スタッフがカウンセリングを行い、最適な施術プランをご提案いたします。',
-          treatments: ['フェイシャルケア', 'デコルテケア', '背中トリートメント', 'ボディライン調整', '保湿・美肌仕上げ'],
-          forWho: ['挙式・前撮りを控えている', '短期間で仕上げたい', 'トータルケアを希望'],
-          prices: ['90分　¥28,000', '120分 ¥38,000', '150分 ¥46,000']
-        },
-        'relaxation-therapy': {
-          kicker: 'SIGNATURE TREATMENT',
-          title: 'リラクゼーションセラピー',
-          category: 'RELAXATION',
-          image: './images/service-optimized/relaxation-therapy.jpg',
-          intro: 'アロマと熟練の手技を組み合わせた癒しのコース。静かな空間の中で心身の緊張をゆるやかに解きほぐします。忙しい日常から離れ、深い安らぎに包まれる時間をお過ごしください。',
-          treatments: ['アロマトリートメント', 'ヘッドケア', '首・肩ケア', '呼吸を整えるリラク手技'],
-          forWho: ['ストレスを感じている', '眠りが浅い', '心身をリセットしたい'],
-          prices: ['60分　¥12,000', '90分　¥16,500', '120分 ¥21,000']
-        }
-      };
+      const allDetails = window.DEMO_TREATMENT_DETAILS || {};
+      const allLabels = window.DEMO_TREATMENT_LABELS || {};
+      let activeTreatmentKey = null;
+      const currentLang = () => document.documentElement.lang || localStorage.getItem('demo_lang') || 'ja';
 
       const listHtml = (arr) => `<ul>${arr.map((item) => `<li>${item}</li>`).join('')}</ul>`;
       const priceListHtml = (arr) => `<ul class="price-list">${
         arr.map((item) => {
-          const m = item.match(/^(.+?\s*分)\s*¥\s*([\d,]+)$/);
-          if (!m) return `<li>${item}</li>`;
-          return `<li><span class="price-time">${m[1]}</span><span class="price-amount">¥${m[2]}</span></li>`;
+          const [timeRaw, amountRaw] = String(item).split('|');
+          const time = (timeRaw || '').trim();
+          const amount = (amountRaw || '').trim();
+          if (!time || !amount) return `<li>${item}</li>`;
+          return `<li><span class="price-time">${time}</span><span class="price-amount">${amount}</span></li>`;
         }).join('')
       }</ul>`;
-      const open = (key) => {
-        const d = details[key];
+      const resolveDetail = (key, lang) => {
+        const dict = allDetails[lang] || allDetails.ja || {};
+        const jaDict = allDetails.ja || {};
+        return dict[key] || jaDict[key] || null;
+      };
+      const resolveLabels = (lang) => {
+        return allLabels[lang] || allLabels.ja || { treatments: '施術内容', forWho: 'こんな方に', prices: '料金' };
+      };
+      const render = (key) => {
+        const lang = currentLang();
+        const d = resolveDetail(key, lang);
         if (!d) return;
+        const labels = resolveLabels(lang);
         kickerEl.textContent = d.kicker;
         titleEl.textContent = d.title;
         catEl.textContent = d.category;
@@ -853,13 +937,17 @@
         imgEl.alt = d.title;
         introEl.textContent = d.intro;
         bodyEl.innerHTML = `
-          <h4>■ 施術内容</h4>
+          <h4>■ ${labels.treatments}</h4>
           ${listHtml(d.treatments)}
-          <h4>■ こんな方に</h4>
+          <h4>■ ${labels.forWho}</h4>
           ${listHtml(d.forWho)}
-          <h4>■ 料金</h4>
+          <h4>■ ${labels.prices}</h4>
           ${priceListHtml(d.prices)}
         `;
+      };
+      const open = (key) => {
+        activeTreatmentKey = key;
+        render(key);
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         modalLock.lock();
@@ -867,7 +955,13 @@
       const close = () => {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
+        activeTreatmentKey = null;
         modalLock.unlock();
+      };
+      window.refreshTreatmentModalLang = () => {
+        if (!activeTreatmentKey) return;
+        if (!modal.classList.contains('is-open')) return;
+        render(activeTreatmentKey);
       };
       document.querySelectorAll('.menu-detail-btn[data-treatment]').forEach((btn) => {
         btn.addEventListener('click', () => open(btn.dataset.treatment));
@@ -984,8 +1078,10 @@
     })();
 
     (function boot() {
+      const bootMask = document.getElementById('bootMask');
       const welcome = document.getElementById('welcome');
       const gate = document.getElementById('langGate');
+      const gateCloseBtn = document.getElementById('langGateClose');
       const lightbox = document.getElementById('imageLightbox');
       const saved = localStorage.getItem('demo_lang');
       const lang = saved || 'ja';
@@ -995,20 +1091,50 @@
       const shouldSkipWelcome = skipByQuery || skipBySession;
       if (skipBySession) sessionStorage.removeItem('skip_demo_welcome');
       applyLang(lang);
+      let bootMaskHidden = false;
 
       // Future transition hook: call this before navigating back to skip welcome once.
       window.skipDemoWelcomeOnce = function () {
         try { sessionStorage.setItem('skip_demo_welcome', '1'); } catch (_) {}
       };
+      const hideBootMask = () => {
+        if (bootMaskHidden || !bootMask) return;
+        bootMaskHidden = true;
+        bootMask.classList.add('hide');
+        window.setTimeout(() => bootMask.remove(), 340);
+      };
 
-      const showLangGate = () => {
+      const ensureFontsReady = async (minMs = 0) => {
+        const startedAt = performance.now();
+        const fontReady = (document.fonts && document.fonts.ready)
+          ? Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 2000))])
+          : Promise.resolve();
+        await fontReady;
+        const elapsed = performance.now() - startedAt;
+        const remain = Math.max(0, minMs - elapsed);
+        if (remain > 0) await new Promise((resolve) => setTimeout(resolve, remain));
+        document.documentElement.classList.add('fonts-ready');
+      };
+
+      const showLangGate = async (mode = 'initial') => {
+        gate.dataset.mode = mode;
+        gate.classList.add('is-preparing');
         gate.classList.add('show');
         document.body.classList.add('welcome-lock');
+        await ensureFontsReady(mode === 'initial' ? 520 : 0);
+        gate.classList.remove('is-preparing');
+        hideBootMask();
       };
 
       const hideLangGate = () => {
         gate.classList.remove('show');
-        document.body.classList.remove('welcome-lock');
+        gate.classList.remove('is-preparing');
+        const welcomeOpen = !welcome.classList.contains('hidden');
+        if (!welcomeOpen) document.body.classList.remove('welcome-lock');
+      };
+
+      window.openDemoLanguageGate = function () {
+        showLangGate('switch');
       };
 
       const releaseLocksIfIdle = () => {
@@ -1022,27 +1148,16 @@
         }
       };
 
-      const waitReadyForWelcome = async () => {
-        const loadingShownAt = performance.now();
-        const fontReady = (document.fonts && document.fonts.ready)
-          ? Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 2000))])
-          : Promise.resolve();
-        await fontReady;
-        const elapsed = performance.now() - loadingShownAt;
-        const remain = Math.max(0, 1000 - elapsed);
-        if (remain > 0) await new Promise((resolve) => setTimeout(resolve, remain));
-        document.documentElement.classList.add('fonts-ready');
-      };
-
       let welcomeStarted = false;
-      const playWelcome = async () => {
+      const playWelcome = async ({ instant = false } = {}) => {
         if (welcomeStarted || shouldSkipWelcome) return;
         welcomeStarted = true;
-        await waitReadyForWelcome();
-        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         welcome.classList.remove('hidden');
         document.body.classList.add('welcome-lock');
+        hideBootMask();
+        await ensureFontsReady(instant ? 0 : 1000);
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         requestAnimationFrame(() => welcome.classList.add('play'));
         setTimeout(() => {
           welcome.classList.add('hidden');
@@ -1050,30 +1165,51 @@
         }, 2720);
       };
 
-      if (shouldSkipWelcome) {
-        document.documentElement.classList.add('fonts-ready');
+      (async () => {
+        if (shouldSkipWelcome) {
+          await ensureFontsReady(0);
+          welcome.classList.add('hidden');
+          if (!saved) await showLangGate('initial');
+          else hideBootMask();
+          return;
+        }
+        if (saved) {
+          await playWelcome();
+          return;
+        }
         welcome.classList.add('hidden');
-        if (!saved) showLangGate();
-      } else if (saved) {
-        playWelcome();
-      } else {
-        welcome.classList.add('hidden');
-        showLangGate();
-      }
+        await showLangGate('initial');
+      })();
+
+      gateCloseBtn?.addEventListener('click', () => {
+        if (gate.dataset.mode === 'initial') return;
+        hideLangGate();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (!gate.classList.contains('show')) return;
+        if (gate.dataset.mode === 'initial') return;
+        hideLangGate();
+      });
 
       gate.querySelectorAll('.lang-btn').forEach((btn) => {
         btn.addEventListener('click', async () => {
-          gate.querySelectorAll('.lang-btn').forEach((b) => {
+          const mode = gate.dataset.mode || 'initial';
+          const gateButtons = gate.querySelectorAll('.lang-btn');
+          gateButtons.forEach((b) => {
             b.disabled = true;
             b.classList.toggle('is-selecting', b === btn);
           });
           const next = btn.dataset.lang;
           localStorage.setItem('demo_lang', next);
           applyLang(next);
-          if (!shouldSkipWelcome) {
-            await playWelcome();
+          if (mode === 'initial' && !shouldSkipWelcome) {
+            await playWelcome({ instant: true });
+            hideLangGate();
+          } else {
+            hideLangGate();
           }
-          hideLangGate();
+          gateButtons.forEach((b) => { b.disabled = false; });
           releaseLocksIfIdle();
         });
       });
@@ -1088,6 +1224,11 @@
       document.getElementById('welcome')?.classList.add('hidden');
       document.body.classList.remove('welcome-lock');
       modalLock.forceUnlock();
+      const bootMask = document.getElementById('bootMask');
+      if (bootMask) {
+        bootMask.classList.add('hide');
+        window.setTimeout(() => bootMask.remove(), 340);
+      }
     }, 12000);
 
   </script>

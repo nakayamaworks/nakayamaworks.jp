@@ -130,3 +130,224 @@ window.DEMO_I18N = {
     lang_copy: '언어를 선택해 주세요.', welcome_sub: '럭셔리 에스테틱 살롱', welcome_line: '당신의 아름다움을 조용히 끌어올립니다.'
   }
 };
+
+window.DEMO_TREATMENT_LABELS = {
+  ja: { treatments: '施術内容', forWho: 'こんな方に', prices: '料金' },
+  en: { treatments: 'Treatment Includes', forWho: 'Recommended For', prices: 'Price' },
+  'zh-TW': { treatments: '療程內容', forWho: '適合對象', prices: '費用' },
+  es: { treatments: 'Contenido del Tratamiento', forWho: 'Recomendado Para', prices: 'Precio' },
+  ko: { treatments: '시술 내용', forWho: '추천 대상', prices: '요금' }
+};
+
+window.DEMO_TREATMENT_DETAILS = {
+  ja: {
+    'premium-facial': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'プレミアムフェイシャル',
+      category: 'FACIAL CARE',
+      image: './images/service-optimized/premium-facial.jpg',
+      intro: '肌状態・水分量・キメを丁寧に分析し、その日のコンディションに最適な施術を組み合わせるオーダーメイドフェイシャル。最新機器と熟練のハンドテクニックを融合し、透明感・ハリ・引き締まりを同時に引き出します。継続的なケアにより、肌本来の美しさを高めます。',
+      treatments: ['クレンジング', 'ディープ洗浄', '角質ケア', '美容液導入', 'リフトトリートメント', '高保湿パック'],
+      forWho: ['くすみや乾燥が気になる', '肌のハリ不足を感じる', '大切な予定を控えている'],
+      prices: ['60分|¥14,000', '90分|¥19,800', '120分|¥24,000']
+    },
+    'body-treatment': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'ボディトリートメント',
+      category: 'BODY CARE',
+      image: './images/service-optimized/body-treatment.jpg',
+      intro: '全身の筋肉とリンパに働きかけ、深部の疲れを解きほぐすトリートメント。滞った巡りを整え、軽やかでしなやかな身体へ導きます。日常のストレスや緊張を静かに解き放つ、上質なリラクゼーションを提供します。',
+      treatments: ['背面トリートメント', 'デコルテケア', '脚・足裏ケア', 'リンパドレナージュ', '仕上げの整え'],
+      forWho: ['慢性的な疲れを感じる', 'むくみや冷えが気になる', '深くリラックスしたい'],
+      prices: ['60分|¥16,000', '90分|¥24,000', '120分|¥30,000']
+    },
+    'bridal-course': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'ブライダルコース',
+      category: 'BRIDAL SPECIAL',
+      image: './images/service-optimized/bridal-course.jpg',
+      intro: '挙式に向けて肌とボディラインを整える短期集中プログラム。ドレスに映える美しいシルエットと透明感のある肌へ導きます。専任スタッフがカウンセリングを行い、最適な施術プランをご提案いたします。',
+      treatments: ['フェイシャルケア', 'デコルテケア', '背中トリートメント', 'ボディライン調整', '保湿・美肌仕上げ'],
+      forWho: ['挙式・前撮りを控えている', '短期間で仕上げたい', 'トータルケアを希望'],
+      prices: ['90分|¥28,000', '120分|¥38,000', '150分|¥46,000']
+    },
+    'relaxation-therapy': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'リラクゼーションセラピー',
+      category: 'RELAXATION',
+      image: './images/service-optimized/relaxation-therapy.jpg',
+      intro: 'アロマと熟練の手技を組み合わせた癒しのコース。静かな空間の中で心身の緊張をゆるやかに解きほぐします。忙しい日常から離れ、深い安らぎに包まれる時間をお過ごしください。',
+      treatments: ['アロマトリートメント', 'ヘッドケア', '首・肩ケア', '呼吸を整えるリラク手技'],
+      forWho: ['ストレスを感じている', '眠りが浅い', '心身をリセットしたい'],
+      prices: ['60分|¥12,000', '90分|¥16,500', '120分|¥21,000']
+    }
+  },
+  en: {
+    'premium-facial': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Premium Facial',
+      category: 'FACIAL CARE',
+      image: './images/service-optimized/premium-facial.jpg',
+      intro: 'A tailor-made facial built on skin condition analysis. By combining advanced devices and skilled hand techniques, this treatment enhances clarity, firmness, and contour in one session.',
+      treatments: ['Cleansing', 'Deep cleanse', 'Exfoliation', 'Serum infusion', 'Lift treatment', 'Moisture mask'],
+      forWho: ['Dullness or dryness concerns', 'Loss of firmness', 'Before an important event'],
+      prices: ['60 min|¥14,000', '90 min|¥19,800', '120 min|¥24,000']
+    },
+    'body-treatment': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Body Treatment',
+      category: 'BODY CARE',
+      image: './images/service-optimized/body-treatment.jpg',
+      intro: 'A full-body treatment designed to release deep fatigue and improve circulation. It restores lightness and flexibility while guiding you into premium relaxation.',
+      treatments: ['Back treatment', 'Decollete care', 'Leg & foot care', 'Lymph drainage', 'Final balancing'],
+      forWho: ['Chronic fatigue', 'Swelling or coldness', 'Need deep relaxation'],
+      prices: ['60 min|¥16,000', '90 min|¥24,000', '120 min|¥30,000']
+    },
+    'bridal-course': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Bridal Course',
+      category: 'BRIDAL SPECIAL',
+      image: './images/service-optimized/bridal-course.jpg',
+      intro: 'An intensive program to refine skin quality and body line before your wedding day. Dedicated staff provide consultation and customize the optimal treatment plan.',
+      treatments: ['Facial care', 'Decollete care', 'Back treatment', 'Body-line adjustment', 'Hydrating finish'],
+      forWho: ['Wedding or photo shoot preparation', 'Need results in a short period', 'Want total care'],
+      prices: ['90 min|¥28,000', '120 min|¥38,000', '150 min|¥46,000']
+    },
+    'relaxation-therapy': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Relaxation Therapy',
+      category: 'RELAXATION',
+      image: './images/service-optimized/relaxation-therapy.jpg',
+      intro: 'A soothing course combining aroma and expert hand techniques. In a calm private setting, tension is gently released for deep physical and mental reset.',
+      treatments: ['Aroma treatment', 'Head care', 'Neck & shoulder care', 'Relaxation breathing techniques'],
+      forWho: ['High stress', 'Light sleep concerns', 'Want a full reset'],
+      prices: ['60 min|¥12,000', '90 min|¥16,500', '120 min|¥21,000']
+    }
+  },
+  'zh-TW': {
+    'premium-facial': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '頂級臉部護理',
+      category: 'FACIAL CARE',
+      image: './images/service-optimized/premium-facial.jpg',
+      intro: '依肌膚狀態進行細緻分析後，組合最適合當日膚況的客製臉部療程。結合儀器與手技，同步提升透亮、緊緻與輪廓感。',
+      treatments: ['卸妝清潔', '深層清潔', '角質護理', '精華導入', '提拉護理', '高保濕面膜'],
+      forWho: ['在意暗沉乾燥', '感到肌膚鬆弛', '有重要行程前保養需求'],
+      prices: ['60分鐘|¥14,000', '90分鐘|¥19,800', '120分鐘|¥24,000']
+    },
+    'body-treatment': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '身體療程',
+      category: 'BODY CARE',
+      image: './images/service-optimized/body-treatment.jpg',
+      intro: '針對全身肌肉與循環的深層放鬆療程，舒緩疲勞、調整循環，帶來輕盈且舒展的身體狀態。',
+      treatments: ['背部療程', '頸胸護理', '腿部與足部護理', '淋巴引流', '整體平衡收尾'],
+      forWho: ['長期疲勞', '在意水腫與手腳冰冷', '想深度放鬆'],
+      prices: ['60分鐘|¥16,000', '90分鐘|¥24,000', '120分鐘|¥30,000']
+    },
+    'bridal-course': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '新娘課程',
+      category: 'BRIDAL SPECIAL',
+      image: './images/service-optimized/bridal-course.jpg',
+      intro: '為婚禮前打造的短期密集計畫，調整肌膚與身形線條。由專任人員諮詢，規劃最適合的個人療程組合。',
+      treatments: ['臉部護理', '頸胸護理', '背部療程', '身形線條調整', '保濕美肌收尾'],
+      forWho: ['婚禮或婚紗拍攝前', '希望短期完成保養', '需要整體照護'],
+      prices: ['90分鐘|¥28,000', '120分鐘|¥38,000', '150分鐘|¥46,000']
+    },
+    'relaxation-therapy': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '舒壓療法',
+      category: 'RELAXATION',
+      image: './images/service-optimized/relaxation-therapy.jpg',
+      intro: '結合芳療與熟練手技，在安靜空間中溫和放鬆身心緊繃，讓日常壓力慢慢釋放。',
+      treatments: ['芳香療程', '頭部舒壓', '頸肩護理', '呼吸放鬆手技'],
+      forWho: ['壓力偏高', '睡眠較淺', '想重整身心狀態'],
+      prices: ['60分鐘|¥12,000', '90分鐘|¥16,500', '120分鐘|¥21,000']
+    }
+  },
+  es: {
+    'premium-facial': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Facial Premium',
+      category: 'FACIAL CARE',
+      image: './images/service-optimized/premium-facial.jpg',
+      intro: 'Facial personalizado según análisis detallado de la piel. Combina tecnología avanzada y técnica manual para mejorar luminosidad, firmeza y contorno.',
+      treatments: ['Limpieza inicial', 'Limpieza profunda', 'Exfoliación', 'Infusión de sérum', 'Tratamiento lifting', 'Mascarilla hidratante'],
+      forWho: ['Piel opaca o seca', 'Pérdida de firmeza', 'Antes de un evento importante'],
+      prices: ['60 min|¥14,000', '90 min|¥19,800', '120 min|¥24,000']
+    },
+    'body-treatment': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Tratamiento Corporal',
+      category: 'BODY CARE',
+      image: './images/service-optimized/body-treatment.jpg',
+      intro: 'Tratamiento integral que libera fatiga profunda y mejora la circulación. Aporta una sensación de ligereza y descanso premium.',
+      treatments: ['Tratamiento de espalda', 'Cuidado de escote', 'Piernas y pies', 'Drenaje linfático', 'Ajuste final'],
+      forWho: ['Fatiga crónica', 'Hinchazón o sensación de frío', 'Necesidad de relajación profunda'],
+      prices: ['60 min|¥16,000', '90 min|¥24,000', '120 min|¥30,000']
+    },
+    'bridal-course': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Curso Bridal',
+      category: 'BRIDAL SPECIAL',
+      image: './images/service-optimized/bridal-course.jpg',
+      intro: 'Programa intensivo para preparar piel y silueta antes de la boda. Nuestro equipo especializado diseña un plan óptimo según tus objetivos.',
+      treatments: ['Cuidado facial', 'Cuidado de escote', 'Tratamiento de espalda', 'Ajuste de silueta', 'Acabado hidratante'],
+      forWho: ['Antes de boda o sesión de fotos', 'Resultados en poco tiempo', 'Deseo de cuidado integral'],
+      prices: ['90 min|¥28,000', '120 min|¥38,000', '150 min|¥46,000']
+    },
+    'relaxation-therapy': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: 'Terapia de Relajación',
+      category: 'RELAXATION',
+      image: './images/service-optimized/relaxation-therapy.jpg',
+      intro: 'Curso relajante que combina aromaterapia y técnica manual. Libera tensión física y mental de forma suave en un ambiente tranquilo.',
+      treatments: ['Aromaterapia', 'Cuidado de cabeza', 'Cuidado de cuello y hombros', 'Técnicas de respiración relajante'],
+      forWho: ['Estrés elevado', 'Sueño ligero', 'Necesidad de reinicio cuerpo-mente'],
+      prices: ['60 min|¥12,000', '90 min|¥16,500', '120 min|¥21,000']
+    }
+  },
+  ko: {
+    'premium-facial': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '프리미엄 페이셜',
+      category: 'FACIAL CARE',
+      image: './images/service-optimized/premium-facial.jpg',
+      intro: '피부 상태를 정밀 분석한 뒤 당일 컨디션에 맞춰 구성하는 맞춤형 페이셜 케어입니다. 기기와 수기 테크닉을 결합해 투명감과 탄력을 동시에 끌어올립니다.',
+      treatments: ['클렌징', '딥 클렌징', '각질 케어', '세럼 도입', '리프트 케어', '고보습 팩'],
+      forWho: ['칙칙함·건조가 고민인 분', '탄력 저하를 느끼는 분', '중요한 일정을 앞둔 분'],
+      prices: ['60분|¥14,000', '90분|¥19,800', '120분|¥24,000']
+    },
+    'body-treatment': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '바디 트리트먼트',
+      category: 'BODY CARE',
+      image: './images/service-optimized/body-treatment.jpg',
+      intro: '전신 근육과 순환에 접근해 깊은 피로를 풀어주는 케어입니다. 무거운 몸을 가볍게 정돈하고 깊은 이완으로 안내합니다.',
+      treatments: ['등 케어', '데콜테 케어', '다리·발 케어', '림프 드레나주', '마무리 밸런싱'],
+      forWho: ['만성 피로가 있는 분', '부기·냉증이 고민인 분', '깊은 휴식을 원하는 분'],
+      prices: ['60분|¥16,000', '90분|¥24,000', '120분|¥30,000']
+    },
+    'bridal-course': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '브라이덜 코스',
+      category: 'BRIDAL SPECIAL',
+      image: './images/service-optimized/bridal-course.jpg',
+      intro: '예식 전 피부와 바디 라인을 정돈하는 집중 프로그램입니다. 전담 스태프가 상담 후 최적의 플랜을 제안합니다.',
+      treatments: ['페이셜 케어', '데콜테 케어', '등 케어', '바디 라인 조정', '보습 마무리'],
+      forWho: ['예식·스냅 촬영을 앞둔 분', '단기간 집중 케어가 필요한 분', '토탈 케어를 원하는 분'],
+      prices: ['90분|¥28,000', '120분|¥38,000', '150분|¥46,000']
+    },
+    'relaxation-therapy': {
+      kicker: 'SIGNATURE TREATMENT',
+      title: '릴랙세이션 테라피',
+      category: 'RELAXATION',
+      image: './images/service-optimized/relaxation-therapy.jpg',
+      intro: '아로마와 숙련된 수기 기법을 결합한 힐링 코스입니다. 고요한 공간에서 몸과 마음의 긴장을 부드럽게 풀어줍니다.',
+      treatments: ['아로마 트리트먼트', '헤드 케어', '목·어깨 케어', '호흡 이완 테크닉'],
+      forWho: ['스트레스가 많은 분', '수면이 얕은 분', '컨디션 리셋이 필요한 분'],
+      prices: ['60분|¥12,000', '90분|¥16,500', '120분|¥21,000']
+    }
+  }
+};
