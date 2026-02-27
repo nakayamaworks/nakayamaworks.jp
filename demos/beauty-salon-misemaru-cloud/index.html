@@ -264,6 +264,10 @@
     .image-lightbox.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
     .image-lightbox-frame{position:relative}
     .image-lightbox-img{width:min(980px,84vw);max-height:78vh;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 56px rgba(0,0,0,.45);display:block;object-fit:contain}
+    .image-lightbox-img.swap-out-next{animation:swapOutNext .2s ease forwards}
+    .image-lightbox-img.swap-out-prev{animation:swapOutPrev .2s ease forwards}
+    .image-lightbox-img.swap-in-next{animation:swapInNext .24s ease forwards}
+    .image-lightbox-img.swap-in-prev{animation:swapInPrev .24s ease forwards}
     .image-lightbox-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
     .image-lightbox-close:hover,.image-lightbox-close:focus-visible{background:rgba(215,178,74,.2)}
     .image-lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,241,204,.45);background:rgba(12,12,12,.72);color:#f6dfab;font-size:1.35rem;line-height:1;display:grid;place-items:center;cursor:pointer}
@@ -276,9 +280,33 @@
     .modal-scroll-area{overscroll-behavior:none;overscroll-behavior-y:none;-webkit-overflow-scrolling:touch;touch-action:pan-y;overflow-y:auto}
     .treatment-modal-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
     .treatment-modal-close:hover,.treatment-modal-close:focus-visible{background:rgba(215,178,74,.2)}
+    .treatment-modal-nav{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,241,204,.45);
+      background:rgba(12,12,12,.72);
+      color:#f6dfab;
+      font-size:1.35rem;
+      line-height:1;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      z-index:2;
+    }
+    .treatment-modal-nav:hover,.treatment-modal-nav:focus-visible{background:rgba(215,178,74,.18)}
+    .treatment-modal-nav.prev{left:10px}
+    .treatment-modal-nav.next{right:10px}
     .treatment-modal-kicker{margin:0;color:#d8b556;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
     .treatment-modal-title{margin:.28rem 0 .2rem;color:#fff2ce;font-family:'Noto Serif JP','Cinzel',serif;font-size:1.35rem;line-height:1.35}
     .treatment-modal-cat{margin:0 0 .75rem;color:rgba(245,240,226,.82);font-family:'Cinzel',serif;letter-spacing:.1em;font-size:.78rem}
+    .treatment-modal-anim.swap-out-next{animation:swapOutNext .2s ease forwards}
+    .treatment-modal-anim.swap-out-prev{animation:swapOutPrev .2s ease forwards}
+    .treatment-modal-anim.swap-in-next{animation:swapInNext .24s ease forwards}
+    .treatment-modal-anim.swap-in-prev{animation:swapInPrev .24s ease forwards}
     .treatment-modal-layout{display:grid;grid-template-columns:minmax(310px,1.14fr) minmax(0,.86fr);gap:.65rem;align-items:start}
     .treatment-modal-media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.14)}
     .treatment-modal-intro{margin:.55rem 0 0;color:rgba(245,240,226,.88);font-size:.92rem;line-height:1.82}
@@ -298,12 +326,19 @@
       font-variant-numeric:tabular-nums;
       font-feature-settings:"tnum" 1;
     }
+    @keyframes swapOutNext { from { opacity:1; transform:translateX(0);} to { opacity:0; transform:translateX(-22px);} }
+    @keyframes swapOutPrev { from { opacity:1; transform:translateX(0);} to { opacity:0; transform:translateX(22px);} }
+    @keyframes swapInNext  { from { opacity:0; transform:translateX(22px);} to { opacity:1; transform:translateX(0);} }
+    @keyframes swapInPrev  { from { opacity:0; transform:translateX(-22px);} to { opacity:1; transform:translateX(0);} }
     @media (max-width:991.98px){
       .image-lightbox-img{width:min(700px,90vw);max-height:68vh}
       .image-lightbox-close{top:8px;right:8px;width:34px;height:34px}
       .image-lightbox-nav{width:38px;height:38px}
       .image-lightbox-nav.prev{left:8px}
       .image-lightbox-nav.next{right:8px}
+      .treatment-modal-nav{width:38px;height:38px}
+      .treatment-modal-nav.prev{left:8px}
+      .treatment-modal-nav.next{right:8px}
       .treatment-modal{padding:max(8px,env(safe-area-inset-top)) .52rem max(8px,env(safe-area-inset-bottom))}
       .treatment-modal-card{padding:.95rem .82rem 1rem;max-height:calc(100dvh - 1rem - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
       .treatment-modal-title{font-size:1.18rem;padding-right:2.1rem}
@@ -583,16 +618,20 @@
 
   <div id="treatmentModal" class="treatment-modal" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="treatment-modal-card modal-scroll-area">
+      <button id="treatmentModalPrev" class="treatment-modal-nav prev" type="button" aria-label="Previous treatment">‹</button>
+      <button id="treatmentModalNext" class="treatment-modal-nav next" type="button" aria-label="Next treatment">›</button>
       <button id="treatmentModalClose" class="treatment-modal-close" type="button" aria-label="Close">×</button>
-      <p id="treatmentModalKicker" class="treatment-modal-kicker">SIGNATURE TREATMENT</p>
-      <h3 id="treatmentModalTitle" class="treatment-modal-title">プレミアムフェイシャル</h3>
-      <p id="treatmentModalCategory" class="treatment-modal-cat">FACIAL CARE</p>
-      <div class="treatment-modal-layout">
-        <div class="treatment-modal-media">
-          <img id="treatmentModalImage" src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" />
-          <p id="treatmentModalIntro" class="treatment-modal-intro"></p>
+      <div id="treatmentModalAnim" class="treatment-modal-anim">
+        <p id="treatmentModalKicker" class="treatment-modal-kicker">SIGNATURE TREATMENT</p>
+        <h3 id="treatmentModalTitle" class="treatment-modal-title">プレミアムフェイシャル</h3>
+        <p id="treatmentModalCategory" class="treatment-modal-cat">FACIAL CARE</p>
+        <div class="treatment-modal-layout">
+          <div class="treatment-modal-media">
+            <img id="treatmentModalImage" src="./images/service-optimized/premium-facial.jpg" alt="Premium Facial" />
+            <p id="treatmentModalIntro" class="treatment-modal-intro"></p>
+          </div>
+          <div id="treatmentModalBody" class="treatment-modal-body"></div>
         </div>
-        <div id="treatmentModalBody" class="treatment-modal-body"></div>
       </div>
     </div>
   </div>
@@ -941,17 +980,29 @@
 
     (function treatmentDetailFx() {
       const modal = document.getElementById('treatmentModal');
+      const modalCard = modal?.querySelector('.treatment-modal-card');
+      const animWrap = document.getElementById('treatmentModalAnim');
       const closeBtn = document.getElementById('treatmentModalClose');
+      const prevBtn = document.getElementById('treatmentModalPrev');
+      const nextBtn = document.getElementById('treatmentModalNext');
       const kickerEl = document.getElementById('treatmentModalKicker');
       const titleEl = document.getElementById('treatmentModalTitle');
       const catEl = document.getElementById('treatmentModalCategory');
       const imgEl = document.getElementById('treatmentModalImage');
       const introEl = document.getElementById('treatmentModalIntro');
       const bodyEl = document.getElementById('treatmentModalBody');
-      if (!modal || !closeBtn || !kickerEl || !titleEl || !catEl || !imgEl || !introEl || !bodyEl) return;
+      if (!modal || !modalCard || !animWrap || !closeBtn || !prevBtn || !nextBtn || !kickerEl || !titleEl || !catEl || !imgEl || !introEl || !bodyEl) return;
       const allDetails = window.DEMO_TREATMENT_DETAILS || {};
       const allLabels = window.DEMO_TREATMENT_LABELS || {};
       let activeTreatmentKey = null;
+      const treatmentKeys = Array.from(document.querySelectorAll('.menu-detail-btn[data-treatment]'))
+        .map((btn) => btn.dataset.treatment)
+        .filter(Boolean);
+      let activeIndex = -1;
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+      let swipeTracking = false;
+      let swapping = false;
       const currentLang = () => document.documentElement.lang || localStorage.getItem('demo_lang') || 'ja';
 
       const listHtml = (arr) => `<ul>${arr.map((item) => `<li>${item}</li>`).join('')}</ul>`;
@@ -992,9 +1043,37 @@
           ${priceListHtml(d.prices)}
         `;
       };
-      const open = (key) => {
+      const showAt = (idx) => {
+        if (!treatmentKeys.length) return;
+        activeIndex = (idx + treatmentKeys.length) % treatmentKeys.length;
+        const key = treatmentKeys[activeIndex];
         activeTreatmentKey = key;
         render(key);
+      };
+      const animateTo = (idx, dir) => {
+        if (!modal.classList.contains('is-open')) {
+          showAt(idx);
+          return;
+        }
+        if (swapping) return;
+        swapping = true;
+        const outCls = dir === 'prev' ? 'swap-out-prev' : 'swap-out-next';
+        const inCls = dir === 'prev' ? 'swap-in-prev' : 'swap-in-next';
+        animWrap.classList.remove('swap-out-next', 'swap-out-prev', 'swap-in-next', 'swap-in-prev');
+        animWrap.classList.add(outCls);
+        window.setTimeout(() => {
+          showAt(idx);
+          animWrap.classList.remove(outCls);
+          animWrap.classList.add(inCls);
+          window.setTimeout(() => {
+            animWrap.classList.remove(inCls);
+            swapping = false;
+          }, 250);
+        }, 190);
+      };
+      const open = (key) => {
+        const found = treatmentKeys.indexOf(key);
+        showAt(found >= 0 ? found : 0);
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         modalLock.lock();
@@ -1003,6 +1082,7 @@
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
         activeTreatmentKey = null;
+        activeIndex = -1;
         modalLock.unlock();
       };
       window.refreshTreatmentModalLang = () => {
@@ -1013,12 +1093,38 @@
       document.querySelectorAll('.menu-detail-btn[data-treatment]').forEach((btn) => {
         btn.addEventListener('click', () => open(btn.dataset.treatment));
       });
+      prevBtn.addEventListener('click', (e) => { e.stopPropagation(); animateTo(activeIndex - 1, 'prev'); });
+      nextBtn.addEventListener('click', (e) => { e.stopPropagation(); animateTo(activeIndex + 1, 'next'); });
       closeBtn.addEventListener('click', close);
       modal.addEventListener('click', (e) => {
         if (e.target === modal) close();
       });
+      modalCard.addEventListener('touchstart', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+        const t = e.touches && e.touches[0];
+        if (!t) return;
+        swipeTracking = true;
+        swipeStartX = t.clientX;
+        swipeStartY = t.clientY;
+      }, { passive: true });
+      modalCard.addEventListener('touchend', (e) => {
+        if (!swipeTracking || !modal.classList.contains('is-open')) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        swipeTracking = false;
+        if (!t) return;
+        const dx = t.clientX - swipeStartX;
+        const dy = t.clientY - swipeStartY;
+        const absX = Math.abs(dx);
+        const absY = Math.abs(dy);
+        if (absX < 36 || absX <= absY * 1.2) return;
+        if (dx < 0) animateTo(activeIndex + 1, 'next');
+        if (dx > 0) animateTo(activeIndex - 1, 'prev');
+      }, { passive: true });
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') animateTo(activeIndex - 1, 'prev');
+        if (e.key === 'ArrowRight') animateTo(activeIndex + 1, 'next');
       });
     })();
 
@@ -1035,12 +1141,34 @@
       let swipeStartX = 0;
       let swipeStartY = 0;
       let swipeTracking = false;
+      let swapping = false;
       const showAt = (idx) => {
         if (!targets.length) return;
         currentIndex = (idx + targets.length) % targets.length;
         const img = targets[currentIndex];
         lightboxImg.src = img.currentSrc || img.src;
         lightboxImg.alt = img.alt || '';
+      };
+      const animateTo = (idx, dir) => {
+        if (!lightbox.classList.contains('is-open')) {
+          showAt(idx);
+          return;
+        }
+        if (swapping) return;
+        swapping = true;
+        const outCls = dir === 'prev' ? 'swap-out-prev' : 'swap-out-next';
+        const inCls = dir === 'prev' ? 'swap-in-prev' : 'swap-in-next';
+        lightboxImg.classList.remove('swap-out-next', 'swap-out-prev', 'swap-in-next', 'swap-in-prev');
+        lightboxImg.classList.add(outCls);
+        window.setTimeout(() => {
+          showAt(idx);
+          lightboxImg.classList.remove(outCls);
+          lightboxImg.classList.add(inCls);
+          window.setTimeout(() => {
+            lightboxImg.classList.remove(inCls);
+            swapping = false;
+          }, 250);
+        }, 190);
       };
       const open = (img) => {
         currentIndex = Math.max(0, targets.indexOf(img));
@@ -1056,8 +1184,8 @@
         window.setTimeout(() => { lightboxImg.src = ''; }, 180);
       };
       targets.forEach((img) => img.addEventListener('click', () => open(img)));
-      prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex - 1); });
-      nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex + 1); });
+      prevBtn.addEventListener('click', (e) => { e.stopPropagation(); animateTo(currentIndex - 1, 'prev'); });
+      nextBtn.addEventListener('click', (e) => { e.stopPropagation(); animateTo(currentIndex + 1, 'next'); });
       closeBtn.addEventListener('click', close);
 
       lightboxFrame.addEventListener('touchstart', (e) => {
@@ -1079,8 +1207,8 @@
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
         if (absX < 36 || absX <= absY * 1.2) return;
-        if (dx < 0) showAt(currentIndex + 1);
-        if (dx > 0) showAt(currentIndex - 1);
+        if (dx < 0) animateTo(currentIndex + 1, 'next');
+        if (dx > 0) animateTo(currentIndex - 1, 'prev');
       }, { passive: true });
 
       lightbox.addEventListener('click', (e) => {
@@ -1089,8 +1217,8 @@
       document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('is-open')) return;
         if (e.key === 'Escape') close();
-        if (e.key === 'ArrowLeft') showAt(currentIndex - 1);
-        if (e.key === 'ArrowRight') showAt(currentIndex + 1);
+        if (e.key === 'ArrowLeft') animateTo(currentIndex - 1, 'prev');
+        if (e.key === 'ArrowRight') animateTo(currentIndex + 1, 'next');
       });
     })();
 
