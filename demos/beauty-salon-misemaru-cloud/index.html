@@ -252,6 +252,9 @@
       #salonGallery.section{width:min(1160px,calc(100% - .9rem))}
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .staff-grid{grid-template-columns:1fr}
+      #staff .staff-card:nth-child(2) .avatar{margin-left:auto;margin-right:0}
+      #staff .staff-card:nth-child(2) #s2Name,
+      #staff .staff-card:nth-child(2) #s2Role{text-align:right}
       .welcome-inner{transform:translate3d(0,-50px,0)}
       .menu-toggle{display:inline-block}
       .top-nav-right{
@@ -529,16 +532,42 @@
       });
     });
 
-    const revealNodes = Array.from(document.querySelectorAll('.reveal'));
-    revealNodes.forEach((n) => n.classList.add('will-reveal'));
-    const io = new IntersectionObserver((entries, obs) => {
+    // Reveal split:
+    // - Section titles appear earlier for scroll confidence.
+    // - Section bodies keep the slower premium timing.
+    const titleNodes = Array.from(document.querySelectorAll('.section .title'));
+    titleNodes.forEach((n) => n.classList.add('will-reveal'));
+    const titleIo = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('on');
         obs.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.16 });
-    revealNodes.forEach((n) => io.observe(n));
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.12 });
+    titleNodes.forEach((n) => titleIo.observe(n));
+
+    const bodyNodes = [];
+    document.querySelectorAll('.section.reveal').forEach((section) => {
+      Array.from(section.children).forEach((child) => {
+        if (child.classList?.contains('title')) return;
+        child.classList?.add('will-reveal');
+        bodyNodes.push(child);
+      });
+    });
+    // Non-section reveals (hero / cta) keep delayed reveal behavior.
+    document.querySelectorAll('.reveal').forEach((n) => {
+      if (n.classList.contains('section')) return;
+      n.classList.add('will-reveal');
+      bodyNodes.push(n);
+    });
+    const bodyIo = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('on');
+        obs.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.34 });
+    bodyNodes.forEach((n) => bodyIo.observe(n));
 
     const topNav = document.getElementById('topNav');
     const menuToggle = document.getElementById('menuToggle');
@@ -607,7 +636,7 @@
           });
           obs.unobserve(section);
         });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.3 });
+      }, { rootMargin: '0px 0px -16% 0px', threshold: 0.5 });
       fx.observe(section);
     })();
 
@@ -628,7 +657,7 @@
           serialDelay += 120;
           obs.unobserve(target);
         });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.48 });
+      }, { rootMargin: '0px 0px -16% 0px', threshold: 0.62 });
       cards.forEach((c) => fx.observe(c));
     })();
 
@@ -646,7 +675,7 @@
           entry.target.classList.add('fx-show');
           obs.unobserve(entry.target);
         });
-      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.55 });
+      }, { rootMargin: '0px 0px -16% 0px', threshold: 0.72 });
       cards.forEach((c) => fx.observe(c));
     })();
 
