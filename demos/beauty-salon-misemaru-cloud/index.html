@@ -607,6 +607,12 @@
 
   <script src="./i18n-demo.js"></script>
   <script>
+    function clearPageLeavingState() {
+      document.body.classList.remove('page-leaving');
+    }
+    window.addEventListener('pageshow', clearPageLeavingState);
+    window.addEventListener('DOMContentLoaded', clearPageLeavingState, { once: true });
+
     const map = {
       navConcept:'nav_concept',navFeatures:'nav_features',navMenu:'nav_menu',navStaff:'nav_staff',navStore:'nav_store',navReserve:'reserve',
       heroReserveLabel:'reserve',ctaReserveLabel:'reserve',heroReserveSub:'reserve_note',ctaReserveSub:'reserve_note',
