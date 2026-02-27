@@ -181,8 +181,9 @@
     .sns-link{width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,241,204,.42);background:rgba(255,255,255,.04);color:#f1ddad;display:grid;place-items:center;transition:transform .2s ease,background .2s ease,border-color .2s ease}
     .sns-link:hover,.sns-link:focus-visible{transform:translateY(-1px);background:rgba(255,255,255,.11);border-color:rgba(255,241,204,.75)}
     .sns-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-    body.modal-lock{overflow:hidden}
-    .image-lightbox{position:fixed;inset:0;z-index:460;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.82);backdrop-filter:blur(6px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+    html.modal-lock,body.modal-lock{overflow:hidden;overscroll-behavior:none;height:100%}
+    body.modal-lock{position:fixed;left:0;right:0;width:100%;touch-action:pan-y}
+    .image-lightbox{position:fixed;inset:0;z-index:460;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.82);backdrop-filter:blur(6px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;overscroll-behavior:contain}
     .image-lightbox.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
     .image-lightbox-frame{position:relative}
     .image-lightbox-img{width:min(980px,84vw);max-height:78vh;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 56px rgba(0,0,0,.45);display:block;object-fit:contain}
@@ -192,9 +193,10 @@
     .image-lightbox-nav:hover,.image-lightbox-nav:focus-visible{background:rgba(215,178,74,.18)}
     .image-lightbox-nav.prev{left:10px}
     .image-lightbox-nav.next{right:10px}
-    .treatment-modal{position:fixed;inset:0;z-index:470;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.78);backdrop-filter:blur(7px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+    .treatment-modal{position:fixed;inset:0;z-index:470;display:grid;place-items:center;padding:1rem;background:rgba(5,5,5,.78);backdrop-filter:blur(7px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;overscroll-behavior:contain}
     .treatment-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
     .treatment-modal-card{position:relative;width:min(760px,94vw);max-height:88vh;overflow:auto;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(165deg,rgba(20,20,20,.96),rgba(10,10,10,.95));box-shadow:0 24px 54px rgba(0,0,0,.45);padding:1rem 1rem 1.15rem}
+    .modal-scroll-area{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
     .treatment-modal-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
     .treatment-modal-close:hover,.treatment-modal-close:focus-visible{background:rgba(215,178,74,.2)}
     .treatment-modal-kicker{margin:0;color:#d8b556;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
@@ -470,7 +472,7 @@
   </footer>
 
   <div id="treatmentModal" class="treatment-modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="treatment-modal-card">
+    <div class="treatment-modal-card modal-scroll-area">
       <button id="treatmentModalClose" class="treatment-modal-close" type="button" aria-label="Close">×</button>
       <p id="treatmentModalKicker" class="treatment-modal-kicker">SIGNATURE TREATMENT</p>
       <h3 id="treatmentModalTitle" class="treatment-modal-title">プレミアムフェイシャル</h3>
@@ -679,6 +681,48 @@
       cards.forEach((c) => fx.observe(c));
     })();
 
+    const modalLock = (() => {
+      let depth = 0;
+      let lockedScrollY = 0;
+
+      const blockBackdropScroll = (e) => {
+        if (!document.body.classList.contains('modal-lock')) return;
+        if (e.target?.closest?.('.modal-scroll-area')) return;
+        e.preventDefault();
+      };
+
+      document.addEventListener('touchmove', blockBackdropScroll, { passive: false });
+      document.addEventListener('wheel', blockBackdropScroll, { passive: false });
+
+      const lock = () => {
+        depth += 1;
+        if (depth > 1) return;
+        lockedScrollY = window.scrollY || window.pageYOffset || 0;
+        document.documentElement.classList.add('modal-lock');
+        document.body.classList.add('modal-lock');
+        document.body.style.top = `-${lockedScrollY}px`;
+      };
+
+      const unlock = () => {
+        if (depth <= 0) return;
+        depth -= 1;
+        if (depth > 0) return;
+        const restoreY = Math.abs(parseInt(document.body.style.top || '0', 10)) || lockedScrollY;
+        document.documentElement.classList.remove('modal-lock');
+        document.body.classList.remove('modal-lock');
+        document.body.style.top = '';
+        window.scrollTo({ top: restoreY, left: 0, behavior: 'auto' });
+      };
+
+      const forceUnlock = () => {
+        if (!document.body.classList.contains('modal-lock') && !document.documentElement.classList.contains('modal-lock')) return;
+        depth = 1;
+        unlock();
+      };
+
+      return { lock, unlock, forceUnlock };
+    })();
+
     (function treatmentDetailFx() {
       const modal = document.getElementById('treatmentModal');
       const closeBtn = document.getElementById('treatmentModalClose');
@@ -753,12 +797,12 @@
         `;
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-lock');
+        modalLock.lock();
       };
       const close = () => {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-lock');
+        modalLock.unlock();
       };
       document.querySelectorAll('.menu-detail-btn[data-treatment]').forEach((btn) => {
         btn.addEventListener('click', () => open(btn.dataset.treatment));
@@ -793,12 +837,12 @@
         showAt(currentIndex);
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-lock');
+        modalLock.lock();
       };
       const close = () => {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-lock');
+        modalLock.unlock();
         window.setTimeout(() => { lightboxImg.src = ''; }, 180);
       };
       targets.forEach((img) => img.addEventListener('click', () => open(img)));
@@ -879,7 +923,8 @@
         const welcomeOpen = !welcome.classList.contains('hidden');
         const lightboxOpen = !!lightbox && lightbox.classList.contains('is-open');
         if (!gateOpen && !welcomeOpen && !lightboxOpen) {
-          document.body.classList.remove('welcome-lock', 'modal-lock');
+          document.body.classList.remove('welcome-lock');
+          modalLock.forceUnlock();
         }
       };
 
@@ -947,7 +992,8 @@
     // Hard fallback: never leave the page blocked by welcome overlay.
     window.setTimeout(() => {
       document.getElementById('welcome')?.classList.add('hidden');
-      document.body.classList.remove('welcome-lock', 'modal-lock');
+      document.body.classList.remove('welcome-lock');
+      modalLock.forceUnlock();
     }, 12000);
 
   </script>
