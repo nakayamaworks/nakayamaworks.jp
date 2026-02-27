@@ -212,6 +212,15 @@
       .treatment-modal-body{padding-left:.95rem}
     }
     .treatment-modal-body ul{margin:.1rem 0 .4rem;padding-left:1.05rem}
+    .treatment-modal-body ul.price-list{padding-left:1.05rem;margin:.15rem 0 .35rem}
+    .treatment-modal-body ul.price-list li{list-style:disc}
+    .treatment-modal-body .price-time{white-space:nowrap}
+    .treatment-modal-body ul.price-list .price-time{display:inline-block;width:66px}
+    .treatment-modal-body .price-amount{
+      white-space:nowrap;
+      font-variant-numeric:tabular-nums;
+      font-feature-settings:"tnum" 1;
+    }
     @media (max-width:991.98px){
       .image-lightbox-img{width:min(700px,90vw);max-height:68vh}
       .image-lightbox-close{top:8px;right:8px;width:34px;height:34px}
@@ -827,6 +836,13 @@
       };
 
       const listHtml = (arr) => `<ul>${arr.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+      const priceListHtml = (arr) => `<ul class="price-list">${
+        arr.map((item) => {
+          const m = item.match(/^(.+?\s*分)\s*¥\s*([\d,]+)$/);
+          if (!m) return `<li>${item}</li>`;
+          return `<li><span class="price-time">${m[1]}</span><span class="price-amount">¥${m[2]}</span></li>`;
+        }).join('')
+      }</ul>`;
       const open = (key) => {
         const d = details[key];
         if (!d) return;
@@ -842,7 +858,7 @@
           <h4>■ こんな方に</h4>
           ${listHtml(d.forWho)}
           <h4>■ 料金</h4>
-          ${listHtml(d.prices)}
+          ${priceListHtml(d.prices)}
         `;
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
