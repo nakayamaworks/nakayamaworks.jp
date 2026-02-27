@@ -871,9 +871,13 @@
       const prevBtn = document.getElementById('imageLightboxPrev');
       const nextBtn = document.getElementById('imageLightboxNext');
       const lightboxImg = document.getElementById('imageLightboxImg');
-      if (!lightbox || !closeBtn || !prevBtn || !nextBtn || !lightboxImg) return;
+      const lightboxFrame = lightbox?.querySelector('.image-lightbox-frame');
+      if (!lightbox || !closeBtn || !prevBtn || !nextBtn || !lightboxImg || !lightboxFrame) return;
       const targets = Array.from(document.querySelectorAll('#salonGallery .menu-item img'));
       let currentIndex = 0;
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+      let swipeTracking = false;
       const showAt = (idx) => {
         if (!targets.length) return;
         currentIndex = (idx + targets.length) % targets.length;
@@ -898,6 +902,30 @@
       prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex - 1); });
       nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex + 1); });
       closeBtn.addEventListener('click', close);
+
+      lightboxFrame.addEventListener('touchstart', (e) => {
+        if (!lightbox.classList.contains('is-open')) return;
+        const t = e.touches && e.touches[0];
+        if (!t) return;
+        swipeTracking = true;
+        swipeStartX = t.clientX;
+        swipeStartY = t.clientY;
+      }, { passive: true });
+
+      lightboxFrame.addEventListener('touchend', (e) => {
+        if (!swipeTracking || !lightbox.classList.contains('is-open')) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        swipeTracking = false;
+        if (!t) return;
+        const dx = t.clientX - swipeStartX;
+        const dy = t.clientY - swipeStartY;
+        const absX = Math.abs(dx);
+        const absY = Math.abs(dy);
+        if (absX < 36 || absX <= absY * 1.2) return;
+        if (dx < 0) showAt(currentIndex + 1);
+        if (dx > 0) showAt(currentIndex - 1);
+      }, { passive: true });
+
       lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) close();
       });
