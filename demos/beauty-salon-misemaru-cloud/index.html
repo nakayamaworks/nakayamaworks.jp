@@ -612,6 +612,23 @@
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
     };
     const LANG_SHORT = { ja:'JP', en:'EN', 'zh-TW':'繁中', es:'ES', ko:'KO' };
+    const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/';
+    function applyReserveLinks(lang) {
+      const ids = ['navReserve', 'heroReserve', 'ctaReserve'];
+      const returnTo = `${location.origin}${location.pathname}`;
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        try {
+          const u = new URL(RESERVE_BASE_URL);
+          u.searchParams.set('lang', lang || 'ja');
+          u.searchParams.set('return', returnTo);
+          el.href = u.toString();
+        } catch (_) {
+          el.href = RESERVE_BASE_URL;
+        }
+      });
+    }
 
     function applyLang(lang) {
       const dict = window.DEMO_I18N || {};
@@ -627,6 +644,7 @@
       document.querySelectorAll('#langGate .lang-btn[data-lang]').forEach((btn) => {
         btn.classList.toggle('is-selecting', btn.dataset.lang === lang);
       });
+      applyReserveLinks(lang);
       if (typeof window.refreshTreatmentModalLang === 'function') {
         window.refreshTreatmentModalLang();
       }
