@@ -196,7 +196,7 @@
     .treatment-modal{position:fixed;inset:0;z-index:470;display:grid;place-items:center;padding:max(12px,env(safe-area-inset-top)) 1rem max(12px,env(safe-area-inset-bottom));background:rgba(5,5,5,.78);backdrop-filter:blur(7px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;overscroll-behavior:contain}
     .treatment-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s}
     .treatment-modal-card{position:relative;width:min(760px,94vw);max-height:min(88vh,calc(100dvh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)));overflow:auto;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(165deg,rgba(20,20,20,.96),rgba(10,10,10,.95));box-shadow:0 24px 54px rgba(0,0,0,.45);padding:1rem 1rem 1.15rem}
-    .modal-scroll-area{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+    .modal-scroll-area{overscroll-behavior:none;overscroll-behavior-y:none;-webkit-overflow-scrolling:touch;touch-action:pan-y;overflow-y:auto}
     .treatment-modal-close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,241,204,.52);background:rgba(18,18,18,.78);color:#f6dfab;font-size:1.2rem;line-height:1;cursor:pointer}
     .treatment-modal-close:hover,.treatment-modal-close:focus-visible{background:rgba(215,178,74,.2)}
     .treatment-modal-kicker{margin:0;color:#d8b556;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
@@ -686,6 +686,10 @@
       let depth = 0;
       let lockedScrollY = 0;
       let touchLastY = 0;
+      let touchStartY = 0;
+      let touchStartTop = 0;
+      let touchStartMax = 0;
+      let touchStartArea = null;
 
       const blockBackdropScroll = (e) => {
         if (!document.body.classList.contains('modal-lock')) return;
@@ -696,13 +700,20 @@
           if (!touch) return;
           const currentY = touch.clientY;
           const deltaY = currentY - touchLastY;
+          const totalDeltaY = currentY - touchStartY;
           touchLastY = currentY;
           const canScroll = area.scrollHeight > area.clientHeight + 1;
           if (!canScroll) {
             e.preventDefault();
             return;
           }
-          const atTop = area.scrollTop <= 0;
+          const startAtTop = touchStartArea === area && touchStartTop <= 1;
+          const startAtBottom = touchStartArea === area && touchStartTop >= touchStartMax - 1;
+          if ((startAtTop && totalDeltaY > 0) || (startAtBottom && totalDeltaY < 0)) {
+            e.preventDefault();
+            return;
+          }
+          const atTop = area.scrollTop <= 1;
           const atBottom = area.scrollTop + area.clientHeight >= area.scrollHeight - 1;
           if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
             e.preventDefault();
@@ -714,8 +725,17 @@
 
       const trackTouchStart = (e) => {
         if (!document.body.classList.contains('modal-lock')) return;
+        touchStartArea = e.target?.closest?.('.modal-scroll-area') || null;
+        if (touchStartArea) {
+          touchStartTop = touchStartArea.scrollTop;
+          touchStartMax = Math.max(0, touchStartArea.scrollHeight - touchStartArea.clientHeight);
+        } else {
+          touchStartTop = 0;
+          touchStartMax = 0;
+        }
         const touch = e.touches && e.touches[0];
         if (!touch) return;
+        touchStartY = touch.clientY;
         touchLastY = touch.clientY;
       };
 
