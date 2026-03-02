@@ -11,7 +11,7 @@ window.DEMO_I18N = {
     nav_menu: 'メニュー',
     nav_gallery: 'スタイル',
     nav_stylist: 'スタイリスト',
-    nav_access: 'アクセス',
+    nav_access: '店舗情報',
     nav_reserve: '予約',
 
     philosophy_title: 'Concept',
@@ -95,12 +95,15 @@ window.DEMO_I18N = {
     stylist_3_role: 'Scalp Care',
     stylist_3_desc: '頭皮と呼吸を整え、髪のコンディションを底上げ。',
 
-    access_title: 'Access',
+    access_title: 'Information',
     access_name: 'Organic Hair Salon LINO',
     access_address: '〒150-0001 東京都渋谷区神宮前3-12-8',
     access_hours: '営業時間 10:00 - 19:30（最終受付 18:00）',
     access_closed: '定休日 火曜日',
     access_tel: 'TEL 03-9876-5432',
+    access_detail_title: 'ご来店について',
+    access_detail_1: '表参道駅 A2出口より徒歩6分 / 明治神宮前駅 5番出口より徒歩8分',
+    access_detail_2: '近隣コインパーキングあり。自転車は店舗前に駐輪可能です。',
 
     reservation_title: 'Reservation',
     reservation_body: '最後に、必要な方だけ。\nご予約は以下からお願いします。',
@@ -120,7 +123,7 @@ window.DEMO_I18N = {
     nav_menu: 'Menu',
     nav_gallery: 'Gallery',
     nav_stylist: 'Stylist',
-    nav_access: 'Access',
+    nav_access: 'Information',
     nav_reserve: 'Reservation',
 
     philosophy_title: 'Concept',
@@ -204,12 +207,15 @@ window.DEMO_I18N = {
     stylist_3_role: 'Scalp Care',
     stylist_3_desc: 'Improves base condition through mindful scalp treatment.',
 
-    access_title: 'Access',
+    access_title: 'Information',
     access_name: 'Organic Hair Salon LINO',
     access_address: '3-12-8 Jingumae, Shibuya-ku, Tokyo 150-0001',
     access_hours: 'Hours 10:00 - 19:30 (Last entry 18:00)',
     access_closed: 'Closed Tuesday',
     access_tel: 'TEL +81-3-9876-5432',
+    access_detail_title: 'Visit Guide',
+    access_detail_1: '6 min walk from Omotesando Station (A2) / 8 min walk from Meiji-jingumae Station (Exit 5).',
+    access_detail_2: 'Coin parking is available nearby. Bicycle parking is available in front of the salon.',
 
     reservation_title: 'Reservation',
     reservation_body: 'Only if you need it, at the end of the story.\nBook from the button below.',

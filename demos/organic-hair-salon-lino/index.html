@@ -954,7 +954,8 @@
     }
 
     .access-info,
-    .access-map {
+    .access-map,
+    .access-detail {
       border-radius: var(--leaf-radius-a);
       overflow: hidden;
       background: linear-gradient(150deg, rgba(226, 239, 212, 0.95), rgba(205, 223, 186, 0.92));
@@ -981,6 +982,27 @@
       width: 100%;
       min-height: 290px;
       display: block;
+    }
+
+    .access-detail {
+      padding: 18px;
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    .access-detail h3 {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: #42503a;
+    }
+
+    .access-detail p {
+      margin: 8px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.68;
     }
 
     #ritual .card,
@@ -1819,7 +1841,7 @@
 
     <section id="access" class="chapter">
       <div class="card" data-reveal>
-        <h2 data-i18n="access_title">Access</h2>
+        <h2 data-i18n="access_title">Information</h2>
         <p class="section-ja-sub" data-i18n="title_sub_access">店舗情報</p>
         <div class="access-grid">
           <div class="access-info access-card">
@@ -1836,6 +1858,11 @@
               referrerpolicy="no-referrer-when-downgrade"
               src="https://www.google.com/maps?q=35.6696,139.7055&z=15&output=embed">
             </iframe>
+          </div>
+          <div class="access-detail access-card">
+            <h3 data-i18n="access_detail_title">Visit Guide</h3>
+            <p data-i18n="access_detail_1">表参道駅 A2出口より徒歩6分 / 明治神宮前駅 5番出口より徒歩8分</p>
+            <p data-i18n="access_detail_2">近隣コインパーキングあり。自転車は店舗前に駐輪可能です。</p>
           </div>
         </div>
       </div>
