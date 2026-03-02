@@ -1177,10 +1177,6 @@
       display: none;
     }
 
-    .carousel-input-lock {
-      touch-action: none;
-    }
-
     @media (max-width: 980px) {
       .materials-strip {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1957,6 +1953,7 @@
       const hero = document.getElementById('hero');
       const heroContent = document.getElementById('heroContent');
       if (!hero || !heroContent) return;
+      const isMobileScreen = () => window.matchMedia('(max-width: 740px)').matches;
 
       let locked = true;
       let progress = 0;
@@ -1988,7 +1985,9 @@
         if (!locked) return;
         if (event.deltaY <= 0) return;
         event.preventDefault();
-        const step = Math.min(0.1, Math.max(0.03, event.deltaY / 2200));
+        const step = isMobileScreen()
+          ? Math.min(0.2, Math.max(0.06, event.deltaY / 1300))
+          : Math.min(0.1, Math.max(0.03, event.deltaY / 2200));
         feed(step);
       };
 
@@ -2009,11 +2008,14 @@
         if (!locked) return;
         const y = event.touches[0].clientY;
         const delta = touchStartY - y;
-        if (delta < 10) return;
+        if (delta < 6) return;
         event.preventDefault();
         const now = Date.now();
-        if (now - lastTouchIntent > 120) {
-          feed(Math.min(0.09, delta / 360));
+        if (now - lastTouchIntent > 70) {
+          const step = isMobileScreen()
+            ? Math.min(0.24, Math.max(0.08, delta / 170))
+            : Math.min(0.09, delta / 360);
+          feed(step);
           lastTouchIntent = now;
         }
       };
@@ -2101,8 +2103,6 @@
         let touchSettleTimer = 0;
         let isAdjusting = false;
         let touchActive = false;
-        let inputLockTimer = 0;
-        let inputLockUntil = 0;
         let lastScrollLeft = track.scrollLeft;
         let lastScrollTime = performance.now();
         let lastVelocity = 0;
@@ -2135,18 +2135,8 @@
           return { start, width, middle };
         };
 
-        const lockInput = (ms = 140) => {
-          inputLockUntil = performance.now() + ms;
-          track.classList.add('carousel-input-lock');
-          clearTimeout(inputLockTimer);
-          inputLockTimer = window.setTimeout(() => {
-            track.classList.remove('carousel-input-lock');
-          }, ms + 24);
-        };
-
         const goTo = (item, behavior = 'auto') => {
           isAdjusting = true;
-          lockInput(140);
           track.scrollTo({ left: centerOffset(track, item), behavior });
           window.setTimeout(() => { isAdjusting = false; }, 36);
         };
@@ -2206,7 +2196,7 @@
           lastScrollLeft = track.scrollLeft;
           lastScrollTime = now;
           clearTimeout(settlingTimer);
-          const isFastMomentum = lastVelocity > 0.55;
+          const isFastMomentum = lastVelocity > 0.75;
           if (touchActive || isFastMomentum) {
             settlingTimer = window.setTimeout(normalizePosition, 180);
           } else {
@@ -2215,25 +2205,20 @@
         };
 
         const onTouchStart = (event) => {
-          if (performance.now() < inputLockUntil || isAdjusting) {
-            event.preventDefault();
-            return;
-          }
           touchActive = true;
           clearTimeout(settlingTimer);
-        };
-
-        const onTouchMove = (event) => {
-          if (performance.now() < inputLockUntil || isAdjusting) {
-            event.preventDefault();
-          }
         };
 
         const onTouchEnd = () => {
           if (!isMobile()) return;
           touchActive = false;
           clearTimeout(touchSettleTimer);
-          lockInput(140);
+          touchSettleTimer = window.setTimeout(normalizePosition, 110);
+        };
+
+        const onTouchCancel = () => {
+          touchActive = false;
+          clearTimeout(touchSettleTimer);
           touchSettleTimer = window.setTimeout(normalizePosition, 110);
         };
 
@@ -2247,9 +2232,9 @@
         };
 
         track.addEventListener('scroll', onScroll, { passive: true });
-        track.addEventListener('touchstart', onTouchStart, { passive: false });
-        track.addEventListener('touchmove', onTouchMove, { passive: false });
+        track.addEventListener('touchstart', onTouchStart, { passive: true });
         track.addEventListener('touchend', onTouchEnd, { passive: true });
+        track.addEventListener('touchcancel', onTouchCancel, { passive: true });
         window.addEventListener('resize', onResize);
 
         mutedUntil = performance.now() + 220;
@@ -2268,14 +2253,12 @@
           clearTimeout(settlingTimer);
           clearTimeout(recenterTimer);
           clearTimeout(touchSettleTimer);
-          clearTimeout(inputLockTimer);
           track.removeEventListener('scroll', onScroll);
           track.removeEventListener('touchstart', onTouchStart);
-          track.removeEventListener('touchmove', onTouchMove);
           track.removeEventListener('touchend', onTouchEnd);
+          track.removeEventListener('touchcancel', onTouchCancel);
           window.removeEventListener('resize', onResize);
           track.querySelectorAll('[data-loop-clone]').forEach((node) => node.remove());
-          track.classList.remove('carousel-input-lock');
           if (pagination.parentNode) pagination.parentNode.removeChild(pagination);
         };
       };
