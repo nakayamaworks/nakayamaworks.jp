@@ -807,6 +807,8 @@
       border: 1px solid rgba(108, 121, 94, 0.22);
       background: rgba(243, 238, 226, 0.86);
       box-shadow: var(--shadow);
+      position: relative;
+      cursor: zoom-in;
     }
 
     .salon-space-shot img {
@@ -820,6 +822,33 @@
 
     .salon-space-shot:hover img {
       transform: scale(1.04);
+    }
+
+    .salon-space-zoom-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(35, 44, 30, 0.62);
+      border: 1px solid rgba(236, 228, 209, 0.72);
+      color: #f5ebd8;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+    }
+
+    .salon-space-zoom-hint svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .menu-grid {
@@ -877,6 +906,25 @@
       text-transform: uppercase;
     }
 
+    .menu-detail-btn {
+      border: 1px solid rgba(108, 121, 94, 0.34);
+      background: rgba(255, 252, 245, 0.78);
+      color: #4f5c45;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.84rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .menu-detail-btn:hover,
+    .menu-detail-btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(77, 94, 64, 0.16);
+      background: rgba(255, 253, 247, 0.94);
+    }
+
     .gallery-grid {
       margin-top: 20px;
       column-count: 3;
@@ -910,6 +958,17 @@
       transform: scale(1.04);
     }
 
+    @media (min-width: 741px) {
+      .gallery-item {
+        aspect-ratio: 3 / 4;
+      }
+
+      .gallery-item img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
     .stylist-grid {
       margin-top: 20px;
       display: grid;
@@ -922,6 +981,23 @@
       padding: 18px;
       background: linear-gradient(150deg, rgba(232, 243, 219, 0.95), rgba(212, 228, 194, 0.92));
       border: 1px solid rgba(108, 121, 94, 0.2);
+    }
+
+    .stylist-photo-slot {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(108, 121, 94, 0.5);
+      background: linear-gradient(140deg, rgba(247, 243, 233, 0.92), rgba(231, 238, 219, 0.8));
+      color: #5a6750;
+      display: grid;
+      place-items: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
     .stylist-note h3 {
@@ -982,6 +1058,15 @@
 
     .access-info p:last-child { margin-bottom: 0; }
 
+    .access-info h3,
+    .access-detail h3 {
+      margin: 0 0 10px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: #42503a;
+    }
+
     .access-map iframe {
       border: 0;
       width: 100%;
@@ -993,14 +1078,6 @@
       padding: 18px;
       grid-column: 1 / -1;
       text-align: center;
-    }
-
-    .access-detail h3 {
-      margin: 0;
-      font-family: 'M PLUS Rounded 1c', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      color: #42503a;
     }
 
     .access-detail p {
@@ -1155,6 +1232,163 @@
     }
 
     #lightbox.open { display: flex; }
+
+    .treatment-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1300;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: rgba(24, 31, 21, 0.82);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+    }
+
+    .treatment-modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.22s ease, visibility 0s;
+    }
+
+    .treatment-modal-card {
+      position: relative;
+      width: min(820px, 95vw);
+      max-height: min(88vh, calc(100dvh - 1.5rem));
+      overflow: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(234, 226, 208, 0.25);
+      background: linear-gradient(165deg, rgba(247, 242, 232, 0.97), rgba(240, 234, 220, 0.95));
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
+      padding: 18px 18px 20px;
+    }
+
+    .treatment-modal-kicker {
+      margin: 0;
+      color: #6b765f;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .treatment-modal-title {
+      margin: 5px 0 0;
+      color: #2f3a28;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1.36rem;
+      line-height: 1.35;
+    }
+
+    .treatment-modal-subtitle {
+      margin: 2px 0 0;
+      color: #607053;
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
+    }
+
+    .treatment-modal-intro-title {
+      margin: 12px 0 0;
+      color: #3a4631;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1rem;
+    }
+
+    .treatment-modal-media-slot {
+      margin-top: 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(108, 121, 94, 0.42);
+      background: linear-gradient(140deg, rgba(247, 243, 233, 0.84), rgba(231, 238, 219, 0.76));
+      min-height: 168px;
+      display: grid;
+      place-items: center;
+      gap: 8px;
+      text-align: center;
+      color: #5f6d54;
+    }
+
+    .treatment-modal-media-initial {
+      width: 62px;
+      height: 62px;
+      border-radius: 999px;
+      border: 1px solid rgba(108, 121, 94, 0.4);
+      display: grid;
+      place-items: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      background: rgba(255, 252, 244, 0.72);
+      color: #4f5d45;
+    }
+
+    .treatment-modal-media-note {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .treatment-modal-intro {
+      margin: 8px 0 0;
+      color: #4f5d45;
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .treatment-modal-body {
+      margin-top: 12px;
+      color: #44513b;
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .treatment-modal-body h4 {
+      margin: 12px 0 4px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 0.96rem;
+      color: #34402c;
+    }
+
+    .treatment-modal-body ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .treatment-modal-close,
+    .treatment-modal-nav {
+      position: absolute;
+      border: 1px solid rgba(105, 120, 89, 0.35);
+      color: #39462f;
+      background: rgba(255, 252, 244, 0.88);
+      cursor: pointer;
+    }
+
+    .treatment-modal-close {
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+
+    .treatment-modal-nav {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      font-size: 1.2rem;
+      display: grid;
+      place-items: center;
+    }
+
+    .treatment-modal-nav.prev { left: 10px; }
+    .treatment-modal-nav.next { right: 10px; }
 
     .lightbox-panel {
       max-width: min(92vw, 960px);
@@ -1494,9 +1728,9 @@
       }
 
       .access-grid {
-        grid-template-columns: none;
-        grid-auto-flow: column;
-        grid-auto-columns: minmax(280px, 82vw);
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
         overflow-x: auto;
         overflow-y: visible;
         padding-top: 0;
@@ -1514,8 +1748,13 @@
       .access-grid::-webkit-scrollbar { display: none; }
 
       .access-card {
+        flex: 0 0 min(280px, 82vw);
         scroll-snap-align: center;
         scroll-snap-stop: always;
+      }
+
+      .access-detail {
+        grid-column: auto;
       }
 
       .gallery-grid {
@@ -1716,9 +1955,47 @@
         <div class="salon-space-grid">
           <figure class="salon-space-shot">
             <img src="./images/salon-space/space-02.jpg" alt="Salon interior photo 2" loading="lazy" />
+            <span class="salon-space-zoom-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="10" r="6"></circle>
+                <path d="M10 7v6"></path>
+                <path d="M7 10h6"></path>
+                <path d="M14.5 14.5L20 20"></path>
+              </svg>
+            </span>
           </figure>
           <figure class="salon-space-shot">
             <img src="./images/salon-space/space-01.jpg" alt="Salon interior photo 1" loading="lazy" />
+            <span class="salon-space-zoom-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="10" r="6"></circle>
+                <path d="M10 7v6"></path>
+                <path d="M7 10h6"></path>
+                <path d="M14.5 14.5L20 20"></path>
+              </svg>
+            </span>
+          </figure>
+          <figure class="salon-space-shot">
+            <img src="./images/salon-space/space-03.jpg" alt="Salon interior photo 3" loading="lazy" />
+            <span class="salon-space-zoom-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="10" r="6"></circle>
+                <path d="M10 7v6"></path>
+                <path d="M7 10h6"></path>
+                <path d="M14.5 14.5L20 20"></path>
+              </svg>
+            </span>
+          </figure>
+          <figure class="salon-space-shot">
+            <img src="./images/salon-space/space-04.jpg" alt="Salon interior photo 4" loading="lazy" />
+            <span class="salon-space-zoom-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="10" r="6"></circle>
+                <path d="M10 7v6"></path>
+                <path d="M7 10h6"></path>
+                <path d="M14.5 14.5L20 20"></path>
+              </svg>
+            </span>
           </figure>
         </div>
       </div>
@@ -1737,6 +2014,7 @@
               <div data-i18n="menu_item_1_price">料金：¥7,700</div>
             </div>
             <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+            <button class="menu-detail-btn" type="button" data-treatment="organic_cut" data-i18n="menu_detail_button">詳細を見る</button>
           </article>
           <article class="menu-item">
             <h3 data-i18n="menu_item_2_title">Botanical Color Ritual</h3>
@@ -1746,6 +2024,7 @@
               <div data-i18n="menu_item_2_price">料金：¥14,300〜</div>
             </div>
             <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+            <button class="menu-detail-btn" type="button" data-treatment="botanical_color" data-i18n="menu_detail_button">詳細を見る</button>
           </article>
           <article class="menu-item">
             <h3 data-i18n="menu_item_3_title">Natural Perm Ritual</h3>
@@ -1755,6 +2034,7 @@
               <div data-i18n="menu_item_3_price">料金：¥13,200〜</div>
             </div>
             <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+            <button class="menu-detail-btn" type="button" data-treatment="natural_perm" data-i18n="menu_detail_button">詳細を見る</button>
           </article>
           <article class="menu-item">
             <h3 data-i18n="menu_item_4_title">Scalp Reset Ritual</h3>
@@ -1764,6 +2044,7 @@
               <div data-i18n="menu_item_4_price">料金：¥6,600</div>
             </div>
             <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+            <button class="menu-detail-btn" type="button" data-treatment="scalp_reset" data-i18n="menu_detail_button">詳細を見る</button>
           </article>
           <article class="menu-item">
             <h3 data-i18n="menu_item_5_title">Seasonal Care Treatment</h3>
@@ -1773,6 +2054,7 @@
               <div data-i18n="menu_item_5_price">料金：¥4,400</div>
             </div>
             <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+            <button class="menu-detail-btn" type="button" data-treatment="seasonal_care" data-i18n="menu_detail_button">詳細を見る</button>
           </article>
         </div>
       </div>
@@ -1826,16 +2108,19 @@
         <p class="lead" data-i18n="stylist_lead">人の温度で、美しさは変わる。</p>
         <div class="stylist-grid">
           <article class="stylist-note">
+            <div class="stylist-photo-slot" aria-label="profile placeholder">RS</div>
             <h3 data-i18n="stylist_1_name">Rina Sato</h3>
             <div class="role" data-i18n="stylist_1_role">Top Stylist</div>
             <p data-i18n="stylist_1_desc">骨格に沿ったレイヤーで、自然にまとまる形へ。</p>
           </article>
           <article class="stylist-note">
+            <div class="stylist-photo-slot" aria-label="profile placeholder">MK</div>
             <h3 data-i18n="stylist_2_name">Mio Kanda</h3>
             <div class="role" data-i18n="stylist_2_role">Color Specialist</div>
             <p data-i18n="stylist_2_desc">植物由来カラーを軸に、肌になじむ色を設計。</p>
           </article>
           <article class="stylist-note">
+            <div class="stylist-photo-slot" aria-label="profile placeholder">YT</div>
             <h3 data-i18n="stylist_3_name">Yui Tanaka</h3>
             <div class="role" data-i18n="stylist_3_role">Scalp Care</div>
             <p data-i18n="stylist_3_desc">頭皮と呼吸を整え、髪のコンディションを底上げ。</p>
@@ -1850,6 +2135,7 @@
         <p class="section-ja-sub" data-i18n="title_sub_access">店舗情報</p>
         <div class="access-grid">
           <div class="access-info access-card">
+            <h3 data-i18n="access_info_title">Salon Information</h3>
             <p data-i18n="access_name">Organic Hair Salon LINO</p>
             <p data-i18n="access_address">〒150-0001 東京都渋谷区神宮前3-12-8</p>
             <p data-i18n="access_hours">営業時間 10:00 - 19:30（最終受付 18:00）</p>
@@ -1892,6 +2178,24 @@
       <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Previous">‹</button>
       <img id="lbImage" src="" alt="Expanded style image" />
       <button class="lb-arrow lb-next" id="lbNext" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <div id="treatmentModal" class="treatment-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="treatment-modal-card">
+      <button id="treatmentModalPrev" class="treatment-modal-nav prev" type="button" aria-label="Previous">‹</button>
+      <button id="treatmentModalNext" class="treatment-modal-nav next" type="button" aria-label="Next">›</button>
+      <button id="treatmentModalClose" class="treatment-modal-close" type="button" data-i18n-attr="aria-label:modal_close">×</button>
+      <p id="treatmentModalKicker" class="treatment-modal-kicker">SIGNATURE RITUAL</p>
+      <h3 id="treatmentModalTitle" class="treatment-modal-title">Organic Cut Ritual</h3>
+      <p id="treatmentModalSubtitle" class="treatment-modal-subtitle">カットリチュアル</p>
+      <div id="treatmentModalMedia" class="treatment-modal-media-slot" aria-label="treatment image placeholder">
+        <div id="treatmentModalMediaInitial" class="treatment-modal-media-initial">OC</div>
+        <div id="treatmentModalMediaNote" class="treatment-modal-media-note" data-i18n="menu_image_placeholder">image coming soon</div>
+      </div>
+      <h4 id="treatmentModalIntroTitle" class="treatment-modal-intro-title">Organic Cut Ritual</h4>
+      <p id="treatmentModalIntro" class="treatment-modal-intro"></p>
+      <div id="treatmentModalBody" class="treatment-modal-body"></div>
     </div>
   </div>
 
@@ -1942,6 +2246,9 @@
       });
 
       applyMobileLeadBreaks(lang, dict);
+      if (typeof window.refreshRitualModalLang === 'function') {
+        window.refreshRitualModalLang();
+      }
     }
 
     function applyMobileLeadBreaks(lang, dict) {
@@ -2472,25 +2779,29 @@
     }
 
     function initLightbox() {
-      const buttons = Array.from(document.querySelectorAll('.gallery-item'));
+      const galleryButtons = Array.from(document.querySelectorAll('.gallery-item'));
+      const salonFigures = Array.from(document.querySelectorAll('.salon-space-shot'));
       const lightbox = document.getElementById('lightbox');
       const image = document.getElementById('lbImage');
       const close = document.getElementById('lbClose');
       const prev = document.getElementById('lbPrev');
       const next = document.getElementById('lbNext');
-      if (!buttons.length) return;
+      if (!galleryButtons.length && !salonFigures.length) return;
 
+      let activeItems = [];
       let index = 0;
       let startX = 0;
 
       const render = () => {
-        const src = buttons[index].dataset.src;
-        const thumb = buttons[index].querySelector('img');
-        image.src = src || '';
-        image.alt = thumb ? thumb.alt : 'Expanded style image';
+        const current = activeItems[index];
+        if (!current) return;
+        image.src = current.src || '';
+        image.alt = current.alt || 'Expanded image';
       };
 
-      const open = (i) => {
+      const open = (items, i) => {
+        if (!items.length) return;
+        activeItems = items;
         index = i;
         render();
         lightbox.classList.add('open');
@@ -2505,16 +2816,35 @@
       };
 
       const showPrev = () => {
-        index = (index - 1 + buttons.length) % buttons.length;
+        if (!activeItems.length) return;
+        index = (index - 1 + activeItems.length) % activeItems.length;
         render();
       };
 
       const showNext = () => {
-        index = (index + 1) % buttons.length;
+        if (!activeItems.length) return;
+        index = (index + 1) % activeItems.length;
         render();
       };
 
-      buttons.forEach((btn, i) => btn.addEventListener('click', () => open(i)));
+      const galleryItems = galleryButtons.map((btn) => {
+        const thumb = btn.querySelector('img');
+        return {
+          src: btn.dataset.src || thumb?.src || '',
+          alt: thumb?.alt || 'Expanded style image'
+        };
+      });
+      galleryButtons.forEach((btn, i) => btn.addEventListener('click', () => open(galleryItems, i)));
+
+      const salonItems = salonFigures.map((figure) => {
+        const img = figure.querySelector('img');
+        return {
+          src: img?.currentSrc || img?.src || '',
+          alt: img?.alt || 'Expanded salon image'
+        };
+      });
+      salonFigures.forEach((figure, i) => figure.addEventListener('click', () => open(salonItems, i)));
+
       close.addEventListener('click', closeBox);
       prev.addEventListener('click', showPrev);
       next.addEventListener('click', showNext);
@@ -2543,6 +2873,113 @@
       }, { passive: true });
     }
 
+    function initTreatmentModal() {
+      const modal = document.getElementById('treatmentModal');
+      const closeBtn = document.getElementById('treatmentModalClose');
+      const prevBtn = document.getElementById('treatmentModalPrev');
+      const nextBtn = document.getElementById('treatmentModalNext');
+      const kickerEl = document.getElementById('treatmentModalKicker');
+      const titleEl = document.getElementById('treatmentModalTitle');
+      const subtitleEl = document.getElementById('treatmentModalSubtitle');
+      const mediaInitialEl = document.getElementById('treatmentModalMediaInitial');
+      const introTitleEl = document.getElementById('treatmentModalIntroTitle');
+      const introEl = document.getElementById('treatmentModalIntro');
+      const bodyEl = document.getElementById('treatmentModalBody');
+      if (!modal || !closeBtn || !prevBtn || !nextBtn || !kickerEl || !titleEl || !subtitleEl || !mediaInitialEl || !introTitleEl || !introEl || !bodyEl) return;
+
+      const detailsMap = window.DEMO_RITUAL_DETAILS || {};
+      const buttons = Array.from(document.querySelectorAll('.menu-detail-btn[data-treatment]'));
+      const keys = buttons.map((btn) => btn.dataset.treatment).filter(Boolean);
+      if (!keys.length) return;
+
+      let activeIdx = 0;
+      let swipeStartX = 0;
+
+      const getDetail = (key) => {
+        const langPack = detailsMap[currentLang] || detailsMap.ja || {};
+        const jaPack = detailsMap.ja || {};
+        return langPack[key] || jaPack[key] || null;
+      };
+
+      const render = (idx) => {
+        const key = keys[(idx + keys.length) % keys.length];
+        const data = getDetail(key);
+        if (!data) return;
+        activeIdx = (idx + keys.length) % keys.length;
+        const initialMap = {
+          organic_cut: 'OC',
+          botanical_color: 'BC',
+          natural_perm: 'NP',
+          scalp_reset: 'SR',
+          seasonal_care: 'SC'
+        };
+        kickerEl.textContent = data.kicker;
+        titleEl.textContent = data.title;
+        subtitleEl.textContent = data.subtitle;
+        mediaInitialEl.textContent = initialMap[key] || 'IMG';
+        introTitleEl.textContent = data.introTitle;
+        introEl.textContent = data.intro;
+        bodyEl.innerHTML = `
+          <h4>■ ${data.headings.treatment}</h4>
+          <ul>${data.treatments.map((v) => `<li>${v}</li>`).join('')}</ul>
+          <h4>■ ${data.headings.forWho}</h4>
+          <ul>${data.forWho.map((v) => `<li>${v}</li>`).join('')}</ul>
+          <h4>■ ${data.headings.price}</h4>
+          <ul><li>${data.price}</li></ul>
+        `;
+      };
+
+      const open = (idx) => {
+        render(idx);
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      };
+
+      const close = () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      };
+
+      const go = (step) => render(activeIdx + step);
+
+      buttons.forEach((btn, idx) => {
+        btn.addEventListener('click', () => open(idx));
+      });
+      closeBtn.addEventListener('click', close);
+      prevBtn.addEventListener('click', () => go(-1));
+      nextBtn.addEventListener('click', () => go(1));
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') go(-1);
+        if (e.key === 'ArrowRight') go(1);
+      });
+
+      const card = modal.querySelector('.treatment-modal-card');
+      if (card) {
+        card.addEventListener('touchstart', (e) => {
+          swipeStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+        card.addEventListener('touchend', (e) => {
+          const diff = e.changedTouches[0].clientX - swipeStartX;
+          if (Math.abs(diff) < 44) return;
+          if (diff > 0) go(-1);
+          else go(1);
+        }, { passive: true });
+      }
+
+      window.refreshRitualModalLang = () => {
+        if (!modal.classList.contains('open')) return;
+        render(activeIdx);
+      };
+    }
+
     applyLang(currentLang);
     initOpening(initHeroIntroGate);
     initReveal();
@@ -2550,6 +2987,7 @@
     initOrganicNav();
     initBackgroundShift();
     initLightbox();
+    initTreatmentModal();
   </script>
 </body>
 </html>

@@ -65,6 +65,7 @@ window.DEMO_I18N = {
     menu_item_5_time: '所要時間：30分',
     menu_item_5_price: '料金：¥4,400',
     menu_image_placeholder: 'image coming soon',
+    menu_detail_button: '詳細を見る',
 
     title_sub_concept: 'コンセプト',
     title_sub_materials: '素材',
@@ -96,6 +97,7 @@ window.DEMO_I18N = {
     stylist_3_desc: '神奈川県出身。\nヨガや呼吸法を取り入れたケアを学び、\n頭皮と身体のつながりを重視した施術を行っています。\n\n強く整えるのではなく、\n巡りを静かに整えることで、\n自然と髪が扱いやすくなる状態を目指しています。\n施術中に眠ってしまう方も多い、穏やかな時間を大切にしています。',
 
     access_title: 'Information',
+    access_info_title: '店舗概要',
     access_name: 'Organic Hair Salon LINO',
     access_address: '〒150-0001 東京都渋谷区神宮前3-12-8',
     access_hours: '営業時間 10:00 - 19:30（最終受付 18:00）',
@@ -109,7 +111,8 @@ window.DEMO_I18N = {
     reservation_body: '最後に、必要な方だけ。\nご予約は以下からお願いします。',
     reserve_button: '予約する',
     footer_note: 'Produced by Nakayama Works',
-    lightbox_close: '閉じる'
+    lightbox_close: '閉じる',
+    modal_close: '閉じる'
   },
   en: {
     brand_line1: 'Organic Hair Salon',
@@ -177,6 +180,7 @@ window.DEMO_I18N = {
     menu_item_5_time: 'Duration: 30 min',
     menu_item_5_price: 'Price: ¥4,400',
     menu_image_placeholder: 'image coming soon',
+    menu_detail_button: 'View details',
 
     title_sub_concept: 'コンセプト',
     title_sub_materials: '素材',
@@ -208,6 +212,7 @@ window.DEMO_I18N = {
     stylist_3_desc: 'Born in Kanagawa.\nShe studied care methods inspired by yoga and breathing, with focus on scalp-body connection.\n\nRather than forcing correction, she restores gentle circulation so hair becomes easier to handle.\nMany guests fall asleep during her treatments, and she values that calm time.',
 
     access_title: 'Information',
+    access_info_title: 'Salon Information',
     access_name: 'Organic Hair Salon LINO',
     access_address: '3-12-8 Jingumae, Shibuya-ku, Tokyo 150-0001',
     access_hours: 'Hours 10:00 - 19:30 (Last entry 18:00)',
@@ -221,7 +226,8 @@ window.DEMO_I18N = {
     reservation_body: 'Only if you need it, at the end of the story.\nBook from the button below.',
     reserve_button: 'Book Now',
     footer_note: 'Produced by Nakayama Works',
-    lightbox_close: 'Close'
+    lightbox_close: 'Close',
+    modal_close: 'Close'
   }
 };
 
@@ -283,6 +289,123 @@ window.DEMO_MENU_DETAILS = {
       benefits: ['Faster morning styling', 'Natural everyday look', 'High home reproducibility'],
       forWho: ['Not confident with styling', 'Want a calm, natural finish'],
       price: 'From ¥6,600'
+    }
+  }
+};
+
+window.DEMO_RITUAL_DETAILS = {
+  ja: {
+    organic_cut: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Organic Cut Ritual',
+      subtitle: 'カットリチュアル',
+      introTitle: 'Organic Cut Ritual',
+      intro: '骨格や髪の流れ、生え方を丁寧に見極めながら、その人本来の形を引き出すカット。乾かすだけで自然にまとまり、日常の中で扱いやすい静かなデザインをつくります。無理なスタイリングに頼らない仕上がりを目指します。',
+      headings: { treatment: '施術内容', forWho: 'こんな方に', price: '料金' },
+      treatments: ['カウンセリング', 'シャンプー', '骨格補正カット', '質感調整', 'スタイリングアドバイス'],
+      forWho: ['朝のスタイリングを楽にしたい', '自然にまとまる髪型にしたい', '髪の扱いにくさを感じている'],
+      price: '60分 ¥7,700'
+    },
+    botanical_color: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Botanical Color Ritual',
+      subtitle: 'ボタニカルカラー',
+      introTitle: 'Botanical Color Ritual',
+      intro: '植物由来成分を中心に使用し、髪と頭皮への負担を抑えながら透明感のある色をつくるカラーリング。色が抜けていく過程まで美しく、柔らかくなじむ仕上がりを目指します。',
+      headings: { treatment: '施術内容', forWho: 'こんな方に', price: '料金' },
+      treatments: ['カウンセリング', '頭皮保護ケア', 'ボタニカルカラー施術', 'アフターケアトリートメント', 'スタイリング'],
+      forWho: ['髪や頭皮への負担を抑えたい', '柔らかく自然な色にしたい', 'カラー後のパサつきが気になる'],
+      price: '120分 ¥14,300〜'
+    },
+    natural_perm: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Natural Perm Ritual',
+      subtitle: 'ナチュラルパーマ',
+      introTitle: 'Natural Perm Ritual',
+      intro: '柔らかな動きと扱いやすさを重視したパーマ。髪質や日常のスタイリング習慣に合わせて設計し、乾かすだけで自然な動きが生まれる静かなデザインを提案します。',
+      headings: { treatment: '施術内容', forWho: 'こんな方に', price: '料金' },
+      treatments: ['カウンセリング', 'ダメージ保護処理', 'ナチュラルパーマ施術', '質感調整カット', 'スタイリングアドバイス'],
+      forWho: ['スタイリングを簡単にしたい', '動きのある髪型にしたい', '硬い印象を柔らかくしたい'],
+      price: '120分 ¥13,200〜'
+    },
+    scalp_reset: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Scalp Reset Ritual',
+      subtitle: 'スカルプリセット',
+      introTitle: 'Scalp Reset Ritual',
+      intro: '頭皮環境を整え、髪のコンディションを根本から改善するケア。血行を促し、巡りを整えることで、軽やかで扱いやすい髪へ導きます。深いリラックス効果も得られます。',
+      headings: { treatment: '施術内容', forWho: 'こんな方に', price: '料金' },
+      treatments: ['頭皮診断', 'クレンジング', 'スカルプマッサージ', '保湿ケア', 'ドライ仕上げ'],
+      forWho: ['頭皮の乾燥やベタつきが気になる', '髪のハリやコシが弱くなってきた', 'リラックスしたい'],
+      price: '45分 ¥6,600'
+    },
+    seasonal_care: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Seasonal Care Treatment',
+      subtitle: 'シーズナルケア',
+      introTitle: 'Seasonal Care Treatment',
+      intro: '季節による乾燥・湿気・ダメージに合わせた集中トリートメント。髪の内部まで補修し、柔らかくまとまりのある状態へ導きます。',
+      headings: { treatment: '施術内容', forWho: 'こんな方に', price: '料金' },
+      treatments: ['髪質診断', '集中補修トリートメント', '保湿ケア', '仕上げスタイリング'],
+      forWho: ['乾燥やダメージが気になる', '髪の広がりを抑えたい', 'まとまりを良くしたい'],
+      price: '30分 ¥4,400'
+    }
+  },
+  en: {
+    organic_cut: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Organic Cut Ritual',
+      subtitle: 'Cut Ritual',
+      introTitle: 'Organic Cut Ritual',
+      intro: 'A cut designed from bone structure, growth direction, and natural flow. It settles naturally with simple drying and creates a calm, easy-to-manage silhouette for daily life.',
+      headings: { treatment: 'Treatment', forWho: 'Recommended For', price: 'Price' },
+      treatments: ['Consultation', 'Shampoo', 'Structure-balanced cut', 'Texture adjustment', 'Styling advice'],
+      forWho: ['Want easier morning styling', 'Prefer naturally settling shape', 'Feel your hair is hard to manage'],
+      price: '60 min ¥7,700'
+    },
+    botanical_color: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Botanical Color Ritual',
+      subtitle: 'Botanical Color',
+      introTitle: 'Botanical Color Ritual',
+      intro: 'Coloring centered on plant-derived ingredients to reduce stress on hair and scalp, while creating soft transparency and beauty that lasts through fade.',
+      headings: { treatment: 'Treatment', forWho: 'Recommended For', price: 'Price' },
+      treatments: ['Consultation', 'Scalp protection', 'Botanical color application', 'After-care treatment', 'Styling'],
+      forWho: ['Want lower stress on hair/scalp', 'Prefer soft natural color', 'Concerned about post-color dryness'],
+      price: '120 min from ¥14,300'
+    },
+    natural_perm: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Natural Perm Ritual',
+      subtitle: 'Natural Perm',
+      introTitle: 'Natural Perm Ritual',
+      intro: 'A perm designed for soft movement and easy handling. Tailored to hair type and daily routine for a calm style that forms naturally with simple drying.',
+      headings: { treatment: 'Treatment', forWho: 'Recommended For', price: 'Price' },
+      treatments: ['Consultation', 'Damage protection prep', 'Natural perm process', 'Texture-balancing cut', 'Styling advice'],
+      forWho: ['Want simpler styling', 'Need soft movement', 'Want to soften a rigid impression'],
+      price: '120 min from ¥13,200'
+    },
+    scalp_reset: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Scalp Reset Ritual',
+      subtitle: 'Scalp Reset',
+      introTitle: 'Scalp Reset Ritual',
+      intro: 'A care ritual to rebalance scalp condition and improve hair from the roots. By restoring circulation, it leads to lighter, easier-to-handle hair with deep relaxation.',
+      headings: { treatment: 'Treatment', forWho: 'Recommended For', price: 'Price' },
+      treatments: ['Scalp check', 'Cleansing', 'Scalp massage', 'Moisture care', 'Dry finish'],
+      forWho: ['Concerned about scalp dryness/oiliness', 'Feel loss of hair firmness', 'Want deep relaxation'],
+      price: '45 min ¥6,600'
+    },
+    seasonal_care: {
+      kicker: 'SIGNATURE RITUAL',
+      title: 'Seasonal Care Treatment',
+      subtitle: 'Seasonal Care',
+      introTitle: 'Seasonal Care Treatment',
+      intro: 'An intensive treatment tailored to seasonal dryness, humidity, and damage. Repairs from inside for softer, more manageable hair.',
+      headings: { treatment: 'Treatment', forWho: 'Recommended For', price: 'Price' },
+      treatments: ['Hair diagnosis', 'Intensive repair treatment', 'Moisture care', 'Finishing styling'],
+      forWho: ['Concerned about dryness or damage', 'Want to reduce frizz/volume', 'Need better manageability'],
+      price: '30 min ¥4,400'
     }
   }
 };
