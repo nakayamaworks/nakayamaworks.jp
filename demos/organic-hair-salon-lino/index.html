@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Organic Hair Salon LINO | Organic Story Demo</title>
+  <meta name="description" content="Organic Hair Salon LINO demo site. Story-driven and calm organic hair salon experience." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f6f1e6;
+      --paper-2: #ede7db;
+      --leaf: #dce6cf;
+      --leaf-soft: #e8efde;
+      --ink: #2d3328;
+      --muted: #5d6657;
+      --line: rgba(61, 69, 53, 0.17);
+      --glass: rgba(255, 255, 255, 0.56);
+      --shadow: 0 10px 32px rgba(58, 66, 47, 0.1);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --leaf-radius-a: 26px 26px 4px 26px;
+      --leaf-radius-b: 4px 26px 26px 26px;
+      --leaf-radius-c: 26px 4px 26px 26px;
+      --leaf-radius-d: 26px 26px 26px 4px;
+      --leaf-radius: var(--leaf-radius-a);
+      --section-space: clamp(52px, 7.4vw, 92px);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Quicksand', 'M PLUS Rounded 1c', 'Noto Sans', 'Noto Sans JP', 'Noto Sans TC', 'Noto Sans KR', sans-serif;
+      color: var(--ink);
+      line-height: 1.85;
+      letter-spacing: 0.02em;
+      background: #e9f0df;
+      position: relative;
+    }
+
+    :lang(ja) body {
+      font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    }
+
+    :lang(zh-TW) body {
+      font-family: 'Noto Sans TC', 'Noto Sans', sans-serif;
+    }
+
+    :lang(ko) body {
+      font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    body.hero-lock {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -5;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.9s cubic-bezier(.25,.65,.25,1);
+      will-change: opacity;
+    }
+
+    .bg-layer.active {
+      opacity: 1;
+    }
+
+    .forest-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.5;
+      background:
+        linear-gradient(180deg, rgba(66, 98, 53, 0.54) 0%, rgba(66, 98, 53, 0.32) 7%, rgba(66, 98, 53, 0.13) 11%, transparent 14%),
+        linear-gradient(0deg, rgba(78, 106, 61, 0.5) 0%, rgba(78, 106, 61, 0.3) 7%, rgba(78, 106, 61, 0.12) 11%, transparent 14%);
+    }
+
+    .hero,
+    .wrap,
+    footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    #opening {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      z-index: 999;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 252, 243, 0.95), rgba(245, 238, 221, 0.88) 45%, rgba(235, 227, 206, 0.74) 100%),
+        linear-gradient(130deg, #fdf7ec, #f1ebdb);
+      transition: opacity 0.56s ease;
+      overflow: hidden;
+    }
+
+    .opening-side-image {
+      position: absolute;
+      right: -10vw;
+      top: 0;
+      bottom: 0;
+      width: min(44vw, 720px);
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(8px) scale(1.01);
+      animation: openingSideReveal 2.6s ease forwards;
+      -webkit-mask-image: linear-gradient(to left, #000 68%, rgba(0, 0, 0, 0.82) 82%, rgba(0, 0, 0, 0.32) 94%, transparent 100%);
+      mask-image: linear-gradient(to left, #000 68%, rgba(0, 0, 0, 0.82) 82%, rgba(0, 0, 0, 0.32) 94%, transparent 100%);
+    }
+
+    .opening-side-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: saturate(0.94) contrast(0.95);
+    }
+
+    .opening-side-image::before {
+      content: '';
+      position: absolute;
+      left: -20%;
+      top: 0;
+      bottom: 0;
+      width: 34%;
+      background: radial-gradient(70% 100% at 100% 50%, rgba(248, 240, 224, 0.85), rgba(248, 240, 224, 0.45) 42%, rgba(248, 240, 224, 0.05) 72%, transparent 100%);
+      filter: blur(14px);
+      pointer-events: none;
+    }
+
+    .opening-side-image.left {
+      left: -3vw;
+      right: auto;
+      width: min(36vw, 620px);
+      animation-delay: 0.12s;
+      -webkit-mask-image: linear-gradient(to right, #000 66%, rgba(0, 0, 0, 0.82) 80%, rgba(0, 0, 0, 0.32) 92%, transparent 100%);
+      mask-image: linear-gradient(to right, #000 66%, rgba(0, 0, 0, 0.82) 80%, rgba(0, 0, 0, 0.32) 92%, transparent 100%);
+    }
+
+    .opening-side-image.left img {
+      object-position: center 34%;
+      filter: saturate(0.92) contrast(0.94);
+    }
+
+    .opening-side-image.left::before {
+      left: auto;
+      right: -22%;
+      background: radial-gradient(70% 100% at 0% 50%, rgba(248, 240, 224, 0.85), rgba(248, 240, 224, 0.45) 42%, rgba(248, 240, 224, 0.05) 72%, transparent 100%);
+    }
+
+    .opening-curtain {
+      position: absolute;
+      top: -6%;
+      bottom: -6%;
+      width: 58%;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.88;
+      --open-shift: 114%;
+      --open-rot-end: 7deg;
+      background:
+        radial-gradient(52% 34% at 24% 16%, rgba(203, 224, 156, 0.48), transparent 72%),
+        radial-gradient(48% 38% at 70% 34%, rgba(174, 209, 128, 0.5), transparent 70%),
+        radial-gradient(56% 44% at 42% 72%, rgba(143, 186, 103, 0.52), transparent 74%),
+        linear-gradient(150deg, rgba(162, 200, 115, 0.76), rgba(127, 168, 91, 0.78));
+      filter: saturate(0.98);
+    }
+
+    .opening-curtain.layer-2 {
+      width: 40%;
+      z-index: 3;
+      opacity: 0.58;
+      --open-shift: 132%;
+      --open-rot-end: 9deg;
+      filter: saturate(0.94);
+    }
+
+    .opening-curtain.layer-3 {
+      width: 30%;
+      z-index: 4;
+      opacity: 0.4;
+      --open-shift: 220%;
+      --open-rot-end: 10.4deg;
+      filter: saturate(0.9);
+    }
+
+    .opening-curtain.left {
+      left: -1%;
+      border-radius: 0 64px 72px 0;
+      clip-path: polygon(0 0, 82% 0, 90% 10%, 86% 22%, 92% 34%, 94% 46%, 92% 58%, 88% 72%, 90% 86%, 80% 100%, 0 100%);
+      transform: translateX(0) rotate(-2.2deg) scale(1.02);
+      transform-origin: 8% 50%;
+      animation: curtainOpenLeft 3.4s cubic-bezier(.2,.7,.2,1) forwards;
+    }
+
+    .opening-curtain.left.layer-2 {
+      left: 16%;
+      clip-path: polygon(0 0, 66% 0, 74% 10%, 70% 22%, 76% 34%, 78% 46%, 76% 58%, 72% 72%, 74% 86%, 64% 100%, 0 100%);
+    }
+
+    .opening-curtain.left.layer-3 {
+      left: 28%;
+      clip-path: polygon(0 0, 56% 0, 64% 8%, 60% 20%, 66% 34%, 68% 46%, 66% 58%, 62% 72%, 64% 86%, 54% 100%, 0 100%);
+    }
+
+    .opening-curtain.right {
+      right: -1%;
+      border-radius: 64px 0 0 72px;
+      clip-path: polygon(18% 0, 100% 0, 100% 100%, 20% 100%, 10% 86%, 12% 72%, 8% 58%, 6% 46%, 8% 34%, 12% 22%, 10% 10%);
+      transform: translateX(0) rotate(2deg) scale(1.02);
+      transform-origin: 92% 50%;
+      animation: curtainOpenRight 3.4s cubic-bezier(.2,.7,.2,1) forwards;
+    }
+
+    .opening-curtain.right.layer-2 {
+      right: 16%;
+      clip-path: polygon(34% 0, 100% 0, 100% 100%, 36% 100%, 26% 86%, 28% 72%, 24% 58%, 22% 46%, 24% 34%, 28% 22%, 26% 10%);
+    }
+
+    .opening-curtain.right.layer-3 {
+      right: 28%;
+      clip-path: polygon(44% 0, 100% 0, 100% 100%, 46% 100%, 36% 86%, 38% 72%, 34% 58%, 32% 46%, 34% 34%, 38% 22%, 36% 10%);
+    }
+
+    .opening-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(255, 254, 247, 0.95), rgba(255, 248, 230, 0.36) 52%, transparent 78%);
+      opacity: 0.88;
+      animation: openingLightPulse 3.4s ease forwards;
+      z-index: 1;
+    }
+
+    #opening.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .opening-mark {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 14px 20px;
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(8px);
+      animation: openingFocus 2.4s ease forwards;
+    }
+
+    .opening-mark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      background: radial-gradient(circle at 50% 46%, rgba(250, 245, 234, 0.78), rgba(250, 245, 234, 0.4) 60%, rgba(250, 245, 234, 0.06) 100%);
+      backdrop-filter: blur(2px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .opening-mark .line1 {
+      font-family: 'Quicksand', sans-serif;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: #5f7152;
+    }
+
+    .opening-mark .line2 {
+      margin-top: 8px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      letter-spacing: 0.15em;
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      color: #35442e;
+    }
+
+    @keyframes openingFocus {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes openingSideReveal {
+      to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes curtainOpenLeft {
+      0% { transform: translateX(0) rotate(-2.2deg) scale(1.02); }
+      100% { transform: translateX(calc(-1 * var(--open-shift))) rotate(calc(-1 * var(--open-rot-end))) scale(1.03); }
+    }
+
+    @keyframes curtainOpenRight {
+      0% { transform: translateX(0) rotate(2deg) scale(1.02); }
+      100% { transform: translateX(var(--open-shift)) rotate(var(--open-rot-end)) scale(1.03); }
+    }
+
+    @keyframes openingLightPulse {
+      0% { opacity: 0.95; }
+      50% { opacity: 0.72; }
+      100% { opacity: 0.2; }
+    }
+
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 84px 16px 54px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 640px;
+      margin-top: 6px;
+      --hero-reveal: 0;
+      opacity: var(--hero-reveal);
+      filter: blur(calc((1 - var(--hero-reveal)) * 10px));
+      transform: translateY(calc((1 - var(--hero-reveal)) * 14px)) scale(calc(0.99 + var(--hero-reveal) * 0.01));
+      transition: opacity 0.12s linear, filter 0.16s linear, transform 0.16s linear;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -5%;
+      background:
+        linear-gradient(rgba(248, 243, 234, 0.36), rgba(248, 243, 234, 0.38)),
+        url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1900&q=80') center / cover no-repeat;
+      transform-origin: center;
+      animation: heroZoom 22s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 76%, rgba(213, 225, 194, 0.35), transparent 42%);
+      z-index: -1;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.07); }
+    }
+
+    .hero-line1 {
+      font-family: 'Quicksand', sans-serif;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: #fbf3e4;
+      text-shadow: 0 1px 0 rgba(51, 64, 41, 0.45), 0 10px 24px rgba(30, 42, 24, 0.34);
+    }
+
+    .hero-line2 {
+      margin: 8px 0 16px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      letter-spacing: 0.15em;
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      color: #fff7e8;
+      text-shadow: 0 1px 0 rgba(51, 64, 41, 0.45), 0 12px 26px rgba(30, 42, 24, 0.35);
+      line-height: 1.05;
+    }
+
+    .hero-catch {
+      margin: 0;
+      font-size: clamp(1rem, 2.3vw, 1.32rem);
+      color: #f3ead8;
+      text-shadow: 0 1px 0 rgba(51, 64, 41, 0.4), 0 8px 18px rgba(30, 42, 24, 0.28);
+    }
+
+    .hero-scroll {
+      margin-top: 20px;
+      font-family: 'Quicksand', sans-serif;
+      letter-spacing: 0.12em;
+      font-size: 0.73rem;
+      color: #49583f;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72), 0 8px 16px rgba(38, 52, 30, 0.14);
+    }
+
+    .wrap {
+      width: min(1140px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .organic-nav-sentinel {
+      height: 1px;
+    }
+
+    .organic-nav-toggle {
+      display: inline-flex;
+      border: 1px solid rgba(106, 118, 92, 0.25);
+      background: linear-gradient(140deg, rgba(226, 237, 213, 0.95), rgba(245, 238, 224, 0.95));
+      color: var(--ink);
+      border-radius: 999px 999px 18px 999px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      min-width: 0;
+      min-height: 0;
+      box-shadow: 0 10px 24px rgba(55, 68, 42, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .organic-nav-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(55, 68, 42, 0.22);
+    }
+
+    .organic-nav-toggle .menu-label,
+    .organic-nav-toggle .menu-icon {
+      display: inline-flex;
+    }
+
+    .organic-nav-toggle .leaf-icon {
+      display: none;
+    }
+
+    .organic-nav-toggle .menu-icon {
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .organic-nav-toggle .menu-icon i {
+      display: block;
+      width: 14px;
+      height: 1.8px;
+      border-radius: 999px;
+      background: #4f6142;
+    }
+
+    .organic-nav-inner {
+      display: flex;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: clamp(250px, 26vw, 320px);
+      z-index: 90;
+      justify-content: flex-start;
+      gap: 8px;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      padding: 10px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: max-height 0.28s ease, opacity 0.2s ease, transform 0.2s ease;
+      border-radius: var(--radius-xl);
+      background: #f3eee2;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .organic-nav-inner.open {
+      max-height: 560px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .organic-brand {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--ink);
+      width: 100%;
+      margin-right: 0;
+      min-width: 0;
+      padding: 2px 4px 8px;
+      line-height: 1.1;
+    }
+
+    .organic-brand .line1 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #627155;
+    }
+
+    .organic-brand .line2 {
+      margin-top: 3px;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1.18rem;
+      letter-spacing: 0.12em;
+      color: #35442e;
+    }
+
+    .organic-nav-float {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      right: auto;
+      width: auto;
+      margin: 0;
+      z-index: 120;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-14px) scale(0.985);
+      filter: blur(1.5px);
+      will-change: opacity, transform, filter;
+      transition: opacity 0.24s ease, transform 0.34s cubic-bezier(.2,.8,.2,1), filter 0.24s ease;
+    }
+
+    .organic-nav-float.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    .organic-nav-float .organic-nav-inner {
+      background: #f3eee2;
+    }
+
+
+    .organic-lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: space-between;
+      margin-left: 0;
+      padding: 9px 16px;
+      border-radius: 999px 999px 16px 999px;
+      border: 1px solid rgba(106, 118, 92, 0.22);
+      background: linear-gradient(140deg, rgba(226, 237, 213, 0.9), rgba(245, 238, 224, 0.9));
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 0.84rem;
+      color: var(--ink);
+      letter-spacing: 0.03em;
+    }
+
+    .organic-lang select {
+      border: none;
+      background: transparent;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.82rem;
+      outline: none;
+      min-width: 66px;
+      cursor: pointer;
+    }
+
+    .organic-link {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 9px 16px;
+      width: 100%;
+      border-radius: 999px 999px 999px 18px;
+      border: 1px solid rgba(106, 118, 92, 0.22);
+      background: linear-gradient(140deg, rgba(226, 237, 213, 0.9), rgba(245, 238, 224, 0.9));
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 0.84rem;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .organic-link:nth-child(2n) { border-radius: 999px 999px 16px 999px; }
+    .organic-link:nth-child(3n) { border-radius: 18px 999px 999px 999px; }
+
+    .organic-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(95, 111, 79, 0.16);
+    }
+
+    .organic-link[data-i18n="nav_reserve"] {
+      background: rgba(83, 101, 69, 0.92);
+      border-color: rgba(95, 113, 80, 0.5);
+      color: #fff;
+    }
+
+    .organic-link[data-i18n="nav_reserve"]:hover {
+      background: rgba(75, 92, 62, 0.95);
+      box-shadow: 0 8px 20px rgba(75, 92, 62, 0.22);
+    }
+
+    .chapter {
+      margin-top: var(--section-space);
+    }
+
+    .chapter:first-of-type {
+      margin-top: 24px;
+    }
+
+    .card {
+      border-radius: var(--leaf-radius-a);
+      background: var(--card-bg, var(--glass));
+      border: 1px solid rgba(108, 121, 94, 0.2);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 4vw, 44px);
+    }
+
+    .chapter:nth-of-type(4n+1) > .card { border-radius: var(--leaf-radius-a); }
+    .chapter:nth-of-type(4n+2) > .card { border-radius: var(--leaf-radius-b); }
+    .chapter:nth-of-type(4n+3) > .card { border-radius: var(--leaf-radius-c); }
+    .chapter:nth-of-type(4n+4) > .card { border-radius: var(--leaf-radius-d); }
+
+    #philosophy .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    #materials .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    #ritual .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    #gallery .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    #stylist .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    #access .card {
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    .chapter h2 {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: clamp(1.7rem, 3.4vw, 2.8rem);
+      letter-spacing: 0.07em;
+    }
+
+    .lead {
+      margin-top: 10px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .philosophy {
+      text-align: center;
+    }
+
+    .philosophy-copy {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: #3f4b35;
+    }
+
+    .materials-strip {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      overflow: visible;
+      padding-bottom: 0;
+    }
+
+    #philosophy .materials-strip {
+      opacity: 0;
+      filter: blur(7px);
+      transform: translateY(14px) scale(0.994);
+      transition: opacity 0.62s ease, filter 0.72s ease, transform 0.72s cubic-bezier(.2,.75,.25,1);
+    }
+
+    #philosophy .materials-strip article {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.55s ease;
+    }
+
+    #philosophy .card.show .materials-strip {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
+      transition-delay: 0.36s;
+    }
+
+    #philosophy .card.show .materials-strip article {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #philosophy .card.show .materials-strip article:nth-child(1) { transition-delay: 0.44s; }
+    #philosophy .card.show .materials-strip article:nth-child(2) { transition-delay: 0.5s; }
+    #philosophy .card.show .materials-strip article:nth-child(3) { transition-delay: 0.56s; }
+    #philosophy .card.show .materials-strip article:nth-child(4) { transition-delay: 0.62s; }
+    #philosophy .card.show .materials-strip article:nth-child(5) { transition-delay: 0.68s; }
+
+    .materials-strip article {
+      border-radius: var(--leaf-radius-a);
+      background: linear-gradient(150deg, rgba(237, 246, 226, 0.95), rgba(219, 233, 201, 0.92));
+      border: 1px solid rgba(109, 123, 95, 0.2);
+      padding: 18px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .materials-strip h3 {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .materials-strip p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.72;
+    }
+
+    #materials .card {
+      text-align: center;
+    }
+
+    #materials .lead {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #materials .materials-strip article {
+      text-align: center;
+    }
+
+    .ritual-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .ritual-step {
+      border-radius: var(--leaf-radius);
+      padding: 16px;
+      background: linear-gradient(140deg, rgba(232, 245, 218, 0.94), rgba(211, 231, 189, 0.9));
+      border: 1px solid rgba(105, 120, 88, 0.22);
+    }
+
+    .ritual-step h3 {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+    }
+
+    .ritual-step p {
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .salon-space-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .salon-space-shot {
+      margin: 0;
+      border-radius: var(--leaf-radius-a);
+      overflow: hidden;
+      border: 1px solid rgba(108, 121, 94, 0.22);
+      background: rgba(243, 238, 226, 0.86);
+      box-shadow: var(--shadow);
+    }
+
+    .salon-space-shot img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .salon-space-shot:hover img {
+      transform: scale(1.04);
+    }
+
+    .menu-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      text-align: left;
+    }
+
+    .menu-item {
+      border-radius: var(--leaf-radius-a);
+      padding: 18px;
+      background: linear-gradient(150deg, rgba(238, 246, 227, 0.94), rgba(221, 234, 204, 0.9));
+      border: 1px solid rgba(108, 121, 94, 0.2);
+      display: grid;
+      gap: 10px;
+    }
+
+    .menu-item h3 {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .menu-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.78;
+      text-align: left;
+    }
+
+    .menu-meta {
+      display: grid;
+      gap: 4px;
+      color: #4f5c45;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .menu-photo-slot {
+      min-height: 120px;
+      border-radius: 16px 16px 4px 16px;
+      border: 1px dashed rgba(108, 121, 94, 0.35);
+      background: linear-gradient(140deg, rgba(247, 243, 233, 0.82), rgba(231, 238, 219, 0.72));
+      color: #6f7768;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .gallery-grid {
+      margin-top: 20px;
+      column-count: 3;
+      column-gap: 12px;
+    }
+
+    .gallery-slide {
+      display: contents;
+    }
+
+    .gallery-item {
+      border: 0;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 12px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #e3e8db;
+      cursor: pointer;
+      break-inside: avoid;
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .stylist-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stylist-note {
+      border-radius: var(--leaf-radius-a);
+      padding: 18px;
+      background: linear-gradient(150deg, rgba(232, 243, 219, 0.95), rgba(212, 228, 194, 0.92));
+      border: 1px solid rgba(108, 121, 94, 0.2);
+    }
+
+    .stylist-note h3 {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: 1.04rem;
+    }
+
+    .stylist-note .role {
+      margin-top: 2px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #647257;
+    }
+
+    .stylist-note p {
+      margin: 8px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .access-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 12px;
+    }
+
+    .access-info,
+    .access-map {
+      border-radius: var(--leaf-radius-a);
+      overflow: hidden;
+      background: linear-gradient(150deg, rgba(226, 239, 212, 0.95), rgba(205, 223, 186, 0.92));
+      border: 1px solid rgba(108, 121, 94, 0.2);
+    }
+
+    .access-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .access-info p {
+      margin: 0 0 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .access-info p:last-child { margin-bottom: 0; }
+
+    .access-map iframe {
+      border: 0;
+      width: 100%;
+      min-height: 290px;
+      display: block;
+    }
+
+    #ritual .card,
+    #gallery .card,
+    #stylist .card,
+    #access .card,
+    #reservation .reserve-wrap {
+      text-align: center;
+    }
+
+    #ritual .lead,
+    #gallery .lead,
+    #stylist .lead,
+    #access .lead,
+    #reservation .lead {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #ritual .ritual-step,
+    #stylist .stylist-note,
+    #access .access-info {
+      text-align: center;
+    }
+
+    .chapter-pause .card {
+      text-align: center;
+      padding-block: clamp(36px, 7vw, 72px);
+      --card-bg: linear-gradient(145deg, rgba(255, 250, 243, 0.95), rgba(249, 241, 231, 0.92));
+    }
+
+    .pause-title {
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: clamp(1.12rem, 2.6vw, 1.72rem);
+      letter-spacing: 0.05em;
+      color: #3f4b35;
+    }
+
+    .pause-body {
+      margin: 10px 0 0;
+      color: #5f6758;
+      font-size: clamp(0.9rem, 1.8vw, 1.02rem);
+    }
+
+    .section-ja-sub {
+      margin: 6px 0 0;
+      font-size: clamp(0.7rem, 1.4vw, 0.82rem);
+      letter-spacing: 0.08em;
+      color: #687462;
+    }
+
+    #access .access-map {
+      border-radius: 18px;
+    }
+
+    .reserve-wrap {
+      text-align: center;
+      border-radius: var(--leaf-radius-a);
+      padding: clamp(26px, 4.6vw, 50px);
+      background:
+        radial-gradient(circle at 82% 16%, rgba(246, 238, 224, 0.56), transparent 42%),
+        radial-gradient(circle at 20% 82%, rgba(239, 228, 210, 0.44), transparent 44%),
+        rgba(252, 246, 236, 0.95);
+      border: 1px solid rgba(108, 121, 94, 0.2);
+      box-shadow: var(--shadow);
+    }
+
+    .reserve-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      min-width: 182px;
+      height: 50px;
+      border-radius: 999px;
+      text-decoration: none;
+      background: rgba(83, 101, 69, 0.92);
+      border: 1px solid rgba(95, 113, 80, 0.5);
+      color: #fff;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      letter-spacing: 0.09em;
+      transition: transform 0.2s ease;
+    }
+
+    .reserve-btn:hover { transform: translateY(-2px); }
+
+    .materials-strip article:nth-child(4n+1),
+    .stylist-note:nth-child(4n+1),
+    .menu-item:nth-child(4n+1),
+    .salon-space-shot:nth-child(4n+1) { border-radius: var(--leaf-radius-a); }
+
+    .materials-strip article:nth-child(4n+2),
+    .stylist-note:nth-child(4n+2),
+    .menu-item:nth-child(4n+2),
+    .salon-space-shot:nth-child(4n+2) { border-radius: var(--leaf-radius-b); }
+
+    .materials-strip article:nth-child(4n+3),
+    .stylist-note:nth-child(4n+3),
+    .menu-item:nth-child(4n+3),
+    .salon-space-shot:nth-child(4n+3) { border-radius: var(--leaf-radius-c); }
+
+    .materials-strip article:nth-child(4n+4),
+    .stylist-note:nth-child(4n+4),
+    .menu-item:nth-child(4n+4),
+    .salon-space-shot:nth-child(4n+4) { border-radius: var(--leaf-radius-d); }
+
+    .access-info { border-radius: var(--leaf-radius-b); }
+    .access-map { border-radius: var(--leaf-radius-c); }
+    #reservation .reserve-wrap { border-radius: var(--leaf-radius-d); }
+
+    footer {
+      text-align: center;
+      padding: 28px 16px 36px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(14px) scale(0.994);
+      filter: blur(8px);
+      transition: opacity 0.86s ease, transform 0.9s cubic-bezier(.2,.75,.25,1), filter 1s ease;
+    }
+
+    [data-reveal].show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(24, 31, 21, 0.86);
+      padding: 20px;
+    }
+
+    #lightbox.open { display: flex; }
+
+    .lightbox-panel {
+      max-width: min(92vw, 960px);
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      background: #edf2e2;
+    }
+
+    .lightbox-panel img {
+      width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lb-close,
+    .lb-arrow {
+      position: absolute;
+      border: 0;
+      color: #fff;
+      background: rgba(24, 33, 21, 0.55);
+      cursor: pointer;
+    }
+
+    .lb-close {
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      font-size: 1rem;
+      z-index: 2;
+    }
+
+    .lb-arrow {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      font-size: 1.15rem;
+      z-index: 2;
+    }
+
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+
+    .carousel-pagination {
+      display: none;
+    }
+
+    .carousel-input-lock {
+      touch-action: none;
+    }
+
+    @media (max-width: 980px) {
+      .materials-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .ritual-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .salon-space-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-grid {
+        column-count: 2;
+      }
+
+      .stylist-grid,
+      .access-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .carousel-pagination {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .carousel-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(83, 101, 69, 0.28);
+        transition: width 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+      }
+
+      .carousel-dot.active {
+        width: 16px;
+        background: rgba(83, 101, 69, 0.9);
+        transform: translateY(-0.5px);
+      }
+
+      .opening-side-image {
+        width: 58vw;
+        right: -8vw;
+        -webkit-mask-image: linear-gradient(to left, #000 64%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 90%, transparent 100%);
+        mask-image: linear-gradient(to left, #000 64%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 90%, transparent 100%);
+      }
+
+      .opening-side-image.left {
+        width: 58vw;
+        left: -8vw;
+        -webkit-mask-image: linear-gradient(to right, #000 64%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 90%, transparent 100%);
+        mask-image: linear-gradient(to right, #000 64%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 90%, transparent 100%);
+      }
+
+      .opening-mark {
+        padding: 12px 16px;
+      }
+
+      .opening-mark::before {
+        border-radius: 18px;
+        background: radial-gradient(circle at 50% 46%, rgba(250, 245, 234, 0.84), rgba(250, 245, 234, 0.5) 58%, rgba(250, 245, 234, 0.08) 100%);
+      }
+
+      .hero {
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-top: 84px;
+      }
+
+      .hero-content {
+        max-width: 90vw;
+      }
+
+      .card {
+        padding: 20px 16px;
+      }
+
+      .chapter h2 {
+        font-size: clamp(1.35rem, 6vw, 1.9rem);
+        letter-spacing: 0.04em;
+      }
+
+      .lead {
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      .philosophy-copy {
+        font-size: clamp(0.92rem, 4.1vw, 1.04rem);
+        line-height: 1.7;
+        gap: 8px;
+      }
+
+      .materials-strip h3,
+      .ritual-step h3,
+      .stylist-note h3 {
+        font-size: 0.95rem;
+      }
+
+      .materials-strip p,
+      .ritual-step p,
+      .stylist-note p,
+      .access-info p {
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+
+      .organic-nav-toggle {
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 8px 14px;
+        border-radius: 999px 999px 18px 999px;
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .organic-nav-float {
+        top: 8px;
+        left: 10px;
+      }
+
+      .organic-nav-toggle .leaf-icon {
+        display: none;
+      }
+
+      .organic-nav-toggle .menu-label,
+      .organic-nav-toggle .menu-icon {
+        display: inline-flex;
+      }
+
+      .organic-nav-inner {
+        width: min(320px, calc(100vw - 24px));
+      }
+
+      .organic-link {
+        font-size: 0.8rem;
+        padding: 8px 13px;
+        width: 100%;
+      }
+
+      .organic-brand {
+        width: 100%;
+        margin-right: 0;
+        padding: 2px 4px 8px;
+      }
+
+      .organic-lang {
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0;
+      }
+
+      .materials-strip {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(220px, 1fr);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-top: 0;
+        padding-bottom: 4px;
+        padding-inline: 11vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 11vw;
+        overscroll-behavior-x: contain;
+      }
+
+      .materials-strip article {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .ritual-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(260px, 74vw);
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 0;
+        padding-inline: 13vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 13vw;
+        overscroll-behavior-x: contain;
+      }
+
+      .ritual-step {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .salon-space-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(240px, 74vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-top: 0;
+        padding-inline: 13vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 13vw;
+        overscroll-behavior-x: contain;
+      }
+
+      .salon-space-shot {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .menu-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(260px, 78vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-top: 0;
+        padding-inline: 11vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 11vw;
+        overscroll-behavior-x: contain;
+      }
+
+      .menu-item {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .stylist-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(260px, 74vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-top: 0;
+        padding-inline: 13vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 13vw;
+        overscroll-behavior-x: contain;
+      }
+
+      .stylist-note {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(180px, 56vw);
+        gap: 12px;
+        column-count: unset;
+        align-items: start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-inline: 20px;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 20px;
+        overscroll-behavior-x: contain;
+      }
+
+      .gallery-slide {
+        display: contents;
+      }
+
+      .gallery-item {
+        margin: 0;
+        break-inside: auto;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        background: #e3e8db;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+    }
+
+    @media (max-width: 900px) {
+      #philosophy .card {
+        padding: 18px 14px 24px;
+        min-height: 0;
+      }
+
+      #philosophy h2 {
+        font-size: clamp(1.18rem, 5.2vw, 1.6rem);
+        letter-spacing: 0.03em;
+      }
+
+      #philosophy .philosophy-copy {
+        margin-top: 12px;
+        gap: 6px;
+        max-width: 100%;
+        font-size: clamp(0.82rem, 3.7vw, 0.95rem);
+        line-height: 1.52;
+        letter-spacing: 0.005em;
+      }
+
+      #philosophy .philosophy-copy > div {
+        overflow-wrap: anywhere;
+      }
+
+      #philosophy .philosophy-copy::after {
+        content: '';
+        display: block;
+        height: 0.7em;
+      }
+
+      #materials h2 {
+        font-size: clamp(1.12rem, 4.8vw, 1.5rem);
+        letter-spacing: 0.02em;
+        line-height: 1.28;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer active" id="bgLayerA" aria-hidden="true"></div>
+  <div class="bg-layer" id="bgLayerB" aria-hidden="true"></div>
+  <div class="forest-vignette" aria-hidden="true"></div>
+
+  <div id="opening" aria-hidden="true">
+    <div class="opening-side-image left" aria-hidden="true">
+      <img src="./images/concept/concept-left.jpg" alt="" />
+    </div>
+    <div class="opening-side-image" aria-hidden="true">
+      <img src="./images/concept/concept-visual.jpg" alt="" />
+    </div>
+    <div class="opening-light"></div>
+    <div class="opening-curtain left layer-1"></div>
+    <div class="opening-curtain right layer-1"></div>
+    <div class="opening-curtain left layer-2"></div>
+    <div class="opening-curtain right layer-2"></div>
+    <div class="opening-curtain left layer-3"></div>
+    <div class="opening-curtain right layer-3"></div>
+    <div class="opening-mark">
+      <div class="line1" data-i18n="brand_line1">Organic Hair Salon</div>
+      <div class="line2" data-i18n="brand_line2">LINO</div>
+    </div>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="hero-content" id="heroContent">
+      <div class="hero-line1" data-i18n="brand_line1">Organic Hair Salon</div>
+      <h1 class="hero-line2" data-i18n="brand_line2">LINO</h1>
+      <p class="hero-catch" data-i18n="hero_catch">静かな美しさを、あなたへ</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <nav class="organic-nav-float" id="organicNavFloat" aria-label="floating section navigation">
+      <button class="organic-nav-toggle" id="organicNavToggleFloat" type="button" aria-controls="organicNavMenuFloat" aria-expanded="false">
+        <span class="leaf-icon" aria-hidden="true"></span>
+        <span class="menu-label">Menu</span>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <div class="organic-nav-inner" id="organicNavMenuFloat">
+        <a class="organic-brand" href="#hero">
+          <div class="line1" data-i18n="brand_line1">Organic Hair Salon</div>
+          <div class="line2" data-i18n="brand_line2">LINO</div>
+        </a>
+        <a class="organic-link" href="#philosophy" data-i18n="nav_philosophy">コンセプト</a>
+        <a class="organic-link" href="#ritual" data-i18n="nav_ritual">Ritual</a>
+        <a class="organic-link" href="#menu" data-i18n="nav_menu">メニュー</a>
+        <a class="organic-link" href="#gallery" data-i18n="nav_gallery">スタイル</a>
+        <a class="organic-link" href="#stylist" data-i18n="nav_stylist">スタイリスト</a>
+        <a class="organic-link" href="#access" data-i18n="nav_access">アクセス</a>
+        <a class="organic-link" href="#reservation" data-i18n="nav_reserve">予約</a>
+        <label class="organic-lang">
+          <span data-i18n="lang_label">Language</span>
+          <select id="langSelectFloat" aria-label="language">
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+      </div>
+    </nav>
+
+    <section id="philosophy" class="chapter philosophy">
+      <div class="card" data-reveal>
+        <h2 data-i18n="philosophy_title">Concept</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_concept">コンセプト</p>
+        <div class="philosophy-copy">
+          <div data-i18n="philosophy_line_1">私たちは、自然の力を信じています。</div>
+          <div data-i18n="philosophy_line_2">髪と心を整えることは、暮らしを整えること。</div>
+          <div data-i18n="philosophy_line_3">ここは、深呼吸を思い出すための美容室です。</div>
+        </div>
+        <div class="materials-strip">
+          <article>
+            <h3 data-i18n="material_1_title">植物由来カラー</h3>
+            <p data-i18n="material_1_body">負担を抑え、透明感のある色へ。</p>
+          </article>
+          <article>
+            <h3 data-i18n="material_2_title">頭皮ケア</h3>
+            <p data-i18n="material_2_body">髪の土台から、巡りを整える。</p>
+          </article>
+          <article>
+            <h3 data-i18n="material_3_title">水</h3>
+            <p data-i18n="material_3_body">軟水ベースで、軽く柔らかな仕上がり。</p>
+          </article>
+          <article>
+            <h3 data-i18n="material_4_title">空気</h3>
+            <p data-i18n="material_4_body">湿度と香りを設計した店内環境。</p>
+          </article>
+          <article>
+            <h3 data-i18n="material_5_title">香り</h3>
+            <p data-i18n="material_5_body">天然精油で緊張をほどく。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <div class="organic-nav-sentinel" id="organicNavSentinel" aria-hidden="true"></div>
+
+    <section id="touch" class="chapter chapter-pause">
+      <div class="card" data-reveal>
+        <h3 class="pause-title" data-i18n="touch_title">髪に触れるすべてを、やさしく</h3>
+      </div>
+    </section>
+
+    <section id="ritual" class="chapter">
+      <div class="card" data-reveal>
+        <h2 data-i18n="ritual_title">Salon Space</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_ritual">店内の様子</p>
+        <p class="lead" id="ritualLead" data-i18n="ritual_lead">光、空気、香り。すべてが静かに整う場所。</p>
+        <div class="salon-space-grid">
+          <figure class="salon-space-shot">
+            <img src="./images/salon-space/space-02.jpg" alt="Salon interior photo 2" loading="lazy" />
+          </figure>
+          <figure class="salon-space-shot">
+            <img src="./images/salon-space/space-01.jpg" alt="Salon interior photo 1" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="chapter">
+      <div class="card" data-reveal>
+        <h2 data-i18n="menu_title">Organic Hair Salon LINO — Menu</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_menu">メニュー</p>
+        <div class="menu-grid">
+          <article class="menu-item">
+            <h3 data-i18n="menu_item_1_title">Organic Cut Ritual</h3>
+            <p data-i18n="menu_item_1_body">骨格や髪の流れに沿って整え、日常の中で自然にまとまる形をつくります。過度なスタイリングに頼らない仕上がりを目指します。</p>
+            <div class="menu-meta">
+              <div data-i18n="menu_item_1_time">所要時間：60分</div>
+              <div data-i18n="menu_item_1_price">料金：¥7,700</div>
+            </div>
+            <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+          </article>
+          <article class="menu-item">
+            <h3 data-i18n="menu_item_2_title">Botanical Color Ritual</h3>
+            <p data-i18n="menu_item_2_body">植物由来成分を中心に、髪と頭皮への負担を抑えたカラーリング。透明感と柔らかさを大切にした色へ。</p>
+            <div class="menu-meta">
+              <div data-i18n="menu_item_2_time">所要時間：120分</div>
+              <div data-i18n="menu_item_2_price">料金：¥14,300〜</div>
+            </div>
+            <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+          </article>
+          <article class="menu-item">
+            <h3 data-i18n="menu_item_3_title">Natural Perm Ritual</h3>
+            <p data-i18n="menu_item_3_body">柔らかな動きと扱いやすさを重視したパーマ。乾かすだけで形になる、静かなデザインを提案します。</p>
+            <div class="menu-meta">
+              <div data-i18n="menu_item_3_time">所要時間：120分</div>
+              <div data-i18n="menu_item_3_price">料金：¥13,200〜</div>
+            </div>
+            <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+          </article>
+          <article class="menu-item">
+            <h3 data-i18n="menu_item_4_title">Scalp Reset Ritual</h3>
+            <p data-i18n="menu_item_4_body">頭皮の状態を整え、髪のコンディションを底から整えるケア。深いリラックスと軽やかな仕上がりへ。</p>
+            <div class="menu-meta">
+              <div data-i18n="menu_item_4_time">所要時間：45分</div>
+              <div data-i18n="menu_item_4_price">料金：¥6,600</div>
+            </div>
+            <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+          </article>
+          <article class="menu-item">
+            <h3 data-i18n="menu_item_5_title">Seasonal Care Treatment</h3>
+            <p data-i18n="menu_item_5_body">季節による乾燥やダメージに合わせた集中ケア。髪の内部から柔らかさを取り戻します。</p>
+            <div class="menu-meta">
+              <div data-i18n="menu_item_5_time">所要時間：30分</div>
+              <div data-i18n="menu_item_5_price">料金：¥4,400</div>
+            </div>
+            <div class="menu-photo-slot" data-i18n="menu_image_placeholder">image coming soon</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pause" class="chapter chapter-pause">
+      <div class="card" data-reveal>
+        <h3 class="pause-title" data-i18n="pause_title">整えることで、変わるものがある</h3>
+        <p class="pause-body" data-i18n="pause_body">深く息を吸って、次の景色へ。</p>
+      </div>
+    </section>
+
+    <section id="gallery" class="chapter">
+      <div class="card" data-reveal>
+        <h2 data-i18n="gallery_title">Style Gallery</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_gallery">スタイル</p>
+        <p class="lead" data-i18n="gallery_lead">作り込まない。けれど、印象に残る。</p>
+        <div class="gallery-grid">
+          <div class="gallery-slide double">
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-01.jpg">
+              <img src="./images/gallery/hair-01.jpg" alt="style photo 1" loading="lazy" />
+            </button>
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-02.jpg">
+              <img src="./images/gallery/hair-02.jpg" alt="style photo 2" loading="lazy" />
+            </button>
+          </div>
+          <div class="gallery-slide single">
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-03.jpg">
+              <img src="./images/gallery/hair-03.jpg" alt="style photo 3" loading="lazy" />
+            </button>
+          </div>
+          <div class="gallery-slide double">
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-04.jpg">
+              <img src="./images/gallery/hair-04.jpg" alt="style photo 4" loading="lazy" />
+            </button>
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-05.jpg">
+              <img src="./images/gallery/hair-05.jpg" alt="style photo 5" loading="lazy" />
+            </button>
+          </div>
+          <div class="gallery-slide single">
+            <button class="gallery-item" type="button" data-src="./images/gallery/hair-06.jpg">
+              <img src="./images/gallery/hair-06.jpg" alt="style photo 6" loading="lazy" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stylist" class="chapter">
+      <div class="card" data-reveal>
+        <h2 data-i18n="stylist_title">Stylist</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_stylist">ひと</p>
+        <p class="lead" data-i18n="stylist_lead">人の温度で、美しさは変わる。</p>
+        <div class="stylist-grid">
+          <article class="stylist-note">
+            <h3 data-i18n="stylist_1_name">Rina Sato</h3>
+            <div class="role" data-i18n="stylist_1_role">Top Stylist</div>
+            <p data-i18n="stylist_1_desc">骨格に沿ったレイヤーで、自然にまとまる形へ。</p>
+          </article>
+          <article class="stylist-note">
+            <h3 data-i18n="stylist_2_name">Mio Kanda</h3>
+            <div class="role" data-i18n="stylist_2_role">Color Specialist</div>
+            <p data-i18n="stylist_2_desc">植物由来カラーを軸に、肌になじむ色を設計。</p>
+          </article>
+          <article class="stylist-note">
+            <h3 data-i18n="stylist_3_name">Yui Tanaka</h3>
+            <div class="role" data-i18n="stylist_3_role">Scalp Care</div>
+            <p data-i18n="stylist_3_desc">頭皮と呼吸を整え、髪のコンディションを底上げ。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="access" class="chapter">
+      <div class="card" data-reveal>
+        <h2 data-i18n="access_title">Access</h2>
+        <p class="section-ja-sub" data-i18n="title_sub_access">店舗情報</p>
+        <div class="access-grid">
+          <div class="access-info">
+            <p data-i18n="access_name">Organic Hair Salon LINO</p>
+            <p data-i18n="access_address">〒150-0001 東京都渋谷区神宮前3-12-8</p>
+            <p data-i18n="access_hours">営業時間 10:00 - 19:30（最終受付 18:00）</p>
+            <p data-i18n="access_closed">定休日 火曜日</p>
+            <p data-i18n="access_tel">TEL 03-9876-5432</p>
+          </div>
+          <div class="access-map">
+            <iframe
+              title="map"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=35.6696,139.7055&z=15&output=embed">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservation" class="chapter">
+      <div class="reserve-wrap" data-reveal>
+        <h2 data-i18n="reservation_title">Reservation</h2>
+        <p class="lead" data-i18n="reservation_body">最後に、必要な方だけ。ご予約は以下からお願いします。</p>
+        <a class="reserve-btn" id="reserveBtn" href="#" data-i18n="reserve_button">予約する</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <small data-i18n="footer_note">Produced by Nakayama Works</small>
+  </footer>
+
+  <div id="lightbox" aria-hidden="true">
+    <div class="lightbox-panel">
+      <button class="lb-close" id="lbClose" data-i18n-attr="aria-label:lightbox_close">×</button>
+      <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+      <img id="lbImage" src="" alt="Expanded style image" />
+      <button class="lb-arrow lb-next" id="lbNext" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <script src="./i18n-demo.js"></script>
+  <script>
+    const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/organic_hair_salon_lino/';
+
+    const i18n = window.DEMO_I18N || {};
+    const langSelect = null;
+    const langSelectFloat = document.getElementById('langSelectFloat');
+    const storedLang = localStorage.getItem('demoLang');
+    const queryLang = new URLSearchParams(location.search).get('lang');
+    let currentLang = queryLang || storedLang || 'ja';
+    if (!i18n[currentLang]) currentLang = 'ja';
+
+    function applyLang(lang) {
+      const dict = i18n[lang] || i18n.ja || {};
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (typeof dict[key] === 'string') {
+          el.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-attr]').forEach((el) => {
+        const rules = el.dataset.i18nAttr.split(',');
+        rules.forEach((rule) => {
+          const [attr, key] = rule.split(':').map((v) => v.trim());
+          if (attr && key && dict[key]) {
+            el.setAttribute(attr, dict[key]);
+          }
+        });
+      });
+
+      const reserveUrl = new URL(RESERVE_BASE_URL);
+      reserveUrl.searchParams.set('lang', lang);
+      reserveUrl.searchParams.set('return', location.href);
+      document.getElementById('reserveBtn').href = reserveUrl.toString();
+
+      if (langSelect) langSelect.value = lang;
+      if (langSelectFloat) langSelectFloat.value = lang;
+      localStorage.setItem('demoLang', lang);
+
+      document.querySelectorAll('.section-ja-sub').forEach((el) => {
+        el.style.display = lang === 'ja' ? '' : 'none';
+      });
+
+      applyMobileLeadBreaks(lang, dict);
+    }
+
+    function applyMobileLeadBreaks(lang, dict) {
+      const materialsLead = document.getElementById('materialsLead');
+      const ritualLead = document.getElementById('ritualLead');
+      if (!ritualLead) return;
+
+      const materialsText = dict.materials_lead || '';
+      const ritualText = dict.ritual_lead || '';
+      const isMobile = window.matchMedia('(max-width: 740px)').matches;
+
+      if (isMobile && lang === 'ja') {
+        if (materialsLead) materialsLead.innerHTML = materialsText.replace('。', '。<br>');
+        ritualLead.innerHTML = ritualText.replace('、', '、<br>');
+      } else {
+        if (materialsLead) materialsLead.textContent = materialsText;
+        ritualLead.textContent = ritualText;
+      }
+    }
+
+    [langSelect, langSelectFloat].forEach((selector) => {
+      if (!selector) return;
+      selector.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        applyLang(currentLang);
+        const nextUrl = new URL(location.href);
+        nextUrl.searchParams.set('lang', currentLang);
+        history.replaceState({}, '', nextUrl);
+      });
+    });
+
+    function initOpening(onDone) {
+      const opening = document.getElementById('opening');
+      if (!opening) {
+        if (typeof onDone === 'function') onDone();
+        return;
+      }
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      document.body.classList.add('hero-lock');
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      // Hard block user scroll intent while opening is visible.
+      const blockWheel = (event) => {
+        event.preventDefault();
+      };
+      const blockTouchMove = (event) => {
+        event.preventDefault();
+      };
+      const blockKey = (event) => {
+        const keys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Spacebar', 'Home', 'End'];
+        if (keys.includes(event.key)) {
+          event.preventDefault();
+        }
+      };
+
+      let pinRaf = 0;
+      const pinTop = () => {
+        window.scrollTo(0, 0);
+        pinRaf = window.requestAnimationFrame(pinTop);
+      };
+
+      window.addEventListener('wheel', blockWheel, { passive: false });
+      window.addEventListener('touchmove', blockTouchMove, { passive: false });
+      window.addEventListener('keydown', blockKey, { passive: false });
+      pinTop();
+
+      const cleanupOpeningBlock = () => {
+        window.removeEventListener('wheel', blockWheel);
+        window.removeEventListener('touchmove', blockTouchMove);
+        window.removeEventListener('keydown', blockKey);
+        if (pinRaf) window.cancelAnimationFrame(pinRaf);
+      };
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const openingDuration = reduce ? 700 : 3400;
+      const fadeDuration = reduce ? 220 : 420;
+      setTimeout(() => {
+        opening.classList.add('hidden');
+        setTimeout(() => {
+          cleanupOpeningBlock();
+          opening.remove();
+          if (typeof onDone === 'function') onDone();
+        }, fadeDuration);
+      }, openingDuration);
+    }
+
+    function initHeroIntroGate() {
+      const hero = document.getElementById('hero');
+      const heroContent = document.getElementById('heroContent');
+      if (!hero || !heroContent) return;
+
+      let locked = true;
+      let progress = 0;
+      let touchStartY = 0;
+      let lastTouchIntent = 0;
+
+      document.body.classList.add('hero-lock');
+      window.scrollTo(0, 0);
+
+      const setProgress = (value) => {
+        progress = Math.max(0, Math.min(1, value));
+        heroContent.style.setProperty('--hero-reveal', String(progress));
+      };
+
+      const unlock = () => {
+        locked = false;
+        document.body.classList.remove('hero-lock');
+      };
+
+      const feed = (amount) => {
+        if (!locked) return;
+        setProgress(progress + amount);
+        if (progress >= 1) {
+          setTimeout(unlock, 280);
+        }
+      };
+
+      const onWheel = (event) => {
+        if (!locked) return;
+        if (event.deltaY <= 0) return;
+        event.preventDefault();
+        const step = Math.min(0.1, Math.max(0.03, event.deltaY / 2200));
+        feed(step);
+      };
+
+      const onKeyDown = (event) => {
+        if (!locked) return;
+        const keys = ['ArrowDown', 'PageDown', ' ', 'Spacebar'];
+        if (!keys.includes(event.key)) return;
+        event.preventDefault();
+        feed(0.08);
+      };
+
+      const onTouchStart = (event) => {
+        if (!locked) return;
+        touchStartY = event.touches[0].clientY;
+      };
+
+      const onTouchMove = (event) => {
+        if (!locked) return;
+        const y = event.touches[0].clientY;
+        const delta = touchStartY - y;
+        if (delta < 10) return;
+        event.preventDefault();
+        const now = Date.now();
+        if (now - lastTouchIntent > 120) {
+          feed(Math.min(0.09, delta / 360));
+          lastTouchIntent = now;
+        }
+      };
+
+      setProgress(0);
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('keydown', onKeyDown, { passive: false });
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+    }
+
+    function initReveal() {
+      const items = document.querySelectorAll('[data-reveal]');
+      const reservationWrap = document.querySelector('#reservation [data-reveal]');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+          } else {
+            entry.target.classList.remove('show');
+          }
+        });
+      }, {
+        threshold: 0.01,
+        rootMargin: '-18% 0px -38% 0px'
+      });
+
+      items.forEach((el, idx) => {
+        el.style.transitionDelay = `${(idx % 3) * 80}ms`;
+        io.observe(el);
+      });
+
+      const ensureLastSectionFocus = () => {
+        if (!reservationWrap) return;
+        const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 12;
+        if (nearBottom) {
+          reservationWrap.classList.add('show');
+        }
+      };
+
+      ensureLastSectionFocus();
+      window.addEventListener('scroll', ensureLastSectionFocus, { passive: true });
+      window.addEventListener('resize', ensureLastSectionFocus);
+    }
+
+    function initMobileLoopCarousels() {
+      const configs = [
+        { track: '.materials-strip', item: 'article' },
+        { track: '.salon-space-grid', item: '.salon-space-shot' },
+        { track: '.menu-grid', item: '.menu-item' },
+        { track: '.gallery-grid', item: '.gallery-item' },
+        { track: '.stylist-grid', item: '.stylist-note' }
+      ];
+
+      const isMobile = () => window.matchMedia('(max-width: 740px)').matches;
+      const cleanups = [];
+
+      const centerOffset = (track, item) => item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+
+      const setupTrack = (track, itemSelector) => {
+        const baseItems = Array.from(track.querySelectorAll(`:scope > ${itemSelector}:not([data-loop-clone])`));
+        if (baseItems.length <= 1) return () => {};
+        baseItems.forEach((item, idx) => { item.dataset.loopIndex = String(idx); });
+
+        const prependFrag = document.createDocumentFragment();
+        const appendFrag = document.createDocumentFragment();
+        baseItems.forEach((item) => {
+          const headClone = item.cloneNode(true);
+          headClone.setAttribute('data-loop-clone', 'head');
+          headClone.dataset.loopIndex = item.dataset.loopIndex || '0';
+          appendFrag.appendChild(headClone);
+        });
+        baseItems.forEach((item) => {
+          const tailClone = item.cloneNode(true);
+          tailClone.setAttribute('data-loop-clone', 'tail');
+          tailClone.dataset.loopIndex = item.dataset.loopIndex || '0';
+          prependFrag.appendChild(tailClone);
+        });
+        track.insertBefore(prependFrag, baseItems[0]);
+        track.appendChild(appendFrag);
+
+        let settlingTimer = 0;
+        let recenterTimer = 0;
+        let mutedUntil = 0;
+        let touchSettleTimer = 0;
+        let isAdjusting = false;
+        let touchActive = false;
+        let inputLockTimer = 0;
+        let inputLockUntil = 0;
+        let lastScrollLeft = track.scrollLeft;
+        let lastScrollTime = performance.now();
+        let lastVelocity = 0;
+        let activeIndex = 0;
+
+        const allItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}`));
+        const middleItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}:not([data-loop-clone])`));
+        const pagination = document.createElement('div');
+        pagination.className = 'carousel-pagination';
+        pagination.innerHTML = baseItems.map((_, idx) => `<span class="carousel-dot${idx === 0 ? ' active' : ''}" aria-hidden="true"></span>`).join('');
+        track.insertAdjacentElement('afterend', pagination);
+        const dots = Array.from(pagination.querySelectorAll('.carousel-dot'));
+
+        const updatePagination = (item) => {
+          if (!item || !dots.length) return;
+          const idx = Number(item.dataset.loopIndex || 0);
+          activeIndex = idx;
+          dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+        };
+
+        const getCycleMetrics = () => {
+          const middle = middleItems();
+          if (!middle.length) return null;
+          const first = middle[0];
+          const last = middle[middle.length - 1];
+          const start = first.offsetLeft;
+          const end = last.offsetLeft + last.offsetWidth;
+          const width = end - start;
+          if (!Number.isFinite(width) || width <= 0) return null;
+          return { start, width, middle };
+        };
+
+        const lockInput = (ms = 140) => {
+          inputLockUntil = performance.now() + ms;
+          track.classList.add('carousel-input-lock');
+          clearTimeout(inputLockTimer);
+          inputLockTimer = window.setTimeout(() => {
+            track.classList.remove('carousel-input-lock');
+          }, ms + 24);
+        };
+
+        const goTo = (item, behavior = 'auto') => {
+          isAdjusting = true;
+          lockInput(140);
+          track.scrollTo({ left: centerOffset(track, item), behavior });
+          window.setTimeout(() => { isAdjusting = false; }, 36);
+        };
+
+        const nearestItem = () => {
+          const center = track.scrollLeft + track.clientWidth / 2;
+          let winner = null;
+          let bestDistance = Infinity;
+          allItems().forEach((item) => {
+            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+            const distance = Math.abs(itemCenter - center);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              winner = item;
+            }
+          });
+          return winner;
+        };
+
+        const normalizePosition = () => {
+          if (!isMobile()) return;
+          recenterLoop();
+          const item = nearestItem();
+          if (!item) return;
+          updatePagination(item);
+          mutedUntil = performance.now() + 160;
+          goTo(item, 'auto');
+        };
+
+        const recenterLoop = () => {
+          const metrics = getCycleMetrics();
+          if (!metrics) return;
+          const { start, width } = metrics;
+          const current = track.scrollLeft;
+          const lowerBound = start - width * 0.25;
+          const upperBound = start + width * 1.25;
+          if (current < lowerBound) {
+            track.scrollLeft = current + width;
+            mutedUntil = performance.now() + 80;
+          } else if (current > upperBound) {
+            track.scrollLeft = current - width;
+            mutedUntil = performance.now() + 80;
+          }
+        };
+
+        const onScroll = () => {
+          if (!isMobile()) return;
+          recenterLoop();
+          if (isAdjusting) return;
+          const nearest = nearestItem();
+          if (nearest) updatePagination(nearest);
+          if (performance.now() < mutedUntil) return;
+          const now = performance.now();
+          const dt = Math.max(1, now - lastScrollTime);
+          const dx = Math.abs(track.scrollLeft - lastScrollLeft);
+          lastVelocity = dx / dt;
+          lastScrollLeft = track.scrollLeft;
+          lastScrollTime = now;
+          clearTimeout(settlingTimer);
+          const isFastMomentum = lastVelocity > 0.55;
+          if (touchActive || isFastMomentum) {
+            settlingTimer = window.setTimeout(normalizePosition, 180);
+          } else {
+            settlingTimer = window.setTimeout(normalizePosition, 92);
+          }
+        };
+
+        const onTouchStart = (event) => {
+          if (performance.now() < inputLockUntil || isAdjusting) {
+            event.preventDefault();
+            return;
+          }
+          touchActive = true;
+          clearTimeout(settlingTimer);
+        };
+
+        const onTouchMove = (event) => {
+          if (performance.now() < inputLockUntil || isAdjusting) {
+            event.preventDefault();
+          }
+        };
+
+        const onTouchEnd = () => {
+          if (!isMobile()) return;
+          touchActive = false;
+          clearTimeout(touchSettleTimer);
+          lockInput(140);
+          touchSettleTimer = window.setTimeout(normalizePosition, 110);
+        };
+
+        const onResize = () => {
+          clearTimeout(recenterTimer);
+          recenterTimer = window.setTimeout(() => {
+            if (!isMobile()) return;
+            recenterLoop();
+            normalizePosition();
+          }, 90);
+        };
+
+        track.addEventListener('scroll', onScroll, { passive: true });
+        track.addEventListener('touchstart', onTouchStart, { passive: false });
+        track.addEventListener('touchmove', onTouchMove, { passive: false });
+        track.addEventListener('touchend', onTouchEnd, { passive: true });
+        window.addEventListener('resize', onResize);
+
+        mutedUntil = performance.now() + 220;
+        const metrics = getCycleMetrics();
+        if (metrics) {
+          track.scrollLeft = metrics.start;
+          const first = metrics.middle[0];
+          updatePagination(first);
+          goTo(first, 'auto');
+        } else {
+          updatePagination(baseItems[0]);
+          goTo(baseItems[0], 'auto');
+        }
+
+        return () => {
+          clearTimeout(settlingTimer);
+          clearTimeout(recenterTimer);
+          clearTimeout(touchSettleTimer);
+          clearTimeout(inputLockTimer);
+          track.removeEventListener('scroll', onScroll);
+          track.removeEventListener('touchstart', onTouchStart);
+          track.removeEventListener('touchmove', onTouchMove);
+          track.removeEventListener('touchend', onTouchEnd);
+          window.removeEventListener('resize', onResize);
+          track.querySelectorAll('[data-loop-clone]').forEach((node) => node.remove());
+          track.classList.remove('carousel-input-lock');
+          if (pagination.parentNode) pagination.parentNode.removeChild(pagination);
+        };
+      };
+
+      const rebuild = () => {
+        while (cleanups.length) {
+          const fn = cleanups.pop();
+          if (typeof fn === 'function') fn();
+        }
+        if (!isMobile()) return;
+        configs.forEach(({ track, item }) => {
+          document.querySelectorAll(track).forEach((trackEl) => {
+            cleanups.push(setupTrack(trackEl, item));
+          });
+        });
+      };
+
+      rebuild();
+      window.addEventListener('orientationchange', rebuild);
+      window.addEventListener('resize', rebuild);
+    }
+
+    function initBackgroundShift() {
+      const sections = Array.from(document.querySelectorAll('.chapter'));
+      const palettes = [
+        "linear-gradient(rgba(241, 245, 234, 0.64), rgba(247, 242, 232, 0.66)), radial-gradient(circle at 10% 12%, rgba(118, 151, 95, 0.5), transparent 35%), radial-gradient(circle at 88% 18%, rgba(164, 181, 134, 0.38), transparent 44%), url('./images/bg/lino-forest-bg.jpg') center 24% / cover no-repeat",
+        "linear-gradient(rgba(244, 248, 238, 0.66), rgba(248, 244, 235, 0.68)), radial-gradient(circle at 12% 15%, rgba(145, 176, 120, 0.45), transparent 35%), radial-gradient(circle at 86% 18%, rgba(193, 205, 166, 0.32), transparent 42%), url('./images/bg/lino-forest-bg.jpg') center 42% / cover no-repeat",
+        "linear-gradient(rgba(247, 250, 242, 0.68), rgba(250, 246, 238, 0.7)), radial-gradient(circle at 14% 18%, rgba(170, 196, 145, 0.38), transparent 34%), radial-gradient(circle at 84% 20%, rgba(216, 224, 193, 0.26), transparent 40%), url('./images/bg/lino-forest-bg.jpg') center 60% / cover no-repeat"
+      ];
+
+      const layerA = document.getElementById('bgLayerA');
+      const layerB = document.getElementById('bgLayerB');
+      if (!sections.length || !layerA || !layerB) return;
+
+      let active = 0;
+      let currentBg = palettes[0];
+      layerA.style.background = currentBg;
+
+      const swapBackground = (nextBg) => {
+        if (nextBg === currentBg) return;
+        const nextLayer = active === 0 ? layerB : layerA;
+        const activeLayer = active === 0 ? layerA : layerB;
+        nextLayer.style.background = nextBg;
+        nextLayer.classList.add('active');
+        activeLayer.classList.remove('active');
+        active = active === 0 ? 1 : 0;
+        currentBg = nextBg;
+      };
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const idx = sections.indexOf(entry.target);
+          swapBackground(palettes[idx % palettes.length]);
+        });
+      }, { rootMargin: '-35% 0px -35% 0px', threshold: 0.01 });
+
+      sections.forEach((section) => io.observe(section));
+    }
+
+    function initOrganicNav() {
+      const philosophy = document.getElementById('philosophy');
+      const floatNav = document.getElementById('organicNavFloat');
+      const toggleFloat = document.getElementById('organicNavToggleFloat');
+      const menuFloat = document.getElementById('organicNavMenuFloat');
+      if (!philosophy || !floatNav || !toggleFloat || !menuFloat) return;
+
+      const closeFloat = () => {
+        menuFloat.classList.remove('open');
+        toggleFloat.setAttribute('aria-expanded', 'false');
+      };
+
+      toggleFloat.addEventListener('click', () => {
+        const isOpen = menuFloat.classList.toggle('open');
+        toggleFloat.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      menuFloat.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (window.matchMedia('(max-width: 740px)').matches) {
+            closeFloat();
+          }
+        });
+      });
+
+      let isFloating = false;
+
+      const setFloating = (on) => {
+        if (isFloating === on) return;
+        isFloating = on;
+        if (on) {
+          floatNav.classList.add('visible');
+        } else {
+          floatNav.classList.remove('visible');
+          closeFloat();
+        }
+      };
+
+      const updateFloatingNav = () => {
+        const topOffset = window.matchMedia('(max-width: 740px)').matches ? 8 : 10;
+        const philosophyTop = philosophy.getBoundingClientRect().top;
+        setFloating(philosophyTop <= topOffset);
+      };
+
+      updateFloatingNav();
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateFloatingNav();
+          ticking = false;
+        });
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        if (!window.matchMedia('(max-width: 740px)').matches) {
+          closeFloat();
+        }
+        const dict = i18n[currentLang] || i18n.ja || {};
+        applyMobileLeadBreaks(currentLang, dict);
+        updateFloatingNav();
+      });
+    }
+
+    function initLightbox() {
+      const buttons = Array.from(document.querySelectorAll('.gallery-item'));
+      const lightbox = document.getElementById('lightbox');
+      const image = document.getElementById('lbImage');
+      const close = document.getElementById('lbClose');
+      const prev = document.getElementById('lbPrev');
+      const next = document.getElementById('lbNext');
+      if (!buttons.length) return;
+
+      let index = 0;
+      let startX = 0;
+
+      const render = () => {
+        const src = buttons[index].dataset.src;
+        const thumb = buttons[index].querySelector('img');
+        image.src = src || '';
+        image.alt = thumb ? thumb.alt : 'Expanded style image';
+      };
+
+      const open = (i) => {
+        index = i;
+        render();
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      };
+
+      const closeBox = () => {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      };
+
+      const showPrev = () => {
+        index = (index - 1 + buttons.length) % buttons.length;
+        render();
+      };
+
+      const showNext = () => {
+        index = (index + 1) % buttons.length;
+        render();
+      };
+
+      buttons.forEach((btn, i) => btn.addEventListener('click', () => open(i)));
+      close.addEventListener('click', closeBox);
+      prev.addEventListener('click', showPrev);
+      next.addEventListener('click', showNext);
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeBox();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') closeBox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      });
+
+      lightbox.addEventListener('touchstart', (e) => {
+        startX = e.changedTouches[0].clientX;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) showPrev();
+          else showNext();
+        }
+      }, { passive: true });
+    }
+
+    applyLang(currentLang);
+    initOpening(initHeroIntroGate);
+    initReveal();
+    initMobileLoopCarousels();
+    initOrganicNav();
+    initBackgroundShift();
+    initLightbox();
+  </script>
+</body>
+</html>
