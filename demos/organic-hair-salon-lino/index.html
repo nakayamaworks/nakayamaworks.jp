@@ -1100,6 +1100,10 @@
     }
 
     @media (max-width: 740px) {
+      body {
+        padding-bottom: calc(94px + env(safe-area-inset-bottom));
+      }
+
       footer {
         position: fixed;
         left: 10px;
@@ -2032,7 +2036,7 @@
         if (event.deltaY <= 0) return;
         event.preventDefault();
         const step = isMobileScreen()
-          ? Math.min(0.34, Math.max(0.12, event.deltaY / 900))
+          ? Math.min(0.5, Math.max(0.2, event.deltaY / 700))
           : Math.min(0.1, Math.max(0.03, event.deltaY / 2200));
         feed(step);
       };
@@ -2059,7 +2063,7 @@
         const now = Date.now();
         if (now - lastTouchIntent > 55) {
           const step = isMobileScreen()
-            ? Math.min(0.4, Math.max(0.16, delta / 120))
+            ? Math.min(0.56, Math.max(0.24, delta / 92))
             : Math.min(0.09, delta / 360);
           feed(step);
           lastTouchIntent = now;
@@ -2114,7 +2118,7 @@
       const reservationWrap = document.querySelector('#reservation [data-reveal]');
       const update = () => {
         const viewportH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        const nearBottom = viewportH + window.scrollY >= document.documentElement.scrollHeight - 16;
+        const nearBottom = viewportH + window.scrollY >= document.documentElement.scrollHeight - 2;
         document.body.classList.toggle('at-page-end', nearBottom);
         if (nearBottom && reservationWrap) {
           reservationWrap.classList.add('show');
