@@ -43,7 +43,7 @@ window.DEMO_I18N = {
     ritual_4_title: '04. Reset',
     ritual_4_body: '仕上げと頭皮ケアで、表情まで軽くする。',
 
-    menu_title: 'Organic Hair Salon LINO — Menu',
+    menu_title: 'Menu',
     menu_item_1_title: 'Organic Cut Ritual',
     menu_item_1_body: '骨格や髪の流れに沿って整え、日常の中で自然にまとまる形をつくります。過度なスタイリングに頼らない仕上がりを目指します。',
     menu_item_1_time: '所要時間：60分',
@@ -152,7 +152,7 @@ window.DEMO_I18N = {
     ritual_4_title: '04. Reset',
     ritual_4_body: 'Finish with scalp care to lighten your expression too.',
 
-    menu_title: 'Organic Hair Salon LINO — Menu',
+    menu_title: 'Menu',
     menu_item_1_title: 'Organic Cut Ritual',
     menu_item_1_body: 'A cut that follows your bone structure and natural hair flow, creating a shape that settles naturally in daily life.',
     menu_item_1_time: 'Duration: 60 min',

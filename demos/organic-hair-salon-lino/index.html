@@ -1037,6 +1037,10 @@
       border-radius: 18px;
     }
 
+    .access-card {
+      display: block;
+    }
+
     .reserve-wrap {
       text-align: center;
       border-radius: var(--leaf-radius-a);
@@ -1462,6 +1466,31 @@
         scroll-snap-stop: always;
       }
 
+      .access-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(280px, 82vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-top: 0;
+        padding-inline: 10vw;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 10vw;
+        overscroll-behavior-x: contain;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .access-grid::-webkit-scrollbar { display: none; }
+
+      .access-card {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
       .gallery-grid {
         display: grid;
         grid-auto-flow: column;
@@ -1670,7 +1699,7 @@
 
     <section id="menu" class="chapter">
       <div class="card" data-reveal>
-        <h2 data-i18n="menu_title">Organic Hair Salon LINO — Menu</h2>
+        <h2 data-i18n="menu_title">Menu</h2>
         <p class="section-ja-sub" data-i18n="title_sub_menu">メニュー</p>
         <div class="menu-grid">
           <article class="menu-item">
@@ -1793,14 +1822,14 @@
         <h2 data-i18n="access_title">Access</h2>
         <p class="section-ja-sub" data-i18n="title_sub_access">店舗情報</p>
         <div class="access-grid">
-          <div class="access-info">
+          <div class="access-info access-card">
             <p data-i18n="access_name">Organic Hair Salon LINO</p>
             <p data-i18n="access_address">〒150-0001 東京都渋谷区神宮前3-12-8</p>
             <p data-i18n="access_hours">営業時間 10:00 - 19:30（最終受付 18:00）</p>
             <p data-i18n="access_closed">定休日 火曜日</p>
             <p data-i18n="access_tel">TEL 03-9876-5432</p>
           </div>
-          <div class="access-map">
+          <div class="access-map access-card">
             <iframe
               title="map"
               loading="lazy"
@@ -2092,7 +2121,8 @@
         { track: '.salon-space-grid', item: '.salon-space-shot' },
         { track: '.menu-grid', item: '.menu-item' },
         { track: '.gallery-grid', item: '.gallery-slide' },
-        { track: '.stylist-grid', item: '.stylist-note' }
+        { track: '.stylist-grid', item: '.stylist-note' },
+        { track: '.access-grid', item: '.access-card' }
       ];
 
       const isMobile = () => window.matchMedia('(max-width: 740px)').matches;
