@@ -1099,34 +1099,6 @@
       font-size: 0.82rem;
     }
 
-    @media (max-width: 740px) {
-      body {
-        padding-bottom: calc(94px + env(safe-area-inset-bottom));
-      }
-
-      footer {
-        position: fixed;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        z-index: 140;
-        padding: 10px 12px;
-        border-radius: 14px;
-        background: rgba(248, 244, 236, 0.96);
-        border: 1px solid rgba(108, 121, 94, 0.22);
-        box-shadow: 0 10px 22px rgba(58, 66, 47, 0.16);
-        opacity: 0;
-        transform: translateY(14px);
-        pointer-events: none;
-        transition: opacity 0.24s ease, transform 0.24s ease;
-      }
-
-      body.at-page-end footer {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     [data-reveal] {
       opacity: 0;
       transform: translateY(14px) scale(0.994);
@@ -2114,33 +2086,6 @@
       window.addEventListener('resize', ensureLastSectionFocus);
     }
 
-    function initPageEndFooter() {
-      const reservationWrap = document.querySelector('#reservation [data-reveal]');
-      const update = () => {
-        const viewportH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        const nearBottom = viewportH + window.scrollY >= document.documentElement.scrollHeight - 2;
-        document.body.classList.toggle('at-page-end', nearBottom);
-        if (nearBottom && reservationWrap) {
-          reservationWrap.classList.add('show');
-        }
-      };
-
-      update();
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-      }, { passive: true });
-      window.addEventListener('resize', update);
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', update);
-      }
-    }
-
     function initMobileLoopCarousels() {
       const configs = [
         { track: '.materials-strip', item: 'article' },
@@ -2543,7 +2488,6 @@
     initOrganicNav();
     initBackgroundShift();
     initLightbox();
-    initPageEndFooter();
   </script>
 </body>
 </html>
