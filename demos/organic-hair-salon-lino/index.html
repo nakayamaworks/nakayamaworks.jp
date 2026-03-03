@@ -508,6 +508,7 @@
       padding: 84px 16px 54px;
       overflow: hidden;
       transition: opacity 1.05s ease;
+      --hero-reveal: 0;
     }
 
     .hero-content {
@@ -527,9 +528,11 @@
       background:
         linear-gradient(rgba(248, 243, 234, 0.36), rgba(248, 243, 234, 0.38)),
         url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1900&q=80') center / cover no-repeat;
+      filter: blur(calc(var(--hero-reveal) * 8px));
       transform-origin: center;
       animation: heroZoom 22s ease-in-out infinite alternate;
       z-index: -2;
+      will-change: transform, filter;
     }
 
     .hero::after {
@@ -602,10 +605,29 @@
 
     .hero-scroll-cue .icon {
       width: 30px;
-      height: 30px;
+      height: 40px;
+      position: relative;
+      display: block;
+    }
+
+    .hero-scroll-cue .icon::before,
+    .hero-scroll-cue .icon::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      width: 20px;
+      height: 20px;
       border-right: 2.6px solid currentColor;
       border-bottom: 2.6px solid currentColor;
-      transform: rotate(45deg);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .hero-scroll-cue .icon::before {
+      top: 0;
+    }
+
+    .hero-scroll-cue .icon::after {
+      top: 12px;
     }
 
     @keyframes heroCueFloat {
@@ -1828,7 +1850,17 @@
 
       .hero-scroll-cue .icon {
         width: 24px;
-        height: 24px;
+        height: 32px;
+      }
+      .hero-scroll-cue .icon::before,
+      .hero-scroll-cue .icon::after {
+        width: 16px;
+        height: 16px;
+        border-right-width: 2.2px;
+        border-bottom-width: 2.2px;
+      }
+      .hero-scroll-cue .icon::after {
+        top: 10px;
       }
 
       .card {
@@ -2831,6 +2863,7 @@
       const setProgress = (value) => {
         progress = Math.max(0, Math.min(1, value));
         heroContent.style.setProperty('--hero-reveal', String(progress));
+        hero.style.setProperty('--hero-reveal', String(progress));
       };
 
       const unlock = () => {
