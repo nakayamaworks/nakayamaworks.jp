@@ -2873,11 +2873,12 @@
       }, openingDuration);
     }
 
-    function initHeroIntroGate() {
+    function initHeroIntroGate(options = {}) {
       const hero = document.getElementById('hero');
       const heroContent = document.getElementById('heroContent');
       const heroScrollCue = document.getElementById('heroScrollCue');
       if (!hero || !heroContent) return;
+      const skipIntro = !!options.skipIntro;
       const isMobileScreen = () => window.matchMedia('(max-width: 740px)').matches;
 
       let locked = true;
@@ -2885,8 +2886,10 @@
       let touchStartY = 0;
       let lastTouchIntent = 0;
 
-      document.body.classList.add('hero-lock');
-      window.scrollTo(0, 0);
+      if (!skipIntro) {
+        document.body.classList.add('hero-lock');
+        window.scrollTo(0, 0);
+      }
 
       const setProgress = (value) => {
         progress = Math.max(0, Math.min(1, value));
@@ -2947,11 +2950,15 @@
         }
       };
 
-      setProgress(0);
-      window.addEventListener('wheel', onWheel, { passive: false });
-      window.addEventListener('keydown', onKeyDown, { passive: false });
-      window.addEventListener('touchstart', onTouchStart, { passive: true });
-      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      setProgress(skipIntro ? 1 : 0);
+      if (skipIntro) {
+        unlock();
+      } else {
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('keydown', onKeyDown, { passive: false });
+        window.addEventListener('touchstart', onTouchStart, { passive: true });
+        window.addEventListener('touchmove', onTouchMove, { passive: false });
+      }
 
       if (heroScrollCue) {
         const smoothScrollTo = (targetY) => {
@@ -3647,11 +3654,7 @@
       document.body.classList.remove('opening-boot');
       document.body.classList.remove('no-bg');
       document.body.classList.remove('hero-preroll');
-      const hero = document.getElementById('hero');
-      const heroContent = document.getElementById('heroContent');
-      if (hero) hero.style.setProperty('--hero-reveal', '1');
-      if (heroContent) heroContent.style.setProperty('--hero-reveal', '1');
-      document.body.classList.remove('hero-lock');
+      initHeroIntroGate({ skipIntro: true });
     } else {
       initLanguageGate(() => initOpening(initHeroIntroGate));
     }
