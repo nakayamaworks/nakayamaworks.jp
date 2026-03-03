@@ -49,6 +49,46 @@
       position: relative;
     }
 
+    body.page-leaving .hero,
+    body.page-leaving .wrap,
+    body.page-leaving footer,
+    body.page-leaving .organic-float-nav {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .34s ease, transform .34s ease;
+      pointer-events: none;
+    }
+
+    body.booting .hero,
+    body.booting .wrap,
+    body.booting footer {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    body.opening-boot .hero,
+    body.opening-boot .wrap,
+    body.opening-boot footer {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    body.hero-preroll .hero {
+      opacity: 0;
+    }
+
+    body.no-bg .bg-layer,
+    body.no-bg .forest-vignette {
+      opacity: 0 !important;
+    }
+
+    body.booting #langGate {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: none;
+    }
+
     :lang(ja) body {
       font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
     }
@@ -69,6 +109,93 @@
     body.hero-lock {
       overflow: hidden;
       touch-action: none;
+    }
+
+    body.welcome-lock {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .lang-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(245, 243, 236, 0.98);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.24s ease, visibility 0s linear 0.24s;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    .lang-gate.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.24s ease, visibility 0s;
+    }
+
+    .lang-card {
+      width: min(680px, calc(100% - 1rem));
+      border: 1px solid rgba(81, 102, 66, 0.26);
+      border-radius: 18px;
+      padding: 1.2rem 1.1rem 1rem;
+      background: #faf8f1;
+      transform: none;
+      transition: none;
+    }
+
+    .lang-gate.show .lang-card {
+      transform: none;
+    }
+
+    .lang-title {
+      margin: 0;
+      text-align: center;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      color: #30432a;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+
+    .lang-copy {
+      margin: 0.34rem 0 0.9rem;
+      text-align: center;
+      color: #5d6657;
+      font-size: 0.9rem;
+      line-height: 1.2;
+    }
+
+    .lang-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .lang-btn {
+      border: 1px solid rgba(81, 102, 66, 0.26);
+      background: #f7f2e5;
+      color: #2f3d2b;
+      border-radius: 999px;
+      min-height: 42px;
+      font: inherit;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: none;
+    }
+
+    .lang-btn:hover {
+      border-color: rgba(81, 102, 66, 0.42);
+    }
+
+    .lang-btn.is-selecting {
+      background: #78996f;
+      color: #fffef9;
+      border-color: #78996f;
     }
 
     .bg-layer {
@@ -114,6 +241,15 @@
         linear-gradient(130deg, #fdf7ec, #f1ebdb);
       transition: opacity 0.56s ease;
       overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #opening.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .opening-side-image {
@@ -274,6 +410,22 @@
       animation: openingFocus 2.4s ease forwards;
     }
 
+    .opening-side-image,
+    .opening-curtain.left,
+    .opening-curtain.right,
+    .opening-light,
+    .opening-mark {
+      animation-play-state: paused;
+    }
+
+    #opening.is-active .opening-side-image,
+    #opening.is-active .opening-curtain.left,
+    #opening.is-active .opening-curtain.right,
+    #opening.is-active .opening-light,
+    #opening.is-active .opening-mark {
+      animation-play-state: running;
+    }
+
     .opening-mark::before {
       content: '';
       position: absolute;
@@ -342,6 +494,7 @@
       text-align: center;
       padding: 84px 16px 54px;
       overflow: hidden;
+      transition: opacity 1.05s ease;
     }
 
     .hero-content {
@@ -403,6 +556,48 @@
       font-size: clamp(1rem, 2.3vw, 1.32rem);
       color: #f3ead8;
       text-shadow: 0 1px 0 rgba(51, 64, 41, 0.4), 0 8px 18px rgba(30, 42, 24, 0.28);
+    }
+
+    .hero-scroll-cue {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: clamp(34px, 8vh, 72px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      border: 0;
+      background: transparent;
+      color: rgba(247, 238, 223, 0.72);
+      cursor: pointer;
+      font-family: 'Quicksand', 'M PLUS Rounded 1c', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.62;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 3;
+      animation: heroCueFloat 2.8s ease-in-out infinite;
+    }
+
+    .hero-scroll-cue:hover,
+    .hero-scroll-cue:focus-visible {
+      opacity: 0.9;
+      transform: translateX(-50%) translateY(-1px);
+    }
+
+    .hero-scroll-cue .icon {
+      width: 18px;
+      height: 18px;
+      border-right: 1.8px solid currentColor;
+      border-bottom: 1.8px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    @keyframes heroCueFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(4px); }
     }
 
     .hero-scroll {
@@ -1492,6 +1687,10 @@
     }
 
     @media (max-width: 980px) {
+      .lang-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .materials-strip {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -1572,6 +1771,18 @@
 
       .hero-content {
         max-width: 90vw;
+      }
+
+      .hero-scroll-cue {
+        left: 50%;
+        bottom: max(26px, calc(22px + env(safe-area-inset-bottom)));
+        font-size: 0.58rem;
+        opacity: 0.56;
+      }
+
+      .hero-scroll-cue .icon {
+        width: 16px;
+        height: 16px;
       }
 
       .card {
@@ -1899,7 +2110,7 @@
     }
   </style>
 </head>
-<body>
+<body class="booting no-bg hero-preroll">
   <div class="bg-layer active" id="bgLayerA" aria-hidden="true"></div>
   <div class="bg-layer" id="bgLayerB" aria-hidden="true"></div>
   <div class="forest-vignette" aria-hidden="true"></div>
@@ -1924,12 +2135,30 @@
     </div>
   </div>
 
+  <div id="langGate" class="lang-gate" role="dialog" aria-modal="true" aria-label="language selector">
+    <div class="lang-card">
+      <h2 class="lang-title">Welcome</h2>
+      <p class="lang-copy">Select language</p>
+      <div class="lang-grid">
+        <button type="button" class="lang-btn" data-lang="ja">日本語</button>
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+        <button type="button" class="lang-btn" data-lang="zh-TW">繁體中文</button>
+        <button type="button" class="lang-btn" data-lang="es">Español</button>
+        <button type="button" class="lang-btn" data-lang="ko">한국어</button>
+      </div>
+    </div>
+  </div>
+
   <section class="hero" id="hero">
     <div class="hero-content" id="heroContent">
       <div class="hero-line1" data-i18n="brand_line1">Organic Hair Salon</div>
       <h1 class="hero-line2" data-i18n="brand_line2">LINO</h1>
       <p class="hero-catch" data-i18n="hero_catch">静かな美しさを、あなたへ</p>
     </div>
+    <button class="hero-scroll-cue" id="heroScrollCue" type="button" data-i18n-attr="aria-label:hero_scroll_hint">
+      <span class="icon" aria-hidden="true"></span>
+      <span data-i18n="hero_scroll_hint">scroll</span>
+    </button>
   </section>
 
   <div class="wrap">
@@ -1956,6 +2185,9 @@
           <select id="langSelectFloat" aria-label="language">
             <option value="ja">日本語</option>
             <option value="en">English</option>
+            <option value="zh-TW">繁體中文</option>
+            <option value="es">Español</option>
+            <option value="ko">한국어</option>
           </select>
         </label>
       </div>
@@ -2261,7 +2493,7 @@
 
   <script src="./i18n-demo.js"></script>
   <script>
-    const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/organic_hair_salon_lino/';
+    const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/organic-hair-salon-lino/';
 
     const i18n = window.DEMO_I18N || {};
     const langSelect = null;
@@ -2328,14 +2560,14 @@
         });
       });
 
-      const reserveUrl = new URL(RESERVE_BASE_URL);
-      reserveUrl.searchParams.set('lang', lang);
-      reserveUrl.searchParams.set('return', location.href);
-      document.getElementById('reserveBtn').href = reserveUrl.toString();
+      applyReserveLink(lang);
 
       if (langSelect) langSelect.value = lang;
       if (langSelectFloat) langSelectFloat.value = lang;
       localStorage.setItem('demoLang', lang);
+      document.querySelectorAll('#langGate .lang-btn[data-lang]').forEach((btn) => {
+        btn.classList.toggle('is-selecting', btn.dataset.lang === lang);
+      });
 
       document.querySelectorAll('.section-ja-sub').forEach((el) => {
         el.style.display = lang === 'ja' ? '' : 'none';
@@ -2344,6 +2576,32 @@
       applyMobileLeadBreaks(lang, dict);
       if (typeof window.refreshRitualModalLang === 'function') {
         window.refreshRitualModalLang();
+      }
+    }
+
+    function applyReserveLink(lang) {
+      const reserveBtn = document.getElementById('reserveBtn');
+      if (!reserveBtn) return;
+      try {
+        const reserveUrl = new URL(RESERVE_BASE_URL);
+        const returnUrl = new URL(`${location.origin}${location.pathname}`);
+        returnUrl.searchParams.set('lang', lang || 'ja');
+        reserveUrl.searchParams.set('lang', lang || 'ja');
+        reserveUrl.searchParams.set('return', returnUrl.toString());
+        reserveBtn.href = reserveUrl.toString();
+      } catch (_) {
+        reserveBtn.href = RESERVE_BASE_URL;
+      }
+
+      if (!reserveBtn.dataset.leaveBound) {
+        reserveBtn.dataset.leaveBound = '1';
+        reserveBtn.addEventListener('click', (event) => {
+          const href = reserveBtn.getAttribute('href') || '';
+          if (!href) return;
+          event.preventDefault();
+          document.body.classList.add('page-leaving');
+          window.setTimeout(() => { location.href = href; }, 260);
+        });
       }
     }
 
@@ -2376,12 +2634,60 @@
       });
     });
 
-    function initOpening(onDone) {
-      const opening = document.getElementById('opening');
-      if (!opening) {
+    function initLanguageGate(onDone) {
+      const gate = document.getElementById('langGate');
+      if (!gate) {
+        applyLang(currentLang);
+        document.body.classList.remove('booting');
         if (typeof onDone === 'function') onDone();
         return;
       }
+      const buttons = Array.from(gate.querySelectorAll('.lang-btn[data-lang]'));
+      const chooseLang = (lang) => {
+        document.body.classList.add('opening-boot');
+        currentLang = i18n[lang] ? lang : 'ja';
+        applyLang(currentLang);
+        const nextUrl = new URL(location.href);
+        nextUrl.searchParams.set('lang', currentLang);
+        history.replaceState({}, '', nextUrl);
+
+        if (typeof onDone === 'function') onDone();
+        requestAnimationFrame(() => {
+          gate.classList.remove('show');
+        });
+        setTimeout(() => {
+          document.body.classList.remove('welcome-lock');
+        }, 260);
+      };
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          buttons.forEach((item) => {
+            item.disabled = true;
+            item.classList.toggle('is-selecting', item === btn);
+          });
+          chooseLang(btn.dataset.lang);
+        });
+      });
+
+      document.body.classList.add('welcome-lock');
+      gate.classList.add('show');
+      document.body.classList.remove('booting');
+      buttons.forEach((btn) => {
+        btn.classList.toggle('is-selecting', btn.dataset.lang === currentLang);
+      });
+    }
+
+    function initOpening(onDone) {
+      const opening = document.getElementById('opening');
+      if (!opening) {
+        document.body.classList.remove('booting');
+        document.body.classList.remove('opening-boot');
+        if (typeof onDone === 'function') onDone();
+        return;
+      }
+      opening.classList.remove('hidden');
+      opening.classList.add('is-active');
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
@@ -2426,11 +2732,17 @@
       const openingDuration = reduce ? 700 : 3400;
       const fadeDuration = reduce ? 220 : 420;
       setTimeout(() => {
+        if (typeof onDone === 'function') onDone();
+        document.body.classList.remove('booting');
+        document.body.classList.remove('opening-boot');
+        requestAnimationFrame(() => {
+          document.body.classList.remove('hero-preroll');
+        });
+        opening.classList.remove('is-active');
         opening.classList.add('hidden');
         setTimeout(() => {
           cleanupOpeningBlock();
           opening.remove();
-          if (typeof onDone === 'function') onDone();
         }, fadeDuration);
       }, openingDuration);
     }
@@ -2438,6 +2750,7 @@
     function initHeroIntroGate() {
       const hero = document.getElementById('hero');
       const heroContent = document.getElementById('heroContent');
+      const heroScrollCue = document.getElementById('heroScrollCue');
       if (!hero || !heroContent) return;
       const isMobileScreen = () => window.matchMedia('(max-width: 740px)').matches;
 
@@ -2457,6 +2770,7 @@
       const unlock = () => {
         locked = false;
         document.body.classList.remove('hero-lock');
+        document.body.classList.remove('no-bg');
       };
 
       const feed = (amount) => {
@@ -2511,6 +2825,36 @@
       window.addEventListener('keydown', onKeyDown, { passive: false });
       window.addEventListener('touchstart', onTouchStart, { passive: true });
       window.addEventListener('touchmove', onTouchMove, { passive: false });
+
+      if (heroScrollCue) {
+        const smoothScrollTo = (targetY) => {
+          const startY = window.scrollY || window.pageYOffset || 0;
+          const distance = targetY - startY;
+          if (Math.abs(distance) < 2) return;
+          const duration = Math.max(1200, Math.min(1900, Math.abs(distance) * 1.6));
+          const startAt = performance.now();
+          const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
+          const tick = (now) => {
+            const p = Math.min(1, (now - startAt) / duration);
+            const eased = easeInOutSine(p);
+            window.scrollTo(0, startY + distance * eased);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+
+        heroScrollCue.addEventListener('click', () => {
+          if (locked) {
+            setProgress(1);
+            unlock();
+          }
+          const concept = document.getElementById('philosophy');
+          if (concept) {
+            const top = concept.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+            smoothScrollTo(top);
+          }
+        });
+      }
     }
 
     function initReveal() {
@@ -3129,8 +3473,7 @@
       };
     }
 
-    applyLang(currentLang);
-    initOpening(initHeroIntroGate);
+    initLanguageGate(() => initOpening(initHeroIntroGate));
     initReveal();
     initMobileLoopCarousels();
     initOrganicNav();
