@@ -82,7 +82,7 @@
       opacity: 0 !important;
     }
 
-    body.booting #langGate {
+    html:not(.lang-gate-seen) body.booting #langGate {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -127,7 +127,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.24s ease, visibility 0s linear 0.24s;
+      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
@@ -135,7 +135,20 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.24s ease, visibility 0s;
+      transition: opacity 0.42s ease, visibility 0s;
+    }
+
+    .lang-gate.is-leaving {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+    }
+
+    .lang-gate.is-leaving .lang-card {
+      opacity: 0.72;
+      transform: translateY(8px);
+      transition: opacity 0.42s ease, transform 0.42s ease;
     }
 
     .lang-card {
@@ -1438,14 +1451,23 @@
       position: fixed;
       inset: 0;
       z-index: 1200;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(24, 31, 21, 0.86);
       padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
     }
 
-    #lightbox.open { display: flex; }
+    #lightbox.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.42s ease, visibility 0s;
+    }
 
     .treatment-modal {
       position: fixed;
@@ -1459,7 +1481,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
       overscroll-behavior: contain;
     }
 
@@ -1467,7 +1489,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.22s ease, visibility 0s;
+      transition: opacity 0.42s ease, visibility 0s;
     }
 
     .treatment-modal-card {
@@ -1483,6 +1505,14 @@
       overscroll-behavior: none;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-y;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+    }
+
+    .treatment-modal:not(.open) .treatment-modal-card {
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
     }
 
     .treatment-modal-kicker {
@@ -1548,6 +1578,14 @@
 
     .treatment-modal-media-slot.has-image .treatment-modal-media-image {
       display: block;
+    }
+
+    @media (min-width: 741px) {
+      .treatment-modal-media-image {
+        max-height: 360px;
+        object-fit: contain;
+        background: rgba(247, 243, 233, 0.92);
+      }
     }
 
     .treatment-modal-media-slot.has-image .treatment-modal-media-initial,
@@ -1641,6 +1679,14 @@
       overflow: hidden;
       position: relative;
       background: #edf2e2;
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
+      transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+    }
+
+    #lightbox.open .lightbox-panel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .lightbox-panel img {
@@ -2109,6 +2155,13 @@
       }
     }
   </style>
+  <script>
+    try {
+      if (localStorage.getItem('demoLangGateSeen') === '1') {
+        document.documentElement.classList.add('lang-gate-seen');
+      }
+    } catch (_) {}
+  </script>
 </head>
 <body class="booting no-bg hero-preroll">
   <div class="bg-layer active" id="bgLayerA" aria-hidden="true"></div>
@@ -2586,6 +2639,7 @@
         const reserveUrl = new URL(RESERVE_BASE_URL);
         const returnUrl = new URL(`${location.origin}${location.pathname}`);
         returnUrl.searchParams.set('lang', lang || 'ja');
+        returnUrl.searchParams.set('skipWelcome', '1');
         reserveUrl.searchParams.set('lang', lang || 'ja');
         reserveUrl.searchParams.set('return', returnUrl.toString());
         reserveBtn.href = reserveUrl.toString();
@@ -2599,6 +2653,7 @@
           const href = reserveBtn.getAttribute('href') || '';
           if (!href) return;
           event.preventDefault();
+          try { sessionStorage.setItem('skip_demo_welcome', '1'); } catch (_) {}
           document.body.classList.add('page-leaving');
           window.setTimeout(() => { location.href = href; }, 260);
         });
@@ -2636,7 +2691,14 @@
 
     function initLanguageGate(onDone) {
       const gate = document.getElementById('langGate');
+      const hasSeenLangGate = localStorage.getItem('demoLangGateSeen') === '1';
       if (!gate) {
+        applyLang(currentLang);
+        document.body.classList.remove('booting');
+        if (typeof onDone === 'function') onDone();
+        return;
+      }
+      if (hasSeenLangGate) {
         applyLang(currentLang);
         document.body.classList.remove('booting');
         if (typeof onDone === 'function') onDone();
@@ -2646,18 +2708,22 @@
       const chooseLang = (lang) => {
         document.body.classList.add('opening-boot');
         currentLang = i18n[lang] ? lang : 'ja';
+        localStorage.setItem('demoLangGateSeen', '1');
         applyLang(currentLang);
         const nextUrl = new URL(location.href);
         nextUrl.searchParams.set('lang', currentLang);
         history.replaceState({}, '', nextUrl);
 
-        if (typeof onDone === 'function') onDone();
-        requestAnimationFrame(() => {
-          gate.classList.remove('show');
-        });
+        gate.classList.add('is-leaving');
+        // Start opening while language gate is fading out for a seamless handoff.
         setTimeout(() => {
+          if (typeof onDone === 'function') onDone();
+        }, 110);
+        setTimeout(() => {
+          gate.classList.remove('show');
+          gate.classList.remove('is-leaving');
           document.body.classList.remove('welcome-lock');
-        }, 260);
+        }, 430);
       };
 
       buttons.forEach((btn) => {
@@ -3473,7 +3539,24 @@
       };
     }
 
-    initLanguageGate(() => initOpening(initHeroIntroGate));
+    const bootUrl = new URL(location.href);
+    const skipByQuery = bootUrl.searchParams.get('skipWelcome') === '1';
+    const skipBySession = sessionStorage.getItem('skip_demo_welcome') === '1';
+    if (skipBySession) {
+      try { sessionStorage.removeItem('skip_demo_welcome'); } catch (_) {}
+    }
+    if (skipByQuery || skipBySession) {
+      const opening = document.getElementById('opening');
+      if (opening) opening.remove();
+      applyLang(currentLang);
+      document.body.classList.remove('booting');
+      document.body.classList.remove('opening-boot');
+      document.body.classList.remove('no-bg');
+      document.body.classList.remove('hero-preroll');
+      initHeroIntroGate();
+    } else {
+      initLanguageGate(() => initOpening(initHeroIntroGate));
+    }
     initReveal();
     initMobileLoopCarousels();
     initOrganicNav();
