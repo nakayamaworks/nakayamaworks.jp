@@ -1195,6 +1195,7 @@
       cursor: pointer;
       break-inside: avoid;
       box-shadow: var(--shadow);
+      position: relative;
     }
 
     .gallery-item img {
@@ -1205,6 +1206,41 @@
 
     .gallery-item:hover img {
       transform: scale(1.04);
+    }
+
+    .gallery-zoom-hint {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(22, 31, 20, 0.58);
+      color: rgba(245, 241, 230, 0.95);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+      opacity: 0.9;
+      transform: translateY(0);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .gallery-zoom-hint svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .gallery-item:hover .gallery-zoom-hint {
+      opacity: 1;
+      transform: translateY(-1px);
     }
 
     @media (min-width: 741px) {
@@ -1482,6 +1518,8 @@
       visibility: hidden;
       pointer-events: none;
       transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     #lightbox.open {
@@ -1732,6 +1770,10 @@
       opacity: 0;
       transform: translateY(14px) scale(0.985);
       transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     #lightbox.open .lightbox-panel {
@@ -1744,6 +1786,8 @@
       max-height: 82vh;
       object-fit: contain;
       display: block;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     .lb-close,
@@ -1814,6 +1858,25 @@
     }
 
     @media (max-width: 740px) {
+      /* iOS/Androidでの拡大モーダル表示チラつき対策 */
+      #lightbox {
+        transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+        background: rgba(24, 31, 21, 0.92);
+      }
+
+      #lightbox.open {
+        transition: opacity 0.28s ease, visibility 0s;
+      }
+
+      .lightbox-panel {
+        transition: opacity 0.28s ease;
+        transform: none !important;
+      }
+
+      #lightbox.open .lightbox-panel {
+        transform: none !important;
+      }
+
       .carousel-pagination {
         margin-top: 10px;
         display: flex;
@@ -2481,25 +2544,73 @@
           <div class="gallery-slide double">
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-01.jpg">
               <img src="./images/gallery/hair-01.jpg" alt="style photo 1" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-02.jpg">
               <img src="./images/gallery/hair-02.jpg" alt="style photo 2" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
           </div>
           <div class="gallery-slide double">
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-03.jpg">
               <img src="./images/gallery/hair-03.jpg" alt="style photo 3" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-04.jpg">
               <img src="./images/gallery/hair-04.jpg" alt="style photo 4" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
           </div>
           <div class="gallery-slide double">
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-05.jpg">
               <img src="./images/gallery/hair-05.jpg" alt="style photo 5" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
             <button class="gallery-item" type="button" data-src="./images/gallery/hair-06.jpg">
               <img src="./images/gallery/hair-06.jpg" alt="style photo 6" loading="lazy" />
+              <span class="gallery-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10" cy="10" r="6"></circle>
+                  <path d="M10 7v6"></path>
+                  <path d="M7 10h6"></path>
+                  <path d="M14.5 14.5L20 20"></path>
+                </svg>
+              </span>
             </button>
           </div>
         </div>
