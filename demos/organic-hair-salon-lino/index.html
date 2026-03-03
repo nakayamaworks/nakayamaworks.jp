@@ -1505,6 +1505,8 @@
       pointer-events: none;
       transition: opacity 0.42s ease, visibility 0s linear 0.42s;
       overscroll-behavior: contain;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .treatment-modal.open {
@@ -1530,6 +1532,10 @@
       opacity: 1;
       transform: translateY(0) scale(1);
       transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .treatment-modal:not(.open) .treatment-modal-card {
@@ -1607,6 +1613,28 @@
         max-height: 360px;
         object-fit: contain;
         background: rgba(247, 243, 233, 0.92);
+      }
+    }
+
+    @media (max-width: 740px) {
+      /* iOS/Androidでの表示時チラつき対策: blurとscaleを抑えてフェード中心にする */
+      .treatment-modal {
+        backdrop-filter: none;
+        background: rgba(24, 31, 21, 0.9);
+        transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+      }
+
+      .treatment-modal.open {
+        transition: opacity 0.28s ease, visibility 0s;
+      }
+
+      .treatment-modal-card {
+        transition: opacity 0.28s ease;
+        transform: none !important;
+      }
+
+      .treatment-modal:not(.open) .treatment-modal-card {
+        transform: none !important;
       }
     }
 
