@@ -585,13 +585,13 @@
       color: rgba(247, 238, 223, 0.72);
       cursor: pointer;
       font-family: 'Quicksand', 'M PLUS Rounded 1c', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.84rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      opacity: 0.62;
+      opacity: 0.76;
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 3;
-      animation: heroCueFloat 2.8s ease-in-out infinite;
+      animation: heroCueFloat 2.4s ease-in-out infinite;
     }
 
     .hero-scroll-cue:hover,
@@ -601,16 +601,16 @@
     }
 
     .hero-scroll-cue .icon {
-      width: 18px;
-      height: 18px;
-      border-right: 1.8px solid currentColor;
-      border-bottom: 1.8px solid currentColor;
+      width: 30px;
+      height: 30px;
+      border-right: 2.6px solid currentColor;
+      border-bottom: 2.6px solid currentColor;
       transform: rotate(45deg);
     }
 
     @keyframes heroCueFloat {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(4px); }
+      50% { transform: translateX(-50%) translateY(10px); }
     }
 
     .hero-scroll {
@@ -1822,13 +1822,13 @@
       .hero-scroll-cue {
         left: 50%;
         bottom: max(26px, calc(22px + env(safe-area-inset-bottom)));
-        font-size: 0.58rem;
-        opacity: 0.56;
+        font-size: 0.74rem;
+        opacity: 0.7;
       }
 
       .hero-scroll-cue .icon {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
       }
 
       .card {
@@ -3004,6 +3004,7 @@
         let touchSettleTimer = 0;
         let isAdjusting = false;
         let touchActive = false;
+        let lastResizeWidth = window.innerWidth;
         let lastScrollLeft = track.scrollLeft;
         let lastScrollTime = performance.now();
         let lastVelocity = 0;
@@ -3124,6 +3125,9 @@
         };
 
         const onResize = () => {
+          const nextWidth = window.innerWidth;
+          if (Math.abs(nextWidth - lastResizeWidth) < 24) return;
+          lastResizeWidth = nextWidth;
           clearTimeout(recenterTimer);
           recenterTimer = window.setTimeout(() => {
             if (!isMobile()) return;
@@ -3164,6 +3168,9 @@
         };
       };
 
+      let lastViewportWidth = window.innerWidth;
+      let lastMobileState = isMobile();
+
       const rebuild = () => {
         while (cleanups.length) {
           const fn = cleanups.pop();
@@ -3178,8 +3185,21 @@
       };
 
       rebuild();
-      window.addEventListener('orientationchange', rebuild);
-      window.addEventListener('resize', rebuild);
+      window.addEventListener('orientationchange', () => {
+        lastViewportWidth = window.innerWidth;
+        lastMobileState = isMobile();
+        rebuild();
+      });
+      window.addEventListener('resize', () => {
+        const nextWidth = window.innerWidth;
+        const nextMobile = isMobile();
+        const widthChanged = Math.abs(nextWidth - lastViewportWidth) >= 24;
+        const mobileChanged = nextMobile !== lastMobileState;
+        if (!widthChanged && !mobileChanged) return;
+        lastViewportWidth = nextWidth;
+        lastMobileState = nextMobile;
+        rebuild();
+      }, { passive: true });
     }
 
     function initBackgroundShift() {
