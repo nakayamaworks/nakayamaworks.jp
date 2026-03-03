@@ -3620,6 +3620,19 @@
       };
     }
 
+    function resetTransientUiState() {
+      document.body.classList.remove('page-leaving');
+      document.body.classList.remove('hero-lock');
+      document.body.classList.remove('modal-open');
+      document.body.classList.remove('opening-boot');
+      document.body.classList.remove('booting');
+      const gate = document.getElementById('langGate');
+      if (gate) {
+        gate.classList.remove('show');
+        gate.classList.remove('is-leaving');
+      }
+    }
+
     const bootUrl = new URL(location.href);
     const skipByQuery = bootUrl.searchParams.get('skipWelcome') === '1';
     const skipBySession = sessionStorage.getItem('skip_demo_welcome') === '1';
@@ -3634,7 +3647,11 @@
       document.body.classList.remove('opening-boot');
       document.body.classList.remove('no-bg');
       document.body.classList.remove('hero-preroll');
-      initHeroIntroGate();
+      const hero = document.getElementById('hero');
+      const heroContent = document.getElementById('heroContent');
+      if (hero) hero.style.setProperty('--hero-reveal', '1');
+      if (heroContent) heroContent.style.setProperty('--hero-reveal', '1');
+      document.body.classList.remove('hero-lock');
     } else {
       initLanguageGate(() => initOpening(initHeroIntroGate));
     }
@@ -3644,6 +3661,11 @@
     initBackgroundShift();
     initLightbox();
     initTreatmentModal();
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || document.body.classList.contains('page-leaving')) {
+        resetTransientUiState();
+      }
+    });
   </script>
 </body>
 </html>
