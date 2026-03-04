@@ -3554,6 +3554,7 @@
       let index = 0;
       let startX = 0;
       let closeTimer = 0;
+      let restoreFocusEl = null;
 
       const render = () => {
         const current = activeItems[index];
@@ -3562,27 +3563,41 @@
         image.alt = current.alt || 'Expanded image';
       };
 
-      const open = (items, i) => {
+      const open = (items, i, triggerEl = null) => {
         if (!items.length) return;
         if (closeTimer) {
           clearTimeout(closeTimer);
           closeTimer = 0;
         }
+        restoreFocusEl = triggerEl || (document.activeElement instanceof HTMLElement ? document.activeElement : null);
         activeItems = items;
         index = i;
         render();
+        lightbox.removeAttribute('inert');
         lightbox.classList.add('open');
         lightbox.setAttribute('aria-hidden', 'false');
         lockModalScroll();
+        requestAnimationFrame(() => {
+          if (close && typeof close.focus === 'function') {
+            close.focus({ preventScroll: true });
+          }
+        });
       };
 
       const closeBox = () => {
         if (!lightbox.classList.contains('open')) return;
+        if (lightbox.contains(document.activeElement) && document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
         lightbox.classList.remove('open');
-        lightbox.setAttribute('aria-hidden', 'true');
         const fadeMs = window.matchMedia('(max-width: 740px)').matches ? 340 : 560;
         closeTimer = window.setTimeout(() => {
+          lightbox.setAttribute('aria-hidden', 'true');
+          lightbox.setAttribute('inert', '');
           unlockModalScroll();
+          if (restoreFocusEl && document.contains(restoreFocusEl) && typeof restoreFocusEl.focus === 'function') {
+            restoreFocusEl.focus({ preventScroll: true });
+          }
           closeTimer = 0;
         }, fadeMs);
       };
@@ -3606,7 +3621,7 @@
           alt: thumb?.alt || 'Expanded style image'
         };
       });
-      galleryButtons.forEach((btn, i) => btn.addEventListener('click', () => open(galleryItems, i)));
+      galleryButtons.forEach((btn, i) => btn.addEventListener('click', () => open(galleryItems, i, btn)));
 
       const salonItems = salonFigures.map((figure) => {
         const img = figure.querySelector('img');
@@ -3615,7 +3630,7 @@
           alt: img?.alt || 'Expanded salon image'
         };
       });
-      salonFigures.forEach((figure, i) => figure.addEventListener('click', () => open(salonItems, i)));
+      salonFigures.forEach((figure, i) => figure.addEventListener('click', () => open(salonItems, i, figure)));
 
       close.addEventListener('click', closeBox);
       prev.addEventListener('click', showPrev);
@@ -3643,6 +3658,8 @@
           else showNext();
         }
       }, { passive: true });
+
+      lightbox.setAttribute('inert', '');
     }
 
     function initTreatmentModal() {
@@ -3670,6 +3687,7 @@
       let swipeStartY = 0;
       let touchLastY = 0;
       let closeTimer = 0;
+      let restoreFocusEl = null;
 
       const getDetail = (key) => {
         const langPack = detailsMap[currentLang] || detailsMap.ja || {};
@@ -3721,24 +3739,38 @@
         `;
       };
 
-      const open = (idx) => {
+      const open = (idx, triggerEl = null) => {
         if (closeTimer) {
           clearTimeout(closeTimer);
           closeTimer = 0;
         }
+        restoreFocusEl = triggerEl || (document.activeElement instanceof HTMLElement ? document.activeElement : null);
         render(idx);
+        modal.removeAttribute('inert');
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         lockModalScroll();
+        requestAnimationFrame(() => {
+          if (closeBtn && typeof closeBtn.focus === 'function') {
+            closeBtn.focus({ preventScroll: true });
+          }
+        });
       };
 
       const close = () => {
         if (!modal.classList.contains('open')) return;
+        if (modal.contains(document.activeElement) && document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
         modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
         const fadeMs = window.matchMedia('(max-width: 740px)').matches ? 340 : 560;
         closeTimer = window.setTimeout(() => {
+          modal.setAttribute('aria-hidden', 'true');
+          modal.setAttribute('inert', '');
           unlockModalScroll();
+          if (restoreFocusEl && document.contains(restoreFocusEl) && typeof restoreFocusEl.focus === 'function') {
+            restoreFocusEl.focus({ preventScroll: true });
+          }
           closeTimer = 0;
         }, fadeMs);
       };
@@ -3746,7 +3778,7 @@
       const go = (step) => render(activeIdx + step);
 
       buttons.forEach((btn, idx) => {
-        btn.addEventListener('click', () => open(idx));
+        btn.addEventListener('click', () => open(idx, btn));
       });
       closeBtn.addEventListener('click', close);
       prevBtn.addEventListener('click', () => go(-1));
@@ -3804,6 +3836,8 @@
         if (!modal.classList.contains('open')) return;
         render(activeIdx);
       };
+
+      modal.setAttribute('inert', '');
     }
 
     function resetTransientUiState() {
