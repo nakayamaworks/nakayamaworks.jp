@@ -2747,33 +2747,21 @@
       if (modalLockDepth > 1) return;
       modalScrollY = window.scrollY || window.pageYOffset || 0;
       document.body.classList.add('modal-open');
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${modalScrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
     }
 
     function unlockModalScroll() {
       if (modalLockDepth <= 0) return;
       modalLockDepth -= 1;
       if (modalLockDepth > 0) return;
-      const restoreY = Math.abs(parseInt(document.body.style.top || '0', 10)) || modalScrollY;
-      const prevHtmlScrollBehavior = document.documentElement.style.scrollBehavior;
-      const prevBodyScrollBehavior = document.body.style.scrollBehavior;
       document.body.classList.add('modal-restoring');
-      document.documentElement.style.scrollBehavior = 'auto';
-      document.body.style.scrollBehavior = 'auto';
       document.body.classList.remove('modal-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      window.scrollTo(0, restoreY);
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       requestAnimationFrame(() => {
-        document.documentElement.style.scrollBehavior = prevHtmlScrollBehavior;
-        document.body.style.scrollBehavior = prevBodyScrollBehavior;
         document.body.classList.remove('modal-restoring');
       });
     }
