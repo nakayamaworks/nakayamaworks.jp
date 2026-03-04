@@ -2761,6 +2761,7 @@
       const restoreY = Math.abs(parseInt(document.body.style.top || '0', 10)) || modalScrollY;
       const prevHtmlScrollBehavior = document.documentElement.style.scrollBehavior;
       const prevBodyScrollBehavior = document.body.style.scrollBehavior;
+      document.body.classList.add('modal-restoring');
       document.documentElement.style.scrollBehavior = 'auto';
       document.body.style.scrollBehavior = 'auto';
       document.body.classList.remove('modal-open');
@@ -2773,6 +2774,7 @@
       requestAnimationFrame(() => {
         document.documentElement.style.scrollBehavior = prevHtmlScrollBehavior;
         document.body.style.scrollBehavior = prevBodyScrollBehavior;
+        document.body.classList.remove('modal-restoring');
       });
     }
 
@@ -3119,26 +3121,46 @@
     function initReveal() {
       const items = document.querySelectorAll('[data-reveal]');
       const reservationWrap = document.querySelector('#reservation [data-reveal]');
-      const isMobileReveal = window.matchMedia('(max-width: 740px)').matches;
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-          } else {
-            const inReservation = !!entry.target.closest('#reservation');
-            if (!inReservation) {
-              entry.target.classList.remove('show');
-            }
-          }
-        });
-      }, {
-        threshold: 0.01,
-        rootMargin: isMobileReveal ? '-8% 0px -20% 0px' : '-18% 0px -38% 0px'
-      });
+      const revealState = new WeakMap();
+      const isMobileReveal = () => window.matchMedia('(max-width: 740px)').matches;
+
+      const shouldShowWithHysteresis = (el, shown) => {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        if (!vh) return shown;
+
+        // Separate enter/leave zones to avoid rapid toggling at boundaries.
+        const enterTop = isMobileReveal() ? 0.94 : 0.9;
+        const enterBottom = isMobileReveal() ? 0.12 : 0.1;
+        const leaveTop = isMobileReveal() ? 1.08 : 1.05;
+        const leaveBottom = isMobileReveal() ? -0.16 : -0.12;
+
+        if (!shown) {
+          return rect.top < vh * enterTop && rect.bottom > vh * enterBottom;
+        }
+        const outAbove = rect.bottom < vh * leaveBottom;
+        const outBelow = rect.top > vh * leaveTop;
+        return !(outAbove || outBelow);
+      };
+
+      const evaluateReveal = (el) => {
+        const prevShown = !!revealState.get(el);
+        const nextShown = shouldShowWithHysteresis(el, prevShown);
+        const inReservation = !!el.closest('#reservation');
+        if (nextShown) {
+          el.classList.add('show');
+          revealState.set(el, true);
+          return;
+        }
+        if (!inReservation) {
+          el.classList.remove('show');
+          revealState.set(el, false);
+        }
+      };
 
       items.forEach((el, idx) => {
         el.style.transitionDelay = `${(idx % 3) * 80}ms`;
-        io.observe(el);
+        revealState.set(el, false);
       });
 
       const ensureLastSectionFocus = () => {
@@ -3149,9 +3171,21 @@
         }
       };
 
-      ensureLastSectionFocus();
-      window.addEventListener('scroll', ensureLastSectionFocus, { passive: true });
-      window.addEventListener('resize', ensureLastSectionFocus);
+      let ticking = false;
+      const onViewportChange = () => {
+        if (ticking) return;
+        if (document.body.classList.contains('modal-open') || document.body.classList.contains('modal-restoring')) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          items.forEach((el) => evaluateReveal(el));
+          ensureLastSectionFocus();
+          ticking = false;
+        });
+      };
+
+      onViewportChange();
+      window.addEventListener('scroll', onViewportChange, { passive: true });
+      window.addEventListener('resize', onViewportChange);
     }
 
     function initMobileLoopCarousels() {
