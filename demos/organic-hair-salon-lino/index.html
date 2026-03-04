@@ -127,7 +127,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s linear 0.56s;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
@@ -135,14 +135,14 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.42s ease, visibility 0s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s;
     }
 
     .lang-gate.is-leaving {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s linear 0.56s;
     }
 
     .lang-gate.is-leaving .lang-card {
@@ -1529,7 +1529,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s linear 0.56s;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
@@ -1538,7 +1538,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.42s ease, visibility 0s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s;
     }
 
     .treatment-modal {
@@ -1553,7 +1553,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.42s ease, visibility 0s linear 0.42s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s linear 0.56s;
       overscroll-behavior: contain;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -1563,7 +1563,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.42s ease, visibility 0s;
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), visibility 0s;
     }
 
     .treatment-modal-card {
@@ -1581,7 +1581,7 @@
       touch-action: pan-y;
       opacity: 1;
       transform: translateY(0) scale(1);
-      transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), transform 0.62s cubic-bezier(.22,.68,.26,1);
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
@@ -1590,7 +1590,7 @@
 
     .treatment-modal:not(.open) .treatment-modal-card {
       opacity: 0;
-      transform: translateY(14px) scale(0.985);
+      transform: translateY(22px) scale(0.974);
     }
 
     .treatment-modal-kicker {
@@ -1671,15 +1671,15 @@
       .treatment-modal {
         backdrop-filter: none;
         background: rgba(24, 31, 21, 0.9);
-        transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+        transition: opacity 0.34s ease, visibility 0s linear 0.34s;
       }
 
       .treatment-modal.open {
-        transition: opacity 0.28s ease, visibility 0s;
+        transition: opacity 0.34s ease, visibility 0s;
       }
 
       .treatment-modal-card {
-        transition: opacity 0.28s ease;
+        transition: opacity 0.34s ease;
         transform: none !important;
       }
 
@@ -1780,8 +1780,8 @@
       position: relative;
       background: #edf2e2;
       opacity: 0;
-      transform: translateY(14px) scale(0.985);
-      transition: opacity 0.42s ease, transform 0.46s cubic-bezier(.2,.75,.25,1);
+      transform: translateY(22px) scale(0.972);
+      transition: opacity 0.56s cubic-bezier(.22,.68,.26,1), transform 0.62s cubic-bezier(.22,.68,.26,1);
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
@@ -1872,16 +1872,16 @@
     @media (max-width: 740px) {
       /* iOS/Androidでの拡大モーダル表示チラつき対策 */
       #lightbox {
-        transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+        transition: opacity 0.34s ease, visibility 0s linear 0.34s;
         background: rgba(24, 31, 21, 0.92);
       }
 
       #lightbox.open {
-        transition: opacity 0.28s ease, visibility 0s;
+        transition: opacity 0.34s ease, visibility 0s;
       }
 
       .lightbox-panel {
-        transition: opacity 0.28s ease;
+        transition: opacity 0.34s ease;
         transform: none !important;
       }
 
@@ -2367,7 +2367,7 @@
         <a class="organic-link" href="#gallery" data-i18n="nav_gallery">スタイル</a>
         <a class="organic-link" href="#stylist" data-i18n="nav_stylist">スタイリスト</a>
         <a class="organic-link" href="#access" data-i18n="nav_access">アクセス</a>
-        <a class="organic-link" href="#reservation" data-i18n="nav_reserve">予約</a>
+        <a class="organic-link" href="#" data-reserve-link data-i18n="nav_reserve">予約</a>
         <label class="organic-lang">
           <span data-i18n="lang_label">Language</span>
           <select id="langSelectFloat" aria-label="language">
@@ -2691,8 +2691,8 @@
     <section id="reservation" class="chapter">
       <div class="reserve-wrap" data-reveal>
         <h2 data-i18n="reservation_title">Reservation</h2>
-        <p class="lead" data-i18n="reservation_body">最後に、必要な方だけ。ご予約は以下からお願いします。</p>
-        <a class="reserve-btn" id="reserveBtn" href="#" data-i18n="reserve_button">予約する</a>
+        <p class="lead" data-i18n="reservation_body">ご予約は以下からお願いします。</p>
+        <a class="reserve-btn" id="reserveBtn" href="#" data-reserve-link data-i18n="reserve_button">予約する</a>
       </div>
     </section>
   </div>
@@ -2817,8 +2817,8 @@
     }
 
     function applyReserveLink(lang) {
-      const reserveBtn = document.getElementById('reserveBtn');
-      if (!reserveBtn) return;
+      const reserveLinks = Array.from(document.querySelectorAll('[data-reserve-link]'));
+      if (!reserveLinks.length) return;
       try {
         const reserveUrl = new URL(RESERVE_BASE_URL);
         const returnUrl = new URL(`${location.origin}${location.pathname}`);
@@ -2826,22 +2826,23 @@
         returnUrl.searchParams.set('skipWelcome', '1');
         reserveUrl.searchParams.set('lang', lang || 'ja');
         reserveUrl.searchParams.set('return', returnUrl.toString());
-        reserveBtn.href = reserveUrl.toString();
+        reserveLinks.forEach((link) => { link.href = reserveUrl.toString(); });
       } catch (_) {
-        reserveBtn.href = RESERVE_BASE_URL;
+        reserveLinks.forEach((link) => { link.href = RESERVE_BASE_URL; });
       }
 
-      if (!reserveBtn.dataset.leaveBound) {
-        reserveBtn.dataset.leaveBound = '1';
-        reserveBtn.addEventListener('click', (event) => {
-          const href = reserveBtn.getAttribute('href') || '';
+      reserveLinks.forEach((link) => {
+        if (link.dataset.leaveBound) return;
+        link.dataset.leaveBound = '1';
+        link.addEventListener('click', (event) => {
+          const href = link.getAttribute('href') || '';
           if (!href) return;
           event.preventDefault();
           try { sessionStorage.setItem('skip_demo_welcome', '1'); } catch (_) {}
           document.body.classList.add('page-leaving');
           window.setTimeout(() => { location.href = href; }, 260);
         });
-      }
+      });
     }
 
     function applyMobileLeadBreaks(lang, dict) {
@@ -3518,6 +3519,7 @@
       let activeItems = [];
       let index = 0;
       let startX = 0;
+      let closeTimer = 0;
 
       const render = () => {
         const current = activeItems[index];
@@ -3528,6 +3530,10 @@
 
       const open = (items, i) => {
         if (!items.length) return;
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = 0;
+        }
         activeItems = items;
         index = i;
         render();
@@ -3537,9 +3543,14 @@
       };
 
       const closeBox = () => {
+        if (!lightbox.classList.contains('open')) return;
         lightbox.classList.remove('open');
         lightbox.setAttribute('aria-hidden', 'true');
-        unlockModalScroll();
+        const fadeMs = window.matchMedia('(max-width: 740px)').matches ? 340 : 560;
+        closeTimer = window.setTimeout(() => {
+          unlockModalScroll();
+          closeTimer = 0;
+        }, fadeMs);
       };
 
       const showPrev = () => {
@@ -3624,6 +3635,7 @@
       let swipeStartX = 0;
       let swipeStartY = 0;
       let touchLastY = 0;
+      let closeTimer = 0;
 
       const getDetail = (key) => {
         const langPack = detailsMap[currentLang] || detailsMap.ja || {};
@@ -3676,6 +3688,10 @@
       };
 
       const open = (idx) => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = 0;
+        }
         render(idx);
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
@@ -3683,9 +3699,14 @@
       };
 
       const close = () => {
+        if (!modal.classList.contains('open')) return;
         modal.classList.remove('open');
         modal.setAttribute('aria-hidden', 'true');
-        unlockModalScroll();
+        const fadeMs = window.matchMedia('(max-width: 740px)').matches ? 340 : 560;
+        closeTimer = window.setTimeout(() => {
+          unlockModalScroll();
+          closeTimer = 0;
+        }, fadeMs);
       };
 
       const go = (step) => render(activeIdx + step);
