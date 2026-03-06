@@ -1,0 +1,1944 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>青葉整体院 | デモサイト</title>
+  <meta name="description" content="青葉整体院の営業デモサイト。必要情報が揃った汎用・信頼系テンプレート。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-alt: #eef2f8;
+      --text: #142033;
+      --muted: #5a687f;
+      --line: #d6deeb;
+      --accent: #153a78;
+      --accent-2: #1f4f9d;
+      --badge: #ecf3ff;
+      --warn: #7e2d2d;
+      --warn-bg: #fff1f1;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --max: 1120px;
+      --shadow-soft: 0 16px 40px rgba(14, 30, 52, 0.08);
+      --shadow-card: 0 10px 28px rgba(19, 39, 70, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans JP', 'Noto Sans TC', 'Noto Sans KR', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at -8% -10%, #e6efff 0%, transparent 42%),
+        radial-gradient(circle at 110% -12%, #e8edf6 0%, transparent 40%),
+        linear-gradient(180deg, #f7f9fc 0%, #f2f5fa 100%);
+      line-height: 1.75;
+      padding-bottom: 84px;
+    }
+
+    :lang(ja) body {
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    }
+
+    :lang(zh-TW) body {
+      font-family: 'Noto Sans TC', 'Inter', sans-serif;
+    }
+
+    :lang(ko) body {
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 1.4rem));
+      margin-inline: auto;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(248, 251, 255, 0.96), rgba(248, 251, 255, 0.9));
+      border-bottom: 1px solid rgba(21, 58, 120, 0.1);
+    }
+
+    .top-nav-inner {
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      white-space: nowrap;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.55rem;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      color: var(--accent);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      margin: 4px auto;
+      border-radius: 999px;
+      transition: transform .24s ease, opacity .2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .nav-panel {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.86rem;
+      padding: 0.5rem 0.72rem;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: var(--badge);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .lang-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 0.22rem 0.45rem;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .lang-wrap select {
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      min-width: 74px;
+    }
+
+    .lang-wrap select:focus {
+      outline: none;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      padding: 0.64rem 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid #7aa4e7;
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(21, 58, 120, 0.24);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(21, 58, 120, 0.3);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--accent);
+      border: 1px solid rgba(21, 58, 120, 0.2);
+      box-shadow: 0 8px 20px rgba(18, 40, 74, 0.1);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      background: var(--badge);
+    }
+
+    .nav-reserve {
+      min-height: 40px;
+      padding: 0.5rem 1rem;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      padding: 1.4rem 0 0.8rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      grid-template-areas:
+        "media content"
+        "media actions";
+      column-gap: 1.2rem;
+      row-gap: 0.5rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: clamp(1rem, 2.8vw, 1.6rem);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-grid::after {
+      content: "";
+      position: absolute;
+      right: -140px;
+      top: -140px;
+      width: 320px;
+      aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(41, 101, 190, 0.14), transparent 72%);
+      pointer-events: none;
+    }
+
+    .hero-media {
+      grid-area: media;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 320px;
+      background: #dde4f0;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      grid-area: content;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: flex-start;
+      align-self: start;
+    }
+
+    .hero-actions {
+      grid-area: actions;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      justify-content: flex-start;
+      align-self: start;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3.6vw, 2.26rem);
+      line-height: 1.28;
+      color: #0f1c31;
+      text-wrap: balance;
+    }
+
+    .hero-lead {
+      margin: 0;
+      color: #294069;
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-line;
+      font-size: 0.98rem;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.48rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .badge-list li {
+      border-radius: 999px;
+      padding: 0.32rem 0.7rem;
+      background: var(--badge);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid rgba(21, 58, 120, 0.14);
+    }
+
+    .hero-cta-group {
+      margin-top: 1.18rem;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.52rem;
+    }
+
+    .hero-cta {
+      flex: 1 1 0;
+      min-width: 0;
+      align-items: center;
+      justify-content: center;
+      gap: 0.16rem;
+      min-height: 58px;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .hero-cta-inline {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+
+    .hero-cta-main {
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .hero-cta-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary .hero-cta-sub {
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    .hero-cta-inline .hero-cta-sub {
+      border-left: 1px solid rgba(255, 255, 255, 0.28);
+      padding-left: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .btn-secondary .hero-cta-sub {
+      color: #597091;
+    }
+
+    .section {
+      margin-top: 1rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: clamp(1rem, 2.4vw, 1.4rem);
+    }
+
+    .section-head {
+      margin-bottom: 0.85rem;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(1.12rem, 2.2vw, 1.46rem);
+      color: #10213a;
+    }
+
+    .notice-updated {
+      margin: 0.36rem 0 0;
+      color: #5f7089;
+      font-size: 0.76rem;
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    .section-lead {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .notice-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.52rem;
+    }
+
+    .notice-item {
+      display: grid;
+      grid-template-columns: 5.2rem minmax(0, 1fr);
+      gap: 0.62rem;
+      align-items: start;
+      color: #304566;
+      font-size: 0.9rem;
+    }
+
+    .notice-item.warn {
+      color: #3a485e;
+    }
+
+    .notice-tag {
+      width: 5.2rem;
+      min-height: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      border-radius: 999px;
+      padding: 0.2rem 0.42rem;
+      background: #e6efff;
+      color: #214a8a;
+      line-height: 1.2;
+    }
+
+    .notice-item.warn .notice-tag {
+      background: #ffe0e0;
+      color: #8a2d2d;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .menu-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    .menu-table th,
+    .menu-table td {
+      border-bottom: 1px solid #e4eaf4;
+      padding: 0.68rem 0.7rem;
+      text-align: left;
+      vertical-align: middle;
+      font-size: 0.9rem;
+    }
+
+    .menu-table thead th {
+      background: #f2f6fd;
+      color: #2a3f60;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .menu-table tbody tr:hover {
+      background: #f7faff;
+    }
+
+    .menu-name {
+      padding-top: 0.56rem;
+      padding-bottom: 0.56rem;
+      font-weight: 700;
+      color: #10213c;
+    }
+
+    .menu-detail {
+      min-height: 34px;
+      padding: 0.38rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid #b8c9e6;
+      color: #244c89;
+      background: #f5f9ff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .menu-detail:hover,
+    .menu-detail:focus-visible {
+      background: #e8f0fe;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.62rem;
+    }
+
+    .feature-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fafcff;
+      padding: 0.7rem;
+    }
+
+    .feature-card h3 {
+      margin: 0;
+      font-size: 0.97rem;
+      color: #133362;
+    }
+
+    .feature-card p {
+      margin: 0.32rem 0 0;
+      color: #52627a;
+      font-size: 0.86rem;
+    }
+
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.72rem;
+    }
+
+    .staff-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.75rem;
+      background: #fbfdff;
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 0.68rem;
+      align-items: start;
+    }
+
+    .staff-avatar {
+      width: 74px;
+      height: 74px;
+      border-radius: 14px;
+      border: 1px solid #cfdaf0;
+      background: linear-gradient(160deg, #eff4ff 0%, #dfe9fa 100%);
+      color: #244a86;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .staff-card h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #0f2a4c;
+      line-height: 1.4;
+    }
+
+    .staff-role {
+      margin: 0.2rem 0 0;
+      color: #2f568d;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .staff-specialty {
+      margin: 0.14rem 0 0;
+      color: #4b5e7d;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .staff-message {
+      margin: 0.3rem 0 0;
+      color: #586983;
+      font-size: 0.84rem;
+    }
+
+    .gallery-wrap {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .gallery-group h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.92rem;
+      color: #2b4670;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .gallery-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 0;
+      text-align: left;
+    }
+
+    .gallery-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #dbe4f2;
+    }
+
+    .gallery-card figcaption {
+      margin: 0;
+      padding: 0.5rem 0.56rem;
+      color: #56657d;
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .gallery-hint {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #667890;
+    }
+
+    .access-grid {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+      align-items: start;
+    }
+
+    .access-main {
+      display: grid;
+      gap: 0.64rem;
+    }
+
+    .access-list {
+      margin: 0;
+      display: grid;
+      gap: 0.42rem;
+    }
+
+    .access-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0.6rem;
+      align-items: start;
+    }
+
+    .access-row dt {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #33517f;
+      background: #eef4ff;
+      border: 1px solid #d6e3f7;
+      border-radius: 8px;
+      padding: 0.24rem 0.42rem;
+      width: fit-content;
+    }
+
+    .access-row dd {
+      margin: 0;
+      color: #4f6077;
+      font-size: 0.9rem;
+    }
+
+    .access-value {
+      display: block;
+    }
+
+    .payment-panel {
+      border: 1px solid #d7e2f2;
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 0.72rem;
+    }
+
+    .payment-title {
+      margin: 0;
+      font-size: 0.86rem;
+      color: #2a4f85;
+      font-weight: 700;
+    }
+
+    .payment-value {
+      margin: 0.28rem 0 0;
+      color: #4f6077;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .cashless-logo {
+      display: block;
+      margin-top: 0.54rem;
+      width: min(360px, 100%);
+      height: auto;
+      border: 1px solid #d9e3f2;
+      border-radius: 10px;
+      background: #fff;
+      padding: 0.24rem 0.32rem;
+      object-fit: contain;
+    }
+
+    .map-link {
+      align-self: start;
+      min-height: 40px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+
+    .faq-list {
+      margin: 0;
+      display: grid;
+      gap: 0.56rem;
+    }
+
+    .faq-item {
+      border: 1px solid #d8e2f2;
+      border-radius: 10px;
+      background: #f9fbff;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.62rem 0.74rem;
+      font-weight: 700;
+      color: #1f3f71;
+      position: relative;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      padding-right: 2rem;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      position: absolute;
+      right: 0.74rem;
+      top: 0.6rem;
+      font-size: 1rem;
+      color: #2d4d80;
+      font-weight: 800;
+    }
+
+    .faq-item[open] summary::after {
+      content: '-';
+    }
+
+    .faq-item p {
+      margin: 0;
+      padding: 0 0.74rem 0.72rem;
+      color: #566880;
+      font-size: 0.86rem;
+    }
+
+    .cta {
+      margin-top: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(21, 58, 120, 0.24);
+      background: linear-gradient(140deg, #eaf2ff, #f9fbff 62%);
+      padding: clamp(1rem, 2.6vw, 1.4rem);
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .cta h2 {
+      margin: 0;
+      font-size: clamp(1.18rem, 2.8vw, 1.62rem);
+      color: #112d55;
+    }
+
+    .cta p {
+      margin: 0.52rem auto 0.82rem;
+      color: #546983;
+      max-width: 720px;
+      font-size: 0.92rem;
+    }
+
+    footer {
+      margin-top: 0.95rem;
+      padding: 0.8rem 0 0.5rem;
+      text-align: center;
+      color: #697b94;
+      font-size: 0.8rem;
+    }
+
+    .mobile-reserve {
+      position: fixed;
+      left: 0.7rem;
+      right: 0.7rem;
+      bottom: max(0.55rem, env(safe-area-inset-bottom));
+      z-index: 85;
+      display: none;
+      min-height: 52px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 0.96rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 110;
+      display: grid;
+      place-items: center;
+      background: rgba(16, 30, 51, 0.56);
+      backdrop-filter: blur(4px);
+      padding: 0.8rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .22s ease, visibility 0s linear .22s;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity .22s ease, visibility 0s;
+    }
+
+    .modal-panel {
+      width: min(620px, 100%);
+      max-height: min(84vh, 680px);
+      overflow: auto;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid #ced9ed;
+      box-shadow: 0 20px 40px rgba(16, 34, 59, 0.24);
+      padding: 1rem 1rem 1.1rem;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.58rem;
+      right: 0.58rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid #b9c9e3;
+      background: #f7faff;
+      color: #1c3f74;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .modal-kicker {
+      margin: 0;
+      color: #47679a;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .modal h3 {
+      margin: 0.18rem 0 0;
+      color: #12315a;
+      font-size: 1.24rem;
+    }
+
+    .modal-desc {
+      margin: 0.55rem 0 0;
+      color: #526886;
+      font-size: 0.9rem;
+    }
+
+    .modal-list-title {
+      margin: 0.72rem 0 0.34rem;
+      font-size: 0.82rem;
+      color: #3b5887;
+      font-weight: 700;
+    }
+
+    .modal ul {
+      margin: 0;
+      padding-left: 1.06rem;
+      color: #4c627f;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .lightbox-frame {
+      width: min(940px, 100%);
+      position: relative;
+    }
+
+    .lightbox-image {
+      width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
+      background: #081426;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-caption {
+      margin: 0.45rem 0 0;
+      color: #dbe8ff;
+      text-align: center;
+      font-size: 0.84rem;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: rgba(7, 20, 38, 0.66);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .lightbox-nav.prev { left: 10px; }
+    .lightbox-nav.next { right: 10px; }
+
+    @media (max-width: 980px) {
+      .top-nav-inner {
+        grid-template-columns: 1fr auto;
+      }
+
+      .menu-toggle {
+        display: inline-block;
+      }
+
+      .nav-panel {
+        position: absolute;
+        left: 0.7rem;
+        right: 0.7rem;
+        top: calc(100% + 0.5rem);
+        background: #fff;
+        border: 1px solid #cfd9ea;
+        border-radius: 12px;
+        box-shadow: 0 14px 30px rgba(17, 36, 62, 0.18);
+        padding: 0.75rem;
+        display: none;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-panel.open {
+        display: flex;
+      }
+
+      .nav-link,
+      .nav-reserve {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .lang-wrap {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "content"
+          "media"
+          "actions";
+        row-gap: 0.88rem;
+        padding: 0.78rem;
+      }
+
+      .hero-content {
+        gap: 0.62rem;
+      }
+
+      .hero-actions {
+        justify-content: flex-start;
+      }
+
+      .hero-media {
+        min-height: 220px;
+        margin-inline: -0.3rem;
+      }
+
+      .hero-lead {
+        font-size: 0.82rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        text-align: center;
+      }
+
+      .hero-subtitle {
+        font-size: 0.86rem;
+      }
+
+      .hero-cta-group {
+        margin-top: 0.2rem;
+        gap: 0.42rem;
+      }
+
+      .hero-cta {
+        min-height: 52px;
+        padding: 0.52rem 0.58rem;
+      }
+
+      .hero-cta-main {
+        font-size: 0.86rem;
+      }
+
+      .hero-cta-sub {
+        font-size: 0.66rem;
+      }
+
+      .hero-cta-inline {
+        gap: 0.34rem;
+      }
+
+      .hero-cta-inline .hero-cta-sub {
+        padding-left: 0.34rem;
+      }
+
+      .notice-item {
+        grid-template-columns: 4.8rem minmax(0, 1fr);
+        gap: 0.54rem;
+      }
+
+      .notice-tag {
+        width: 4.8rem;
+      }
+
+      .badge-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.4rem;
+      }
+
+      .hero-content .badge-list {
+        justify-content: center;
+      }
+
+      .badge-list li {
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+
+      .feature-grid,
+      .staff-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .access-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-link {
+        width: fit-content;
+      }
+
+      .access-row {
+        grid-template-columns: 1fr;
+        gap: 0.22rem;
+      }
+
+      .mobile-reserve {
+        display: inline-flex;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav" id="topNav">
+    <div class="container top-nav-inner">
+      <div class="brand" id="navBrand">青葉整体院</div>
+      <div class="nav-actions">
+        <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="navPanel" aria-label="menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav id="navPanel" class="nav-panel" aria-label="Primary">
+          <button class="nav-link" type="button" data-scroll="menu" data-i18n="nav_menu">施術・料金</button>
+          <button class="nav-link" type="button" data-scroll="features" data-i18n="nav_features">選ばれる理由</button>
+          <button class="nav-link" type="button" data-scroll="staff" data-i18n="nav_staff">スタッフ</button>
+          <button class="nav-link" type="button" data-scroll="gallery" data-i18n="nav_gallery">ギャラリー</button>
+          <button class="nav-link" type="button" data-scroll="access" data-i18n="nav_access">アクセス</button>
+          <button class="nav-link" type="button" data-scroll="faq" data-i18n="nav_faq">FAQ</button>
+          <a id="navReserve" class="btn btn-primary nav-reserve" href="#" data-i18n="nav_reserve">予約する</a>
+          <label class="lang-wrap" for="langSelect">
+            <span id="langLabel" data-i18n="lang_label">Lang</span>
+            <select id="langSelect" aria-label="language">
+              <option value="ja">JP</option>
+              <option value="en">EN</option>
+              <option value="zh-TW">繁中</option>
+              <option value="es">ES</option>
+              <option value="ko">KO</option>
+            </select>
+          </label>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="hero" class="hero">
+      <div class="hero-grid reveal is-visible">
+        <figure class="hero-media">
+          <img src="./images/hero.jpg" alt="青葉整体院の院内" loading="eager" />
+        </figure>
+        <div class="hero-content">
+          <h1 data-i18n="hero_title">青葉整体院</h1>
+          <p class="hero-lead" data-i18n="hero_lead">表参道・明治神宮前。肩こり・腰の違和感に対応。</p>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">初回の流れ・料金・所要時間をまとめて確認できます。\nご予約はオンライン予約、またはお電話にて承っております。</p>
+          <ul id="heroBadges" class="badge-list" aria-label="highlights"></ul>
+        </div>
+        <div class="hero-actions">
+          <div class="hero-cta-group">
+            <a id="heroReserve" class="btn btn-primary hero-cta hero-cta-inline" href="#">
+              <span class="hero-cta-main" data-i18n="hero_cta_online_main">オンライン予約</span>
+            </a>
+            <a id="heroCall" class="btn btn-secondary hero-cta" href="tel:0312349876">
+              <span class="hero-cta-main" data-i18n="hero_cta_call_main">電話で予約する</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="notice" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="notice_title">お知らせ</h2>
+      </div>
+      <ul id="noticeList" class="notice-list"></ul>
+      <p class="notice-updated" data-i18n="notice_updated">最終更新：2026年3月6日</p>
+    </section>
+
+    <section id="menu" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="menu_title">施術・料金</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="menu-table">
+          <thead>
+            <tr>
+              <th><span class="sr-only" data-i18n="menu_col_name">施術</span></th>
+              <th data-i18n="menu_col_price">料金</th>
+              <th data-i18n="menu_col_duration">目安時間</th>
+              <th data-i18n="menu_col_target">対象</th>
+              <th data-i18n="menu_col_action">詳細</th>
+            </tr>
+          </thead>
+          <tbody id="menuTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="features" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="features_title">選ばれる理由</h2>
+        <p class="section-lead" data-i18n="features_lead">初回に不安になりやすいポイントを、先回りして解消します。</p>
+      </div>
+      <div id="featuresGrid" class="feature-grid"></div>
+    </section>
+
+    <section id="staff" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="staff_title">スタッフ</h2>
+        <p class="section-lead" data-i18n="staff_lead">担当者が見えると、初回でも安心して予約できます。</p>
+      </div>
+      <div id="staffGrid" class="staff-grid"></div>
+    </section>
+
+    <section id="gallery" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="gallery_title">ギャラリー</h2>
+      </div>
+      <div class="gallery-wrap">
+        <div class="gallery-group">
+          <h3 data-i18n="gallery_shop_title">店内</h3>
+          <div id="galleryShop" class="gallery-grid"></div>
+        </div>
+        <div class="gallery-group">
+          <h3 data-i18n="gallery_style_title">スタイル</h3>
+          <div id="galleryStyle" class="gallery-grid"></div>
+        </div>
+        <p class="gallery-hint" data-i18n="gallery_hint">画像をタップすると拡大できます。</p>
+      </div>
+    </section>
+
+    <section id="access" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="access_title">院情報</h2>
+        <p class="section-lead" data-i18n="access_lead">住所・営業時間・支払い・駐車場をまとめて確認できます。</p>
+      </div>
+      <div class="access-grid">
+        <div class="access-main">
+          <dl class="access-list" id="accessList"></dl>
+          <a id="accessMapLink" class="btn btn-secondary map-link" href="#" target="_blank" rel="noopener" data-i18n="access_map_label">Googleマップで見る</a>
+        </div>
+        <aside class="payment-panel">
+          <h3 class="payment-title" data-i18n="access_label_payment">支払い</h3>
+          <p id="paymentValue" class="payment-value">現金 / クレジットカード / 交通系IC / QR決済</p>
+          <img id="paymentLogo" class="cashless-logo" src="./images/icon/cashlesslogo.jpg" alt="支払いロゴ" loading="lazy" decoding="async" />
+        </aside>
+      </div>
+    </section>
+
+    <section id="faq" class="section reveal">
+      <div class="section-head">
+        <h2 data-i18n="faq_title">FAQ</h2>
+        <p class="section-lead" data-i18n="faq_lead">ご予約前によくいただく質問をまとめました。</p>
+      </div>
+      <div id="faqList" class="faq-list"></div>
+    </section>
+
+    <section id="cta" class="cta reveal">
+      <h2 data-i18n="cta_title">ご予約はこちら</h2>
+      <p data-i18n="cta_body">空き状況の確認とご予約は、オンライン予約ページからお願いします。</p>
+      <a id="ctaReserve" class="btn btn-primary" href="#" data-i18n="cta_button">今すぐ予約する</a>
+    </section>
+
+    <footer>
+      <p id="footerBrand" data-i18n="footer_brand">青葉整体院</p>
+      <p id="footerNote" data-i18n="footer_note">Produced by Nakayama Works</p>
+    </footer>
+  </main>
+
+  <a id="mobileReserve" class="btn btn-primary mobile-reserve" href="#" data-i18n="mobile_reserve">予約する</a>
+
+  <div id="menuModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-panel">
+      <button id="menuModalClose" class="modal-close" type="button" aria-label="Close">×</button>
+      <p class="modal-kicker" data-i18n="menu_modal_title">施術詳細</p>
+      <h3 id="menuModalTitle">-</h3>
+      <p id="menuModalDesc" class="modal-desc">-</p>
+      <p class="modal-list-title" data-i18n="menu_modal_points">内容</p>
+      <ul id="menuModalList"></ul>
+    </div>
+  </div>
+
+  <div id="lightbox" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox-frame">
+      <button id="lightboxClose" class="modal-close" type="button" aria-label="Close">×</button>
+      <button id="lightboxPrev" class="lightbox-nav prev" type="button" aria-label="Previous">‹</button>
+      <button id="lightboxNext" class="lightbox-nav next" type="button" aria-label="Next">›</button>
+      <img id="lightboxImg" class="lightbox-image" src="" alt="" />
+      <p id="lightboxCaption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script src="./i18n-demo.js"></script>
+  <script>
+    (() => {
+      const SUPPORTED_LANGS = ['ja', 'en', 'zh-TW', 'es', 'ko'];
+      const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/porto_seitai/';
+      const state = {
+        lang: 'ja',
+        menuMap: new Map(),
+        galleryItems: [],
+        galleryIndex: 0,
+        touchStartX: 0,
+        touchStartY: 0
+      };
+
+      const el = {
+        navBrand: document.getElementById('navBrand'),
+        menuToggle: document.getElementById('menuToggle'),
+        navPanel: document.getElementById('navPanel'),
+        langSelect: document.getElementById('langSelect'),
+        heroBadges: document.getElementById('heroBadges'),
+        noticeList: document.getElementById('noticeList'),
+        menuTableBody: document.getElementById('menuTableBody'),
+        featuresGrid: document.getElementById('featuresGrid'),
+        staffGrid: document.getElementById('staffGrid'),
+        galleryShop: document.getElementById('galleryShop'),
+        galleryStyle: document.getElementById('galleryStyle'),
+        accessList: document.getElementById('accessList'),
+        accessMapLink: document.getElementById('accessMapLink'),
+        paymentValue: document.getElementById('paymentValue'),
+        paymentLogo: document.getElementById('paymentLogo'),
+        faqList: document.getElementById('faqList'),
+        menuModal: document.getElementById('menuModal'),
+        menuModalClose: document.getElementById('menuModalClose'),
+        menuModalTitle: document.getElementById('menuModalTitle'),
+        menuModalDesc: document.getElementById('menuModalDesc'),
+        menuModalList: document.getElementById('menuModalList'),
+        lightbox: document.getElementById('lightbox'),
+        lightboxClose: document.getElementById('lightboxClose'),
+        lightboxPrev: document.getElementById('lightboxPrev'),
+        lightboxNext: document.getElementById('lightboxNext'),
+        lightboxImg: document.getElementById('lightboxImg'),
+        lightboxCaption: document.getElementById('lightboxCaption')
+      };
+
+      const i18n = window.DEMO_I18N || {};
+
+      function getLangMap(source) {
+        if (source && source[state.lang]) return source[state.lang];
+        if (source && source.ja) return source.ja;
+        return null;
+      }
+
+      function t(key) {
+        const dict = getLangMap(i18n) || {};
+        return dict[key] || (i18n.ja && i18n.ja[key]) || '';
+      }
+
+      function resolveInitialLang() {
+        const url = new URL(window.location.href);
+        const queryLang = url.searchParams.get('lang');
+        if (SUPPORTED_LANGS.includes(queryLang)) return queryLang;
+
+        const browserLang = navigator.language || navigator.userLanguage || 'ja';
+        if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
+        const short = browserLang.toLowerCase().split('-')[0];
+        if (short === 'ja') return 'ja';
+        if (short === 'en') return 'en';
+        if (short === 'es') return 'es';
+        if (short === 'ko') return 'ko';
+        if (short === 'zh') return 'zh-TW';
+        return 'ja';
+      }
+
+      function syncUrlLang() {
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', state.lang);
+        history.replaceState(null, '', url.toString());
+      }
+
+      function applyStaticText() {
+        document.documentElement.lang = state.lang;
+        document.querySelectorAll('[data-i18n]').forEach((node) => {
+          const key = node.getAttribute('data-i18n');
+          const text = t(key);
+          if (text) node.textContent = text;
+        });
+
+        const dict = getLangMap(i18n) || {};
+        document.title = dict.meta_title || i18n.ja.meta_title;
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute('content', dict.meta_description || i18n.ja.meta_description);
+        if (el.navBrand) el.navBrand.textContent = t('brand');
+        el.menuModalClose.setAttribute('aria-label', t('modal_close') || 'Close');
+        el.lightboxClose.setAttribute('aria-label', t('lightbox_close') || 'Close');
+      }
+
+      function renderBadges() {
+        const badges = getLangMap(window.DEMO_BADGES) || [];
+        el.heroBadges.innerHTML = '';
+        badges.slice(0, 3).forEach((label) => {
+          const li = document.createElement('li');
+          li.textContent = label;
+          el.heroBadges.appendChild(li);
+        });
+      }
+
+      function renderNotices() {
+        const notices = getLangMap(window.DEMO_NOTICE_ITEMS) || [];
+        el.noticeList.innerHTML = '';
+        notices.forEach((item) => {
+          const li = document.createElement('li');
+          const level = item.level === 'warn' ? 'warn' : 'info';
+          li.className = `notice-item ${level}`;
+
+          const tag = document.createElement('span');
+          tag.className = 'notice-tag';
+          tag.textContent = level === 'warn' ? t('notice_level_warn') : t('notice_level_info');
+
+          const text = document.createElement('span');
+          text.textContent = item.text || '';
+
+          li.appendChild(tag);
+          li.appendChild(text);
+          el.noticeList.appendChild(li);
+        });
+      }
+
+      function renderMenu() {
+        const items = (getLangMap(window.DEMO_MENU_ITEMS) || []).slice();
+        state.menuMap = new Map();
+        el.menuTableBody.innerHTML = '';
+
+        items.forEach((item) => {
+          state.menuMap.set(item.id, item);
+          const tr = document.createElement('tr');
+
+          const nameTd = document.createElement('td');
+          nameTd.className = 'menu-name';
+          nameTd.textContent = item.title;
+
+          const priceTd = document.createElement('td');
+          priceTd.textContent = item.price;
+
+          const durationTd = document.createElement('td');
+          durationTd.textContent = item.duration;
+
+          const targetTd = document.createElement('td');
+          targetTd.textContent = item.target;
+
+          const actionTd = document.createElement('td');
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'menu-detail';
+          btn.setAttribute('data-menu-id', item.id);
+          btn.textContent = t('menu_detail_button');
+          actionTd.appendChild(btn);
+
+          tr.appendChild(nameTd);
+          tr.appendChild(priceTd);
+          tr.appendChild(durationTd);
+          tr.appendChild(targetTd);
+          tr.appendChild(actionTd);
+          el.menuTableBody.appendChild(tr);
+        });
+      }
+
+      function renderFeatures() {
+        const features = getLangMap(window.DEMO_FEATURE_ITEMS) || [];
+        el.featuresGrid.innerHTML = '';
+        features.forEach((item) => {
+          const article = document.createElement('article');
+          article.className = 'feature-card';
+
+          const h3 = document.createElement('h3');
+          h3.textContent = item.title || '';
+
+          const p = document.createElement('p');
+          p.textContent = item.body || '';
+
+          article.appendChild(h3);
+          article.appendChild(p);
+          el.featuresGrid.appendChild(article);
+        });
+      }
+
+      function getStaffInitials(item) {
+        const explicit = String(item && item.initials || '').trim();
+        if (explicit) return explicit.toUpperCase();
+
+        const raw = String(item && item.name || '').trim();
+        if (!raw) return '--';
+
+        const paren = raw.match(/\(([^)]+)\)/);
+        const latin = (paren ? paren[1] : raw).replace(/[^A-Za-z\s-]/g, ' ').trim();
+        if (latin) {
+          const parts = latin.split(/\s+/).filter(Boolean);
+          if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+          return `${parts[0][0] || ''}${parts[parts.length - 1][0] || ''}`.toUpperCase();
+        }
+
+        return raw.replace(/\s+/g, '').slice(0, 2).toUpperCase();
+      }
+
+      function renderStaff() {
+        const staffItems = getLangMap(window.DEMO_STAFF_ITEMS) || [];
+        el.staffGrid.innerHTML = '';
+
+        staffItems.forEach((item) => {
+          const article = document.createElement('article');
+          article.className = 'staff-card';
+
+          const avatar = document.createElement('div');
+          avatar.className = 'staff-avatar';
+          avatar.setAttribute('aria-hidden', 'true');
+          avatar.textContent = getStaffInitials(item);
+
+          const body = document.createElement('div');
+
+          const h3 = document.createElement('h3');
+          h3.textContent = item.name || '';
+
+          const role = document.createElement('p');
+          role.className = 'staff-role';
+          role.textContent = item.role || '';
+
+          const specialty = document.createElement('p');
+          specialty.className = 'staff-specialty';
+          specialty.textContent = item.specialty || '';
+
+          const message = document.createElement('p');
+          message.className = 'staff-message';
+          message.textContent = item.message || '';
+
+          body.appendChild(h3);
+          body.appendChild(role);
+          body.appendChild(specialty);
+          body.appendChild(message);
+
+          article.appendChild(avatar);
+          article.appendChild(body);
+          el.staffGrid.appendChild(article);
+        });
+      }
+
+      function createGalleryCard(item, index) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gallery-card';
+        button.setAttribute('data-gallery-index', String(index));
+
+        const fig = document.createElement('figure');
+        fig.style.margin = '0';
+
+        const img = document.createElement('img');
+        img.src = item.src || '';
+        img.alt = item.alt || '';
+        img.loading = 'lazy';
+
+        const cap = document.createElement('figcaption');
+        cap.textContent = item.caption || '';
+
+        fig.appendChild(img);
+        fig.appendChild(cap);
+        button.appendChild(fig);
+        return button;
+      }
+
+      function renderGallery() {
+        const gallery = getLangMap(window.DEMO_GALLERY_ITEMS) || { shop: [], style: [] };
+        const shop = Array.isArray(gallery.shop) ? gallery.shop : [];
+        const style = Array.isArray(gallery.style) ? gallery.style : [];
+
+        state.galleryItems = [...shop, ...style];
+        el.galleryShop.innerHTML = '';
+        el.galleryStyle.innerHTML = '';
+
+        let idx = 0;
+        shop.forEach((item) => {
+          el.galleryShop.appendChild(createGalleryCard(item, idx));
+          idx += 1;
+        });
+
+        style.forEach((item) => {
+          el.galleryStyle.appendChild(createGalleryCard(item, idx));
+          idx += 1;
+        });
+      }
+
+      function renderAccess() {
+        const store = getLangMap(window.DEMO_STORE_INFO) || {};
+        const rows = [
+          { key: 'address', label: t('access_label_address'), value: store.address || '' },
+          { key: 'access', label: t('access_label_access'), value: store.access || '' },
+          { key: 'hours', label: t('access_label_hours'), value: store.hours || '' },
+          { key: 'closed', label: t('access_label_closed'), value: store.closed || '' },
+          { key: 'parking', label: t('access_label_parking'), value: store.parking || '' },
+          { key: 'tel', label: t('access_label_tel'), value: store.tel || '' }
+        ];
+
+        el.accessList.innerHTML = '';
+        rows.forEach((row) => {
+          const wrap = document.createElement('div');
+          wrap.className = 'access-row';
+
+          const dt = document.createElement('dt');
+          dt.textContent = row.label;
+
+          const dd = document.createElement('dd');
+          const text = document.createElement('span');
+          text.className = 'access-value';
+          text.textContent = row.value;
+          dd.appendChild(text);
+
+          wrap.appendChild(dt);
+          wrap.appendChild(dd);
+          el.accessList.appendChild(wrap);
+        });
+
+        const paymentText = store.payment || '';
+        el.paymentValue.textContent = paymentText;
+        el.paymentValue.hidden = !paymentText;
+        el.paymentLogo.hidden = !paymentText;
+        el.paymentLogo.alt = t('access_label_payment');
+
+        const mapUrl = store.mapUrl || 'https://maps.google.com';
+        el.accessMapLink.href = mapUrl;
+      }
+
+      function renderFaq() {
+        const items = getLangMap(window.DEMO_FAQ_ITEMS) || [];
+        el.faqList.innerHTML = '';
+
+        items.forEach((item) => {
+          const details = document.createElement('details');
+          details.className = 'faq-item';
+
+          const summary = document.createElement('summary');
+          summary.textContent = item.q || '';
+
+          const p = document.createElement('p');
+          p.textContent = item.a || '';
+
+          details.appendChild(summary);
+          details.appendChild(p);
+          el.faqList.appendChild(details);
+        });
+      }
+
+      function updateReserveLinks() {
+        const ids = ['navReserve', 'heroReserve', 'ctaReserve', 'mobileReserve'];
+        const returnUrl = new URL(window.location.href);
+        returnUrl.hash = '';
+
+        ids.forEach((id) => {
+          const link = document.getElementById(id);
+          if (!link) return;
+          try {
+            const url = new URL(RESERVE_BASE_URL);
+            url.searchParams.set('lang', state.lang);
+            url.searchParams.set('return', returnUrl.toString());
+            link.href = url.toString();
+          } catch (_) {
+            link.href = RESERVE_BASE_URL;
+          }
+        });
+      }
+
+      function toTelHref(raw) {
+        const source = String(raw || '').trim();
+        if (!source) return 'tel:0312349876';
+        const cleaned = source.replace(/[^+\d]/g, '');
+        if (!cleaned) return 'tel:0312349876';
+        if (cleaned.startsWith('+')) {
+          return `tel:+${cleaned.slice(1).replace(/\+/g, '')}`;
+        }
+        return `tel:${cleaned.replace(/\+/g, '')}`;
+      }
+
+      function updateCallLinks() {
+        const store = getLangMap(window.DEMO_STORE_INFO) || {};
+        const href = toTelHref(store.tel);
+        const ids = ['heroCall'];
+        ids.forEach((id) => {
+          const link = document.getElementById(id);
+          if (link) link.href = href;
+        });
+      }
+
+      function closeMenuPanel() {
+        el.navPanel.classList.remove('open');
+        el.menuToggle.setAttribute('aria-expanded', 'false');
+      }
+
+      function setupScrolling() {
+        document.querySelectorAll('[data-scroll]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const id = button.getAttribute('data-scroll');
+            const target = document.getElementById(id);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            closeMenuPanel();
+          });
+        });
+      }
+
+      function setupReveal() {
+        const targets = document.querySelectorAll('.reveal');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) {
+          targets.forEach((node) => node.classList.add('is-visible'));
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+        targets.forEach((node) => observer.observe(node));
+      }
+
+      function openMenuModal(menuId) {
+        const item = state.menuMap.get(menuId);
+        if (!item) return;
+
+        el.menuModalTitle.textContent = item.title || '';
+        el.menuModalDesc.textContent = item.description || '';
+        el.menuModalList.innerHTML = '';
+
+        (item.notes || []).forEach((point) => {
+          const li = document.createElement('li');
+          li.textContent = point;
+          el.menuModalList.appendChild(li);
+        });
+
+        el.menuModal.classList.add('open');
+        el.menuModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeMenuModal() {
+        el.menuModal.classList.remove('open');
+        el.menuModal.setAttribute('aria-hidden', 'true');
+        if (!el.lightbox.classList.contains('open')) {
+          document.body.classList.remove('modal-open');
+        }
+      }
+
+      function showLightbox(index) {
+        if (!state.galleryItems.length) return;
+        state.galleryIndex = (index + state.galleryItems.length) % state.galleryItems.length;
+        const item = state.galleryItems[state.galleryIndex];
+
+        el.lightboxImg.src = item.src || '';
+        el.lightboxImg.alt = item.alt || '';
+        el.lightboxCaption.textContent = item.caption || '';
+        el.lightbox.classList.add('open');
+        el.lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeLightbox() {
+        el.lightbox.classList.remove('open');
+        el.lightbox.setAttribute('aria-hidden', 'true');
+        el.lightboxImg.src = '';
+        el.lightboxCaption.textContent = '';
+        if (!el.menuModal.classList.contains('open')) {
+          document.body.classList.remove('modal-open');
+        }
+      }
+
+      function nextLightbox(step) {
+        showLightbox(state.galleryIndex + step);
+      }
+
+      function setupGallerySwipe() {
+        el.lightbox.addEventListener('touchstart', (event) => {
+          const touch = event.changedTouches && event.changedTouches[0];
+          if (!touch) return;
+          state.touchStartX = touch.clientX;
+          state.touchStartY = touch.clientY;
+        }, { passive: true });
+
+        el.lightbox.addEventListener('touchend', (event) => {
+          const touch = event.changedTouches && event.changedTouches[0];
+          if (!touch) return;
+
+          const dx = touch.clientX - state.touchStartX;
+          const dy = touch.clientY - state.touchStartY;
+          if (Math.abs(dx) < 46 || Math.abs(dx) < Math.abs(dy)) return;
+          nextLightbox(dx > 0 ? -1 : 1);
+        }, { passive: true });
+      }
+
+      function setupModalEvents() {
+        el.menuTableBody.addEventListener('click', (event) => {
+          const target = event.target.closest('[data-menu-id]');
+          if (!target) return;
+          openMenuModal(target.getAttribute('data-menu-id'));
+        });
+
+        el.menuModalClose.addEventListener('click', closeMenuModal);
+        el.menuModal.addEventListener('click', (event) => {
+          if (event.target === el.menuModal) closeMenuModal();
+        });
+
+        document.addEventListener('click', (event) => {
+          const card = event.target.closest('[data-gallery-index]');
+          if (!card) return;
+          showLightbox(Number(card.getAttribute('data-gallery-index')) || 0);
+        });
+
+        el.lightboxClose.addEventListener('click', closeLightbox);
+        el.lightboxPrev.addEventListener('click', () => nextLightbox(-1));
+        el.lightboxNext.addEventListener('click', () => nextLightbox(1));
+        el.lightbox.addEventListener('click', (event) => {
+          if (event.target === el.lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            if (el.lightbox.classList.contains('open')) closeLightbox();
+            if (el.menuModal.classList.contains('open')) closeMenuModal();
+            return;
+          }
+
+          if (!el.lightbox.classList.contains('open')) return;
+          if (event.key === 'ArrowLeft') nextLightbox(-1);
+          if (event.key === 'ArrowRight') nextLightbox(1);
+        });
+
+        setupGallerySwipe();
+      }
+
+      function renderAll() {
+        applyStaticText();
+        renderBadges();
+        renderNotices();
+        renderMenu();
+        renderFeatures();
+        renderStaff();
+        renderGallery();
+        renderAccess();
+        renderFaq();
+        updateReserveLinks();
+        updateCallLinks();
+      }
+
+      function applyLang(nextLang) {
+        const lang = SUPPORTED_LANGS.includes(nextLang) ? nextLang : 'ja';
+        state.lang = lang;
+        el.langSelect.value = lang;
+        syncUrlLang();
+        renderAll();
+      }
+
+      function init() {
+        state.lang = resolveInitialLang();
+        syncUrlLang();
+        renderAll();
+        el.langSelect.value = state.lang;
+
+        setupScrolling();
+        setupReveal();
+        setupModalEvents();
+
+        el.langSelect.addEventListener('change', () => {
+          applyLang(el.langSelect.value);
+        });
+
+        el.menuToggle.addEventListener('click', () => {
+          const open = !el.navPanel.classList.contains('open');
+          el.navPanel.classList.toggle('open', open);
+          el.menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!el.navPanel.classList.contains('open')) return;
+          if (event.target.closest('#navPanel') || event.target.closest('#menuToggle')) return;
+          closeMenuPanel();
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 980) closeMenuPanel();
+        });
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
