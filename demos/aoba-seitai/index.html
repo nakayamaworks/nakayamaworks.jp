@@ -4,7 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>青葉整体院 | デモサイト</title>
-  <meta name="description" content="青葉整体院の営業デモサイト。必要情報が揃った汎用・信頼系テンプレート。" />
+  <meta name="description" content="青葉整体院 のデモサイト。Nakayama Works が制作する多言語対応のサロン・店舗向けWebサイトテンプレートのサンプルです。" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="青葉整体院 | Nakayama Works Demo" />
+  <meta property="og:description" content="青葉整体院 の営業デモサイト。多言語対応・予約導線を備えた店舗向けWebサイトテンプレート。" />
+  <meta property="og:site_name" content="Nakayama Works Demo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="format-detection" content="telephone=no" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -64,6 +71,106 @@
     body.modal-open {
       overflow: hidden;
       touch-action: none;
+    }
+
+    body.welcome-lock {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .lang-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 220;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(248, 251, 255, 0.97);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.32s ease, visibility 0s linear 0.32s;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+    }
+
+    html:not(.lang-gate-seen) .lang-gate {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: none;
+    }
+
+    .lang-gate.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.32s ease, visibility 0s;
+    }
+
+    .lang-gate.is-leaving {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+    }
+
+    .lang-card {
+      width: min(680px, calc(100% - 1rem));
+      border: 1px solid #d2dcec;
+      border-radius: 16px;
+      padding: 1.1rem 1rem 0.95rem;
+      background: #ffffff;
+      box-shadow: 0 22px 44px rgba(20, 41, 73, 0.14);
+    }
+
+    .lang-title {
+      margin: 0;
+      text-align: center;
+      font-size: 1.18rem;
+      color: #1a3766;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+    }
+
+    .lang-copy {
+      margin: 0.34rem 0 0.86rem;
+      text-align: center;
+      color: #5c6f8b;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .lang-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .lang-btn {
+      border: 1px solid #c8d5ea;
+      background: #f9fbff;
+      color: #1d3b69;
+      border-radius: 999px;
+      min-height: 42px;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, color .18s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn:focus-visible {
+      background: #edf4ff;
+      border-color: #a9bddc;
+      outline: none;
+    }
+
+    .lang-btn.is-selecting {
+      background: #153a78;
+      border-color: #153a78;
+      color: #fff;
     }
 
     a {
@@ -496,6 +603,81 @@
       overflow-x: auto;
       border: 1px solid var(--line);
       border-radius: 12px;
+    }
+
+    .menu-first-visit {
+      border: 1px solid #c9d9f2;
+      border-radius: 14px;
+      padding: 0.82rem 0.88rem;
+      background: linear-gradient(140deg, #edf4ff 0%, #f8fbff 58%, #ffffff 100%);
+      box-shadow: 0 12px 24px rgba(16, 40, 73, 0.08);
+    }
+
+    .menu-first-detail {
+      width: 100%;
+      margin-top: 0.66rem;
+      min-height: 40px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-first-title {
+      margin: 0;
+      color: #122f57;
+      font-size: clamp(1.02rem, 1.8vw, 1.24rem);
+      line-height: 1.45;
+    }
+
+    .menu-first-desc {
+      margin: 0.32rem 0 0;
+      color: #4c607f;
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+
+    .menu-first-foot {
+      margin-top: 0.52rem;
+      display: grid;
+      gap: 0.48rem;
+      justify-items: center;
+    }
+
+    .menu-first-price {
+      margin: 0;
+      color: #0f2e57;
+      font-family: "Inter", sans-serif;
+      font-size: clamp(1.68rem, 4vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .menu-first-meta {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.28rem;
+    }
+
+    .menu-first-meta li {
+      border: 1px solid #d4e2f6;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #355077;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.4;
+      padding: 0.2rem 0.52rem;
+      white-space: nowrap;
+    }
+
+    .menu-first-visit + .table-wrap {
+      margin-top: 0.66rem;
     }
 
     .menu-table {
@@ -1040,6 +1222,10 @@
     }
 
     @media (max-width: 740px) {
+      .lang-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .hero-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -1111,6 +1297,10 @@
         width: 4.8rem;
       }
 
+      .menu-first-detail {
+        margin-top: 0.58rem;
+      }
+
       .badge-list {
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -1169,8 +1359,29 @@
       }
     }
   </style>
+  <script>
+    try {
+      if (localStorage.getItem('aobaSeitaiDemoLangGateSeen') === '1') {
+        document.documentElement.classList.add('lang-gate-seen');
+      }
+    } catch (_) {}
+  </script>
 </head>
 <body>
+  <div id="langGate" class="lang-gate" role="dialog" aria-modal="true" aria-label="language selector">
+    <div class="lang-card">
+      <h2 class="lang-title">Welcome</h2>
+      <p class="lang-copy">Select Language</p>
+      <div class="lang-grid">
+        <button type="button" class="lang-btn" data-lang="ja">日本語</button>
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+        <button type="button" class="lang-btn" data-lang="zh-TW">繁體中文</button>
+        <button type="button" class="lang-btn" data-lang="es">Español</button>
+        <button type="button" class="lang-btn" data-lang="ko">한국어</button>
+      </div>
+    </div>
+  </div>
+
   <header class="top-nav" id="topNav">
     <div class="container top-nav-inner">
       <div class="brand" id="navBrand">青葉整体院</div>
@@ -1238,11 +1449,23 @@
       <div class="section-head">
         <h2 data-i18n="menu_title">施術・料金</h2>
       </div>
-      <div class="table-wrap">
+      <article id="menuFirstVisit" class="menu-first-visit" hidden>
+        <h3 id="menuFirstVisitTitle" class="menu-first-title">初回整体（カウンセリング込）</h3>
+        <p id="menuFirstVisitDesc" class="menu-first-desc">初回の来院では、姿勢・生活習慣・お悩みを確認して施術方針を確認します。</p>
+        <div class="menu-first-foot">
+          <p id="menuFirstVisitPrice" class="menu-first-price">¥6,600</p>
+          <ul class="menu-first-meta">
+            <li id="menuFirstVisitDuration">目安時間 50分</li>
+            <li id="menuFirstVisitTarget">対象 初めての方</li>
+          </ul>
+        </div>
+        <button id="menuFirstVisitDetail" type="button" class="menu-detail menu-first-detail" data-menu-id="first-visit" data-i18n="menu_detail_button">詳細を見る</button>
+      </article>
+      <div id="menuTableWrap" class="table-wrap">
         <table class="menu-table">
           <thead>
             <tr>
-              <th><span class="sr-only" data-i18n="menu_col_name">施術</span></th>
+              <th data-i18n="menu_col_name">2回目以降</th>
               <th data-i18n="menu_col_price">料金</th>
               <th data-i18n="menu_col_duration">目安時間</th>
               <th data-i18n="menu_col_target">対象</th>
@@ -1353,6 +1576,8 @@
     (() => {
       const SUPPORTED_LANGS = ['ja', 'en', 'zh-TW', 'es', 'ko'];
       const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/porto_seitai/';
+      const STORAGE_LANG_KEY = 'aobaSeitaiDemoLang';
+      const STORAGE_LANG_GATE_SEEN_KEY = 'aobaSeitaiDemoLangGateSeen';
       const state = {
         lang: 'ja',
         menuMap: new Map(),
@@ -1363,10 +1588,20 @@
       };
 
       const el = {
+        langGate: document.getElementById('langGate'),
         navBrand: document.getElementById('navBrand'),
         menuToggle: document.getElementById('menuToggle'),
         navPanel: document.getElementById('navPanel'),
         langSelect: document.getElementById('langSelect'),
+        menuSection: document.getElementById('menu'),
+        menuFirstVisit: document.getElementById('menuFirstVisit'),
+        menuFirstVisitDetail: document.getElementById('menuFirstVisitDetail'),
+        menuFirstVisitTitle: document.getElementById('menuFirstVisitTitle'),
+        menuFirstVisitDesc: document.getElementById('menuFirstVisitDesc'),
+        menuFirstVisitPrice: document.getElementById('menuFirstVisitPrice'),
+        menuFirstVisitDuration: document.getElementById('menuFirstVisitDuration'),
+        menuFirstVisitTarget: document.getElementById('menuFirstVisitTarget'),
+        menuTableWrap: document.getElementById('menuTableWrap'),
         heroBadges: document.getElementById('heroBadges'),
         noticeList: document.getElementById('noticeList'),
         menuTableBody: document.getElementById('menuTableBody'),
@@ -1405,10 +1640,27 @@
         return dict[key] || (i18n.ja && i18n.ja[key]) || '';
       }
 
+      function readStorage(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function writeStorage(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (_) {}
+      }
+
       function resolveInitialLang() {
         const url = new URL(window.location.href);
         const queryLang = url.searchParams.get('lang');
         if (SUPPORTED_LANGS.includes(queryLang)) return queryLang;
+
+        const storedLang = readStorage(STORAGE_LANG_KEY);
+        if (SUPPORTED_LANGS.includes(storedLang)) return storedLang;
 
         const browserLang = navigator.language || navigator.userLanguage || 'ja';
         if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
@@ -1477,11 +1729,28 @@
 
       function renderMenu() {
         const items = (getLangMap(window.DEMO_MENU_ITEMS) || []).slice();
-        state.menuMap = new Map();
+        state.menuMap = new Map(items.map((item) => [item.id, item]));
         el.menuTableBody.innerHTML = '';
 
-        items.forEach((item) => {
-          state.menuMap.set(item.id, item);
+        const firstVisit = items.find((item) => item.id === 'first-visit') || null;
+        const tableItems = firstVisit
+          ? items.filter((item) => item.id !== firstVisit.id)
+          : items;
+
+        if (firstVisit) {
+          el.menuFirstVisit.hidden = false;
+          el.menuFirstVisitDetail.setAttribute('data-menu-id', firstVisit.id);
+          el.menuFirstVisitTitle.textContent = firstVisit.title || '';
+          el.menuFirstVisitDesc.textContent = firstVisit.description || '';
+          el.menuFirstVisitPrice.textContent = firstVisit.price || '';
+          el.menuFirstVisitDuration.textContent = `${t('menu_col_duration')} ${firstVisit.duration || ''}`.trim();
+          el.menuFirstVisitTarget.textContent = `${t('menu_col_target')} ${firstVisit.target || ''}`.trim();
+        } else {
+          el.menuFirstVisit.hidden = true;
+        }
+
+        el.menuTableWrap.hidden = tableItems.length === 0;
+        tableItems.forEach((item) => {
           const tr = document.createElement('tr');
 
           const nameTd = document.createElement('td');
@@ -1845,7 +2114,7 @@
       }
 
       function setupModalEvents() {
-        el.menuTableBody.addEventListener('click', (event) => {
+        el.menuSection.addEventListener('click', (event) => {
           const target = event.target.closest('[data-menu-id]');
           if (!target) return;
           openMenuModal(target.getAttribute('data-menu-id'));
@@ -1902,15 +2171,60 @@
         const lang = SUPPORTED_LANGS.includes(nextLang) ? nextLang : 'ja';
         state.lang = lang;
         el.langSelect.value = lang;
+        writeStorage(STORAGE_LANG_KEY, lang);
         syncUrlLang();
         renderAll();
       }
 
+      function setupLangGate() {
+        const gate = el.langGate;
+        const hasSeenGate = readStorage(STORAGE_LANG_GATE_SEEN_KEY) === '1';
+        el.langSelect.value = state.lang;
+
+        if (!gate || hasSeenGate) {
+          applyLang(state.lang);
+          return;
+        }
+
+        const buttons = Array.from(gate.querySelectorAll('.lang-btn[data-lang]'));
+        if (!buttons.length) {
+          applyLang(state.lang);
+          return;
+        }
+
+        const chooseLang = (rawLang) => {
+          const nextLang = SUPPORTED_LANGS.includes(rawLang) ? rawLang : 'ja';
+          buttons.forEach((item) => {
+            item.disabled = true;
+            item.classList.toggle('is-selecting', item.dataset.lang === nextLang);
+          });
+
+          writeStorage(STORAGE_LANG_GATE_SEEN_KEY, '1');
+          document.documentElement.classList.add('lang-gate-seen');
+          applyLang(nextLang);
+
+          gate.classList.add('is-leaving');
+          setTimeout(() => {
+            gate.classList.remove('show');
+            gate.classList.remove('is-leaving');
+            document.body.classList.remove('welcome-lock');
+          }, 320);
+        };
+
+        buttons.forEach((btn) => {
+          btn.classList.remove('is-selecting');
+          btn.addEventListener('click', () => chooseLang(btn.dataset.lang));
+        });
+
+        document.body.classList.add('welcome-lock');
+        gate.classList.add('show');
+        gate.setAttribute('tabindex', '-1');
+        gate.focus({ preventScroll: true });
+      }
+
       function init() {
         state.lang = resolveInitialLang();
-        syncUrlLang();
-        renderAll();
-        el.langSelect.value = state.lang;
+        setupLangGate();
 
         setupScrolling();
         setupReveal();

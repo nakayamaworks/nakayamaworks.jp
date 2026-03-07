@@ -4,7 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Organic Hair Salon LINO | Organic Story Demo</title>
-  <meta name="description" content="Organic Hair Salon LINO demo site. Story-driven and calm organic hair salon experience." />
+  <meta name="description" content="Organic Hair Salon LINO のデモサイト。Nakayama Works が制作する多言語対応のサロン・店舗向けWebサイトテンプレートのサンプルです。" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Organic Hair Salon LINO | Nakayama Works Demo" />
+  <meta property="og:description" content="Organic Hair Salon LINO の営業デモサイト。多言語対応・予約導線を備えた店舗向けWebサイトテンプレート。" />
+  <meta property="og:site_name" content="Nakayama Works Demo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="format-detection" content="telephone=no" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -2792,10 +2799,6 @@
       if (langSelect) langSelect.value = lang;
       if (langSelectFloat) langSelectFloat.value = lang;
       localStorage.setItem('demoLang', lang);
-      document.querySelectorAll('#langGate .lang-btn[data-lang]').forEach((btn) => {
-        btn.classList.toggle('is-selecting', btn.dataset.lang === lang);
-      });
-
       document.querySelectorAll('.section-ja-sub').forEach((el) => {
         el.style.display = lang === 'ja' ? '' : 'none';
       });
@@ -2880,6 +2883,9 @@
         return;
       }
       const buttons = Array.from(gate.querySelectorAll('.lang-btn[data-lang]'));
+      buttons.forEach((btn) => {
+        btn.classList.remove('is-selecting');
+      });
       const chooseLang = (lang) => {
         document.body.classList.add('opening-boot');
         currentLang = i18n[lang] ? lang : 'ja';
@@ -2914,9 +2920,6 @@
       document.body.classList.add('welcome-lock');
       gate.classList.add('show');
       document.body.classList.remove('booting');
-      buttons.forEach((btn) => {
-        btn.classList.toggle('is-selecting', btn.dataset.lang === currentLang);
-      });
     }
 
     function initOpening(onDone) {

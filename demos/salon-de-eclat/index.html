@@ -4,7 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Salon de ÉCLAT | Demo</title>
-  <meta name="description" content="Salon de ÉCLAT の営業デモサイト" />
+  <meta name="description" content="Salon de ÉCLAT のデモサイト。Nakayama Works が制作する多言語対応のサロン・店舗向けWebサイトテンプレートのサンプルです。" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Salon de ÉCLAT | Nakayama Works Demo" />
+  <meta property="og:description" content="Salon de ÉCLAT の営業デモサイト。多言語対応・予約導線を備えた店舗向けWebサイトテンプレート。" />
+  <meta property="og:site_name" content="Nakayama Works Demo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="format-detection" content="telephone=no" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -714,9 +721,6 @@
       });
       const current = document.getElementById('navLangCurrent');
       if (current) current.textContent = LANG_SHORT[lang] || 'JP';
-      document.querySelectorAll('#langGate .lang-btn[data-lang]').forEach((btn) => {
-        btn.classList.toggle('is-selecting', btn.dataset.lang === lang);
-      });
       applyReserveLinks(lang);
       if (typeof window.refreshTreatmentModalLang === 'function') {
         window.refreshTreatmentModalLang();
@@ -1298,6 +1302,9 @@
 
       const showLangGate = async (mode = 'initial') => {
         gate.dataset.mode = mode;
+        gate.querySelectorAll('.lang-btn').forEach((btn) => {
+          btn.classList.remove('is-selecting');
+        });
         gate.classList.add('is-preparing');
         gate.classList.add('show');
         document.body.classList.add('welcome-lock');
