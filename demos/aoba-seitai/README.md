@@ -59,7 +59,7 @@
 
 ## 8. 予約導線仕様
 - 予約先URL:
-  - `const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/porto_seitai/';`
+  - `const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/aoba-seitai/';`
 - 対象リンク:
   - `#navReserve`, `#heroReserve`, `#ctaReserve`, `#mobileReserve`
 - 付与パラメータ:

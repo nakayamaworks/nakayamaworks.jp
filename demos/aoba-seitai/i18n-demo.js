@@ -881,82 +881,47 @@ window.DEMO_FEATURE_ITEMS = {
 window.DEMO_STAFF_ITEMS = {
   "ja": [
     {
-      "name": "中山 亮（Ryo Nakayama）",
+      "name": "ライアン・ネルソン（Ryan Nelson）",
       "initials": "RN",
       "role": "院長 / 整体師",
       "specialty": "得意：首肩・腰まわりの調整",
       "message": "初回はお悩みの背景まで丁寧に確認し、無理のない施術計画をご提案します。"
-    },
-    {
-      "name": "佐藤 美咲（Misaki Sato）",
-      "initials": "MS",
-      "role": "施術スタッフ",
-      "specialty": "得意：姿勢ケア・全身バランス調整",
-      "message": "施術後の日常ケアまで分かりやすくお伝えし、再発しにくい身体づくりをサポートします。"
     }
   ],
   "en": [
     {
-      "name": "Ryo Nakayama",
+      "name": "Ryan Nelson",
       "initials": "RN",
       "role": "Director / Therapist",
       "specialty": "Specialty: Neck, shoulder, and lower back care",
       "message": "For first visits, I carefully review your background and suggest a realistic treatment plan."
-    },
-    {
-      "name": "Misaki Sato",
-      "initials": "MS",
-      "role": "Therapist",
-      "specialty": "Specialty: Posture care and full-body balance",
-      "message": "I also explain aftercare routines so your condition is easier to maintain."
     }
   ],
   "zh-TW": [
     {
-      "name": "中山 亮（Ryo Nakayama）",
+      "name": "Ryan Nelson",
       "initials": "RN",
       "role": "院長 / 整體師",
       "specialty": "擅長：肩頸與腰部調整",
       "message": "初診會先完整了解狀況，再提供可執行的施術規劃。"
-    },
-    {
-      "name": "佐藤 美咲（Misaki Sato）",
-      "initials": "MS",
-      "role": "施術人員",
-      "specialty": "擅長：姿勢照護與全身平衡",
-      "message": "會一併說明日常照護方式，協助維持穩定狀態。"
     }
   ],
   "es": [
     {
-      "name": "Ryo Nakayama",
+      "name": "Ryan Nelson",
       "initials": "RN",
       "role": "Director / Terapeuta",
       "specialty": "Especialidad: cuello, hombros y zona lumbar",
       "message": "En la primera visita revisamos tu contexto y proponemos un plan realista."
-    },
-    {
-      "name": "Misaki Sato",
-      "initials": "MS",
-      "role": "Terapeuta",
-      "specialty": "Especialidad: postura y equilibrio corporal",
-      "message": "También explico cuidados diarios para mantener mejor condición entre visitas."
     }
   ],
   "ko": [
     {
-      "name": "Ryo Nakayama",
+      "name": "Ryan Nelson",
       "initials": "RN",
       "role": "원장 / 세이타이스트",
       "specialty": "전문: 목·어깨·허리 조정",
       "message": "초진에서 상태의 배경까지 확인하고 무리 없는 계획을 제안합니다."
-    },
-    {
-      "name": "Misaki Sato",
-      "initials": "MS",
-      "role": "시술 스태프",
-      "specialty": "전문: 자세 케어·전신 밸런스",
-      "message": "시술 후 일상 관리까지 안내해 안정적인 컨디션 유지를 돕습니다."
     }
   ]
 };
