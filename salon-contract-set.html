@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>印刷用契約書類セット | Nakayama Works</title>
+  <meta name="description" content="Nakayama Worksのサロン向け制作・運用契約に使える印刷用契約書類セットです。A4印刷用HTMLとして作成しています。">
+  <meta name="theme-color" content="#1f3d31">
+  <link rel="icon" type="image/png" href="assets/images/common/brand-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest-deep: #1f3d31;
+      --forest-main: #2f5a47;
+      --forest-soft: #e7efe9;
+      --moss: #7b927b;
+      --paper: #ffffff;
+      --ink: #202624;
+      --ink-soft: #56605b;
+      --line: #cad7cf;
+      --page-shadow: 0 18px 44px rgba(16, 30, 23, 0.12);
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(123, 146, 123, 0.16) 0%, rgba(123, 146, 123, 0) 28%),
+        linear-gradient(180deg, #eef4f0 0%, #e5ede7 100%);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(31, 61, 49, 0.12);
+      background: rgba(239, 245, 241, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .toolbar-copy {
+      min-width: 0;
+    }
+
+    .toolbar-title {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .toolbar-note {
+      margin: 4px 0 0;
+      color: var(--ink-soft);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(31, 61, 49, 0.18);
+      border-radius: 999px;
+      padding: 11px 18px;
+      background: #fff;
+      color: var(--forest-deep);
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(20, 35, 28, 0.12);
+    }
+
+    .btn-primary {
+      background: var(--forest-main);
+      color: #fff;
+    }
+
+    .sheet-stack {
+      width: min(100%, 248mm);
+      margin: 24px auto 56px;
+      padding: 0 12px;
+    }
+
+    .sheet {
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 18px;
+      padding: 14mm 14mm 22mm;
+      background: var(--paper);
+      box-shadow: var(--page-shadow);
+      overflow: hidden;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .sheet:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(47, 90, 71, 0.14);
+      pointer-events: none;
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10mm;
+      padding-bottom: 7mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sheet-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--forest-main);
+      font-size: 10.5pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sheet-label::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+
+    .sheet-title {
+      margin: 6px 0 0;
+      color: var(--forest-deep);
+      font-size: 20pt;
+      line-height: 1.45;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .sheet-subtitle {
+      margin: 6px 0 0;
+      color: var(--ink-soft);
+      font-size: 10.5pt;
+    }
+
+    .page-code {
+      flex: 0 0 auto;
+      color: var(--moss);
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      color: var(--forest-deep);
+      font-size: 12.5pt;
+      line-height: 1.55;
+      font-weight: 800;
+    }
+
+    p,
+    li,
+    td,
+    th,
+    dd,
+    dt {
+      font-size: 10.5pt;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .stack + .stack {
+      margin-top: 5mm;
+    }
+
+    .lead-block {
+      display: grid;
+      gap: 5mm;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4mm;
+    }
+
+    .info-card {
+      padding: 4mm;
+      border: 1px solid var(--line);
+      background: #fbfdfb;
+    }
+
+    .info-card strong {
+      display: block;
+      margin-bottom: 2mm;
+      color: var(--forest-deep);
+      font-size: 10pt;
+    }
+
+    .check-list,
+    .article-list,
+    .note-list {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .check-list li + li,
+    .article-list li + li,
+    .note-list li + li {
+      margin-top: 2mm;
+    }
+
+    .article-list li > p + p {
+      margin-top: 1.5mm;
+    }
+
+    .article {
+      padding: 4mm 0;
+      border-top: 1px dashed var(--line);
+    }
+
+    .article:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .article-title {
+      margin: 0 0 2mm;
+      color: var(--forest-deep);
+      font-size: 11pt;
+      line-height: 1.55;
+      font-weight: 800;
+    }
+
+    .article-body {
+      display: grid;
+      gap: 2.5mm;
+      color: var(--ink-soft);
+    }
+
+    .article-body p {
+      color: var(--ink-soft);
+    }
+
+    .boxed {
+      padding: 4mm;
+      border: 1px solid var(--line);
+      background: #fbfdfb;
+    }
+
+    .boxed p + p {
+      margin-top: 2mm;
+    }
+
+    .party-table,
+    .detail-table,
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .party-table th,
+    .party-table td,
+    .detail-table th,
+    .detail-table td,
+    .check-table th,
+    .check-table td {
+      border: 1px solid var(--line);
+      padding: 3mm;
+      vertical-align: top;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    .party-table th,
+    .detail-table th,
+    .check-table th {
+      width: 28%;
+      background: var(--forest-soft);
+      color: var(--forest-deep);
+      font-weight: 700;
+    }
+
+    .detail-table td,
+    .check-table td {
+      color: var(--ink-soft);
+    }
+
+    .signature-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6mm;
+      margin-top: 7mm;
+    }
+
+    .signature-box {
+      min-height: 34mm;
+      padding: 4mm;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .signature-title {
+      margin-bottom: 3mm;
+      color: var(--forest-deep);
+      font-size: 10pt;
+      font-weight: 700;
+    }
+
+    .signature-lines {
+      display: grid;
+      gap: 2.5mm;
+      color: var(--ink-soft);
+    }
+
+    .line-fill {
+      display: inline-block;
+      min-width: 28mm;
+      border-bottom: 1px solid #8b9891;
+      transform: translateY(-1px);
+    }
+
+    .line-fill--long {
+      min-width: 58mm;
+    }
+
+    .line-fill--full {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .inline-note {
+      color: var(--moss);
+      font-size: 9pt;
+    }
+
+    .compact-list {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--ink-soft);
+    }
+
+    .compact-list li + li {
+      margin-top: 1.5mm;
+    }
+
+    .sheet-footer {
+      position: absolute;
+      right: 14mm;
+      bottom: 10mm;
+      left: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #75827b;
+      font-size: 8.8pt;
+      border-top: 1px solid rgba(202, 215, 207, 0.8);
+      padding-top: 3mm;
+    }
+
+    .screen-note {
+      width: min(100%, 248mm);
+      margin: 0 auto;
+      padding: 0 12px;
+    }
+
+    .screen-note-box {
+      margin: 18px auto 0;
+      padding: 16px 18px;
+      border: 1px solid rgba(47, 90, 71, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink-soft);
+      box-shadow: 0 10px 26px rgba(20, 34, 28, 0.08);
+    }
+
+    .screen-note-box strong {
+      color: var(--forest-deep);
+    }
+
+    .screen-note-box ul {
+      margin: 8px 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .screen-note-box li + li {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 980px) {
+      .sheet-stack,
+      .screen-note {
+        width: 100%;
+      }
+
+      .sheet {
+        width: min(210mm, calc(100vw - 24px));
+        min-height: 297mm;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .toolbar {
+        padding: 14px;
+      }
+
+      .toolbar-actions {
+        width: 100%;
+      }
+
+      .btn {
+        flex: 1 1 160px;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .info-grid,
+      .signature-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .toolbar,
+      .screen-note {
+        display: none !important;
+      }
+
+      .sheet-stack {
+        width: auto;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sheet {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .sheet::before {
+        display: none;
+      }
+
+      .sheet + .sheet {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="toolbar-copy">
+      <p class="toolbar-title">サロン向け 印刷用契約書類セット</p>
+      <p class="toolbar-note">A4でそのまま印刷できるHTMLです。コンビニ印刷に回す場合は、先にブラウザからPDF保存する運用を想定しています。</p>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-primary" type="button" id="printButton">印刷する</button>
+      <a class="btn" href="index.html">LPへ戻る</a>
+    </div>
+  </div>
+
+  <div class="screen-note" aria-hidden="true">
+    <div class="screen-note-box">
+      <strong>印刷前の確認</strong>
+      <ul>
+        <li>紙で署名押印する契約書は、内容により印紙税の対象になり得ます。特に請負契約書や継続的取引の基本契約書に近い形は要確認です。</li>
+        <li>単なる申込書のつもりでも、承諾済みで契約成立を証する文面だと課税文書として扱われる場合があります。</li>
+        <li>このページは実務で使いやすい雛形として作成しています。住所、支払条件、解約予告日数、管轄などの確定事項は必ず埋めてから使用してください。</li>
+      </ul>
+    </div>
+  </div>
+
+  <main class="sheet-stack">
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Contract Pack</span>
+          <h1 class="sheet-title">サロン向け制作・運用契約書類セット</h1>
+          <p class="sheet-subtitle">Nakayama Worksがサロンと契約締結するときに使いやすい、A4印刷用の書類ひな形です。</p>
+        </div>
+        <div class="page-code">Cover / 01</div>
+      </header>
+
+      <div class="lead-block stack">
+        <div class="boxed">
+          <p>このセットは、LPに掲載している「公式サイト制作」「予約システム導入支援」「公開後の運用サポート」を前提に構成しています。基本条件は利用規約ページの内容に寄せつつ、紙契約で使えるよう個別記入欄を追加しています。</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>収録書類</strong>
+            <ol class="check-list">
+              <li>業務委託基本契約書</li>
+              <li>個別契約書兼申込書</li>
+              <li>個人情報取扱確認書</li>
+              <li>公開・引渡確認書</li>
+            </ol>
+          </div>
+          <div class="info-card">
+            <strong>推奨の使い方</strong>
+            <ol class="check-list">
+              <li>初回契約時に基本契約書と個別契約書を署名</li>
+              <li>予約情報や顧客情報を扱う場合のみ個人情報取扱確認書を添付</li>
+              <li>公開時または納品時に公開・引渡確認書で最終確認</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h2 class="section-title">記入チェック</h2>
+          <ul class="note-list">
+            <li>甲乙の正式名称、住所、代表者名、連絡先</li>
+            <li>初期料金、月額料金、第三者サービス費用の負担区分</li>
+            <li>着手日、初稿確認日、公開予定日、解約予告日数</li>
+            <li>修正回数、検収方法、引渡対象データの範囲</li>
+            <li>実績掲載の可否、個人情報の取扱範囲、アカウント引渡先</li>
+          </ul>
+        </div>
+
+        <div class="stack">
+          <h2 class="section-title">料金欄の初期値</h2>
+          <div class="boxed">
+            <p>LP記載の基準料金は、初期料金 99,800円、運用サポート料金 14,800円/月 です。予約システム費用は、みせまるクラウド 0円、STORES予約 スモール 12,980円/月、STORES予約 チーム 22,880円/月 を初期入力の参考値としています。</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h2 class="section-title">印刷メモ</h2>
+          <ul class="compact-list">
+            <li>A4 / 縦 / 片面印刷推奨</li>
+            <li>ブラウザ印刷時はヘッダー・フッター表示をオフ</li>
+            <li>コンビニ印刷へ回す場合は、先にPDF保存してからアップロード</li>
+            <li>紙契約で署名押印する前に、印紙要否と最終文言を確認</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>1 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Master Agreement</span>
+          <h1 class="sheet-title">業務委託基本契約書</h1>
+          <p class="sheet-subtitle">Webサイト制作、予約システム導入支援、運用サポートに関する基本条件</p>
+        </div>
+        <div class="page-code">Agreement / 02</div>
+      </header>
+
+      <div class="stack">
+        <table class="party-table" aria-label="当事者情報">
+          <tbody>
+            <tr>
+              <th scope="row">契約締結日</th>
+              <td><span class="line-fill"></span> 年 <span class="line-fill"></span> 月 <span class="line-fill"></span> 日</td>
+            </tr>
+            <tr>
+              <th scope="row">甲</th>
+              <td>Nakayama Works<br>代表者名: 中山 航<br>住所: <span class="line-fill line-fill--full"></span><br>連絡先: <span class="line-fill line-fill--long"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">乙</th>
+              <td>屋号・法人名: <span class="line-fill line-fill--long"></span><br>代表者名: <span class="line-fill line-fill--long"></span><br>住所: <span class="line-fill line-fill--full"></span><br>連絡先: <span class="line-fill line-fill--long"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第1条（目的）</h2>
+        <div class="article-body">
+          <p>本契約は、甲が乙に対して提供する公式Webサイトの企画・制作、予約システム導入支援、公開後の運用サポートその他これらに付随する業務について、基本的な条件を定めることを目的とする。</p>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第2条（対象業務）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲が提供する具体的な業務内容、納期、料金、修正回数、引渡物、サポート範囲等は、別途締結する個別契約書兼申込書に定める。</li>
+            <li>
+              <p>本契約における「月」とは、毎月1日から末日までの暦月をいう。</p>
+              <p>甲は、乙の要望に基づき、サイト構成、デザイン、HTML/CSS実装、公開支援、予約システム設定支援等を行う。</p>
+              <p>月額運用サポートに含まれる「軽微な更新対応」は、既存ページのレイアウト又は仕様を変更しない範囲のテキスト修正を月3回まで、画像差し替えを月3点までとし、相談対応は電話、メール、チャット又はオンライン打合せによる月2回、各30分以内とする。</p>
+            </li>
+            <li>前項の上限を超える対応、新規ページ作成、構成変更、レイアウト変更、バナー制作、予約導線の変更、機能追加その他軽微な更新又は相談対応の範囲を超える対応は、別途見積りのうえ有償で行う。</li>
+            <li>甲は、集客数、売上、検索順位、予約件数その他の事業成果を保証しない。ただし、乙の目的達成に向けて、個別契約および月額サポートの範囲内で改善提案および運用支援を行う。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第3条（個別契約の成立）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>個別案件は、乙による申込みと甲による承諾により成立する。</li>
+            <li>個別契約が本契約と抵触する場合、個別契約の定めが優先する。</li>
+            <li>乙に虚偽記載、反社会的勢力との関係その他甲が不適当と判断する事由がある場合、甲は申込みを承諾しないことができる。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第4条（乙の協力義務）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>乙は、制作に必要な文章、画像、ロゴ、メニュー情報、価格、店舗情報、予約運用情報等を、甲が指定する期限までに提供する。</li>
+            <li>乙は、提供素材について第三者の権利を侵害しないことを保証し、紛争が生じた場合は自己の責任と費用で解決する。</li>
+            <li>乙の確認遅延、素材未提出、仕様変更その他乙の事情により、納期は甲が乙へ通知した変更後の期日まで延長されることがある。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第5条（確認・修正）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲は制作工程において必要に応じてレビューを依頼し、乙は甲が指定する期限までに確認と回答を行う。</li>
+            <li>基本修正回数は3回までとする。ここでいう「1回の修正」とは、甲が乙に対して確認依頼として送付した各制作物又は確認用画面一式に対し、乙が1回にまとめて提出する修正指示一式をいう。乙が同一の確認依頼に対する修正指示を複数回に分けて送付した場合、分割された各回はそれぞれ1回の修正として扱うものとする。</li>
+            <li>レイアウトの全面見直し、ページ構成の変更、デザイン方針の変更、新規素材の大量追加、予約導線の再設計、機能追加その他これに準ずる大幅変更は、前項の基本修正に含まれず、別途見積りとする。</li>
+            <li>乙が公開前の確認を完了した後に生じた再修正は、軽微な誤記修正を除き追加対応とする。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>2 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Master Agreement</span>
+          <h1 class="sheet-title">業務委託基本契約書</h1>
+          <p class="sheet-subtitle">料金、知的財産、第三者サービス、秘密保持</p>
+        </div>
+        <div class="page-code">Agreement / 03</div>
+      </header>
+
+      <div class="article">
+        <h2 class="article-title">第6条（料金・支払い）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>乙は、個別契約で定める初期料金、月額サポート料金、追加対応費用その他の対価を、定められた支払期日までに支払う。</li>
+            <li>個別契約に別段の定めがない場合、初期料金は申込後7日以内に支払うものとし、月額料金は当月分を前月末日までに支払うものとする。ただし、公開初月に限り、当月分を公開日が属する月の末日までに支払うことができる。</li>
+            <li>支払方法は銀行振込、Stripe決済、現金その他双方が合意した方法とし、振込手数料は乙の負担とする。</li>
+            <li>乙が支払いを遅延した場合、甲は業務の一時停止、公開作業の延期、アカウント管理の停止または契約解除を行うことができる。</li>
+            <li>第三者サービスの利用料、決済手数料、ドメイン費用、サーバー費用等は、個別契約に別段の定めがない限り乙の負担とする。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第7条（納品・検収）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲は、個別契約で定める方法により制作物又は設定完了状態を乙へ提示し、乙は納品日又は公開確認依頼日のいずれか遅い日から7日以内（以下「検収期限」という。）に、検収結果を具体的な修正指摘又は不承認理由とともに通知する。</li>
+            <li>乙から検収期限内に個別契約および第5条に定める範囲内の修正指摘があった場合、甲は当該範囲内で対応する。</li>
+            <li>乙が検収期限内に修正指摘又は不承認理由を通知しない場合、当該制作物は検収完了したものとみなす。</li>
+            <li>検収完了後に発見された不具合又は追加要望については、第5条および個別契約の定めに従い、内容に応じて月額サポート又は別途有償対応とする。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第8条（知的財産権）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>本条における「成果物」とは、個別案件のために甲が新規に制作したHTMLファイル、CSSファイル、当該案件専用に作成した画像データ、テキストデータ及びこれらに付随する納品データをいう。ただし、甲又は第三者が従前から保有するテンプレート、ライブラリ、フォント、写真素材、ノウハウ、汎用コード、設計思想、運用手法等は成果物に含まれない。乙が対価を完済した後、成果物の著作権は乙に移転する。</li>
+            <li>甲が従前から保有するテンプレート、ライブラリ、ノウハウ、汎用部品、設計思想、運用手法その他再利用可能な資産に関する一切の権利は、甲に留保される。</li>
+            <li>乙は、成果物を自己の事業目的の範囲で利用できるが、甲に留保されたテンプレート、ノウハウ、汎用コードその他再利用可能な資産を第三者へ再配布、転売又は流用してはならない。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第9条（第三者サービス）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲は、Google、GitHub Pages、STORES予約、Stripeその他の外部サービスを利用することがある。</li>
+            <li>外部サービスの仕様変更、提供停止、障害、料金改定、セキュリティ事故等に起因して乙に損害が生じた場合、甲は自己の故意または重過失がある場合を除き責任を負わない。</li>
+            <li>乙名義で契約または管理すべきアカウントは、原則として乙が契約主体となる。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第10条（秘密保持）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲および乙は、相手方から秘密として開示された技術上、営業上、運営上その他一切の非公開情報を、相手方の事前承諾なく第三者へ開示または漏えいしてはならない。</li>
+            <li>前項の義務は、法令に基づく開示、公知情報、開示前から保有していた情報、正当な権限を有する第三者から適法に取得した情報には適用しない。</li>
+            <li>本条の義務は、本契約終了後も3年間存続する。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第11条（実績掲載）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲は、サイト名、URL、トップページ画像、ロゴその他公開済み情報を制作実績としてWebサイト、提案資料、SNS等に掲載できる。</li>
+            <li>乙が掲載を希望しない場合、個別契約でその旨および非掲載とする範囲を指定することにより、甲は当該指定の範囲で掲載を行わない。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>3 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Master Agreement</span>
+          <h1 class="sheet-title">業務委託基本契約書</h1>
+          <p class="sheet-subtitle">個人情報、解約、責任制限、反社条項、署名欄</p>
+        </div>
+        <div class="page-code">Agreement / 04</div>
+      </header>
+
+      <div class="article">
+        <h2 class="article-title">第12条（個人情報の取扱い）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲は、乙または乙の顧客に関する個人情報を、問い合わせ対応、予約システム設定、データ移行、運用サポートその他本業務の遂行に必要な範囲でのみ利用する。</li>
+            <li>甲は、個人情報の漏えい、紛失、改ざん等を防止するため、合理的な安全管理措置を講じる。</li>
+            <li>甲が乙の顧客情報に直接アクセスする場合は、必要に応じて本契約に加え「個人情報取扱確認書」を作成する。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第13条（契約期間・解約）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>本契約は締結日から有効とし、いずれか当事者が終了を申し出るまで存続する。ただし、個別案件の具体的な期間は個別契約に定める。</li>
+            <li>本条における「任意解約」とは、債務不履行その他の法定又は約定解除事由によらず、当事者の都合により将来に向かって本契約又は個別契約を終了させることをいう。月額サポートの任意解約は月末締めとし、乙は解約希望月末日の30日前までに、書面又は電子メールで甲へ通知する。</li>
+            <li>前項に基づく任意解約が成立した場合でも、甲は当該解約月の末日まで個別契約に定めるサポートを提供し、乙は当該月末日までの料金を支払う。</li>
+            <li>乙が制作開始後に個別案件を任意解約し、又は乙の都合により中断した場合、甲は、作業完了部分に相当する費用、既に確保又は手配済みの外注費、素材費、交通費その他実費を請求できる。</li>
+            <li>甲又は乙が本契約又は個別契約に違反し、相手方が書面又は電子メールにより催告した後7日以内に是正しない場合、相手方は本契約又は当該個別契約の全部又は一部を解除できる。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第14条（責任制限）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲の責に帰すべき事由により乙へ損害が生じた場合、甲の賠償責任は、直近3か月間に甲が受領した本サービスの対価総額を上限とする。ただし、甲に故意または重過失がある場合を除く。</li>
+            <li>甲は、逸失利益、間接損害、特別損害について責任を負わない。</li>
+            <li>天災地変、火災、停電、通信回線障害、インターネット障害、ドメイン又はDNS障害、サーバ障害、法令改正、感染症の流行、行政上の措置その他甲の合理的支配を超える不可抗力により生じた履行遅滞又は履行不能について、甲は責任を負わない。</li>
+            <li>Google、GitHub、STORES予約、Stripeその他外部サービスの仕様変更、障害、停止、制限、アカウント凍結、料金改定その他当該外部サービスに起因する事象については、甲の故意又は重過失がある場合を除き、甲は責任を負わない。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第15条（反社会的勢力の排除）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>甲および乙は、自らまたはその役員等が反社会的勢力に該当せず、また将来にわたっても関与しないことを表明し保証する。</li>
+            <li>相手方が前項に違反した場合、催告なく直ちに本契約および個別契約を解除できる。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="article">
+        <h2 class="article-title">第16条（協議・管轄）</h2>
+        <div class="article-body">
+          <ol class="article-list">
+            <li>本契約に定めのない事項または解釈に疑義が生じた場合、甲乙は誠実に協議して解決する。</li>
+            <li>本契約に関する訴訟については、甲の主たる事務所所在地を管轄する地方裁判所または簡易裁判所を第一審の専属的合意管轄裁判所とする。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="stack">
+        <p>本契約締結の証として、本書2通を作成し、甲乙各1通を保有する。</p>
+      </div>
+
+      <div class="signature-row">
+        <div class="signature-box">
+          <div class="signature-title">甲</div>
+          <div class="signature-lines">
+            <div>住所: <span class="line-fill line-fill--full"></span></div>
+            <div>屋号: Nakayama Works</div>
+            <div>代表者: 中山 航</div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+        <div class="signature-box">
+          <div class="signature-title">乙</div>
+          <div class="signature-lines">
+            <div>住所: <span class="line-fill line-fill--full"></span></div>
+            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
+            <div>代表者: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>4 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Order Sheet</span>
+          <h1 class="sheet-title">個別契約書兼申込書</h1>
+          <p class="sheet-subtitle">案件ごとの料金、納期、対象範囲、運用条件を確定するための書面</p>
+        </div>
+        <div class="page-code">Order / 05</div>
+      </header>
+
+      <div class="stack">
+        <table class="detail-table" aria-label="個別契約詳細">
+          <tbody>
+            <tr>
+              <th scope="row">案件名</th>
+              <td><span class="line-fill line-fill--full"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">乙の店舗名</th>
+              <td><span class="line-fill line-fill--long"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">対象業務</th>
+              <td>□ 公式サイト制作　□ 予約システム導入支援　□ 公開後運用サポート　□ 多言語対応　□ 写真選定・調整　□ その他 <span class="line-fill line-fill--long"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">制作範囲</th>
+              <td>ページ数: <span class="line-fill"></span> ページ / 主な掲載内容: <span class="line-fill line-fill--full"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">予約システム</th>
+              <td>□ みせまるクラウド　□ STORES予約 スモール　□ STORES予約 チーム　□ 利用なし　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">初期料金</th>
+              <td><span class="line-fill"></span> 円 <span class="inline-note">参考初期値: 99,800円</span></td>
+            </tr>
+            <tr>
+              <th scope="row">月額運用サポート</th>
+              <td><span class="line-fill"></span> 円 / 月 <span class="inline-note">参考初期値: 14,800円 / 月</span><br>本個別契約における「月」とは、毎月1日から末日までの暦月をいう。月額サポートに含まれる軽微更新は、既存ページのテキスト修正月3回まで、画像差し替え月3点まで、相談対応は電話、メール、チャット又はオンライン打合せによる月2回・各30分までとし、超過分は別途見積りとする。</td>
+            </tr>
+            <tr>
+              <th scope="row">予約システム利用料</th>
+              <td>□ 乙が直接負担　□ 甲が立替後請求　金額目安: <span class="line-fill"></span> 円 / 月</td>
+            </tr>
+            <tr>
+              <th scope="row">支払条件</th>
+              <td>□ 初期料金は申込後7日以内に支払　□ 月額料金は当月分を前月末日までに支払　□ 公開初月は当月末日までに支払　□ 公開月から月額開始　□ 着手金 <span class="line-fill"></span> 円　□ その他 <span class="line-fill line-fill--long"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">スケジュール</th>
+              <td>着手予定日: <span class="line-fill"></span> / 初稿確認: <span class="line-fill"></span> / 公開予定日: <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">修正回数</th>
+              <td>基本修正は3回までとする。1回とは、甲が乙に対して確認依頼として送付した各制作物又は確認用画面一式に対し、乙が1回にまとめて提出する修正指示一式をいう。レイアウト全面見直し、構成変更、導線変更、機能追加、素材の大量追加その他大幅変更は別途見積りとする。</td>
+            </tr>
+            <tr>
+              <th scope="row">実績掲載</th>
+              <td>□ 可　□ 不可　□ ロゴのみ可　□ 公開後 <span class="line-fill"></span> 日以降可</td>
+            </tr>
+            <tr>
+              <th scope="row">引渡対象</th>
+              <td>□ 公開済みサイト　□ HTML/CSS/画像データ　□ ドメイン情報　□ GitHub等の管理権限　□ 予約システム管理権限　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">解約条件</th>
+              <td>月額サポートの任意解約は月末締めとし、解約希望月末日の30日前までに通知する。制作開始後の任意解約又は乙都合の中断時は、進行済業務、手配済費用その他実費を精算する。日割返金: □ しない　□ 別途定める</td>
+            </tr>
+            <tr>
+              <th scope="row">備考</th>
+              <td><span class="line-fill line-fill--full"></span><br><span class="line-fill line-fill--full"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="signature-row">
+        <div class="signature-box">
+          <div class="signature-title">甲</div>
+          <div class="signature-lines">
+            <div>屋号: Nakayama Works</div>
+            <div>代表者: 中山 航</div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+        <div class="signature-box">
+          <div class="signature-title">乙</div>
+          <div class="signature-lines">
+            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
+            <div>代表者: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>5 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Privacy Memo</span>
+          <h1 class="sheet-title">個人情報取扱確認書</h1>
+          <p class="sheet-subtitle">予約情報、顧客連絡先、問い合わせ内容を甲が扱う場合の確認用</p>
+        </div>
+        <div class="page-code">Privacy / 06</div>
+      </header>
+
+      <div class="stack">
+        <div class="boxed">
+          <p>本確認書は、甲が乙の顧客情報または見込み顧客情報へアクセスする場合に、本契約を補足する目的で作成する。閲覧だけでなく、予約システム設定、データ移行、問い合わせフォーム管理、トラブル対応時の一時的アクセスも対象とする。</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <table class="detail-table" aria-label="個人情報取扱条件">
+          <tbody>
+            <tr>
+              <th scope="row">対象データ</th>
+              <td>□ 氏名　□ 電話番号　□ メールアドレス　□ 予約日時　□ 利用メニュー　□ 問い合わせ内容　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">利用目的</th>
+              <td>□ 初期設定　□ データ移行　□ 運用サポート　□ 障害調査　□ 予約導線改善　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">アクセス方法</th>
+              <td>□ 乙が発行した管理者アカウント　□ 画面共有　□ 一時共有ファイル　□ CSV等の受領　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">保管方法</th>
+              <td>甲は、必要な範囲でのみ情報を保管し、業務端末・クラウドストレージ・パスワード管理を適切に分離して管理する。</td>
+            </tr>
+            <tr>
+              <th scope="row">再委託</th>
+              <td>再委託は原則禁止とする。甲がやむを得ず再委託する場合、事前に乙の書面又は電子メールによる承諾を得たうえで、再委託先に本確認書と同等以上の義務を課し、必要かつ適切な監督を行う。</td>
+            </tr>
+            <tr>
+              <th scope="row">第三者サービス</th>
+              <td>Google、GitHub、STORES予約、Stripeその他、業務に必要な外部サービスを利用する場合がある。利用主体や権限範囲は本契約および個別契約に従う。</td>
+            </tr>
+            <tr>
+              <th scope="row">事故時対応</th>
+              <td>漏えい、紛失、誤送信、権限設定ミスその他の事故が判明した場合、甲は知得後3営業日以内に乙へ第一報を行い、被害拡大防止、原因調査、再発防止その他合理的な措置を講じる。なお、甲の損害賠償その他の責任範囲は本契約第14条に従う。</td>
+            </tr>
+            <tr>
+              <th scope="row">返却・削除</th>
+              <td>本業務終了後または乙から要請があった場合、甲は法令またはバックアップ運用上保存が必要なものを除き、受領データを返却または削除する。</td>
+            </tr>
+            <tr>
+              <th scope="row">特記事項</th>
+              <td><span class="line-fill line-fill--full"></span><br><span class="line-fill line-fill--full"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="signature-row">
+        <div class="signature-box">
+          <div class="signature-title">甲</div>
+          <div class="signature-lines">
+            <div>屋号: Nakayama Works</div>
+            <div>代表者: 中山 航</div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+        <div class="signature-box">
+          <div class="signature-title">乙</div>
+          <div class="signature-lines">
+            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
+            <div>代表者: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>6 / 7</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <header class="sheet-header">
+        <div>
+          <span class="sheet-label">Handover</span>
+          <h1 class="sheet-title">公開・引渡確認書</h1>
+          <p class="sheet-subtitle">公開時の確認事項、引渡物、サポート開始条件を整理するための書面</p>
+        </div>
+        <div class="page-code">Handover / 07</div>
+      </header>
+
+      <div class="stack">
+        <table class="check-table" aria-label="公開引渡確認">
+          <tbody>
+            <tr>
+              <th scope="row">案件名</th>
+              <td><span class="line-fill line-fill--full"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">公開URL</th>
+              <td><span class="line-fill line-fill--full"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">公開日</th>
+              <td><span class="line-fill"></span> 年 <span class="line-fill"></span> 月 <span class="line-fill"></span> 日</td>
+            </tr>
+            <tr>
+              <th scope="row">表示確認</th>
+              <td>□ スマホ表示　□ PC表示　□ 予約導線　□ 問い合わせフォーム　□ メニュー/価格　□ 店舗情報　□ SSL　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">引渡物</th>
+              <td>□ HTML/CSS/画像データ　□ 管理アカウント一覧　□ ドメイン/DNS情報　□ GitHub等リポジトリ権限　□ 運用メモ　□ その他 <span class="line-fill"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">未了項目</th>
+              <td>□ なし　□ あり <span class="line-fill line-fill--full"></span></td>
+            </tr>
+            <tr>
+              <th scope="row">月額サポート開始</th>
+              <td><span class="line-fill"></span> 年 <span class="line-fill"></span> 月分から開始</td>
+            </tr>
+            <tr>
+              <th scope="row">備考</th>
+              <td><span class="line-fill line-fill--full"></span><br><span class="line-fill line-fill--full"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stack">
+        <h2 class="section-title">確認結果</h2>
+        <div class="boxed">
+          <p>乙は、上記内容を確認のうえ、以下のいずれかを選択する。</p>
+          <p>□ 上記内容で公開・引渡を確認し、検収完了とする。</p>
+          <p>□ 軽微な修正を条件に公開・引渡を確認する。修正期限: <span class="line-fill"></span></p>
+        </div>
+      </div>
+
+      <div class="signature-row">
+        <div class="signature-box">
+          <div class="signature-title">甲</div>
+          <div class="signature-lines">
+            <div>屋号: Nakayama Works</div>
+            <div>代表者: 中山 航</div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+        <div class="signature-box">
+          <div class="signature-title">乙</div>
+          <div class="signature-lines">
+            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
+            <div>代表者: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <span>Nakayama Works Contract Set</span>
+        <span>7 / 7</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var printButton = document.getElementById("printButton");
+      if (!printButton) {
+        return;
+      }
+
+      printButton.addEventListener("click", function () {
+        window.print();
+      });
+    })();
+  </script>
+</body>
+</html>
