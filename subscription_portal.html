@@ -3,24 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nakayama Works 月額サポート申込</title>
-  <meta name="description" content="Nakayama Works の月額サポート申込ページです。ライトプラン、スタンダードプラン、運用代行プランから選択できます。" />
+  <title>Nakayama Works 月額サポート</title>
+  <meta name="description" content="Nakayama Works の月額サポートお申し込みページ。ライトプラン、スタンダードプラン、運用代行プランから選択できます。" />
   <link rel="icon" type="image/png" href="assets/images/common/brand-favicon.png" />
+
+  <!-- Apple icon -->
+  <link rel="apple-touch-icon" href="assets/images/common/brand-favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f7f1e5;
-      --paper: rgba(255, 251, 245, 0.92);
+      color-scheme: light;
+      --bg: #f4f1ea;
+      --ink: #1d1c1a;
+      --muted: #5c564e;
+      --accent: #0d6b5b;
+      --accent-dark: #0a5145;
+      --accent-soft: rgba(13, 107, 91, 0.12);
       --card: #ffffff;
-      --ink: #17342d;
-      --muted: #5c695f;
-      --accent: #0f7666;
-      --accent-dark: #0b5d51;
-      --accent-soft: rgba(15, 118, 102, 0.12);
-      --line: rgba(23, 52, 45, 0.12);
-      --shadow: 0 24px 64px rgba(23, 52, 45, 0.12);
+      --ring: rgba(29, 28, 26, 0.1);
+      --shadow: 0 20px 45px rgba(29, 28, 26, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -29,214 +32,204 @@
       margin: 0;
       font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(255, 232, 188, 0.72), transparent 34%),
-        radial-gradient(circle at top right, rgba(123, 193, 172, 0.28), transparent 28%),
-        linear-gradient(180deg, #fbf6ee 0%, #f4ecdf 100%);
+      background: radial-gradient(circle at top left, #fff7e8 0%, transparent 55%),
+        radial-gradient(circle at 70% 20%, #e9f5f2 0%, transparent 45%),
+        var(--bg);
       min-height: 100vh;
     }
 
     .page {
-      width: min(1120px, calc(100% - 32px));
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 28px 0 80px;
+      padding: 20px 20px 80px;
+      position: relative;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-      gap: 28px;
-      align-items: stretch;
-      margin-bottom: 30px;
-    }
-
-    .hero-copy,
-    .hero-panel,
-    .plan-card,
-    .notes-card,
-    .owner-card,
-    .reservation-panel {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-copy,
-    .hero-panel {
-      border-radius: 28px;
-      padding: 30px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
     }
-
-    .hero h1 {
-      margin: 0 0 16px;
-      font-family: "Shippori Mincho", serif;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1.28;
+    @media (min-width: 768px) {
+      .hero h2{
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+    }
+    .hero h2 {
       letter-spacing: 0.02em;
     }
 
     .hero p {
-      margin: 0;
+      margin: 0 0 24px;
       color: var(--muted);
-      line-height: 1.9;
-      font-size: 1rem;
-    }
-
-    .hero-panel {
-      display: grid;
-      gap: 16px;
-      align-content: start;
-    }
-
-    .hero-panel img {
-      width: 140px;
-      height: auto;
-    }
-
-    .hero-panel strong {
-      font-size: 1.2rem;
-    }
-
-    .hero-list {
-      margin: 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
+      font-size: 1.05rem;
       line-height: 1.8;
     }
 
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 22px;
+    .support-note {
+      color: #81786e;
+      font-size: 0.92rem;
+      margin: 8px 0 0;
     }
 
-    .plan-card {
+    .hero-card {
+      background: var(--card);
       border-radius: 24px;
-      padding: 24px;
-      display: grid;
-      gap: 14px;
-      align-content: start;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--ring);
+      position: relative;
+      overflow: hidden;
     }
 
-    .plan-card.is-selected {
-      border-color: rgba(15, 118, 102, 0.42);
-      box-shadow: 0 28px 70px rgba(15, 118, 102, 0.18);
-      transform: translateY(-2px);
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -60px;
+      width: 180px;
+      height: 180px;
+      background: var(--accent-soft);
+      border-radius: 50%;
     }
-
-    .plan-card h2 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .plan-target {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      min-height: 84px;
-    }
-
-    .price {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      font-weight: 700;
-      color: var(--accent-dark);
-    }
-
-    .price strong {
-      font-size: 2rem;
-      line-height: 1;
-    }
-
-    .features {
-      margin: 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
     .cta {
-      appearance: none;
-      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
       border-radius: 999px;
       background: var(--accent);
       color: #fff;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 14px 18px;
-      transition: background 0.2s ease, transform 0.2s ease;
-      text-align: center;
       text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    .cta:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
+    .cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .cta-button {
+      border: none;
+      cursor: pointer;
+    }
+    .cta-compact {
+      padding: 8px 16px;
+      font-size: 0.95rem;
+    }
+    .cta-line {
+      background: #06c755;
+      color: #fff;
+    }
+    .cta-line:hover { background: #05b84e; }
+
+    .toggle-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .reservation-panel {
-      border-radius: 28px;
-      padding: 24px;
-      margin-bottom: 22px;
+    .toggle-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
     }
 
-    .reservation-panel.is-collapsed {
+    .toggle-close {
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .toggle-close:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    .reservation-body {
+      max-height: 0;
+      opacity: 0;
+      transform: scaleY(0.98);
+      transform-origin: top;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(0.2, 0.9, 0.2, 1),
+        opacity 0.2s ease;
+    }
+
+    #support-reservation:not(.is-collapsed) .reservation-body {
+      max-height: 720px;
+      opacity: 1;
+      transform: scaleY(1);
+      animation: boingOpen 0.5s cubic-bezier(0.2, 1.2, 0.25, 1);
+    }
+
+    .section-body {
+      margin-top: 12px;
+      max-height: 0;
+      opacity: 0;
+      transform: scaleY(0.98);
+      transform-origin: top;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(0.2, 0.9, 0.2, 1),
+        opacity 0.2s ease;
+    }
+
+    .section-card:not(.is-collapsed) .section-body {
+      max-height: 5000px;
+      opacity: 1;
+      transform: scaleY(1);
+      animation: boingOpen 0.5s cubic-bezier(0.2, 1.2, 0.25, 1);
+    }
+
+    .is-collapsed #close-reservation {
       display: none;
     }
 
-    .reservation-header {
+    .is-collapsed #reload-reservation {
+      display: none;
+    }
+
+    .toggle-reload svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .toggle-reload {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .price-row {
       display: flex;
       align-items: center;
-      gap: 14px;
-      justify-content: space-between;
-      margin-bottom: 16px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
-    .reservation-heading h2 {
-      margin: 0 0 6px;
-      font-size: 1.15rem;
-    }
-
-    .reservation-heading p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .reservation-actions {
-      display: inline-flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .ghost {
-      appearance: none;
-      border: 1px solid rgba(15, 118, 102, 0.2);
-      border-radius: 999px;
+    .price-help {
+      border: 1px solid var(--ring);
       background: #fff;
-      color: var(--accent-dark);
-      font: inherit;
+      color: var(--accent);
       font-weight: 700;
+      border-radius: 999px;
+      padding: 2px 8px;
       cursor: pointer;
-      padding: 10px 16px;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
+
+    .price-help:hover { background: var(--accent-soft); transform: translateY(-1px); }
+
+    .price-note {
+      display: none;
+      margin: 10px 0 0;
+    }
+
+    .price-note.is-open { display: block; }
 
     .reservation-loading {
       display: inline-flex;
@@ -244,19 +237,66 @@
       gap: 10px;
       color: var(--muted);
       font-size: 0.95rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .toggle-header .reservation-loading {
+      width: auto;
+      justify-content: flex-start;
+      white-space: nowrap;
     }
 
     .spinner {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      border: 3px solid rgba(15, 118, 102, 0.18);
+      border: 3px solid rgba(13, 107, 91, 0.2);
       border-top-color: var(--accent);
       animation: spin 0.9s linear infinite;
     }
 
-    .reservation-panel.is-loaded .reservation-loading {
+    .is-loaded .reservation-loading {
       display: none;
+    }
+
+    .is-collapsed .reservation-loading {
+      display: none;
+    }
+
+    .services {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0 1rem;
+      scroll-snap-type: x mandatory;
+      scroll-snap-stop: always;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    .services::-webkit-scrollbar {
+      display: none;
+    }
+    .services {
+      scrollbar-width: none;
+    }
+
+    .service-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid var(--ring);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 220px;
+      animation: floatIn 0.6s ease both;
+      flex: 0 0 clamp(320px, 38vw, 380px);
+      scroll-snap-align: center;
+    }
+
+    .reservation-embed {
+      margin-top: 16px;
     }
 
     .reservation-iframe {
@@ -265,353 +305,664 @@
       border: 0;
       display: block;
       background: #fff;
-      border-radius: 22px;
       opacity: 0;
       transition: opacity 0.2s ease;
     }
 
-    .reservation-panel.is-loaded .reservation-iframe {
+    .is-switching .reservation-iframe {
+      opacity: 0;
+      transition: none;
+    }
+
+    .is-loaded .reservation-iframe {
       opacity: 1;
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .service-card .service-desc {
+      flex: 0;
+      min-height: 120px;
+    }
+
+    .service-card .service-image {
+      width: 100%;
+      max-width: 220px;
+      height: 180px;
+      object-fit: contain;
+      align-self: center;
+      margin: 6px auto 10px;
+      display: block;
+    }
+
+    .service-card .price {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .service-card .cta {
+      margin-top: 4px;
+    }
+
+    .services-nav-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0.25rem 0 0.5rem;
+    }
+    .services-nav {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(13, 107, 91, 0.14);
+      color: #0d6b5b;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease, color .2s ease;
+    }
+    .services-nav:hover,
+    .services-nav:focus-visible {
+      background: rgba(13, 107, 91, 0.28);
+      outline: none;
+      transform: scale(1.05);
+    }
+    .services-nav:active {
+      transform: scale(0.96);
+    }
+    .services-nav:disabled {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+    .services-nav svg { width: 20px; height: 20px; }
+
+    @media (max-width: 767.98px) {
+      .services {
+        padding: 0.5rem 0 1rem;
+        gap: 1rem;
+      }
+      .service-card {
+        flex: 0 0 100%;
+      }
+      .service-card .service-image {
+        max-width: 220px;
+        height: 160px;
+      }
+      .service-card .service-desc {
+        min-height: auto;
+      }
+    }
+
+    .support-owner {
+      margin-top: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px dashed rgba(29, 28, 26, 0.18);
+    }
+
+    .support-owner img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #f0ebe4;
+      border: 1px solid rgba(29, 28, 26, 0.12);
+    }
+
+    .support-owner p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .section-card {
+      background: #fff8f0;
+      border-radius: 24px;
+      padding: 17px 20px 12px;
+      border: 1px solid rgba(29, 28, 26, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .section-card h2 {
+      font-size: 1.2rem;
+    }
+
+    #support-reservation.section-card {
+      background: #fff;
+      margin-top: 24px;
+    }
+    #support-reservation.section-card.is-collapsed {
+      display: none;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .step {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--ring);
+    }
+
+    .step-arrow {
+      text-align: center;
+      font-weight: 700;
+      margin: 6px 0;
+      color: var(--accent);
+    }
+
+    .step span {
+      font-weight: 700;
+      color: var(--accent);
     }
 
     .notes {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
-      margin-bottom: 22px;
     }
 
-    .notes-card,
-    .owner-card {
-      border-radius: 22px;
-      padding: 22px;
-    }
-
-    .notes-card h3 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .notes-card p {
-      margin: 0;
+    .note {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+      border: 1px dashed rgba(29, 28, 26, 0.2);
       color: var(--muted);
-      line-height: 1.8;
+      line-height: 1.6;
+      margin-bottom: 10px;
     }
 
-    .owner-card {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 28px;
-    }
-
-    .owner-card img {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--line);
-      flex: 0 0 auto;
-    }
-
-    .owner-card h3 {
-      margin: 0 0 8px;
-      font-size: 1rem;
-    }
-
-    .owner-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .footer {
+    .footer-cta {
+      margin-top: 40px;
       text-align: center;
     }
+    a.cta{
+      margin-top:10px
+    }
 
-    .footer a {
+    .footer-cta .cta {
+      font-size: 1.05rem;
+      padding: 14px 28px;
+    }
+
+    .cta-top {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      box-shadow: none;
+    }
+
+    .cta-top:hover,
+    .cta-top:focus {
+      background: var(--accent-soft);
       color: var(--accent-dark);
-      text-decoration: none;
-      font-weight: 700;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .site-footer .footer-line {
+      display: inline;
+    }
+
+    @media (max-width: 576px) {
+      .site-footer .footer-line {
+        display: block;
+      }
+      .site-footer .dash {
+        display: none;
+      }
+      .reservation-loading {
+        justify-content: flex-end;
+        padding-right: 8px;
+        text-align: right;
+      }
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    @media (max-width: 980px) {
-      .hero,
-      .plans,
-      .notes {
-        grid-template-columns: 1fr;
-      }
-
-      .plan-target {
-        min-height: auto;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        width: min(100% - 20px, 1120px);
-        padding-top: 18px;
-      }
-
-      .hero-copy,
-      .hero-panel,
-      .plan-card,
-      .reservation-panel,
-      .notes-card,
-      .owner-card {
-        padding: 20px;
-      }
-
-      .reservation-header {
-        align-items: flex-start;
-      }
-
-      .reservation-actions {
-        width: 100%;
-      }
-
-      .reservation-actions button {
-        flex: 1;
-      }
-
-      .owner-card {
-        align-items: flex-start;
-      }
+    @keyframes boingOpen {
+      0% { transform: scaleY(0.96); }
+      60% { transform: scaleY(1.03); }
+      100% { transform: scaleY(1); }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">Monthly Support</div>
-        <h1>公開後の運用に合わせて、<br>月額プランを選べます。</h1>
-        <p>LINEチャットでの相談対応から、電話サポート、更新や設定変更の代行まで。<br>現在の運用スタイルに合うプランを選んで、そのままお申し込みいただけます。</p>
-      </div>
-      <aside class="hero-panel">
-        <img src="assets/images/common/brand-logo.png" alt="Nakayama Works" />
-        <strong>このページでできること</strong>
-        <ul class="hero-list">
-          <li>ライトプラン / スタンダードプラン / 運用代行プランの選択</li>
-          <li>GAS の申込フォームを iframe でそのまま表示</li>
-          <li>申込完了後の確認画面までこのページ内で完結</li>
-        </ul>
-      </aside>
-    </section>
-
-    <section class="plans" aria-label="月額プラン一覧">
-      <article class="plan-card" data-plan-card="light">
-        <h2>ライトプラン</h2>
-        <p class="plan-target">最低限のサポートだけ欲しい方向け。日々の運用はご自身で進めつつ、必要なときにLINEチャットで相談できます。</p>
-        <div class="price"><strong>¥5,000</strong><span>/ 月</span></div>
-        <ul class="features">
-          <li>LINEチャットサポート</li>
-          <li>文章や画像の修正は月1回まで</li>
-          <li>予約通知はメールが基本</li>
-        </ul>
-        <button class="cta toggle-reservation" type="button" data-service="line" data-plan="light">ライトプランで申し込む</button>
-      </article>
-
-      <article class="plan-card" data-plan-card="standard">
-        <h2>スタンダードプラン</h2>
-        <p class="plan-target">相談しながら安心して運用したい方向け。LINEチャットに加えて、電話サポートも利用できます。</p>
-        <div class="price"><strong>¥10,000</strong><span>/ 月</span></div>
-        <ul class="features">
-          <li>LINEチャットサポート（優先）</li>
-          <li>電話サポート 月3回 / 1回20分以内</li>
-          <li>文章や画像の修正は月3回まで</li>
-        </ul>
-        <button class="cta toggle-reservation" type="button" data-service="line" data-plan="standard">スタンダードで申し込む</button>
-      </article>
-
-      <article class="plan-card" data-plan-card="managed">
-        <h2>運用代行プラン</h2>
-        <p class="plan-target">更新や設定変更まで任せたい方向け。日々の細かな変更依頼も、LINEチャットからまとめて相談できます。</p>
-        <div class="price"><strong>¥15,000</strong><span>/ 月</span></div>
-        <ul class="features">
-          <li>LINEチャット + 電話サポート</li>
-          <li>更新代行 月5回まで</li>
-          <li>設定変更 月3回まで</li>
-        </ul>
-        <button class="cta toggle-reservation" type="button" data-service="line" data-plan="managed">運用代行で申し込む</button>
-      </article>
-    </section>
-
-    <section class="reservation-panel is-collapsed" id="support-reservation">
-      <div class="reservation-header">
-        <div class="reservation-heading">
-          <h2 id="reservation-plan-heading">申込フォーム</h2>
-          <p id="reservation-plan-summary">選択したプランの申込フォームを表示しています。</p>
-        </div>
-        <div class="reservation-loading" id="reservation-loading">
-          <span class="spinner" aria-hidden="true"></span>
-          <span>画面表示中...</span>
-        </div>
-        <div class="reservation-actions">
-          <button class="ghost" type="button" id="reload-reservation">再読み込み</button>
-          <button class="ghost" type="button" id="close-reservation">閉じる</button>
-        </div>
-      </div>
-      <iframe
-        class="reservation-iframe"
-        id="reservation-iframe"
-        data-base-url="https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec"
-        title="Nakayama Works 月額サポート申込"
-        loading="lazy"
-        src="https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec?page=32_reservation&embed=1&service=line&plan=light"
-      ></iframe>
-    </section>
-
-    <section class="notes">
-      <article class="notes-card">
-        <h3>契約期間</h3>
-        <p>最低契約期間は6ヶ月です。解約後も次回更新日まではご利用いただけます。</p>
-      </article>
-      <article class="notes-card">
-        <h3>予約通知</h3>
-        <p>予約通知はメールが基本です。SMS通知をご希望の場合はオプションで追加できます（+2,000円 / 月）。</p>
-      </article>
-      <article class="notes-card">
-        <h3>解約後</h3>
-        <p>月額プラン解約後は、当社管理の公式サイトおよび予約システムは継続利用できません。</p>
-      </article>
-    </section>
-
-    <section class="owner-card">
-      <img src="assets/images/profile/nakayama-profile.jpg" alt="中山のプロフィール写真" />
       <div>
-        <h3>対応担当</h3>
-        <p>中山（Nakayama Works）が対応します。<br>お申し込み後のやり取りは、みせまる公式LINEからご案内します。</p>
+        <h2>Nakayama Works の月額サポート</h2>
+        <p>公開後の相談対応から、更新・設定変更の代行まで。<br>運用スタイルに合わせて、3つの月額プランからお選びいただけます。</p>
       </div>
     </section>
 
-    <footer class="footer">
-      <a href="index.html#pricing">LPに戻る</a>
+    <section class="section-card is-collapsed" id="support-menu">
+      <div class="toggle-header">
+        <h2>サービスメニュー</h2>
+        <button class="toggle-close" type="button" id="toggle-menu" aria-expanded="false">開く</button>
+      </div>
+      <div class="section-body">
+        <p>公開後のサポート内容に合わせて、月額3プランからお選びいただけます。
+        </p>
+      <div class="services-nav-row">
+        <button type="button"
+                class="services-nav"
+                data-role="services-prev"
+                aria-label="Previous services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button"
+                class="services-nav"
+                data-role="services-next"
+                aria-label="Next services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="services">
+          <div class="service-card">
+            <h3>ライトプラン</h3>
+            <p class="service-desc">　最低限のサポートだけ欲しい方向けの月額プランです。<br>　日々の運用はご自身で進めつつ、必要なときにLINEチャットで相談できます。</p>
+            <ul>
+              <li>LINEチャットサポート</li>
+              <li>文章や画像の修正は月1回まで</li>
+              <li>自己運用を基本にしたい方におすすめ</li>
+            </ul>
+            <div class="price-row">
+              <div class="price">5,000円(税込) / 月</div>
+              <button class="price-help" type="button" aria-expanded="false" aria-controls="price-note-intro">[?]</button>
+            </div>
+            <div class="price-note support-note" id="price-note-intro">
+              LINEチャットサポート / 軽微修正 月1回 / 予約通知はメールが基本<br>
+              SMS通知はオプションで追加できます（+2,000円 / 月）
+            </div>
+            <button class="cta cta-button cta-compact toggle-reservation" type="button" aria-expanded="false" aria-controls="support-reservation" data-service="line" data-plan="light">
+              申込フォームを開く
+            </button>
+          </div>
+          <div class="service-card">
+            <h3>スタンダードプラン</h3>
+            <p class="service-desc">　相談しながら安心して運用したい方向けの月額プランです。<br>　LINEチャットに加えて、電話サポートも利用できます。</p>
+            <ul>
+              <li>LINEチャットサポート（優先）</li>
+              <li>電話サポート 月3回 / 1回20分以内</li>
+              <li>文章や画像の修正は月3回まで</li>
+            </ul>
+            <div class="price-row">
+              <div class="price">10,000円(税込) / 月</div>
+              <button class="price-help" type="button" aria-expanded="false" aria-controls="price-note-upgrade">[?]</button>
+            </div>
+            <div class="price-note support-note" id="price-note-upgrade">
+              LINEチャット優先対応 / 電話サポート 月3回 / 軽微修正 月3回<br>
+              予約通知はメールが基本、SMS通知はオプション追加です
+            </div>
+            <button class="cta cta-button cta-compact toggle-reservation" type="button" aria-expanded="false" aria-controls="support-reservation" data-service="line" data-plan="standard">
+              申込フォームを開く
+            </button>
+          </div>
+          <div class="service-card">
+            <h3>運用代行プラン</h3>
+            <p class="service-desc">　更新や設定変更まで任せたい方向けの月額プランです。<br>　日々の細かな変更依頼も、LINEチャットからまとめてご相談いただけます。</p>
+            <ul>
+              <li>LINEチャット + 電話サポート</li>
+              <li>お知らせ・画像・メニュー内容の更新は月5回まで</li>
+              <li>営業時間・予約枠・スタッフ設定の変更は月3回まで</li>
+            </ul>
+            <div class="price-row">
+              <div class="price">15,000円(税込) / 月</div>
+              <button class="price-help" type="button" aria-expanded="false" aria-controls="price-note-line-free">[?]</button>
+            </div>
+            <div class="price-note support-note" id="price-note-line-free">
+              更新代行 月5回 / 設定変更 月3回 / 継続的な運用相談に対応<br>
+              予約通知はメールが基本、SMS通知はオプション追加です
+            </div>
+            <button class="cta cta-button cta-compact toggle-reservation" type="button" aria-expanded="false" aria-controls="support-reservation" data-service="line" data-plan="managed">
+              申込フォームを開く
+            </button>
+          </div>
+        </div>
+        <div class="services-nav-row">
+          <button type="button"
+                  class="services-nav"
+                  data-role="services-prev"
+                  aria-label="Previous services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button"
+                  class="services-nav"
+                  data-role="services-next"
+                  aria-label="Next services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <section class="section-card is-collapsed" id="support-reservation">
+        <div class="toggle-header">
+          <h2>申込フォーム</h2>
+          <div class="reservation-loading" id="reservation-loading">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>画面表示中...</span>
+          </div>
+          <div class="toggle-actions">
+            <button class="toggle-close toggle-reload" type="button" id="reload-reservation">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path fill="currentColor" d="M12 5a7 7 0 0 1 6.93 6H16l4.5 4.5L25 11h-2.07A10 10 0 1 0 22 16h-3a7 7 0 1 1-7-11z"/>
+              </svg>
+                再読み込み
+              </button>
+              <button class="toggle-close" type="button" id="close-reservation">閉じる</button>
+            </div>
+          </div>
+          <div class="reservation-body">
+            <!--<p class="support-note">フォームが表示されない場合は、「再読み込み」ボタンを押してください。</p>-->
+            <div class="reservation-embed">
+              <iframe
+                class="reservation-iframe"
+                data-base-url="https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec"
+                title="Nakayama Works 月額サポート申込"
+                loading="lazy"
+                src="https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec?page=32_reservation&embed=1&service=line&plan=light"
+              ></iframe>
+            </div>
+          </div>
+        </section>
+        <div class="support-owner">
+          <img src="assets/images/profile/nakayama-profile.jpg" alt="サポート担当の写真" />
+          <p>👤 担当：中山（Nakayama Works）<br>お申し込み後のご案内は、LINEチャットで対応いたします。</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section-card is-collapsed" id="support-flow">
+      <div class="toggle-header">
+        <h2>ご利用までの流れ</h2>
+        <button class="toggle-close" type="button" id="toggle-flow" aria-expanded="false">開く</button>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step"><strong><span>1.</span> サービスを選択</strong><br><br>
+          ◾️	ライトプラン<br>
+          　→ 最低限のサポートだけ欲しい方におすすめ<br><br>
+          ◾️	スタンダードプラン<br>
+          　→ 相談しながら安心して運用したい方におすすめ<br><br>
+          ◾️	運用代行プラン<br>
+          　→ 更新や設定変更まで任せたい方におすすめ
+          </div>
+          <div class="step"><strong><span>2.</span> お申込み</strong><br><br>
+•	プランを選択<br>
+<div class="step-arrow">↓</div>
+•	お名前・メールアドレスを入力<br>
+<div class="step-arrow">↓</div>
+•	オンライン決済でお支払い<br>
+<div class="step-arrow">↓</div>
+•	お申込み完了メールの受け取り<br></div>
+          <div class="step"><strong><span>3.</span> サポート開始</strong><br><br>
+          ◾️	全プラン共通<br>
+          →LINEチャットからご相談・ご依頼を送信<br><br>
+          ◾️	スタンダード / 運用代行<br>
+          →必要に応じて電話サポートをご案内<br>
+          </div>
+        </div>
+        <p class="support-note">※ LINEチャットでのサポート利用には、LINEアプリのインストールが必要です。</p>
+        <p class="support-note">※ 予約通知はメールが基本です。SMS通知をご希望の場合はオプションで追加できます。</p>
+      </div>
+    </section>
+
+    <section class="section-card is-collapsed" id="support-usage">
+      <div class="toggle-header">
+        <h2>ご利用について</h2>
+        <button class="toggle-close" type="button" id="toggle-usage" aria-expanded="false">開く</button>
+      </div>
+      <div class="section-body">
+        <div class="note">最低契約期間は6ヶ月です。解約後は次回更新日までご利用いただけます。</div>
+        <div class="note">月額プラン解約後は、当社管理の公式サイトおよび予約システムは継続利用できません。</div>
+        <div class="note">対応範囲外の作業や予約数の多い店舗向けの個別対応は、別途ご案内します。</div>
+      </div>
+    </section>
+
+    <div class="footer-cta">
+      <a class="cta cta-top" href="index.html#pricing">LPに戻る</a>
+    </div>
+
+    <footer class="site-footer">
+      <p class="footer-desc">
+        <span class="footer-line">Nakayama Works Subscription Portal</span>
+        <span class="footer-line">
+          <span class="dash">—</span> monthly support for your salon site.
+        </span>
+      </p>
+      <p class="copyright">© 2026 Nakayama Works. All rights reserved.</p>
     </footer>
   </main>
-
   <script>
     (function () {
-      const planMeta = {
-        light: {
-          heading: "ライトプラン申込フォーム",
-          summary: "最低限のサポートだけ欲しい方向けのフォームです。",
-        },
-        standard: {
-          heading: "スタンダードプラン申込フォーム",
-          summary: "相談しながら安心して運用したい方向けのフォームです。",
-        },
-        managed: {
-          heading: "運用代行プラン申込フォーム",
-          summary: "更新や設定変更まで任せたい方向けのフォームです。",
-        },
-      };
+      const debugLog = () => {};
+      const carousel = document.querySelector(".services");
+      const prevBtns = document.querySelectorAll("[data-role='services-prev']");
+      const nextBtns = document.querySelectorAll("[data-role='services-next']");
+      if (carousel && (prevBtns.length || nextBtns.length)) {
+        const cards = Array.from(carousel.querySelectorAll(".service-card"));
+        const getItemWidth = () => {
+          const first = cards[0];
+          if (!first) return 320;
+          const style = window.getComputedStyle(carousel);
+          const gap = parseFloat(style.columnGap || style.gap || "0");
+          return first.getBoundingClientRect().width + gap;
+        };
+        const getMaxScroll = () => Math.max(carousel.scrollWidth - carousel.clientWidth, 0);
+        const updateNav = () => {
+          const maxScroll = getMaxScroll();
+          prevBtns.forEach((btn) => { btn.disabled = carousel.scrollLeft <= 2; });
+          nextBtns.forEach((btn) => { btn.disabled = carousel.scrollLeft >= maxScroll - 2; });
+        };
+        const scrollToPosition = (pos) => {
+          carousel.scrollTo({ left: pos, behavior: "smooth" });
+        };
+        prevBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            scrollToPosition(carousel.scrollLeft - getItemWidth());
+          });
+        });
+        nextBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            scrollToPosition(carousel.scrollLeft + getItemWidth());
+          });
+        });
+        carousel.addEventListener("scroll", updateNav, { passive: true });
+        window.addEventListener("resize", updateNav);
+        updateNav();
+      }
+      const priceHelpButtons = document.querySelectorAll(".price-help");
+      priceHelpButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetId = button.getAttribute("aria-controls") || "";
+          if (!targetId) return;
+          const note = document.getElementById(targetId);
+          if (!note) return;
+          const isOpen = note.classList.toggle("is-open");
+          button.setAttribute("aria-expanded", String(isOpen));
+        });
+      });
 
-      const toggleButtons = Array.from(document.querySelectorAll(".toggle-reservation"));
-      const planCards = Array.from(document.querySelectorAll("[data-plan-card]"));
-      const section = document.getElementById("support-reservation");
-      const iframe = document.getElementById("reservation-iframe");
-      const loading = document.getElementById("reservation-loading");
+      const toggleButtons = document.querySelectorAll(".toggle-reservation");
       const closeButton = document.getElementById("close-reservation");
       const reloadButton = document.getElementById("reload-reservation");
-      const heading = document.getElementById("reservation-plan-heading");
-      const summary = document.getElementById("reservation-plan-summary");
-
-      if (!section || !iframe || !loading || !closeButton || !reloadButton) return;
-
-      let readyTimer = null;
-      let openFallback = null;
-
-      function normalizePlan(plan) {
-        const raw = String(plan || "").trim().toLowerCase();
-        if (raw === "managed" || raw === "full" || raw === "full_support") return "managed";
-        if (raw === "standard" || raw === "middle") return "standard";
-        return "light";
-      }
-
-      function markLoaded() {
-        section.classList.add("is-loaded");
-        iframe.dataset.loaded = "1";
-        if (openFallback) clearTimeout(openFallback);
-      }
+      const section = document.getElementById("support-reservation");
+      if (!toggleButtons.length || !closeButton || !reloadButton || !section) return;
 
       function setOpen(isOpen) {
         section.classList.toggle("is-collapsed", !isOpen);
+        toggleButtons.forEach((button) => {
+          button.setAttribute("aria-expanded", String(isOpen));
+        });
         if (isOpen) {
           section.scrollIntoView({ behavior: "smooth", block: "start" });
-          section.classList.remove("is-loaded");
-          if (iframe.dataset.loaded === "1") {
-            markLoaded();
-          } else {
-            if (openFallback) clearTimeout(openFallback);
-            openFallback = setTimeout(markLoaded, 2500);
+        }
+      }
+
+      const iframe = section.querySelector("iframe");
+      const loading = document.getElementById("reservation-loading");
+      if (iframe && loading) {
+        let readyTimer = null;
+        let openFallback = null;
+        const markLoaded = () => {
+          section.classList.add("is-loaded");
+          section.classList.remove("is-switching");
+          iframe.dataset.loaded = "1";
+          if (openFallback) clearTimeout(openFallback);
+        };
+
+        iframe.addEventListener("load", () => {
+          if (readyTimer) clearTimeout(readyTimer);
+          readyTimer = setTimeout(markLoaded, 800);
+        });
+
+        const getChildOrigin = () => {
+          try {
+            const base = iframe?.dataset.baseUrl || iframe?.getAttribute("src") || "";
+            if (!base) return "";
+            return new URL(base, window.location.origin).origin;
+          } catch (_) {
+            return "";
           }
-        }
-      }
+        };
 
-      function setSelectedPlan(plan) {
-        const normalized = normalizePlan(plan);
-        const meta = planMeta[normalized] || planMeta.light;
-        planCards.forEach((card) => {
-          card.classList.toggle("is-selected", card.dataset.planCard === normalized);
+        const isAllowedOrigin = (origin) => {
+          if (!origin) return false;
+          if (origin === window.location.origin) return true;
+          if (origin === getChildOrigin()) return true;
+          if (origin.endsWith(".script.googleusercontent.com")) return true;
+          if (origin.endsWith("-script.googleusercontent.com")) return true;
+          try {
+            const srcOrigin = new URL(iframe.getAttribute("src") || "", window.location.origin).origin;
+            if (origin === srcOrigin) return true;
+          } catch (_) {}
+          return false;
+        };
+
+        window.addEventListener("message", (event) => {
+          if (!event || !event.data) return;
+          let data = event.data;
+          if (typeof data === "string") {
+            try {
+              data = JSON.parse(data);
+            } catch (_) {
+              data = { type: event.data };
+            }
+          }
+          const allowed = isAllowedOrigin(event.origin);
+          if (!allowed) return;
+          const isSameOrigin = event.origin === window.location.origin;
+          if (data.type === "support:paid" && isSameOrigin) {
+            const draftId = String(data.draftId || data.draft_id || "").trim();
+            const sessionId = String(data.sessionId || data.session_id || "").trim();
+            if (draftId || sessionId) {
+              setOpen(true);
+              section.classList.remove("is-loaded");
+              const nextUrl = buildIframeUrl("33_confirm", {
+                draft_id: draftId,
+                session_id: sessionId,
+              });
+              iframe.setAttribute("src", nextUrl);
+            }
+            return;
+          }
+          if (iframe && event.source !== iframe.contentWindow) {
+            const isGoogleusercontent = event.origin && event.origin.endsWith(".script.googleusercontent.com");
+            const isGoogleusercontentAlt = event.origin && event.origin.endsWith("-script.googleusercontent.com");
+            if (!isGoogleusercontent && !isGoogleusercontentAlt) return;
+          }
+          if (data.type === "support:ready") {
+            if (readyTimer) clearTimeout(readyTimer);
+            markLoaded();
+            return;
+          }
+          if (data.type === "support:confirm") {
+            const reservationId = String(data.reservationId || "").trim();
+            const serviceType = String(data.service || "").trim();
+            section.classList.remove("is-loaded");
+            const nextUrl = buildIframeUrl("33_confirm", {
+              draft_id: reservationId,
+              service: serviceType,
+            });
+            iframe.setAttribute("src", nextUrl);
+            return;
+          }
+          if (data.type === "support:height") {
+            const nextHeight = Number(data.height || 0);
+            if (!Number.isNaN(nextHeight) && nextHeight > 0) {
+              iframe.style.height = `${nextHeight}px`;
+            }
+            return;
+          }
+          if (data.type === "support:draft") {
+            const reservationId = String(data.reservationId || "").trim();
+            if (reservationId) {
+              try { localStorage.setItem("support_draft_id", reservationId); } catch (_) {}
+              iframe.dataset.draftId = reservationId;
+            }
+          }
         });
-        if (heading) heading.textContent = meta.heading;
-        if (summary) summary.textContent = meta.summary;
-      }
 
-      function buildIframeUrl(page, params) {
-        const baseUrl = iframe.dataset.baseUrl || iframe.getAttribute("src") || "";
-        const url = new URL(baseUrl, window.location.origin);
-        const search = new URLSearchParams(url.search);
-        search.set("page", page);
-        search.set("embed", "1");
-        Object.entries(params || {}).forEach(([key, value]) => {
-          if (!value) return;
-          search.set(key, value);
-        });
-        url.search = search.toString();
-        return url.toString();
+        const originalSetOpen = setOpen;
+        setOpen = (isOpen) => {
+          if (isOpen) {
+            section.classList.remove("is-loaded");
+            if (iframe.dataset.loaded === "1") {
+              markLoaded();
+            } else {
+              if (openFallback) clearTimeout(openFallback);
+              openFallback = setTimeout(markLoaded, 2500);
+            }
+          }
+          originalSetOpen(isOpen);
+        };
       }
-
-      function getChildOrigin() {
-        try {
-          const base = iframe.dataset.baseUrl || iframe.getAttribute("src") || "";
-          return base ? new URL(base, window.location.origin).origin : "";
-        } catch (_) {
-          return "";
-        }
-      }
-
-      function isAllowedOrigin(origin) {
-        if (!origin) return false;
-        if (origin === window.location.origin) return true;
-        if (origin === getChildOrigin()) return true;
-        if (origin.endsWith(".script.googleusercontent.com")) return true;
-        if (origin.endsWith("-script.googleusercontent.com")) return true;
-        try {
-          const srcOrigin = new URL(iframe.getAttribute("src") || "", window.location.origin).origin;
-          if (origin === srcOrigin) return true;
-        } catch (_) {}
-        return false;
-      }
-
-      iframe.addEventListener("load", () => {
-        if (readyTimer) clearTimeout(readyTimer);
-        readyTimer = setTimeout(markLoaded, 800);
-      });
 
       toggleButtons.forEach((button) => {
         button.addEventListener("click", () => {
-          const serviceType = button.dataset.service || "line";
-          const planType = normalizePlan(button.dataset.plan || "light");
-          setSelectedPlan(planType);
-          section.classList.remove("is-loaded");
-          iframe.dataset.loaded = "";
-          iframe.setAttribute("src", buildIframeUrl("32_reservation", { service: serviceType, plan: planType }));
+          if (iframe) {
+            section.classList.remove("is-loaded");
+            section.classList.add("is-switching");
+            iframe.dataset.loaded = "";
+            const serviceType = button.dataset.service || "line";
+            const planType = button.dataset.plan || "light";
+            const nextUrl = buildIframeUrl("32_reservation", { service: serviceType, plan: planType });
+            iframe.setAttribute("src", nextUrl);
+          }
           setOpen(true);
         });
       });
@@ -621,81 +972,95 @@
       });
 
       reloadButton.addEventListener("click", () => {
+        if (!iframe) return;
         section.classList.remove("is-loaded");
-        iframe.dataset.loaded = "";
         const currentSrc = iframe.getAttribute("src");
-        if (currentSrc) iframe.setAttribute("src", currentSrc);
-      });
-
-      window.addEventListener("message", (event) => {
-        if (!event || !event.data || !isAllowedOrigin(event.origin)) return;
-        let data = event.data;
-        if (typeof data === "string") {
-          try {
-            data = JSON.parse(data);
-          } catch (_) {
-            data = { type: data };
-          }
-        }
-
-        if (event.origin === window.location.origin && data.type === "support:paid") {
-          const draftId = String(data.draftId || data.draft_id || "").trim();
-          const sessionId = String(data.sessionId || data.session_id || "").trim();
-          if (draftId || sessionId) {
-            setOpen(true);
-            section.classList.remove("is-loaded");
-            iframe.setAttribute("src", buildIframeUrl("33_confirm", { draft_id: draftId, session_id: sessionId }));
-          }
-          return;
-        }
-
-        if (iframe && event.source !== iframe.contentWindow) {
-          const isGoogleusercontent = event.origin && event.origin.endsWith(".script.googleusercontent.com");
-          const isGoogleusercontentAlt = event.origin && event.origin.endsWith("-script.googleusercontent.com");
-          if (!isGoogleusercontent && !isGoogleusercontentAlt) return;
-        }
-
-        if (data.type === "support:ready") {
-          if (readyTimer) clearTimeout(readyTimer);
-          markLoaded();
-          return;
-        }
-
-        if (data.type === "support:confirm") {
-          const reservationId = String(data.reservationId || "").trim();
-          const serviceType = String(data.service || "line").trim();
-          section.classList.remove("is-loaded");
-          iframe.setAttribute("src", buildIframeUrl("33_confirm", { draft_id: reservationId, service: serviceType }));
-          return;
-        }
-
-        if (data.type === "support:height") {
-          const nextHeight = Number(data.height || 0);
-          if (!Number.isNaN(nextHeight) && nextHeight > 0) {
-            iframe.style.height = `${nextHeight}px`;
-          }
-          return;
-        }
-
-        if (data.type === "support:draft") {
-          const reservationId = String(data.reservationId || "").trim();
-          if (reservationId) {
-            try { localStorage.setItem("support_draft_id", reservationId); } catch (_) {}
-            iframe.dataset.draftId = reservationId;
-          }
+        if (currentSrc) {
+          iframe.setAttribute("src", currentSrc);
         }
       });
 
-      function handlePaidPayload(payload) {
-        const draftId = payload.draftId || (() => {
-          try { return localStorage.getItem("support_draft_id") || ""; } catch (_) { return ""; }
-        })();
-        const sessionId = payload.sessionId || "";
-        if (!draftId && !sessionId) return;
+      const flowSection = document.getElementById("support-flow");
+      const flowToggle = document.getElementById("toggle-flow");
+      if (flowSection && flowToggle) {
+        flowToggle.addEventListener("click", () => {
+          const isOpen = !flowSection.classList.contains("is-collapsed");
+          flowSection.classList.toggle("is-collapsed", isOpen);
+          flowToggle.setAttribute("aria-expanded", String(!isOpen));
+          flowToggle.textContent = isOpen ? "開く" : "閉じる";
+        });
+      }
+
+      const menuSection = document.getElementById("support-menu");
+      const menuToggle = document.getElementById("toggle-menu");
+      if (menuSection && menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          const isOpen = !menuSection.classList.contains("is-collapsed");
+          menuSection.classList.toggle("is-collapsed", isOpen);
+          menuToggle.setAttribute("aria-expanded", String(!isOpen));
+          menuToggle.textContent = isOpen ? "開く" : "閉じる";
+        });
+      }
+
+      const usageSection = document.getElementById("support-usage");
+      const usageToggle = document.getElementById("toggle-usage");
+      if (usageSection && usageToggle) {
+        usageToggle.addEventListener("click", () => {
+          const isOpen = !usageSection.classList.contains("is-collapsed");
+          usageSection.classList.toggle("is-collapsed", isOpen);
+          usageToggle.setAttribute("aria-expanded", String(!isOpen));
+          usageToggle.textContent = isOpen ? "開く" : "閉じる";
+        });
+      }
+
+      function buildIframeUrl(page, params) {
+        const baseUrl = iframe.dataset.baseUrl || iframe.getAttribute("src") || "";
+        const url = new URL(baseUrl, window.location.origin);
+        const search = new URLSearchParams(url.search);
+        search.set("page", page);
+        search.set("embed", "1");
+        if (params) {
+          Object.entries(params).forEach(([key, value]) => {
+            if (!value) return;
+            search.set(key, value);
+          });
+        }
+        url.search = search.toString();
+        return url.toString();
+      }
+
+      function getHashParams() {
+        const hash = window.location.hash.replace(/^#/, "");
+        const parts = hash.split("&");
+        const params = new URLSearchParams();
+        parts.forEach((part) => {
+          if (!part) return;
+          if (!part.includes("=")) return;
+          const [key, value] = part.split("=");
+          params.set(key, value);
+        });
+        return params;
+      }
+
+      function handlePaidState() {
+        const params = getHashParams();
+        if (params.get("state") !== "paid") return;
+        const draftId = params.get("draft_id")
+          || iframe.dataset.draftId
+          || (() => {
+            try { return localStorage.getItem("support_draft_id") || ""; } catch (_) { return ""; }
+          })();
         setOpen(true);
         section.classList.remove("is-loaded");
-        iframe.setAttribute("src", buildIframeUrl("33_confirm", { draft_id: draftId, session_id: sessionId }));
+        const nextUrl = buildIframeUrl("33_confirm", { draft_id: draftId });
+        iframe.setAttribute("src", nextUrl);
+        if (history.replaceState) {
+          history.replaceState(null, "", window.location.pathname + window.location.search + "#support-reservation");
+        }
       }
+
+      window.addEventListener("hashchange", handlePaidState);
+      handlePaidState();
 
       window.addEventListener("storage", (event) => {
         if (!event || event.key !== "support_paid") return;
@@ -714,7 +1079,33 @@
         });
       }
 
-      setSelectedPlan("light");
+      function handlePaidPayload(payload) {
+        const draftId = payload.draftId || (() => {
+          try { return localStorage.getItem("support_draft_id") || ""; } catch (_) { return ""; }
+        })();
+        const sessionId = payload.sessionId || "";
+        if (!draftId && !sessionId) return;
+        try {
+          const last = Number(sessionStorage.getItem("support_paid_handled") || "0");
+          const at = Number(payload.at || 0);
+          if (at && at <= last) return;
+          if (at) sessionStorage.setItem("support_paid_handled", String(at));
+        } catch (_) {}
+        setOpen(true);
+        section.classList.remove("is-loaded");
+        const nextUrl = buildIframeUrl("33_confirm", { draft_id: draftId, session_id: sessionId });
+        iframe.setAttribute("src", nextUrl);
+      }
+
+      setInterval(() => {
+        try {
+          const raw = localStorage.getItem("support_paid");
+          if (!raw) return;
+          const payload = JSON.parse(raw || "{}");
+          if (!payload || payload.status !== "paid") return;
+          handlePaidPayload(payload);
+        } catch (_) {}
+      }, 1200);
     })();
   </script>
 </body>
