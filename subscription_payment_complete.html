@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>お支払い完了</title>
+  <link rel="icon" type="image/png" href="assets/images/common/brand-favicon.png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
+      background: linear-gradient(180deg, #fbf6ee 0%, #f4ecdf 100%);
+      color: #17342d;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(520px, 100%);
+      background: rgba(255, 251, 245, 0.96);
+      border: 1px solid rgba(23, 52, 45, 0.12);
+      border-radius: 24px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(23, 52, 45, 0.12);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 1.5rem;
+    }
+    p {
+      margin: 0;
+      line-height: 1.8;
+      color: #5c695f;
+    }
+    .note {
+      margin-top: 14px;
+      color: #0f7666;
+      font-weight: 700;
+    }
+    button {
+      margin-top: 18px;
+      border: none;
+      border-radius: 999px;
+      background: #0f7666;
+      color: #fff;
+      padding: 12px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>お支払いが完了しました</h1>
+    <p>元の申込ページに、お申し込み完了の詳細が表示されます。</p>
+    <p class="note">このタブを閉じてください。</p>
+    <button type="button" id="close-tab">タブを閉じる</button>
+  </div>
+
+  <script>
+    (function () {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get("session_id") || "";
+        const draftParam = params.get("rid") || params.get("draft_id") || "";
+        let draftId = "";
+        try { draftId = draftParam || localStorage.getItem("support_draft_id") || ""; } catch (_) {}
+        if (draftParam) {
+          try { localStorage.setItem("support_draft_id", draftParam); } catch (_) {}
+        }
+        const payload = {
+          status: "paid",
+          draftId,
+          sessionId,
+          at: Date.now(),
+        };
+        localStorage.setItem("support_paid", JSON.stringify(payload));
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage(
+            { type: "support:paid", draftId, sessionId },
+            window.location.origin
+          );
+        }
+        if (window.BroadcastChannel) {
+          const channel = new BroadcastChannel("support_paid");
+          channel.postMessage(payload);
+          channel.close();
+        }
+      } catch (_) {}
+    })();
+
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id") || "";
+      const draftParam = params.get("rid") || params.get("draft_id") || "";
+      let draftId = "";
+      try { draftId = draftParam || localStorage.getItem("support_draft_id") || ""; } catch (_) {}
+      if (!sessionId) return;
+      const baseUrl = "https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec";
+      const ridParam = draftId ? `&rid=${encodeURIComponent(draftId)}` : "";
+      const url = `${baseUrl}?action=store_stripe&session_id=${encodeURIComponent(sessionId)}${ridParam}`;
+      try {
+        fetch(url, { mode: "no-cors", keepalive: true });
+      } catch (_) {}
+      const img = new Image();
+      img.src = url;
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    })();
+
+    document.getElementById("close-tab").addEventListener("click", () => {
+      window.close();
+    });
+  </script>
+</body>
+</html>

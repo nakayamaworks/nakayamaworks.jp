@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>解約ページへ移動します</title>
+  <link rel="icon" type="image/png" href="assets/images/common/brand-favicon.png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
+      background: linear-gradient(180deg, #fbf6ee 0%, #f4ecdf 100%);
+      color: #17342d;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(520px, 100%);
+      background: rgba(255, 251, 245, 0.96);
+      border: 1px solid rgba(23, 52, 45, 0.12);
+      border-radius: 24px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(23, 52, 45, 0.12);
+    }
+    p {
+      margin: 0;
+      line-height: 1.8;
+      color: #5c695f;
+    }
+    a {
+      color: #0f7666;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p>解約ページへ移動しています。</p>
+    <p>自動で移動しない場合は、<a id="cancel-link" href="#">こちら</a>をクリックしてください。</p>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (!params.get("rid") && window.location.hash) {
+        const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+        hashParams.forEach((value, key) => params.set(key, value));
+      }
+      const rid = params.get("rid") || "";
+      const email = params.get("email") || "";
+      const service = params.get("service") || "line";
+      const baseUrl = "https://script.google.com/macros/s/AKfycbwnEa6UVoT2BgS-KOACUVbLk_R7jyBnTrbjKKko7iU8J1yCRmhXQlDDwAvvC_3O_1rx/exec";
+      const serviceParam = service ? `&service=${encodeURIComponent(service)}` : "";
+      const url = `${baseUrl}?page=34_cancel&rid=${encodeURIComponent(rid)}&email=${encodeURIComponent(email)}${serviceParam}`;
+      const link = document.getElementById("cancel-link");
+      if (link) link.href = url;
+      window.location.replace(url);
+    })();
+  </script>
+</body>
+</html>
