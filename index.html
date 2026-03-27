@@ -1109,66 +1109,6 @@
       flex: 0 0 auto;
     }
 
-    .stores-card {
-      padding: clamp(22px, 3.6vw, 34px);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(155, 102, 48, 0.24);
-      background:
-        linear-gradient(160deg, rgba(183, 128, 71, 0.1) 0%, rgba(255, 255, 255, 0.95) 42%, rgba(243, 237, 225, 0.5) 100%);
-      box-shadow: var(--card-shadow);
-      min-width: 0;
-    }
-
-    .stores-card p {
-      margin: 12px 0 0;
-      color: var(--charcoal-soft);
-      line-height: 1.9;
-    }
-
-    .stores-card h3 {
-      margin: 0;
-      font-size: clamp(1.2rem, 3vw, 1.55rem);
-      color: var(--forest-main);
-      line-height: 1.5;
-    }
-
-    .stores-list {
-      list-style: none;
-      margin: 14px 0 0;
-      padding: 0;
-      display: grid;
-      gap: 8px;
-    }
-
-    .stores-list li {
-      position: relative;
-      padding-left: 18px;
-      color: var(--charcoal-soft);
-      line-height: 1.8;
-      font-weight: 500;
-    }
-
-    .stores-list li::before {
-      content: "■";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #9a6b3a;
-      font-size: 0.72em;
-      line-height: 2.2;
-    }
-
-    .stores-note {
-      margin: 14px 0 0;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(255, 245, 235, 0.88);
-      border: 1px solid rgba(155, 102, 48, 0.26);
-      color: #6e4c2b;
-      font-size: 0.9rem;
-      line-height: 1.8;
-    }
-
     .cloud-link {
       color: #1f5f44;
       font-weight: 700;
@@ -1453,6 +1393,57 @@
       font-size: 0.93rem;
       color: var(--charcoal-soft);
       line-height: 1.85;
+    }
+
+    .pricing-plan-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .pricing-plan-card {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .pricing-plan-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pricing-plan-label {
+      margin: 0 0 8px;
+      color: var(--forest-main);
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pricing-plan-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pricing-plan-section {
+      padding-top: 12px;
+      border-top: 1px solid rgba(31, 63, 49, 0.1);
+    }
+
+    .pricing-plan-section:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .pricing-plan-section h4 {
+      margin: 0;
+      color: var(--forest-deep);
+      font-size: 1rem;
+      line-height: 1.55;
     }
 
     .pricing-table-wrap {
@@ -1883,6 +1874,10 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
+      .pricing-plan-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .pricing-notes {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1911,6 +1906,14 @@
       .profile-card {
         grid-template-columns: 220px minmax(0, 1fr);
         align-items: center;
+      }
+
+      .pricing-plan-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pricing-note-card--wide {
+        grid-column: 1 / -1;
       }
 
       .cta-final-head {
@@ -2039,6 +2042,11 @@
 
       .flow-icon-wrap img {
         width: min(96px, 44%);
+      }
+
+      .pricing-plan-head {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .pricing-block {
@@ -2210,7 +2218,7 @@
             <li>ポータルサイトに頼らず、自分のお店で予約を管理したい</li>
             <li>ITのことを長く相談できる人がほしい</li>
           </ul>
-          <h3>そのお悩み、解決します。</h4>
+          <h3>そのお悩み、解決します。</h3>
         </div>
       </div>
     </section>
@@ -2347,8 +2355,8 @@
       <div class="container">
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Reservation System</span>
-          <h2 class="section-title">選べる予約システム</h2>
-          <p class="section-lead">運用方法に合わせて、２つの予約システムから選べます。</p>
+          <h2 class="section-title">自社開発の予約システム「みせまるクラウド」を採用しています</h2>
+          <p class="section-lead">サロンの現場で無理なく使い続けられるよう、必要な機能に絞って設計した予約システムです。</p>
         </div>
         <div class="reservation-cards">
           <article class="cloud-card fade-in">
@@ -2356,8 +2364,8 @@
               <h3>サロン向け予約システム みせまるクラウド</h3>
             </div>
             <p>
-              独自で開発した、Googleサービス使った予約システム「みせまるクラウド」を組み合わせることができます。<br>
-              専門知識は必要ありません。現場で使いやすい形を前提に設計されています。
+              Nakayama Worksが自社開発した予約システム「みせまるクラウド」を導入し、サロンの予約運用をシンプルに整えます。<br>
+              Googleサービスを活用した構成で、専門知識がなくても現場で使いやすい形に整えます。
             </p>
             <p class="reservation-url"><img class="reservation-url-logo" src="assets/images/reservation/misemaru-cloud-logo.png" alt="みせまるクラウド ロゴ"><a href="https://misemaru.cloud/" target="_blank" rel="noopener noreferrer">https://misemaru.cloud/</a></p>
             <div class="cloud-gallery" aria-label="みせまるクラウド画面イメージ">
@@ -2379,51 +2387,13 @@
               </div>
             </div>
             <p class="cloud-note">
-              ■ システム利用料は無料<br>
-              予約システム自体の利用料金はかかりません。初期料金と月々の運用サポート費のみでご利用いただけます。<br><br>
+              ■ 複雑すぎない、現場向けの予約システムです<br>
+              高機能すぎて使いこなせない仕組みではなく、サロンの現場で無理なく使い続けられることを重視しています。<br><br>
               ■ 外国人のお客様にも対応できます<br>
               多言語表示に対応しているため、海外からのお客様の予約にも対応できます。<br><br>
               ■ オンライン決済には対応していません<br>
-              現地でのお支払い（来店時決済）を前提としています。シンプルな運用を重視した構成です。
-            </p>
-          </article>
-          <article class="stores-card fade-in">
-            <h3>決済対応予約システム STORES 予約</h3>
-            <p>
-              STORES 株式会社が提供する、事前決済対応型の予約システムです。<br>
-              事前決済・複数スタッフ運用・リピーター向け機能などに対応しており、店舗の運用スタイルに合わせて柔軟に設定できます。<br>
-              専門的な設定はすべてこちらで対応します。
-            </p>
-            <p class="reservation-url"><img class="reservation-url-logo" src="assets/images/reservation/stores-booking-logo.svg" alt="STORES予約 ロゴ"><a href="https://stores.fun/" target="_blank" rel="noopener noreferrer">https://stores.fun/</a></p>
-            <div class="cloud-gallery" aria-label="STORES予約 画面イメージ">
-              <div class="cloud-gallery-grid pc">
-                <figure>
-                  <img src="assets/images/reservation/stores-booking-screen-1.png" alt="STORES予約 画面イメージ1" loading="lazy" decoding="async">
-                </figure>
-                <figure>
-                  <img src="assets/images/reservation/stores-booking-screen-2.png" alt="STORES予約 画面イメージ2" loading="lazy" decoding="async">
-                </figure>
-              </div>
-              <div class="cloud-gallery-grid sp">
-                <figure>
-                  <img src="assets/images/reservation/stores-booking-screen-1.png" alt="STORES予約 画面イメージ1" loading="lazy" decoding="async">
-                </figure>
-                <figure>
-                  <img src="assets/images/reservation/stores-booking-screen-2.png" alt="STORES予約 画面イメージ2" loading="lazy" decoding="async">
-                </figure>
-              </div>
-            </div>
-            <p class="cloud-note">
-              ■ オンライン決済に対応<br>
-              来店前に支払いを完了できるため、無断キャンセル対策や当日の会計時間短縮に役立ちます。<br>
-              前払いが必要なメニューや高単価サービスにも対応できます。<br><br>
-              ■ リピーター施策に対応<br>
-              回数券や会員向け機能により、継続来店を促す仕組みを作ることができます。<br>
-              常連のお客様が多いサロンにも適しています。<br><br>
-              ■ 複数スタッフ体制に対応<br>
-              スタッフ指名や同時予約の管理など、複数名で運営するサロンでもスムーズに運用できます。<br>
-              店舗規模に応じた柔軟な設定が可能です。<br><br>
-              ※ STORES予約の月額利用料が別途必要になります
+              来店時のお支払いを前提とした、シンプルで運用しやすい予約システムです。<br>
+              ※ 事前決済をご希望の場合は、別の予約システムを個別にご案内します（別途月額利用料がかかります）
             </p>
           </article>
         </div>
@@ -2473,92 +2443,122 @@
         <div class="section-title-wrap fade-in">
           <span class="eyebrow">Pricing</span>
           <h2 class="section-title">料金プラン</h2>
-          <p class="section-lead">サロンの規模や運用方法に合わせて最適な構成をご提案します</p>
+          <p class="section-lead">初期費用を抑えながら、公開後の運用も必要な範囲だけ選べる料金設計です</p>
         </div>
         <div class="pricing-layout">
           <article class="pricing-block fade-in">
-            <h3 class="pricing-block-title">■ 初期料金</h3>
-            <div class="pricing-initial-value"><span class="yen">¥</span>99,800</div>
-            <p class="pricing-initial-desc">公式サイト制作と予約システムを連携</p>
-          </article>
-          <article class="pricing-block fade-in">
-            <h3 class="pricing-block-title">■ 運用サポート料金（月額）</h3>
-            <div class="pricing-initial-value"><span class="yen">¥</span>14,800</div>
-            <p class="pricing-initial-desc">公式サイトと予約システムの運用を継続支援</p>
-          </article>
-          <article class="pricing-block fade-in">
-            <h3 class="pricing-block-title">■ 予約システム料金（月額）</h3>
-            <p class="pricing-initial-desc">予約システム料金比較表</p>
-            <div class="pricing-table-wrap" role="region" aria-label="料金プラン比較表">
-              <table class="pricing-table">
-                <thead>
-                  <tr>
-                    <th scope="col">項目</th>
-                    <th scope="col">みせまるクラウド</th>
-                    <th scope="col">STORES予約 スモール</th>
-                    <th scope="col">STORES予約 チーム</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">予約システム利用料</th>
-                    <td>¥0</td>
-                    <td>¥12,980</td>
-                    <td>¥22,880</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">予約件数目安</th>
-                    <td>実質無制限</td>
-                    <td>200件/月</td>
-                    <td>300件/月</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">事前決済</th>
-                    <td>×</td>
-                    <td>◎</td>
-                    <td>◎</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">スタッフ指名予約</th>
-                    <td>○</td>
-                    <td>☓</td>
-                    <td>○</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">スタッフ複数</th>
-                    <td>○</td>
-                    <td>△</td>
-                    <td>◎</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">おすすめ</th>
-                    <td>コスト重視</td>
-                    <td>個人＋事前決済</td>
-                    <td>複数スタッフ＋事前決済</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="pricing-plan-head">
+              <div>
+                <p class="pricing-plan-label">Initial Fee</p>
+                <h3 class="pricing-block-title">■ 初期費用</h3>
+              </div>
+              <div class="pricing-initial-value"><span class="yen">¥</span>29,800<span class="fixed">税込</span></div>
             </div>
+            <p class="pricing-initial-desc">公式サイトの制作と、みせまるクラウド導入をまとめて行い、営業開始に必要な初期準備まで対応します。</p>
             <div class="pricing-notes">
               <article class="pricing-note-card">
-                <h4>■ 月額料金について</h4>
+                <h4>■ 含まれる内容</h4>
                 <ul class="pricing-note-list">
-                  <li>月額料金は「運用サポート料金」 ＋ 「予約システム料金」　となります</li>
-                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例①：</span><span class="pricing-example-head">みせまるクラウド利用の場合</span><span class="pricing-example-body">14,800円/月（運用サポート料金のみ）</span></li>
-                  <li class="pricing-note-example"><span class="pricing-example-prefix">※例②：</span><span class="pricing-example-head">STORES予約 スモール利用の場合</span><span class="pricing-example-body">14,800円 + 12,980円 = 27,780円/月</span></li>
+                  <li>公式サイトの新規制作</li>
+                  <li>基本ページ構成の作成</li>
+                  <li>スマホ対応と予約導線の設計</li>
+                  <li>予約システム（みせまるクラウド）の導入</li>
+                  <li>Googleアカウント連携設定</li>
+                  <li>基本設定（営業時間 / メニュー / スタッフ）</li>
+                  <li>公開設定</li>
                 </ul>
               </article>
               <article class="pricing-note-card">
-                <h4>■ ご解約時について</h4>
+                <h4>■ 含まれない内容</h4>
                 <ul class="pricing-note-list">
-                  <li>ご解約後は、当社による運用サポートおよび管理を終了します</li>
-                  <li>公式サイトの公開は停止されます</li>
-                  <li>ドメイン・サーバー管理も終了します</li>
-                  <li>ご希望があれば、サイト一式の引き渡しにも対応可能です</li>
+                  <li>写真撮影</li>
+                  <li>ロゴ制作</li>
+                  <li>原稿の大量作成</li>
+                  <li>大幅なデザインカスタマイズ</li>
                 </ul>
               </article>
             </div>
           </article>
+          <div class="pricing-plan-grid">
+            <article class="pricing-block pricing-plan-card fade-in">
+              <div class="pricing-plan-head">
+                <div>
+                  <p class="pricing-plan-label">Light Plan</p>
+                  <h3 class="pricing-block-title">■ ライトプラン</h3>
+                </div>
+                <div class="pricing-initial-value"><span class="yen">¥</span>5,000<span class="fixed">/ 月</span></div>
+              </div>
+              <p class="pricing-initial-desc">👉 最低限のサポートだけ欲しい方</p>
+              <div class="pricing-plan-stack">
+                <ul class="pricing-note-list">
+                  <li>LINEチャットサポート</li>
+                  <li>文章や画像の修正：月1回</li>
+                  <li>日々の運用はご自身で対応いただくプランです</li>
+                </ul>
+              </div>
+            </article>
+            <article class="pricing-block pricing-plan-card fade-in">
+              <div class="pricing-plan-head">
+                <div>
+                  <p class="pricing-plan-label">Standard Plan</p>
+                  <h3 class="pricing-block-title">■ スタンダードプラン</h3>
+                </div>
+                <div class="pricing-initial-value"><span class="yen">¥</span>10,000<span class="fixed">/ 月</span></div>
+              </div>
+              <p class="pricing-initial-desc">👉 相談しながら安心して運用したい方</p>
+              <div class="pricing-plan-stack">
+                <ul class="pricing-note-list">
+                  <li>LINEチャットサポート（優先）</li>
+                  <li>電話サポート：月3回 / 1回20分以内</li>
+                  <li>文章や画像の修正：月3回</li>
+                </ul>
+              </div>
+            </article>
+            <article class="pricing-block pricing-plan-card fade-in">
+              <div class="pricing-plan-head">
+                <div>
+                  <p class="pricing-plan-label">Managed Plan</p>
+                  <h3 class="pricing-block-title">■ 運用代行プラン</h3>
+                </div>
+                <div class="pricing-initial-value"><span class="yen">¥</span>15,000<span class="fixed">/ 月</span></div>
+              </div>
+              <p class="pricing-initial-desc">👉 更新や設定変更まで任せたい方</p>
+              <div class="pricing-plan-stack">
+                <ul class="pricing-note-list">
+                  <li>LINEチャット + 電話サポート</li>
+                  <li>お知らせ・画像・メニュー内容の更新：月5回</li>
+                  <li>営業時間・予約枠・スタッフ設定の変更：月3回</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+          <div class="pricing-notes fade-in">
+            <article class="pricing-note-card">
+              <h4>■ 月額プラン共通</h4>
+              <ul class="pricing-note-list">
+                <li>最低契約期間は6ヶ月です</li>
+                <li>7ヶ月目以降は1ヶ月ごとの更新です</li>
+                <li>電話サポートは平日10:00〜18:00、不在時は折り返し対応です</li>
+              </ul>
+            </article>
+            <article class="pricing-note-card">
+              <h4>■ 補足事項</h4>
+              <ul class="pricing-note-list">
+                <li>文章や画像の修正は、テキスト1箇所変更や画像1枚差し替えなどの軽微な対応です</li>
+                <li>大きな修正や追加制作は、内容を確認のうえ別途お見積もりします</li>
+                <li>未使用分の修正回数や通話枠は翌月へ繰り越せません</li>
+                <li>事前決済が必要な場合は、別の予約システムを個別にご案内します</li>
+              </ul>
+            </article>
+            <article class="pricing-note-card pricing-note-card--wide">
+              <h4>■ 解約について</h4>
+              <ul class="pricing-note-list">
+                <li>月額プラン解約後は、当社による公式サイト・予約システムの管理を終了します</li>
+                <li>そのため、公式サイトおよび予約システムは継続してご利用いただけません</li>
+                <li>継続利用をご希望の場合は、別途ご相談ください</li>
+              </ul>
+            </article>
+          </div>
         </div>
       </div>
     </section>
