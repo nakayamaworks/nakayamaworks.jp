@@ -25,8 +25,8 @@
  * }
  */
 
-const DESTINATION_EMAIL = "support@misemaru.cloud";
-const CC_EMAIL = "contact@nakayamaworks.jp";
+const DESTINATION_EMAIL = "contact@nakayamaworks.jp";
+const CC_EMAIL = "";
 const DEFAULT_ALLOWED_ORIGIN = "https://nakayamaworks.jp";
 const ALLOWED_ORIGINS = [
   "https://nakayamaworks.jp",
