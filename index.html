@@ -549,6 +549,19 @@
       box-shadow: 0 8px 24px rgba(26, 41, 34, 0.22);
     }
 
+    .header-cta-secondary {
+      background: transparent;
+      color: var(--forest-deep);
+      border: 1px solid rgba(31, 63, 49, 0.22);
+      box-shadow: none;
+    }
+
+    .header-cta-secondary:hover {
+      background: rgba(47, 90, 71, 0.1);
+      color: var(--forest-deep);
+      box-shadow: none;
+    }
+
     .hero {
       position: relative;
       min-height: min(900px, 100svh);
@@ -2003,6 +2016,17 @@
         color: #fff;
       }
 
+      .header-nav .header-cta-secondary {
+        color: var(--forest-deep);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: none;
+      }
+
+      .header-nav .header-cta-secondary:hover {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--forest-deep);
+      }
+
       .header-overlay {
         position: fixed;
         inset: 64px 0 0;
@@ -2149,6 +2173,7 @@
         <a href="#pricing">料金</a>
         <a href="#profile">自己紹介</a>
         <a class="header-cta" href="#cta-final">無料相談</a>
+        <a class="header-cta header-cta-secondary" href="subscription_portal.html">お申し込み</a>
       </nav>
     </div>
     <div class="header-overlay" id="headerOverlay" aria-hidden="true"></div>
