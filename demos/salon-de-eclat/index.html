@@ -48,6 +48,20 @@
     @keyframes welcomeLine { to { opacity:1; transform:none; } }
     @keyframes welcomeHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
     @keyframes loaderSlide { 0% { transform:translateX(-110%);} 100% { transform:translateX(230%);} }
+    @keyframes heroReserveFloatIn {
+      0% {
+        opacity:0;
+        transform:translateY(12px) scale(.985);
+        filter:blur(4px);
+        box-shadow:0 22px 40px rgba(0,0,0,0);
+      }
+      100% {
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+        box-shadow:0 14px 28px rgba(0,0,0,.16);
+      }
+    }
     html.welcome-lock,body.welcome-lock{overflow:hidden;overscroll-behavior:none;height:100%}
     body.welcome-lock{touch-action:manipulation}
 
@@ -141,6 +155,16 @@
     }
     .hero-cta{
       margin-top:1.5rem;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:.44rem;padding:1rem 1.55rem .92rem;border-radius:999px;background:linear-gradient(135deg,#f5de8a,#d7b24a 52%,#b98a2f);color:#261b0c;text-decoration:none;font-weight:700;min-width:300px
+    }
+    #heroReserve{
+      opacity:0;
+      transform:translateY(12px) scale(.985);
+      filter:blur(4px);
+      box-shadow:0 18px 34px rgba(0,0,0,0);
+      will-change:opacity,transform,filter,box-shadow;
+    }
+    .hero.hero-reserve-in #heroReserve{
+      animation:heroReserveFloatIn .72s ease-out 0s forwards;
     }
     .hero-cta-main{font-weight:700;line-height:1.1;font-size:20px}
     .hero-cta-sub{font-size:.92rem;line-height:1.12;opacity:.85;letter-spacing:.03em}
@@ -1290,6 +1314,16 @@
         bootMask.classList.add('hide');
         window.setTimeout(() => bootMask.remove(), 340);
       };
+      const triggerHeroReserveReveal = () => {
+        const hero = document.getElementById('hero');
+        const heroReserve = document.getElementById('heroReserve');
+        if (!hero || !heroReserve) return;
+        hero.classList.remove('hero-reserve-in');
+        void heroReserve.offsetWidth;
+        requestAnimationFrame(() => {
+          hero.classList.add('hero-reserve-in');
+        });
+      };
       const setWelcomeState = ({ open = false, playing = false } = {}) => {
         document.body.classList.toggle('is-welcome', open);
         document.body.classList.toggle('is-welcome-playing', open && playing);
@@ -1373,6 +1407,7 @@
           document.documentElement.classList.remove('welcome-lock');
           document.body.classList.remove('welcome-lock');
           modalLock.unlock();
+          triggerHeroReserveReveal();
         }, 2720);
       };
 
@@ -1382,7 +1417,10 @@
           welcome.classList.add('hidden');
           setWelcomeState();
           if (!saved) await showLangGate('initial');
-          else hideBootMask();
+          else {
+            hideBootMask();
+            triggerHeroReserveReveal();
+          }
           return;
         }
         if (saved) {
