@@ -48,7 +48,8 @@
     @keyframes welcomeLine { to { opacity:1; transform:none; } }
     @keyframes welcomeHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
     @keyframes loaderSlide { 0% { transform:translateX(-110%);} 100% { transform:translateX(230%);} }
-    body.welcome-lock{overflow:hidden}
+    html.welcome-lock,body.welcome-lock{overflow:hidden;overscroll-behavior:none;height:100%}
+    body.welcome-lock{touch-action:manipulation}
 
     .lang-gate{
       position:fixed;inset:0;z-index:310;display:grid;place-items:center;
@@ -960,10 +961,10 @@
       document.addEventListener('touchmove', blockBackdropScroll, { passive: false });
       document.addEventListener('wheel', blockBackdropScroll, { passive: false });
 
-      const lock = () => {
+      const lock = (scrollY = window.scrollY || window.pageYOffset || 0) => {
         depth += 1;
         if (depth > 1) return;
-        lockedScrollY = window.scrollY || window.pageYOffset || 0;
+        lockedScrollY = Math.max(0, scrollY);
         document.documentElement.classList.add('modal-lock');
         document.body.classList.add('modal-lock');
         document.body.style.top = `-${lockedScrollY}px`;
@@ -1313,6 +1314,8 @@
         });
         gate.classList.add('is-preparing');
         gate.classList.add('show');
+        modalLock.lock();
+        document.documentElement.classList.add('welcome-lock');
         document.body.classList.add('welcome-lock');
         await ensureFontsReady(mode === 'initial' ? 520 : 0);
         gate.classList.remove('is-preparing');
@@ -1323,7 +1326,11 @@
         gate.classList.remove('show');
         gate.classList.remove('is-preparing');
         const welcomeOpen = !welcome.classList.contains('hidden');
-        if (!welcomeOpen) document.body.classList.remove('welcome-lock');
+        if (!welcomeOpen) {
+          document.documentElement.classList.remove('welcome-lock');
+          document.body.classList.remove('welcome-lock');
+          modalLock.unlock();
+        }
       };
 
       window.openDemoLanguageGate = function () {
@@ -1336,6 +1343,7 @@
         const lightboxOpen = !!lightbox && lightbox.classList.contains('is-open');
         const treatmentModalOpen = !!document.getElementById('treatmentModal')?.classList.contains('is-open');
         if (!gateOpen && !welcomeOpen && !lightboxOpen && !treatmentModalOpen) {
+          document.documentElement.classList.remove('welcome-lock');
           document.body.classList.remove('welcome-lock');
           modalLock.forceUnlock();
         }
@@ -1348,11 +1356,13 @@
         welcome.classList.remove('play');
         welcome.classList.remove('hidden');
         setWelcomeState({ open: true, playing: false });
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        modalLock.lock(0);
+        document.documentElement.classList.add('welcome-lock');
         document.body.classList.add('welcome-lock');
         hideBootMask();
         await ensureFontsReady(instant ? 0 : 1000);
-        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         requestAnimationFrame(() => {
           setWelcomeState({ open: true, playing: true });
           welcome.classList.add('play');
@@ -1360,7 +1370,9 @@
         setTimeout(() => {
           welcome.classList.add('hidden');
           setWelcomeState();
+          document.documentElement.classList.remove('welcome-lock');
           document.body.classList.remove('welcome-lock');
+          modalLock.unlock();
         }, 2720);
       };
 
@@ -1424,6 +1436,7 @@
     window.setTimeout(() => {
       document.getElementById('welcome')?.classList.add('hidden');
       document.body.classList.remove('is-welcome', 'is-welcome-playing');
+      document.documentElement.classList.remove('welcome-lock');
       document.body.classList.remove('welcome-lock');
       modalLock.forceUnlock();
       const bootMask = document.getElementById('bootMask');
