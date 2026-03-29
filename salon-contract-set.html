@@ -342,6 +342,19 @@
       color: var(--ink-soft);
     }
 
+    .party-table td {
+      padding-top: 4mm;
+      padding-bottom: 4mm;
+      line-height: 1.9;
+    }
+
+    .party-table td br,
+    .signature-lines br {
+      content: "";
+      display: block;
+      margin-top: 1.2mm;
+    }
+
     .signature-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -350,7 +363,7 @@
     }
 
     .signature-box {
-      min-height: 34mm;
+      min-height: 38mm;
       padding: 4mm;
       border: 1px solid var(--line);
       background: #fff;
@@ -365,15 +378,36 @@
 
     .signature-lines {
       display: grid;
-      gap: 2.5mm;
+      gap: 3.4mm;
       color: var(--ink-soft);
+      line-height: 1.85;
+    }
+
+    .signature-lines .line-fill {
+      margin-top: 1.2mm;
+    }
+
+    .signature-lines .line-fill--long {
+      min-width: 78mm;
     }
 
     .line-fill {
       display: inline-block;
       min-width: 28mm;
+      min-height: 4.5mm;
       border-bottom: 1px solid #8b9891;
-      transform: translateY(-1px);
+      vertical-align: bottom;
+    }
+
+    .editable-line {
+      padding: 0 1.2mm 0.6mm;
+      cursor: text;
+      outline: none;
+    }
+
+    .editable-line:focus {
+      background: rgba(255, 248, 214, 0.9);
+      box-shadow: inset 0 -1px 0 rgba(31, 61, 49, 0.18);
     }
 
     .line-fill--long {
@@ -383,6 +417,49 @@
     .line-fill--full {
       width: 100%;
       min-width: 0;
+    }
+
+    .editable-line.line-fill--full {
+      display: block;
+      min-height: 7mm;
+    }
+
+    .check-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.8mm;
+      margin: 0 3mm 1.2mm 0;
+      cursor: pointer;
+    }
+
+    .check-control {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .check-box {
+      position: relative;
+      width: 4mm;
+      height: 4mm;
+      border: 1px solid #7f8f86;
+      background: #fff;
+      flex: 0 0 auto;
+    }
+
+    .check-item.is-checked .check-box::after {
+      content: "✓";
+      position: absolute;
+      inset: -1.1mm 0 0 0;
+      color: var(--forest-deep);
+      font-size: 10pt;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .check-text {
+      line-height: 1.6;
     }
 
     .inline-note {
@@ -482,6 +559,11 @@
         background: #fff;
       }
 
+      .editable-line:focus {
+        background: transparent;
+        box-shadow: none;
+      }
+
       .toolbar,
       .screen-note {
         display: none !important;
@@ -574,7 +656,7 @@
           <h2 class="section-title">記入チェック</h2>
           <ul class="note-list">
             <li>甲乙の正式名称、住所、代表者名、連絡先</li>
-            <li>初期料金、月額料金、第三者サービス費用の負担区分</li>
+            <li>初期料金、運用プラン料金、第三者サービス費用の負担区分</li>
             <li>着手日、初稿確認日、公開予定日、解約予告日数</li>
             <li>修正回数、検収方法、引渡対象データの範囲</li>
             <li>実績掲載の可否、個人情報の取扱範囲、アカウント引渡先</li>
@@ -584,7 +666,7 @@
         <div class="stack">
           <h2 class="section-title">料金欄の初期値</h2>
           <div class="boxed">
-            <p>LP記載の基準料金は、初期料金 99,800円、運用サポート料金 14,800円/月 です。予約システム費用は、みせまるクラウド 0円、STORES予約 スモール 12,980円/月、STORES予約 チーム 22,880円/月 を初期入力の参考値としています。</p>
+            <p>LP記載の基準料金は、初期料金 30,000円、運用プラン料金 ライト 5,000円/月・スタンダード 10,000円/月・運用代行 15,000円/月 です。予約通知のSMS通知オプションは +2,000円/月 を初期入力の参考値としています。</p>
           </div>
         </div>
 
@@ -649,10 +731,10 @@
             <li>
               <p>本契約における「月」とは、毎月1日から末日までの暦月をいう。</p>
               <p>甲は、乙の要望に基づき、サイト構成、デザイン、HTML/CSS実装、公開支援、予約システム設定支援等を行う。</p>
-              <p>月額運用サポートに含まれる「軽微な更新対応」は、既存ページのレイアウト又は仕様を変更しない範囲のテキスト修正を月3回まで、画像差し替えを月3点までとし、相談対応は電話、メール、チャット又はオンライン打合せによる月2回、各30分以内とする。</p>
+              <p>運用プランに含まれる対応範囲は、ライトプラン、スタンダードプラン、運用代行プランの別および個別契約の定めに従う。各プランには、公式サイトおよび予約システムの継続利用、LINEチャットによる相談対応、軽微修正、更新代行、設定変更その他甲が定める運用支援のうち、該当プランに応じた範囲を含む。</p>
             </li>
             <li>前項の上限を超える対応、新規ページ作成、構成変更、レイアウト変更、バナー制作、予約導線の変更、機能追加その他軽微な更新又は相談対応の範囲を超える対応は、別途見積りのうえ有償で行う。</li>
-            <li>甲は、集客数、売上、検索順位、予約件数その他の事業成果を保証しない。ただし、乙の目的達成に向けて、個別契約および月額サポートの範囲内で改善提案および運用支援を行う。</li>
+            <li>甲は、集客数、売上、検索順位、予約件数その他の事業成果を保証しない。ただし、乙の目的達成に向けて、個別契約および運用プランの範囲内で改善提案および運用支援を行う。</li>
           </ol>
         </div>
       </div>
@@ -711,8 +793,8 @@
         <h2 class="article-title">第6条（料金・支払い）</h2>
         <div class="article-body">
           <ol class="article-list">
-            <li>乙は、個別契約で定める初期料金、月額サポート料金、追加対応費用その他の対価を、定められた支払期日までに支払う。</li>
-            <li>個別契約に別段の定めがない場合、初期料金は申込後7日以内に支払うものとし、月額料金は当月分を前月末日までに支払うものとする。ただし、公開初月に限り、当月分を公開日が属する月の末日までに支払うことができる。</li>
+            <li>乙は、個別契約で定める初期料金、運用プラン料金、追加対応費用その他の対価を、定められた支払期日までに支払う。</li>
+            <li>個別契約に別段の定めがない場合、初期料金は申込後7日以内に支払うものとし、運用プラン料金は当月分を前月末日までに支払うものとする。ただし、公開初月に限り、当月分を公開日が属する月の末日までに支払うことができる。</li>
             <li>支払方法は銀行振込、Stripe決済、現金その他双方が合意した方法とし、振込手数料は乙の負担とする。</li>
             <li>乙が支払いを遅延した場合、甲は業務の一時停止、公開作業の延期、アカウント管理の停止または契約解除を行うことができる。</li>
             <li>第三者サービスの利用料、決済手数料、ドメイン費用、サーバー費用等は、個別契約に別段の定めがない限り乙の負担とする。</li>
@@ -727,7 +809,7 @@
             <li>甲は、個別契約で定める方法により制作物又は設定完了状態を乙へ提示し、乙は納品日又は公開確認依頼日のいずれか遅い日から7日以内（以下「検収期限」という。）に、検収結果を具体的な修正指摘又は不承認理由とともに通知する。</li>
             <li>乙から検収期限内に個別契約および第5条に定める範囲内の修正指摘があった場合、甲は当該範囲内で対応する。</li>
             <li>乙が検収期限内に修正指摘又は不承認理由を通知しない場合、当該制作物は検収完了したものとみなす。</li>
-            <li>検収完了後に発見された不具合又は追加要望については、第5条および個別契約の定めに従い、内容に応じて月額サポート又は別途有償対応とする。</li>
+            <li>検収完了後に発見された不具合又は追加要望については、第5条および個別契約の定めに従い、内容に応じて運用プラン又は別途有償対応とする。</li>
           </ol>
         </div>
       </div>
@@ -747,7 +829,7 @@
         <h2 class="article-title">第9条（第三者サービス）</h2>
         <div class="article-body">
           <ol class="article-list">
-            <li>甲は、Google、GitHub Pages、STORES予約、Stripeその他の外部サービスを利用することがある。</li>
+            <li>甲は、Google、GitHub Pages、みせまるクラウド、Stripeその他の外部サービスを利用することがある。</li>
             <li>外部サービスの仕様変更、提供停止、障害、料金改定、セキュリティ事故等に起因して乙に損害が生じた場合、甲は自己の故意または重過失がある場合を除き責任を負わない。</li>
             <li>乙名義で契約または管理すべきアカウントは、原則として乙が契約主体となる。</li>
           </ol>
@@ -807,8 +889,9 @@
         <div class="article-body">
           <ol class="article-list">
             <li>本契約は締結日から有効とし、いずれか当事者が終了を申し出るまで存続する。ただし、個別案件の具体的な期間は個別契約に定める。</li>
-            <li>本条における「任意解約」とは、債務不履行その他の法定又は約定解除事由によらず、当事者の都合により将来に向かって本契約又は個別契約を終了させることをいう。月額サポートの任意解約は月末締めとし、乙は解約希望月末日の30日前までに、書面又は電子メールで甲へ通知する。</li>
-            <li>前項に基づく任意解約が成立した場合でも、甲は当該解約月の末日まで個別契約に定めるサポートを提供し、乙は当該月末日までの料金を支払う。</li>
+            <li>本条における「任意解約」とは、債務不履行その他の法定又は約定解除事由によらず、当事者の都合により将来に向かって本契約又は個別契約を終了させることをいう。運用プランの最低契約期間は利用開始日から6か月とし、7か月目以降の任意解約は月末締めとする。乙は、解約希望月の前月末日までに、書面又は電子メールで甲へ通知する。</li>
+            <li>乙は、運用プランの最低契約期間中であっても、ライトプラン、スタンダードプランおよび運用代行プランの相互変更を希望することができる。プラン変更は、適用希望月の前月末日までに乙が甲へ通知し、原則として翌月1日から適用する。</li>
+            <li>前項に基づく任意解約が成立した場合でも、甲は当該解約月の末日まで個別契約に定めるサービスを提供し、乙は当該月末日までの料金を支払う。運用プラン終了後は、甲が管理する公式サイトおよび予約システムは継続利用できないものとし、継続利用を希望する場合は別途協議する。</li>
             <li>乙が制作開始後に個別案件を任意解約し、又は乙の都合により中断した場合、甲は、作業完了部分に相当する費用、既に確保又は手配済みの外注費、素材費、交通費その他実費を請求できる。</li>
             <li>甲又は乙が本契約又は個別契約に違反し、相手方が書面又は電子メールにより催告した後7日以内に是正しない場合、相手方は本契約又は当該個別契約の全部又は一部を解除できる。</li>
           </ol>
@@ -822,7 +905,7 @@
             <li>甲の責に帰すべき事由により乙へ損害が生じた場合、甲の賠償責任は、直近3か月間に甲が受領した本サービスの対価総額を上限とする。ただし、甲に故意または重過失がある場合を除く。</li>
             <li>甲は、逸失利益、間接損害、特別損害について責任を負わない。</li>
             <li>天災地変、火災、停電、通信回線障害、インターネット障害、ドメイン又はDNS障害、サーバ障害、法令改正、感染症の流行、行政上の措置その他甲の合理的支配を超える不可抗力により生じた履行遅滞又は履行不能について、甲は責任を負わない。</li>
-            <li>Google、GitHub、STORES予約、Stripeその他外部サービスの仕様変更、障害、停止、制限、アカウント凍結、料金改定その他当該外部サービスに起因する事象については、甲の故意又は重過失がある場合を除き、甲は責任を負わない。</li>
+            <li>Google、GitHub、みせまるクラウド、Stripeその他外部サービスの仕様変更、障害、停止、制限、アカウント凍結、料金改定その他当該外部サービスに起因する事象については、甲の故意又は重過失がある場合を除き、甲は責任を負わない。</li>
           </ol>
         </div>
       </div>
@@ -855,19 +938,19 @@
         <div class="signature-box">
           <div class="signature-title">甲</div>
           <div class="signature-lines">
-            <div>住所: <span class="line-fill line-fill--full"></span></div>
+            <div>住所:<br><span class="line-fill line-fill--full"></span></div>
             <div>屋号: Nakayama Works</div>
             <div>代表者: 中山 航</div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
         <div class="signature-box">
           <div class="signature-title">乙</div>
           <div class="signature-lines">
-            <div>住所: <span class="line-fill line-fill--full"></span></div>
-            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
-            <div>代表者: <span class="line-fill line-fill--long"></span></div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>住所:<br><span class="line-fill line-fill--full"></span></div>
+            <div>屋号・法人名:<br><span class="line-fill line-fill--long"></span></div>
+            <div>代表者:<br><span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
       </div>
@@ -901,7 +984,7 @@
             </tr>
             <tr>
               <th scope="row">対象業務</th>
-              <td>□ 公式サイト制作　□ 予約システム導入支援　□ 公開後運用サポート　□ 多言語対応　□ 写真選定・調整　□ その他 <span class="line-fill line-fill--long"></span></td>
+              <td>□ 公式サイト制作　□ 予約システム導入支援　□ 公開後運用サポート　□ 多言語対応　□ 写真選定・調整<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">制作範囲</th>
@@ -909,27 +992,27 @@
             </tr>
             <tr>
               <th scope="row">予約システム</th>
-              <td>□ みせまるクラウド　□ STORES予約 スモール　□ STORES予約 チーム　□ 利用なし　□ その他 <span class="line-fill"></span></td>
+              <td>□ みせまるクラウド　□ 別途案内の予約システム　□ 利用なし　□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">初期料金</th>
-              <td><span class="line-fill"></span> 円 <span class="inline-note">参考初期値: 99,800円</span></td>
+              <td><span class="line-fill"></span> 円 <span class="inline-note">参考初期値: 30,000円</span></td>
             </tr>
             <tr>
-              <th scope="row">月額運用サポート</th>
-              <td><span class="line-fill"></span> 円 / 月 <span class="inline-note">参考初期値: 14,800円 / 月</span><br>本個別契約における「月」とは、毎月1日から末日までの暦月をいう。月額サポートに含まれる軽微更新は、既存ページのテキスト修正月3回まで、画像差し替え月3点まで、相談対応は電話、メール、チャット又はオンライン打合せによる月2回・各30分までとし、超過分は別途見積りとする。</td>
+              <th scope="row">運用プラン料金</th>
+              <td><span class="line-fill"></span> 円 / 月<br><span class="inline-note">参考初期値: ライト 5,000円 / 月 ・ スタンダード 10,000円 / 月 ・ 運用代行 15,000円 / 月</span><br>□ ライトプラン　□ スタンダードプラン　□ 運用代行プラン　□ SMS通知オプション（+2,000円 / 月）<br>各プランには、公式サイトおよび予約システムの継続利用と公開後の運用支援を含む。具体的な対応範囲、回数上限および対象作業は、本個別契約の定めに従う。</td>
             </tr>
             <tr>
               <th scope="row">予約システム利用料</th>
-              <td>□ 乙が直接負担　□ 甲が立替後請求　金額目安: <span class="line-fill"></span> 円 / 月</td>
+              <td>□ みせまるクラウド利用は運用プラン料金に含む　□ ドメイン等の第三者サービス費用は乙が直接負担　□ 事前決済等のため別予約システムを利用する場合は別途協議<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">支払条件</th>
-              <td>□ 初期料金は申込後7日以内に支払　□ 月額料金は当月分を前月末日までに支払　□ 公開初月は当月末日までに支払　□ 公開月から月額開始　□ 着手金 <span class="line-fill"></span> 円　□ その他 <span class="line-fill line-fill--long"></span></td>
+              <td>□ 初期料金は申込後7日以内に支払　□ 運用プラン料金は当月分を前月末日までに支払　□ 公開初月は当月末日までに支払　□ 公開月から運用プラン開始　□ 着手金 <span class="line-fill"></span> 円<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">スケジュール</th>
-              <td>着手予定日: <span class="line-fill"></span> / 初稿確認: <span class="line-fill"></span> / 公開予定日: <span class="line-fill"></span></td>
+              <td>着手予定日: <span class="line-fill"></span> / 初稿確認: <span class="line-fill"></span> /<br>公開予定日: <span class="line-fill"></span></td>
             </tr>
             <tr>
               <th scope="row">修正回数</th>
@@ -937,15 +1020,15 @@
             </tr>
             <tr>
               <th scope="row">実績掲載</th>
-              <td>□ 可　□ 不可　□ ロゴのみ可　□ 公開後 <span class="line-fill"></span> 日以降可</td>
+              <td>□ 可　□ 不可　□ ロゴのみ可<br>□ 公開後 <span class="line-fill"></span> 日以降可</td>
             </tr>
             <tr>
               <th scope="row">引渡対象</th>
-              <td>□ 公開済みサイト　□ HTML/CSS/画像データ　□ ドメイン情報　□ GitHub等の管理権限　□ 予約システム管理権限　□ その他 <span class="line-fill"></span></td>
+              <td>□ なし（継続利用型）　□ 公開済みサイト　□ HTML/CSS/画像データ<br>□ ドメイン情報　□ 公開環境の管理権限　□ 予約システム管理情報<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">解約条件</th>
-              <td>月額サポートの任意解約は月末締めとし、解約希望月末日の30日前までに通知する。制作開始後の任意解約又は乙都合の中断時は、進行済業務、手配済費用その他実費を精算する。日割返金: □ しない　□ 別途定める</td>
+              <td>運用プランの最低契約期間は6ヶ月とし、7ヶ月目以降の任意解約は月末締めとする。解約希望月の前月末日までに通知すること。プラン変更は月単位で可能とし、適用希望月の前月末日までに通知した場合、原則として翌月1日から変更後プランを適用する。解約後は、甲が管理する公式サイトおよび予約システムは継続利用できない。制作開始後の任意解約又は乙都合の中断時は、進行済業務、手配済費用その他実費を精算する。<br><br>日割返金: □ しない　□ 別途定める</td>
             </tr>
             <tr>
               <th scope="row">備考</th>
@@ -961,15 +1044,15 @@
           <div class="signature-lines">
             <div>屋号: Nakayama Works</div>
             <div>代表者: 中山 航</div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
         <div class="signature-box">
           <div class="signature-title">乙</div>
           <div class="signature-lines">
-            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
-            <div>代表者: <span class="line-fill line-fill--long"></span></div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>屋号・法人名:<br><span class="line-fill line-fill--long"></span></div>
+            <div>代表者:<br><span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
       </div>
@@ -1001,15 +1084,15 @@
           <tbody>
             <tr>
               <th scope="row">対象データ</th>
-              <td>□ 氏名　□ 電話番号　□ メールアドレス　□ 予約日時　□ 利用メニュー　□ 問い合わせ内容　□ その他 <span class="line-fill"></span></td>
+              <td>□ 氏名　□ 電話番号　□ メールアドレス　□ 予約日時　□ 利用メニュー　□ 問い合わせ内容<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">利用目的</th>
-              <td>□ 初期設定　□ データ移行　□ 運用サポート　□ 障害調査　□ 予約導線改善　□ その他 <span class="line-fill"></span></td>
+              <td>□ 初期設定　□ データ移行　□ 運用サポート　□ 障害調査　□ 予約導線改善　□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">アクセス方法</th>
-              <td>□ 乙が発行した管理者アカウント　□ 画面共有　□ 一時共有ファイル　□ CSV等の受領　□ その他 <span class="line-fill"></span></td>
+              <td>□ 乙が発行した管理者アカウント　□ 画面共有　□ 一時共有ファイル　□ CSV等の受領<br>□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">保管方法</th>
@@ -1021,7 +1104,7 @@
             </tr>
             <tr>
               <th scope="row">第三者サービス</th>
-              <td>Google、GitHub、STORES予約、Stripeその他、業務に必要な外部サービスを利用する場合がある。利用主体や権限範囲は本契約および個別契約に従う。</td>
+              <td>Google、GitHub、みせまるクラウド、Stripeその他、業務に必要な外部サービスを利用する場合がある。利用主体や権限範囲は本契約および個別契約に従う。</td>
             </tr>
             <tr>
               <th scope="row">事故時対応</th>
@@ -1045,15 +1128,15 @@
           <div class="signature-lines">
             <div>屋号: Nakayama Works</div>
             <div>代表者: 中山 航</div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
         <div class="signature-box">
           <div class="signature-title">乙</div>
           <div class="signature-lines">
-            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
-            <div>代表者: <span class="line-fill line-fill--long"></span></div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>屋号・法人名:<br><span class="line-fill line-fill--long"></span></div>
+            <div>代表者:<br><span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
       </div>
@@ -1091,18 +1174,18 @@
             </tr>
             <tr>
               <th scope="row">表示確認</th>
-              <td>□ スマホ表示　□ PC表示　□ 予約導線　□ 問い合わせフォーム　□ メニュー/価格　□ 店舗情報　□ SSL　□ その他 <span class="line-fill"></span></td>
+              <td>□ スマホ表示　□ PC表示　□ 予約導線　□ 問い合わせフォーム　□ メニュー/価格　□ 店舗情報　□ SSL　□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">引渡物</th>
-              <td>□ HTML/CSS/画像データ　□ 管理アカウント一覧　□ ドメイン/DNS情報　□ GitHub等リポジトリ権限　□ 運用メモ　□ その他 <span class="line-fill"></span></td>
+              <td>□ HTML/CSS/画像データ　□ 管理アカウント一覧　□ ドメイン/DNS情報　□ GitHub等リポジトリ権限　□ 運用メモ　□ その他 <span class="line-fill line-fill--long"></span></td>
             </tr>
             <tr>
               <th scope="row">未了項目</th>
               <td>□ なし　□ あり <span class="line-fill line-fill--full"></span></td>
             </tr>
             <tr>
-              <th scope="row">月額サポート開始</th>
+              <th scope="row">運用プラン開始</th>
               <td><span class="line-fill"></span> 年 <span class="line-fill"></span> 月分から開始</td>
             </tr>
             <tr>
@@ -1128,15 +1211,15 @@
           <div class="signature-lines">
             <div>屋号: Nakayama Works</div>
             <div>代表者: 中山 航</div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
         <div class="signature-box">
           <div class="signature-title">乙</div>
           <div class="signature-lines">
-            <div>屋号・法人名: <span class="line-fill line-fill--long"></span></div>
-            <div>代表者: <span class="line-fill line-fill--long"></span></div>
-            <div>署名・押印: <span class="line-fill line-fill--long"></span></div>
+            <div>屋号・法人名:<br><span class="line-fill line-fill--long"></span></div>
+            <div>代表者:<br><span class="line-fill line-fill--long"></span></div>
+            <div>署名・押印:<br><span class="line-fill line-fill--long"></span></div>
           </div>
         </div>
       </div>
@@ -1150,6 +1233,120 @@
 
   <script>
     (function () {
+      var storagePrefix = "nakayama-contract-set:v1:";
+
+      function safeStorageGet(key) {
+        try {
+          return window.localStorage.getItem(storagePrefix + key);
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function safeStorageSet(key, value) {
+        try {
+          window.localStorage.setItem(storagePrefix + key, value);
+        } catch (_) {}
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function initEditableLines() {
+        var lines = document.querySelectorAll(".line-fill");
+        lines.forEach(function (line, index) {
+          var key = line.getAttribute("data-field-key") || ("line-" + index);
+          line.classList.add("editable-line");
+          line.setAttribute("contenteditable", "true");
+          line.setAttribute("data-field-key", key);
+          line.setAttribute("spellcheck", "false");
+
+          var savedValue = safeStorageGet(key);
+          if (savedValue) {
+            line.textContent = savedValue;
+          }
+
+          line.addEventListener("input", function () {
+            safeStorageSet(key, line.textContent || "");
+          });
+
+          line.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+            }
+          });
+        });
+      }
+
+      function buildCheckMarkup(label, key) {
+        var safeLabel = escapeHtml(label);
+        return '<label class="check-item" data-check-key="' + key + '">'
+          + '<input class="check-control" type="checkbox">'
+          + '<span class="check-box" aria-hidden="true"></span>'
+          + '<span class="check-text">' + safeLabel + "</span>"
+          + "</label>";
+      }
+
+      function replaceChecksInHtml(html, getNextKey) {
+        return String(html || "")
+          .split(/(<br\s*\/?>)/i)
+          .map(function (segment) {
+            if (/^<br\s*\/?>$/i.test(segment)) {
+              return segment;
+            }
+            return segment.replace(/□\s*([^□<]+?)(?=(?:\s*□)|(?:<br\s*\/?>)|(?:\s*<span\b)|$)/g, function (_, label) {
+              var trimmed = String(label || "").trim();
+              if (!trimmed) return _;
+              return buildCheckMarkup(trimmed, getNextKey());
+            });
+          })
+          .join("");
+      }
+
+      function initInteractiveChecks() {
+        var targets = document.querySelectorAll(".detail-table td, .check-table td, .boxed p");
+        var checkIndex = 0;
+        function nextCheckKey() {
+          var key = "check-" + checkIndex;
+          checkIndex += 1;
+          return key;
+        }
+
+        targets.forEach(function (target) {
+          if (!target || target.querySelector(".check-item")) return;
+          var html = target.innerHTML;
+          if (html.indexOf("□") === -1) return;
+
+          target.innerHTML = replaceChecksInHtml(html, nextCheckKey);
+        });
+
+        document.querySelectorAll(".check-item").forEach(function (item) {
+          var key = item.getAttribute("data-check-key") || "";
+          var input = item.querySelector(".check-control");
+          if (!input) return;
+
+          var saved = safeStorageGet(key);
+          input.checked = saved === "true";
+          item.classList.toggle("is-checked", input.checked);
+
+          item.addEventListener("click", function (event) {
+            event.preventDefault();
+            input.checked = !input.checked;
+            item.classList.toggle("is-checked", input.checked);
+            safeStorageSet(key, input.checked ? "true" : "false");
+          });
+        });
+      }
+
+      initInteractiveChecks();
+      initEditableLines();
+
       var printButton = document.getElementById("printButton");
       if (!printButton) {
         return;

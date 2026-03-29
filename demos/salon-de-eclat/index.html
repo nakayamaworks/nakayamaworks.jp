@@ -39,20 +39,11 @@
     .welcome{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;min-height:92vh;padding:5rem 1.2rem 3rem;background:radial-gradient(circle at 20% 20%, rgba(215,178,74,.22), transparent 40%),#070707;transition:opacity .5s ease}
     .welcome.play{animation:welcomeHide .72s ease 2.1s forwards}
     .welcome.is-out{opacity:0;pointer-events:none}
-    .welcome-inner{width:100%;max-width:760px;margin:0 auto;text-align:center;transform:translate3d(0,-86px,0)}
     .welcome-loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:12px;transition:opacity .3s ease}
     .welcome-loading-mark{width:min(200px,42vw);height:3px;border-radius:999px;background:rgba(215,178,74,.22);overflow:hidden}
     .welcome-loading-mark::after{content:"";display:block;width:45%;height:100%;border-radius:inherit;background:linear-gradient(90deg,rgba(215,178,74,.55) 0%,rgba(247,224,138,.88) 100%);animation:loaderSlide 1.18s ease-in-out infinite}
     .welcome-loading-text{margin:0;font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;letter-spacing:.09em;color:rgba(245,240,226,.72);text-transform:uppercase}
-    .welcome-inner{opacity:0;transition:opacity .3s ease}
-    html.fonts-ready .welcome-inner{opacity:1}
     html.fonts-ready .welcome-loading{opacity:0;visibility:hidden}
-    .welcome-sub,.welcome-title{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease}
-    .welcome.play .welcome-sub,.welcome.play .welcome-title{animation:welcomeUp .82s ease .08s forwards}
-    .welcome-sub{margin:0 0 .65rem;color:var(--gold);letter-spacing:.13em;font-size:clamp(15px,3.8vw,20px)}
-    .welcome-title{margin:.2rem 0 .95rem;color:#fff6dd;font-family:'Cinzel',serif}
-    .welcome-line{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease;margin:1.15rem auto 0;max-width:620px;font-size:clamp(15px,3.9vw,20px);color:rgba(245,240,226,.82)}
-    .welcome.play .welcome-line{animation:welcomeLine .92s ease .48s forwards}
     @keyframes welcomeUp { to { opacity:1; transform:none; } }
     @keyframes welcomeLine { to { opacity:1; transform:none; } }
     @keyframes welcomeHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
@@ -139,7 +130,7 @@
     .hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.2rem 3rem}
     .hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;will-change:opacity}
     .hero-bg.is-visible{opacity:1}
-    .hero-copy{text-align:center;max-width:760px;position:relative;z-index:1}
+    .hero-copy{text-align:center;max-width:760px;position:relative;z-index:1;transition:opacity .3s ease}
     .hero-tag{color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.13em;margin:0 0 .65rem;font-size:clamp(15px,3.8vw,20px)}
     .hero h1{font-family:'Cinzel',serif}
     .hero-lead{margin:1.15rem auto 0;color:rgba(245,240,226,.82);max-width:620px;font-size:clamp(15px,3.9vw,20px)}
@@ -166,6 +157,31 @@
       transition:left .52s ease;
     }
     .hero-cta:hover::before,.hero-cta:focus::before,.reserve-link:hover::before,.reserve-link:focus::before{left:135%}
+    body.is-welcome .hero{opacity:1;transform:none}
+    body.is-welcome .hero-copy{z-index:330}
+    html:not(.fonts-ready) body.is-welcome .hero-copy{opacity:0}
+    body.is-welcome .hero-tag,
+    body.is-welcome #heroTitle{
+      opacity:0;
+      transform:translateY(14px);
+    }
+    body.is-welcome .hero-lead{
+      opacity:0;
+      transform:translateX(-24px);
+    }
+    body.is-welcome .hero-cta{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transform:translateY(18px);
+    }
+    body.is-welcome.is-welcome-playing .hero-tag,
+    body.is-welcome.is-welcome-playing #heroTitle{
+      animation:welcomeUp .82s ease .08s forwards;
+    }
+    body.is-welcome.is-welcome-playing .hero-lead{
+      animation:welcomeLine .92s ease .48s forwards;
+    }
 
     .section{width:min(1160px,calc(100% - 1.4rem));margin:0 auto;padding:2.2rem 0}
     .title{
@@ -177,9 +193,7 @@
     }
     .brand,
     .hero-tag,
-    .welcome-sub,
     .hero h1,
-    .welcome-title,
     .title,
     .menu-item h3,
     .staff-card h3,
@@ -191,14 +205,12 @@
       letter-spacing:.08em;
       line-height:1.15;
     }
-    .hero-copy,
-    .welcome-inner{
+    .hero-copy{
       width:100%;
       max-width:760px;
       margin:0 auto;
     }
-    .hero h1,
-    .welcome-title{
+    .hero h1{
       font-size:clamp(2.1rem,5.5vw,4.2rem);
       margin:.2rem 0 .95rem;
       text-wrap:balance;
@@ -206,12 +218,10 @@
       overflow-wrap:normal;
     }
     .title-line{display:block;white-space:nowrap}
-    .hero h1 .title-line + .title-line,
-    .welcome-title .title-line + .title-line{
+    .hero h1 .title-line + .title-line{
       margin-top:.04em;
     }
     :lang(ja) .hero-tag,
-    :lang(ja) .welcome-sub,
     :lang(ja) #storeInfoTitle,
     :lang(ja) #salonGallery .menu-item h3,
     :lang(ja) #menu .menu-item h3,
@@ -374,12 +384,10 @@
 
     @media (max-width:991.98px){
       html,body{overflow-x:hidden !important}
-      .hero h1,
-      .welcome-title{
+      .hero h1{
         font-size:clamp(1.68rem,7.5vw,2.2rem);
       }
-      .hero h1,
-      .welcome-title{
+      .hero h1{
         max-width:none;
         margin-left:auto;
         margin-right:auto;
@@ -391,7 +399,6 @@
       #staff .staff-card:nth-child(2) .avatar{margin-left:auto;margin-right:0}
       #staff .staff-card:nth-child(2) #s2Name,
       #staff .staff-card:nth-child(2) #s2Role{text-align:right}
-      .welcome-inner{transform:translate3d(0,-50px,0)}
       .menu-toggle{display:inline-block}
       .top-nav-right{
         position:absolute;
@@ -453,11 +460,6 @@
     <div class="welcome-loading" id="welcomeLoading">
       <span class="welcome-loading-mark"></span>
       <p class="welcome-loading-text">Loading</p>
-    </div>
-    <div class="welcome-inner">
-      <p id="w-sub" class="welcome-sub">高級エステサロン</p>
-      <h1 id="w-title" class="welcome-title"><span class="title-line">Salon de</span><span class="title-line">ÉCLAT</span></h1>
-      <p id="w-line" class="welcome-line">あなたの美しさを、静かに引き出す</p>
     </div>
   </div>
 
@@ -677,7 +679,7 @@
       menuDetailBtn1:'menu_detail_btn',menuDetailBtn2:'menu_detail_btn',menuDetailBtn3:'menu_detail_btn',menuDetailBtn4:'menu_detail_btn',
       staffTitle:'staff_title',s1Name:'s1_name',s1Role:'s1_role',s1Desc:'s1_desc',s2Name:'s2_name',s2Role:'s2_role',s2Desc:'s2_desc',s3Name:'s3_name',s3Role:'s3_role',s3Desc:'s3_desc',
       storeTitle:'store_title',storeInfoTitle:'store_info_title',storeAddress:'store_address',storeHours:'store_hours',storeAccess:'store_access',storeTel:'store_tel',mapTitle:'map_title',
-      ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy','w-sub':'welcome_sub','w-line':'welcome_line'
+      ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy'
     };
     const LANG_SHORT = { ja:'JP', en:'EN', 'zh-TW':'繁中', es:'ES', ko:'KO' };
     const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/';
@@ -1287,6 +1289,10 @@
         bootMask.classList.add('hide');
         window.setTimeout(() => bootMask.remove(), 340);
       };
+      const setWelcomeState = ({ open = false, playing = false } = {}) => {
+        document.body.classList.toggle('is-welcome', open);
+        document.body.classList.toggle('is-welcome-playing', open && playing);
+      };
 
       const ensureFontsReady = async (minMs = 0) => {
         const startedAt = performance.now();
@@ -1339,15 +1345,21 @@
       const playWelcome = async ({ instant = false } = {}) => {
         if (welcomeStarted || shouldSkipWelcome) return;
         welcomeStarted = true;
+        welcome.classList.remove('play');
         welcome.classList.remove('hidden');
+        setWelcomeState({ open: true, playing: false });
         document.body.classList.add('welcome-lock');
         hideBootMask();
         await ensureFontsReady(instant ? 0 : 1000);
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-        requestAnimationFrame(() => welcome.classList.add('play'));
+        requestAnimationFrame(() => {
+          setWelcomeState({ open: true, playing: true });
+          welcome.classList.add('play');
+        });
         setTimeout(() => {
           welcome.classList.add('hidden');
+          setWelcomeState();
           document.body.classList.remove('welcome-lock');
         }, 2720);
       };
@@ -1356,6 +1368,7 @@
         if (shouldSkipWelcome) {
           await ensureFontsReady(0);
           welcome.classList.add('hidden');
+          setWelcomeState();
           if (!saved) await showLangGate('initial');
           else hideBootMask();
           return;
@@ -1365,6 +1378,7 @@
           return;
         }
         welcome.classList.add('hidden');
+        setWelcomeState();
         await showLangGate('initial');
       })();
 
@@ -1409,6 +1423,7 @@
     // Hard fallback: never leave the page blocked by welcome overlay.
     window.setTimeout(() => {
       document.getElementById('welcome')?.classList.add('hidden');
+      document.body.classList.remove('is-welcome', 'is-welcome-playing');
       document.body.classList.remove('welcome-lock');
       modalLock.forceUnlock();
       const bootMask = document.getElementById('bootMask');
