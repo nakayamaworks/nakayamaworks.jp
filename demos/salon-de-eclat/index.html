@@ -1459,6 +1459,7 @@
             hideLangGate();
           } else {
             hideLangGate();
+            if (mode === 'initial') triggerHeroReserveReveal();
           }
           gateButtons.forEach((b) => { b.disabled = false; });
           releaseLocksIfIdle();
@@ -1466,6 +1467,11 @@
       });
 
       window.addEventListener('pageshow', releaseLocksIfIdle);
+      window.addEventListener('pageshow', () => {
+        const gateOpen = gate.classList.contains('show');
+        const welcomeOpen = !welcome.classList.contains('hidden');
+        if (!gateOpen && !welcomeOpen) triggerHeroReserveReveal();
+      });
       window.addEventListener('load', releaseLocksIfIdle);
       window.setInterval(releaseLocksIfIdle, 800);
     })();
