@@ -14,8 +14,13 @@
   <meta name="format-detection" content="telephone=no" />
   <script>
     try {
+      const supportedLangs = ['ja', 'en', 'zh-TW', 'es', 'ko'];
+      const storedLang = localStorage.getItem('nakayama_demo_lang_nail_atelier_sui');
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
+      }
+      if (storedLang && supportedLangs.includes(storedLang)) {
+        document.documentElement.lang = storedLang;
       }
       if (localStorage.getItem('nakayama_demo_lang_gate_seen_nail_atelier_sui') === '1') {
         document.documentElement.classList.add('lang-gate-seen');
