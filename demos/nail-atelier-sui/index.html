@@ -1927,19 +1927,24 @@
         white-space: nowrap;
       }
 
-      body.booting .hero-grid {
-        position: relative;
+      body.booting .hero-copy {
+        opacity: 1;
+        visibility: visible;
+        position: static;
+        order: 2;
+        padding: 0;
+        text-align: center;
       }
 
-      body.booting .hero-copy {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 1.2rem;
-        z-index: 5;
-        order: 0;
-        padding: 0 1rem;
-        text-align: center;
+      body.booting .hero-grid {
+        gap: 0.55rem;
+        align-content: center;
+      }
+
+      body.booting .hero-copy .hero-body,
+      body.booting .hero-actions,
+      body.booting .hero-scroll-cue--mobile {
+        display: none;
       }
 
       body.booting .hero-title-row {
