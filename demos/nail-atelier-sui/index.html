@@ -1622,6 +1622,7 @@
     .lightbox-nav {
       display: flex;
       gap: 0.7rem;
+      justify-content: center;
     }
 
     .lightbox-nav button {
@@ -1873,6 +1874,25 @@
         white-space: nowrap;
       }
 
+      body.booting .hero-grid {
+        position: relative;
+      }
+
+      body.booting .hero-copy {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 1.2rem;
+        z-index: 5;
+        order: 0;
+        padding: 0 1rem;
+        text-align: center;
+      }
+
+      body.booting .hero-title-row {
+        margin: 0;
+      }
+
       .hero-visual {
         min-height: 424px;
       }
@@ -1987,6 +2007,19 @@
         scroll-padding-inline: 8vw;
       }
 
+      .gallery-visual {
+        aspect-ratio: 4 / 5;
+      }
+
+      .gallery-card__body {
+        padding: 0.78rem 0.82rem 0.86rem;
+        gap: 0.42rem;
+      }
+
+      .gallery-card p {
+        display: none;
+      }
+
       .story-cards,
       .info-grid,
       .flow-grid {
@@ -2075,11 +2108,15 @@
       }
 
       .lightbox {
-        padding: 0.5rem;
+        place-items: start center;
+        padding: max(0.5rem, env(safe-area-inset-top)) 0.5rem max(0.5rem, env(safe-area-inset-bottom));
+        overflow-y: auto;
       }
 
       .lightbox-card {
+        width: 100%;
         border-radius: 20px;
+        max-height: none;
       }
 
       .lightbox-body {
@@ -2087,7 +2124,27 @@
       }
 
       .lightbox-visual {
-        min-height: 340px;
+        min-height: 0;
+        padding: 0.9rem 0.9rem 0;
+      }
+
+      .lightbox-visual img {
+        min-height: 0;
+        max-height: 52dvh;
+        height: auto;
+        width: 100%;
+      }
+
+      .lightbox-copy {
+        padding: 1rem 0.95rem 1.1rem;
+      }
+
+      .lightbox-close {
+        position: fixed;
+        top: max(0.72rem, env(safe-area-inset-top));
+        right: 0.85rem;
+        z-index: 230;
+        box-shadow: var(--shadow-sm);
       }
     }
   </style>
@@ -2142,7 +2199,7 @@
   <main id="top">
     <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-copy reveal">
+        <div class="hero-copy reveal is-visible">
           <div class="hero-title-row">
             <h1 id="heroTitle" data-i18n-html="hero_title">指先に<br />静かな余白を。</h1>
             <button class="hero-scroll-cue hero-scroll-cue--mobile" id="heroScrollCueMobile" type="button" aria-label="Scroll">
@@ -2156,7 +2213,7 @@
           </div>
         </div>
 
-        <div class="hero-visual reveal">
+        <div class="hero-visual reveal is-visible">
           <div class="eyebrow" data-i18n="hero_eyebrow">Omotesando Private Nail Salon</div>
           <div class="hero-card">
             <div class="hero-art">
