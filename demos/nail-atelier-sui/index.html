@@ -655,10 +655,6 @@
     }
 
     .hero-scroll-cue {
-      --hero-cue-shift-x: -50%;
-      position: absolute;
-      left: 50%;
-      bottom: clamp(18px, 4vw, 34px);
       display: inline-flex;
       flex-direction: column;
       align-items: center;
@@ -671,11 +667,22 @@
       font-size: 0.92rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      transform: translateX(var(--hero-cue-shift-x));
       opacity: 0.78;
       transition: opacity .2s ease;
       z-index: 4;
+    }
+
+    .hero-scroll-cue--desktop {
+      --hero-cue-shift-x: -50%;
+      position: absolute;
+      left: 50%;
+      bottom: clamp(18px, 4vw, 34px);
+      transform: translateX(var(--hero-cue-shift-x));
       animation: heroCueFloat 2.4s ease-in-out infinite;
+    }
+
+    .hero-scroll-cue--mobile {
+      display: none;
     }
 
     .hero-scroll-label {
@@ -1858,14 +1865,12 @@
       }
 
       .hero-title-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 0.7rem;
+        position: relative;
+        display: block;
       }
 
       .hero-title-row h1 {
-        flex: 1 1 auto;
+        white-space: nowrap;
       }
 
       .hero-visual {
@@ -1883,19 +1888,26 @@
       }
 
       .hero-scroll-cue {
-        position: static;
-        --hero-cue-shift-x: 0;
-        flex: 0 0 auto;
         align-items: center;
         justify-content: center;
         gap: 0;
-        min-width: 28px;
-        padding-top: 0.22rem;
         transform: none;
         animation: none;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+      }
+
+      .hero-scroll-cue--desktop {
+        display: none;
+      }
+
+      .hero-scroll-cue--mobile {
+        display: inline-flex;
+        position: absolute;
+        top: 0.22rem;
+        right: -0.1rem;
+        --hero-cue-shift-x: 0;
       }
 
       .hero-scroll-cue .icon {
@@ -2128,7 +2140,7 @@
         <div class="hero-copy reveal">
           <div class="hero-title-row">
             <h1 id="heroTitle" data-i18n-html="hero_title">指先に<br />静かな余白を。</h1>
-            <button class="hero-scroll-cue" id="heroScrollCue" type="button" aria-label="Scroll">
+            <button class="hero-scroll-cue hero-scroll-cue--mobile" id="heroScrollCueMobile" type="button" aria-label="Scroll">
               <span class="icon" aria-hidden="true"></span>
               <span class="hero-scroll-label" data-i18n="hero_scroll_hint">scroll</span>
             </button>
@@ -2154,6 +2166,10 @@
           </div>
         </div>
       </div>
+      <button class="hero-scroll-cue hero-scroll-cue--desktop" id="heroScrollCueDesktop" type="button" aria-label="Scroll">
+        <span class="icon" aria-hidden="true"></span>
+        <span class="hero-scroll-label" data-i18n="hero_scroll_hint">scroll</span>
+      </button>
     </section>
 
     <section id="concept" class="reveal">
@@ -2376,9 +2392,11 @@
       const langSelect = document.getElementById('langSelect');
       const menuToggle = document.getElementById('menuToggle');
       const navPanel = document.getElementById('navPanel');
-      const heroScrollCue = document.getElementById('heroScrollCue');
+      const heroScrollCueDesktop = document.getElementById('heroScrollCueDesktop');
+      const heroScrollCueMobile = document.getElementById('heroScrollCueMobile');
       const heroTitle = document.getElementById('heroTitle');
       const heroBody = document.querySelector('.hero-body');
+      const heroActions = document.querySelector('.hero-actions');
       const topNav = document.querySelector('.top-nav');
       const galleryGrid = document.getElementById('galleryGrid');
       const galleryCarouselStatus = document.getElementById('galleryCarouselStatus');
@@ -2533,7 +2551,9 @@
         document.title = t('page_title') || document.title;
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription && t('meta_description')) metaDescription.setAttribute('content', t('meta_description'));
-        if (heroScrollCue) heroScrollCue.setAttribute('aria-label', t('hero_scroll_hint') || 'Scroll');
+        [heroScrollCueDesktop, heroScrollCueMobile].forEach((cue) => {
+          if (cue) cue.setAttribute('aria-label', t('hero_scroll_hint') || 'Scroll');
+        });
 
         renderGallery();
         renderStylists();
@@ -2899,7 +2919,8 @@
       }
 
       function initHeroScrollCue() {
-        if (!heroScrollCue) return;
+        const cues = [heroScrollCueDesktop, heroScrollCueMobile].filter(Boolean);
+        if (!cues.length) return;
 
         const isMobileHeroCue = () => window.matchMedia('(max-width: 640px)').matches;
         const navOffset = () => {
@@ -2913,7 +2934,7 @@
           window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         };
 
-        heroScrollCue.addEventListener('click', () => {
+        cues.forEach((cue) => cue.addEventListener('click', () => {
           if (isMobileHeroCue()) {
             scrollToWithOffset(heroTitle);
             return;
@@ -2921,19 +2942,19 @@
 
           const concept = document.getElementById('concept');
           scrollToWithOffset(concept);
-        });
+        }));
 
         updateHeroScrollCueState();
         window.addEventListener('resize', updateHeroScrollCueState, { passive: true });
       }
 
       function updateHeroScrollCueState() {
-        if (!heroScrollCue || !heroBody) return;
+        if (!heroBody || !heroActions) return;
         if (document.body.classList.contains('booting')) return;
 
         const isMobile = window.matchMedia('(max-width: 640px)').matches;
         if (!isMobile) {
-          document.body.classList.add('hero-scroll-cue-needed');
+          document.body.classList.remove('hero-scroll-cue-needed');
           return;
         }
 
@@ -2942,8 +2963,8 @@
           return;
         }
 
-        const heroBodyTop = heroBody.getBoundingClientRect().top;
-        const needsCue = heroBodyTop > window.innerHeight - 16;
+        const heroActionsTop = heroActions.getBoundingClientRect().top;
+        const needsCue = heroActionsTop > window.innerHeight - 20;
         document.body.classList.toggle('hero-scroll-cue-needed', needsCue);
       }
 
