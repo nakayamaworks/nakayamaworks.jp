@@ -79,7 +79,7 @@ window.DEMO_I18N = {
     access_note_body: '完全予約制。初回はカウンセリングを含め、通常より15分ほど余裕をみています。',
 
     reservation_kicker: 'Reservation',
-    reservation_title: '空き状況の確認はこちらから。',
+    reservation_title: 'ご予約のご案内',
     reservation_body: '無理に背伸びしない、でも少し気分が整う。\nそんな指先の時間を用意してお待ちしています。',
     reserve_button: 'ご予約はこちら',
     reserve_secondary: '空き状況を見る',
@@ -168,7 +168,7 @@ window.DEMO_I18N = {
     access_note_body: 'Reservations only. First visits include a consultation, so please allow about 15 extra minutes.',
 
     reservation_kicker: 'Reservation',
-    reservation_title: 'Check availability here.',
+    reservation_title: 'Reservation Information',
     reservation_body: 'Not overdone, but enough to settle the mood a little.\nThat is the kind of fingertip time waiting for you at SUI.',
     reserve_button: 'Book Now',
     reserve_secondary: 'Check Availability',
@@ -257,7 +257,7 @@ window.DEMO_I18N = {
     access_note_body: '完全預約制。初次來店含諮詢，請預留多 15 分鐘左右。',
 
     reservation_kicker: 'Reservation',
-    reservation_title: '可由此查看預約空檔。',
+    reservation_title: '預約資訊',
     reservation_body: '不刻意誇張，卻能讓心情稍微安定下來。\n這就是 SUI 想提供的指尖時間。',
     reserve_button: '立即預約',
     reserve_secondary: '查看空檔',
@@ -346,7 +346,7 @@ window.DEMO_I18N = {
     access_note_body: 'Solo con reserva. La primera visita incluye consulta, asi que recomendamos 15 minutos extra.',
 
     reservation_kicker: 'Reservation',
-    reservation_title: 'Consulte disponibilidad aqui.',
+    reservation_title: 'Informacion de reserva',
     reservation_body: 'Sin exceso, pero suficiente para ordenar un poco el animo.\nEse es el tiempo para tus manos que espera en SUI.',
     reserve_button: 'Reservar',
     reserve_secondary: 'Ver disponibilidad',
@@ -435,7 +435,7 @@ window.DEMO_I18N = {
     access_note_body: '완전 예약제입니다. 첫 방문은 상담을 포함해 약 15분 정도 여유를 두고 있습니다.',
 
     reservation_kicker: 'Reservation',
-    reservation_title: '예약 가능 시간은 여기에서 확인해 주세요.',
+    reservation_title: '예약 안내',
     reservation_body: '과하지 않지만, 기분은 조금 정돈되는 시간.\nSUI가 준비한 손끝의 시간을 만나보세요.',
     reserve_button: '예약하기',
     reserve_secondary: '가능 시간 보기',
