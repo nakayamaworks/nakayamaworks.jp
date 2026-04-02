@@ -58,6 +58,7 @@
 
     html {
       scroll-behavior: smooth;
+      overscroll-behavior: none;
     }
 
     body {
@@ -73,6 +74,7 @@
         linear-gradient(180deg, #f8f3eb 0%, #f5eee4 48%, #f8f4ee 100%);
       min-height: 100vh;
       overflow-x: hidden;
+      overscroll-behavior: none;
     }
 
     body.welcome-lock {
@@ -2597,6 +2599,7 @@
       initGalleryDesktopControls();
       initHeroScrollCue();
       initHeroReserveReveal();
+      initRubberBandSuppression();
       initEntryFlow();
 
       function getInitialLang() {
@@ -3196,6 +3199,69 @@
             menuToggle.setAttribute('aria-expanded', 'false');
           }
         });
+      }
+
+      function initRubberBandSuppression() {
+        if (!('ontouchstart' in window)) return;
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        const nearestScrollable = (target, axis) => {
+          let node = target instanceof Element ? target : null;
+          while (node && node !== document.body) {
+            const style = window.getComputedStyle(node);
+            const overflow = axis === 'x' ? style.overflowX : style.overflowY;
+            const canScroll = /(auto|scroll|overlay)/.test(overflow);
+            const hasRange = axis === 'x'
+              ? node.scrollWidth > node.clientWidth + 1
+              : node.scrollHeight > node.clientHeight + 1;
+            if (canScroll && hasRange) return node;
+            node = node.parentElement;
+          }
+          return null;
+        };
+
+        document.addEventListener('touchstart', (event) => {
+          const touch = event.changedTouches[0];
+          touchStartX = touch.clientX;
+          touchStartY = touch.clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (event) => {
+          if (event.touches.length !== 1) return;
+          if (lightbox.classList.contains('show')) return;
+
+          const touch = event.touches[0];
+          const deltaX = touch.clientX - touchStartX;
+          const deltaY = touch.clientY - touchStartY;
+          const axis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+          const scrollTarget = nearestScrollable(event.target, axis);
+
+          if (axis === 'x') {
+            if (!scrollTarget) {
+              event.preventDefault();
+              return;
+            }
+
+            const maxLeft = scrollTarget.scrollWidth - scrollTarget.clientWidth;
+            const atStart = scrollTarget.scrollLeft <= 1;
+            const atEnd = scrollTarget.scrollLeft >= maxLeft - 1;
+            if ((atStart && deltaX > 0) || (atEnd && deltaX < 0)) {
+              event.preventDefault();
+            }
+            return;
+          }
+
+          const root = document.scrollingElement || document.documentElement;
+          const scrollNode = scrollTarget || root;
+          const maxTop = scrollNode.scrollHeight - (scrollNode === root ? window.innerHeight : scrollNode.clientHeight);
+          const atTop = scrollNode.scrollTop <= 1;
+          const atBottom = scrollNode.scrollTop >= maxTop - 1;
+          if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
+            event.preventDefault();
+          }
+        }, { passive: false });
       }
 
       function initReveal() {
