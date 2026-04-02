@@ -908,14 +908,38 @@
 
     .mobile-carousel-status {
       display: none;
-    }
-
-    #galleryCarouselStatus {
-      display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.7rem;
       margin-top: 0.9rem;
+    }
+
+    .gallery-carousel-controls {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-top: 0.9rem;
+    }
+
+    .gallery-carousel-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(95, 71, 58, 0.12);
+      background: rgba(255, 252, 247, 0.94);
+      color: var(--accent-deep);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .gallery-carousel-btn:hover,
+    .gallery-carousel-btn:focus-visible {
+      outline: none;
+      transform: translateY(-1px);
+      background: rgba(250, 244, 236, 0.98);
+      border-color: rgba(95, 71, 58, 0.2);
     }
 
     .mobile-carousel-dots {
@@ -1468,6 +1492,22 @@
       }
     }
 
+    @media (max-width: 1024px) {
+      #galleryCarouselStatus {
+        display: flex;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      #galleryCarouselStatus {
+        display: none;
+      }
+
+      .gallery-carousel-controls {
+        display: flex;
+      }
+    }
+
     @media (min-width: 641px) and (max-width: 1024px) {
       .hero {
         padding-top: 1.7rem;
@@ -1686,12 +1726,9 @@
         scroll-snap-stop: always;
       }
 
-      .mobile-carousel-status {
+      #galleryCarouselStatus,
+      #menuCarouselStatus {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.7rem;
-        margin-top: 0.9rem;
       }
 
       .brand-mark img {
@@ -1828,6 +1865,10 @@
           <p class="section-lead" data-i18n="gallery_body">作品写真の代わりに、色・質感・空気感が伝わるサンプルルックで構成しています。</p>
         </div>
         <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-carousel-controls">
+          <button class="gallery-carousel-btn" id="galleryPrevBtn" type="button" aria-label="Previous gallery item">←</button>
+          <button class="gallery-carousel-btn" id="galleryNextBtn" type="button" aria-label="Next gallery item">→</button>
+        </div>
         <div class="mobile-carousel-status" id="galleryCarouselStatus" aria-hidden="true">
           <div class="mobile-carousel-dots"></div>
           <div class="mobile-carousel-count">01 / 03</div>
@@ -2010,6 +2051,8 @@
       const navPanel = document.getElementById('navPanel');
       const galleryGrid = document.getElementById('galleryGrid');
       const galleryCarouselStatus = document.getElementById('galleryCarouselStatus');
+      const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+      const galleryNextBtn = document.getElementById('galleryNextBtn');
       const stylistGrid = document.getElementById('stylistGrid');
       const menuGrid = document.getElementById('menuGrid');
       const menuCarouselStatus = document.getElementById('menuCarouselStatus');
@@ -2032,7 +2075,7 @@
       initNavigation();
       initReveal();
       initLightbox();
-      initResponsiveCarousels();
+      initGalleryDesktopControls();
       initHeroReserveReveal();
       initEntryFlow();
 
@@ -2156,8 +2199,8 @@
         renderFlow();
         renderStoreInfo();
         updateReserveLinks();
-        setupLoopingCarousel(galleryGrid, '.gallery-card', galleryCarouselStatus);
-        setupLoopingCarousel(menuGrid, '.menu-card', menuCarouselStatus);
+        syncMobileCarouselStatus(galleryGrid, '.gallery-card', galleryCarouselStatus);
+        syncMobileCarouselStatus(menuGrid, '.menu-card', menuCarouselStatus);
         if (lightbox.classList.contains('show')) {
           renderLightbox(lightboxIndex);
         }
@@ -2180,6 +2223,13 @@
             '</button>'
           );
         }).join('');
+
+        galleryGrid.querySelectorAll('[data-gallery-index]').forEach((button) => {
+          button.addEventListener('click', () => {
+            renderLightbox(Number(button.getAttribute('data-gallery-index')));
+            openLightbox();
+          });
+        });
       }
 
       function renderGalleryVisual(item, index, className = 'gallery-visual') {
@@ -2256,7 +2306,7 @@
         });
       }
 
-      function setupLoopingCarousel(track, itemSelector, statusEl) {
+      function syncMobileCarouselStatus(track, itemSelector, statusEl) {
         if (!track || !statusEl) return;
 
         if (typeof track._loopCleanup === 'function') {
@@ -2282,6 +2332,7 @@
 
         const dots = Array.from(dotsEl.children);
         let activeLogicalIndex = 0;
+        let touchStartX = 0;
         const update = (visibleItems = items) => {
           const centers = visibleItems.map((item) => item.offsetLeft + item.offsetWidth / 2);
           const viewportCenter = track.scrollLeft + track.clientWidth / 2;
@@ -2303,178 +2354,76 @@
           countEl.textContent = formatCarouselCount(logicalIndex + 1, items.length);
         };
 
-        const shouldLoop = items.length > 1 && track.scrollWidth > track.clientWidth + 8;
-
-        if (!shouldLoop) {
-          const onScroll = () => requestAnimationFrame(() => update(items));
-          track.addEventListener('scroll', onScroll, { passive: true });
-          requestAnimationFrame(() => update(items));
-
-          track._loopCleanup = () => {
-            track.removeEventListener('scroll', onScroll);
-          };
-          return;
-        }
-
-        const prependFrag = document.createDocumentFragment();
-        const appendFrag = document.createDocumentFragment();
-
-        items.forEach((item) => {
-          const headClone = item.cloneNode(true);
-          headClone.setAttribute('data-loop-clone', 'head');
-          headClone.dataset.loopIndex = item.dataset.loopIndex || '0';
-          appendFrag.appendChild(headClone);
-        });
-
-        items.forEach((item) => {
-          const tailClone = item.cloneNode(true);
-          tailClone.setAttribute('data-loop-clone', 'tail');
-          tailClone.dataset.loopIndex = item.dataset.loopIndex || '0';
-          prependFrag.appendChild(tailClone);
-        });
-
-        track.insertBefore(prependFrag, items[0]);
-        track.appendChild(appendFrag);
-
-        let settlingTimer = 0;
-        let touchTimer = 0;
-        let mutedUntil = 0;
-        let touchActive = false;
-        let touchStartX = 0;
-
-        const allItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}`));
-        const middleItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}:not([data-loop-clone])`));
-        const centerOffset = (item) => item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
-        const goTo = (item) => {
-          if (!item) return;
-          track.scrollTo({ left: centerOffset(item), behavior: 'auto' });
-        };
-
-        const nearestItem = (pool = allItems()) => {
-          const viewportCenter = track.scrollLeft + track.clientWidth / 2;
-          let winner = pool[0] || null;
-          let bestDistance = Number.POSITIVE_INFINITY;
-
-          pool.forEach((item) => {
-            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-            const distance = Math.abs(itemCenter - viewportCenter);
-            if (distance < bestDistance) {
-              bestDistance = distance;
-              winner = item;
-            }
-          });
-
-          return winner;
-        };
-
-        const getMetrics = () => {
-          const middle = middleItems();
-          if (!middle.length) return null;
-          const first = middle[0];
-          const last = middle[middle.length - 1];
-          const start = first.offsetLeft;
-          const end = last.offsetLeft + last.offsetWidth;
-          const width = end - start;
-          if (!Number.isFinite(width) || width <= 0) return null;
-          return { start, width, middle };
-        };
-
-        const recenterLoop = () => {
-          const metrics = getMetrics();
-          if (!metrics) return;
-          const current = track.scrollLeft;
-          const lowerBound = metrics.start - metrics.width * 0.25;
-          const upperBound = metrics.start + metrics.width * 1.25;
-
-          if (current < lowerBound) {
-            track.scrollLeft = current + metrics.width;
-            mutedUntil = performance.now() + 90;
-          } else if (current > upperBound) {
-            track.scrollLeft = current - metrics.width;
-            mutedUntil = performance.now() + 90;
-          }
-        };
-
-        const normalizePosition = () => {
-          recenterLoop();
-          const item = nearestItem();
-          if (!item) return;
-          update(allItems());
-          mutedUntil = performance.now() + 140;
-          goTo(item);
-        };
-
-        const onScroll = () => {
-          recenterLoop();
-          requestAnimationFrame(() => update(allItems()));
-          if (performance.now() < mutedUntil) return;
-          clearTimeout(settlingTimer);
-          settlingTimer = window.setTimeout(normalizePosition, touchActive ? 140 : 90);
-        };
-
+        const onScroll = () => requestAnimationFrame(() => update(items));
         const onTouchStart = (event) => {
-          touchActive = true;
-          clearTimeout(settlingTimer);
+          if (!window.matchMedia('(max-width: 640px)').matches) return;
           touchStartX = event.changedTouches && event.changedTouches[0] ? event.changedTouches[0].clientX : 0;
         };
-
         const onTouchEnd = (event) => {
-          touchActive = false;
-          clearTimeout(touchTimer);
+          if (!window.matchMedia('(max-width: 640px)').matches) return;
           const touchEndX = event.changedTouches && event.changedTouches[0] ? event.changedTouches[0].clientX : touchStartX;
           const deltaX = touchEndX - touchStartX;
-          const edgeSwipeThreshold = 36;
-          const middle = middleItems();
+          const threshold = 36;
 
-          if (middle.length > 1) {
-            if (activeLogicalIndex === 0 && deltaX > edgeSwipeThreshold) {
-              mutedUntil = performance.now() + 180;
-              goTo(middle[middle.length - 1]);
-              requestAnimationFrame(() => update(allItems()));
-              return;
-            }
-
-            if (activeLogicalIndex === middle.length - 1 && deltaX < -edgeSwipeThreshold) {
-              mutedUntil = performance.now() + 180;
-              goTo(middle[0]);
-              requestAnimationFrame(() => update(allItems()));
-              return;
-            }
+          if (activeLogicalIndex === 0 && deltaX > threshold) {
+            scrollCarouselToIndex(track, items, items.length - 1);
+            return;
           }
 
-          touchTimer = window.setTimeout(normalizePosition, 110);
+          if (activeLogicalIndex === items.length - 1 && deltaX < -threshold) {
+            scrollCarouselToIndex(track, items, 0);
+          }
         };
 
         track.addEventListener('scroll', onScroll, { passive: true });
         track.addEventListener('touchstart', onTouchStart, { passive: true });
         track.addEventListener('touchend', onTouchEnd, { passive: true });
-        track.addEventListener('touchcancel', onTouchEnd, { passive: true });
-
-        requestAnimationFrame(() => {
-          const metrics = getMetrics();
-          const first = metrics && metrics.middle[0] ? metrics.middle[0] : items[0];
-          if (!first) return;
-          mutedUntil = performance.now() + 180;
-          if (metrics) {
-            track.scrollLeft = metrics.start;
-          }
-          goTo(first);
-          update(allItems());
-        });
+        requestAnimationFrame(() => update(items));
 
         track._loopCleanup = () => {
-          clearTimeout(settlingTimer);
-          clearTimeout(touchTimer);
           track.removeEventListener('scroll', onScroll);
           track.removeEventListener('touchstart', onTouchStart);
           track.removeEventListener('touchend', onTouchEnd);
-          track.removeEventListener('touchcancel', onTouchEnd);
-          track.querySelectorAll('[data-loop-clone]').forEach((node) => node.remove());
         };
       }
 
       function formatCarouselCount(current, total) {
         return String(current).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+      }
+
+      function scrollCarouselToIndex(track, items, index) {
+        const item = items[index];
+        if (!track || !item) return;
+        const left = item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+        track.scrollTo({ left, behavior: 'smooth' });
+      }
+
+      function initGalleryDesktopControls() {
+        if (!galleryGrid || !galleryPrevBtn || !galleryNextBtn) return;
+
+        const moveGallery = (direction) => {
+          const items = Array.from(galleryGrid.querySelectorAll(':scope > .gallery-card'));
+          if (!items.length) return;
+
+          const viewportCenter = galleryGrid.scrollLeft + galleryGrid.clientWidth / 2;
+          let activeIndex = 0;
+          let activeDistance = Number.POSITIVE_INFINITY;
+
+          items.forEach((item, index) => {
+            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+            const distance = Math.abs(itemCenter - viewportCenter);
+            if (distance < activeDistance) {
+              activeDistance = distance;
+              activeIndex = index;
+            }
+          });
+
+          const targetIndex = Math.max(0, Math.min(items.length - 1, activeIndex + direction));
+          scrollCarouselToIndex(galleryGrid, items, targetIndex);
+        };
+
+        galleryPrevBtn.addEventListener('click', () => moveGallery(-1));
+        galleryNextBtn.addEventListener('click', () => moveGallery(1));
       }
 
       function initHeroReserveReveal() {
@@ -2520,27 +2469,6 @@
             navPanel.classList.remove('open');
             menuToggle.setAttribute('aria-expanded', 'false');
           }
-        });
-      }
-
-      function initResponsiveCarousels() {
-        let resizeTimer = 0;
-
-        if (galleryGrid) {
-          galleryGrid.addEventListener('click', (event) => {
-            const button = event.target.closest('[data-gallery-index]');
-            if (!button || !galleryGrid.contains(button)) return;
-            renderLightbox(Number(button.getAttribute('data-gallery-index')));
-            openLightbox();
-          });
-        }
-
-        window.addEventListener('resize', () => {
-          clearTimeout(resizeTimer);
-          resizeTimer = window.setTimeout(() => {
-            setupLoopingCarousel(galleryGrid, '.gallery-card', galleryCarouselStatus);
-            setupLoopingCarousel(menuGrid, '.menu-card', menuCarouselStatus);
-          }, 110);
         });
       }
 
