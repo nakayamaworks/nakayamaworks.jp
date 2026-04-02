@@ -93,7 +93,12 @@
       pointer-events: none;
     }
 
-    body.booting .hero-copy > :not(.hero-body) {
+    body.booting .hero-copy h1 {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    body.booting .hero-copy > :not(.hero-body):not(h1) {
       opacity: 0;
       transform: translateY(14px);
     }
@@ -154,6 +159,12 @@
     body.booting.welcome-play .hero-side-card {
       transform: translate(0, 0) rotate(-4deg);
       transition-delay: .36s;
+    }
+
+    body.booting.welcome-play .hero-copy h1 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: .44s;
     }
 
     body::before {
@@ -559,10 +570,11 @@
       position: relative;
       margin: 0;
       max-width: 34rem;
-      color: var(--muted);
+      color: transparent;
       white-space: pre-line;
       font-size: 0.98rem;
       isolation: isolate;
+      transform: translateY(16px);
     }
 
     .hero-body::after {
@@ -613,6 +625,11 @@
       min-width: min(100%, 260px);
       padding-inline: 2.05rem;
       padding-block: 0.92rem;
+    }
+
+    body.hero-cta-visible .hero-body {
+      color: var(--muted);
+      transform: translateY(0);
     }
 
     body.hero-cta-visible .hero-actions {
@@ -1243,7 +1260,8 @@
     }
 
     .info-grid {
-      grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+      grid-template-columns: minmax(0, 0.88fr) minmax(0, 0.66fr) minmax(0, 1.06fr);
+      align-items: stretch;
     }
 
     .info-card dl {
@@ -1266,8 +1284,47 @@
       text-transform: uppercase;
     }
 
+    .payment-panel {
+      display: grid;
+      align-content: start;
+      gap: 0.58rem;
+      border: 1px solid rgba(219, 207, 192, 0.92);
+      border-radius: 22px;
+      background: linear-gradient(160deg, rgba(255, 252, 247, 0.98), rgba(248, 242, 234, 0.94));
+      box-shadow: var(--shadow-sm);
+      padding: 1rem;
+    }
+
+    .payment-title {
+      margin: 0;
+      color: var(--accent-deep);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .payment-value {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .cashless-logo {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid rgba(223, 212, 199, 0.94);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 0.24rem 0.3rem;
+      object-fit: contain;
+    }
+
     .map-card {
       position: relative;
+      display: flex;
       padding: 1.2rem;
       border-radius: 28px;
       min-height: 100%;
@@ -1305,6 +1362,8 @@
 
     .map-surface {
       position: relative;
+      flex: 1 1 auto;
+      min-height: 100%;
       min-height: 320px;
       border-radius: 24px;
       overflow: hidden;
@@ -1479,9 +1538,16 @@
       .hero-grid,
       .concept-grid,
       .story-layout,
-      .info-grid,
       .lightbox-body {
         grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .map-card {
+        grid-column: 1 / -1;
       }
 
       .lineup-grid,
@@ -1681,6 +1747,57 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .hero h1,
+      .section-title,
+      .section-lead,
+      .concept-body,
+      .story-card h3,
+      .stylist-card h3,
+      .menu-card h3,
+      .flow-card h3,
+      .gallery-card h3,
+      .info-card dd,
+      .payment-value,
+      .reservation-card p {
+        text-wrap: pretty;
+        word-break: normal;
+        line-break: strict;
+        overflow-wrap: normal;
+        hyphens: none;
+      }
+
+      .section-title {
+        text-wrap: pretty;
+      }
+
+      .hero-visual {
+        min-height: 424px;
+      }
+
+      .hero-card {
+        min-height: 424px;
+        padding-top: 2.1rem;
+      }
+
+      .story-stage {
+        min-height: 338px;
+        padding: 0.92rem;
+      }
+
+      .story-stage::before {
+        inset: 11px;
+      }
+
+      .story-stage img:first-child {
+        height: 74%;
+        top: 8%;
+      }
+
+      .story-stage img:last-child {
+        width: min(38%, 162px);
+        bottom: 5%;
+      }
+
       .lineup-grid {
         grid-template-columns: none;
         grid-auto-flow: column;
@@ -1714,6 +1831,43 @@
         scroll-padding-inline: 8vw;
       }
 
+      .story-cards,
+      .info-grid,
+      .flow-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(82vw, 82vw);
+        gap: 0.9rem;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 0 8vw 0.4rem;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 8vw;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .info-grid__item,
+      .map-card {
+        grid-column: auto;
+      }
+
+      .story-cards::-webkit-scrollbar,
+      .info-grid::-webkit-scrollbar,
+      .flow-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .story-card,
+      .info-grid__item,
+      .flow-card {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
       .menu-grid {
         grid-template-columns: none;
         grid-auto-flow: column;
@@ -1741,17 +1895,15 @@
       }
 
       #galleryCarouselStatus,
-      #menuCarouselStatus {
+      #storyCarouselStatus,
+      #menuCarouselStatus,
+      #infoCarouselStatus,
+      #flowCarouselStatus {
         display: flex;
       }
 
       .brand-mark img {
         width: 154px;
-      }
-
-      .hero-card {
-        min-height: 460px;
-        padding-top: 2.5rem;
       }
 
       .hero-art {
@@ -1903,7 +2055,7 @@
               <h2 class="section-title" data-i18n="story_title">木の棚、リネン、陶器。音までやわらかい空間。</h2>
               <p class="section-lead" data-i18n="story_body">大きすぎない空間だからこそ、視線も会話も落ち着く。道具や素材の見せ方まで含めて、SUI の世界観をつくっています。</p>
             </div>
-            <div class="story-cards">
+            <div class="story-cards" id="storyCards">
               <article class="story-card">
                 <h3 data-i18n="story_card_1_title">Private Seat</h3>
                 <p data-i18n="story_card_1_body">同時施術は1〜2名まで。周囲を気にせず過ごせます。</p>
@@ -1916,6 +2068,10 @@
                 <h3 data-i18n="story_card_3_title">Soft Materials</h3>
                 <p data-i18n="story_card_3_body">木・布・紙など、視覚的にやわらかな素材で統一しています。</p>
               </article>
+            </div>
+            <div class="mobile-carousel-status" id="storyCarouselStatus" aria-hidden="true">
+              <div class="mobile-carousel-dots"></div>
+              <div class="mobile-carousel-count">01 / 03</div>
             </div>
           </div>
         </div>
@@ -1954,6 +2110,10 @@
           <h2 class="section-title" data-i18n="flow_title">予約からお帰りまで、急がせない流れ。</h2>
         </div>
         <div class="flow-grid" id="flowGrid"></div>
+        <div class="mobile-carousel-status" id="flowCarouselStatus" aria-hidden="true">
+          <div class="mobile-carousel-dots"></div>
+          <div class="mobile-carousel-count">01 / 04</div>
+        </div>
       </div>
     </section>
 
@@ -1964,10 +2124,15 @@
           <h2 class="section-title" data-i18n="access_title">表参道の路地裏にある、小さなアトリエ。</h2>
         </div>
         <div class="info-grid">
-          <div class="info-card">
+          <div class="info-card info-grid__item">
             <dl id="storeInfo"></dl>
           </div>
-          <div class="map-card">
+          <aside class="payment-panel info-grid__item">
+            <h3 class="payment-title" data-i18n="access_payment_label">支払い方法</h3>
+            <p class="payment-value" id="paymentValue">各種クレジットカード / 交通系IC / QR決済</p>
+            <img id="paymentLogo" class="cashless-logo" src="./images/cashlesslogo.jpg" alt="支払いロゴ" loading="lazy" decoding="async" />
+          </aside>
+          <div class="map-card info-grid__item">
             <div class="map-surface">
               <iframe
                 class="map-embed"
@@ -1978,8 +2143,11 @@
                 referrerpolicy="no-referrer-when-downgrade"
                 src="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%8B%E8%B0%B7%E5%8C%BA%E7%A5%9E%E5%AE%AE%E5%89%8D4-18-6&z=18&output=embed"></iframe>
             </div>
-            <p class="map-note"><strong data-i18n="access_note_title">ご来店メモ</strong><br /><span data-i18n="access_note_body">完全予約制。初回はカウンセリングを含め、通常より15分ほど余裕をみています。</span></p>
           </div>
+        </div>
+        <div class="mobile-carousel-status" id="infoCarouselStatus" aria-hidden="true">
+          <div class="mobile-carousel-dots"></div>
+          <div class="mobile-carousel-count">01 / 03</div>
         </div>
       </div>
     </section>
@@ -2067,11 +2235,18 @@
       const galleryCarouselStatus = document.getElementById('galleryCarouselStatus');
       const galleryPrevBtn = document.getElementById('galleryPrevBtn');
       const galleryNextBtn = document.getElementById('galleryNextBtn');
+      const storyCards = document.getElementById('storyCards');
+      const storyCarouselStatus = document.getElementById('storyCarouselStatus');
       const stylistGrid = document.getElementById('stylistGrid');
       const menuGrid = document.getElementById('menuGrid');
       const menuCarouselStatus = document.getElementById('menuCarouselStatus');
       const flowGrid = document.getElementById('flowGrid');
+      const flowCarouselStatus = document.getElementById('flowCarouselStatus');
+      const infoGrid = document.querySelector('#access .info-grid');
+      const infoCarouselStatus = document.getElementById('infoCarouselStatus');
       const storeInfo = document.getElementById('storeInfo');
+      const paymentValue = document.getElementById('paymentValue');
+      const paymentLogo = document.getElementById('paymentLogo');
       const mapEmbed = document.getElementById('mapEmbed');
       const lightbox = document.getElementById('galleryLightbox');
       const lightboxClose = document.getElementById('lightboxClose');
@@ -2089,6 +2264,7 @@
       initNavigation();
       initReveal();
       initLightbox();
+      initGalleryInteractions();
       initGalleryDesktopControls();
       initHeroReserveReveal();
       initEntryFlow();
@@ -2214,7 +2390,10 @@
         renderStoreInfo();
         updateReserveLinks();
         syncMobileCarouselStatus(galleryGrid, '.gallery-card', galleryCarouselStatus);
+        syncMobileCarouselStatus(storyCards, '.story-card', storyCarouselStatus);
         syncMobileCarouselStatus(menuGrid, '.menu-card', menuCarouselStatus);
+        syncMobileCarouselStatus(flowGrid, '.flow-card', flowCarouselStatus);
+        syncMobileCarouselStatus(infoGrid, '.info-grid__item', infoCarouselStatus);
         if (lightbox.classList.contains('show')) {
           renderLightbox(lightboxIndex);
         }
@@ -2237,13 +2416,6 @@
             '</button>'
           );
         }).join('');
-
-        galleryGrid.querySelectorAll('[data-gallery-index]').forEach((button) => {
-          button.addEventListener('click', () => {
-            renderLightbox(Number(button.getAttribute('data-gallery-index')));
-            openLightbox();
-          });
-        });
       }
 
       function renderGalleryVisual(item, index, className = 'gallery-visual') {
@@ -2299,11 +2471,21 @@
           { label: t('access_address_label'), value: info.address },
           { label: t('access_hours_label'), value: info.hours },
           { label: t('access_closed_label'), value: info.closed },
-          { label: t('access_payment_label'), value: info.payment },
-          { label: t('access_access_label'), value: info.access }
+          { label: t('access_access_label'), value: info.access },
+          { label: t('access_note_title'), value: t('access_note_body') }
         ].map((row) => (
           '<div><dt>' + escapeHtml(row.label) + '</dt><dd>' + escapeHtml(row.value || '') + '</dd></div>'
         )).join('');
+
+        if (paymentValue) {
+          paymentValue.textContent = info.payment || '';
+          paymentValue.hidden = !info.payment;
+        }
+
+        if (paymentLogo) {
+          paymentLogo.hidden = !info.payment;
+          paymentLogo.alt = t('access_payment_label');
+        }
 
         if (mapEmbed) {
           mapEmbed.src = 'https://www.google.com/maps?q=' + encodeURIComponent(MAP_QUERY) + '&z=18&output=embed';
@@ -2345,9 +2527,10 @@
         });
 
         const dots = Array.from(dotsEl.children);
-        let activeLogicalIndex = 0;
-        let touchStartX = 0;
-        const update = (visibleItems = items) => {
+        const isMobileViewport = () => window.matchMedia('(max-width: 640px)').matches;
+        const queryVisibleItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}`));
+        const queryRealItems = () => Array.from(track.querySelectorAll(`:scope > ${itemSelector}:not([data-loop-clone])`));
+        const nearestItem = (visibleItems) => {
           const centers = visibleItems.map((item) => item.offsetLeft + item.offsetWidth / 2);
           const viewportCenter = track.scrollLeft + track.clientWidth / 2;
           let activeIndex = 0;
@@ -2361,43 +2544,132 @@
             }
           });
 
-          const item = visibleItems[activeIndex];
-          const logicalIndex = Number(item && item.dataset.loopIndex ? item.dataset.loopIndex : activeIndex);
-          activeLogicalIndex = logicalIndex;
+          return visibleItems[activeIndex] || null;
+        };
+        const update = (visibleItems = queryVisibleItems()) => {
+          const item = nearestItem(visibleItems);
+          if (!item) return;
+          const logicalIndex = Number(item.dataset.loopIndex || 0);
           dots.forEach((dot, index) => dot.classList.toggle('is-active', index === logicalIndex));
           countEl.textContent = formatCarouselCount(logicalIndex + 1, items.length);
         };
-
-        const onScroll = () => requestAnimationFrame(() => update(items));
-        const onTouchStart = (event) => {
-          if (!window.matchMedia('(max-width: 640px)').matches) return;
-          touchStartX = event.changedTouches && event.changedTouches[0] ? event.changedTouches[0].clientX : 0;
+        const centerOffset = (item) => item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+        const positionAt = (item, behavior = 'auto') => {
+          if (!item) return;
+          isAdjusting = true;
+          track.scrollTo({ left: centerOffset(item), behavior });
+          window.setTimeout(() => {
+            isAdjusting = false;
+          }, 48);
         };
-        const onTouchEnd = (event) => {
-          if (!window.matchMedia('(max-width: 640px)').matches) return;
-          const touchEndX = event.changedTouches && event.changedTouches[0] ? event.changedTouches[0].clientX : touchStartX;
-          const deltaX = touchEndX - touchStartX;
-          const threshold = 36;
+        const setupLoopClones = () => {
+          if (!isMobileViewport() || items.length <= 1) return;
+          const headClone = items[items.length - 1].cloneNode(true);
+          headClone.setAttribute('data-loop-clone', 'head');
+          headClone.dataset.loopIndex = String(items.length - 1);
+          headClone.setAttribute('aria-hidden', 'true');
+          if ('tabIndex' in headClone) headClone.tabIndex = -1;
+          track.insertBefore(headClone, items[0]);
 
-          if (activeLogicalIndex === 0 && deltaX > threshold) {
-            scrollCarouselToIndex(track, items, items.length - 1);
+          const tailClone = items[0].cloneNode(true);
+          tailClone.setAttribute('data-loop-clone', 'tail');
+          tailClone.dataset.loopIndex = '0';
+          tailClone.setAttribute('aria-hidden', 'true');
+          if ('tabIndex' in tailClone) tailClone.tabIndex = -1;
+          track.appendChild(tailClone);
+        };
+        const normalizeLoop = () => {
+          if (!isMobileViewport() || items.length <= 1) return;
+          const visibleItems = queryVisibleItems();
+          const item = nearestItem(visibleItems);
+          if (!item) return;
+
+          if (item.getAttribute('data-loop-clone') === 'head') {
+            const realItems = queryRealItems();
+            positionAt(realItems[realItems.length - 1], 'auto');
+            requestAnimationFrame(() => update(queryVisibleItems()));
             return;
           }
 
-          if (activeLogicalIndex === items.length - 1 && deltaX < -threshold) {
-            scrollCarouselToIndex(track, items, 0);
+          if (item.getAttribute('data-loop-clone') === 'tail') {
+            const realItems = queryRealItems();
+            positionAt(realItems[0], 'auto');
+            requestAnimationFrame(() => update(queryVisibleItems()));
+            return;
           }
+
+          update(visibleItems);
+        };
+
+        let settleTimer = 0;
+        let resizeTimer = 0;
+        let touchSettleTimer = 0;
+        let touchActive = false;
+        let isAdjusting = false;
+        let lastMobileViewport = isMobileViewport();
+
+        setupLoopClones();
+
+        const onScroll = () => {
+          const visibleItems = queryVisibleItems();
+          requestAnimationFrame(() => update(visibleItems));
+          if (!isMobileViewport() || items.length <= 1 || isAdjusting) return;
+          clearTimeout(settleTimer);
+          settleTimer = window.setTimeout(normalizeLoop, touchActive ? 140 : 96);
+        };
+        const onTouchStart = () => {
+          if (!isMobileViewport() || items.length <= 1) return;
+          touchActive = true;
+          clearTimeout(settleTimer);
+        };
+        const onTouchEnd = () => {
+          if (!isMobileViewport() || items.length <= 1) return;
+          touchActive = false;
+          clearTimeout(touchSettleTimer);
+          touchSettleTimer = window.setTimeout(normalizeLoop, 108);
+        };
+        const onResize = () => {
+          const nextMobileViewport = isMobileViewport();
+          if (nextMobileViewport !== lastMobileViewport) {
+            lastMobileViewport = nextMobileViewport;
+            syncMobileCarouselStatus(track, itemSelector, statusEl);
+            return;
+          }
+
+          clearTimeout(resizeTimer);
+          resizeTimer = window.setTimeout(() => {
+            if (isMobileViewport() && items.length > 1) {
+              normalizeLoop();
+            } else {
+              update(queryRealItems());
+            }
+          }, 80);
         };
 
         track.addEventListener('scroll', onScroll, { passive: true });
         track.addEventListener('touchstart', onTouchStart, { passive: true });
         track.addEventListener('touchend', onTouchEnd, { passive: true });
-        requestAnimationFrame(() => update(items));
+        track.addEventListener('touchcancel', onTouchEnd, { passive: true });
+        window.addEventListener('resize', onResize);
+        requestAnimationFrame(() => {
+          if (isMobileViewport() && items.length > 1) {
+            positionAt(queryRealItems()[0], 'auto');
+            requestAnimationFrame(() => update(queryVisibleItems()));
+            return;
+          }
+          update(items);
+        });
 
         track._loopCleanup = () => {
+          clearTimeout(settleTimer);
+          clearTimeout(resizeTimer);
+          clearTimeout(touchSettleTimer);
           track.removeEventListener('scroll', onScroll);
           track.removeEventListener('touchstart', onTouchStart);
           track.removeEventListener('touchend', onTouchEnd);
+          track.removeEventListener('touchcancel', onTouchEnd);
+          window.removeEventListener('resize', onResize);
+          track.querySelectorAll('[data-loop-clone]').forEach((node) => node.remove());
         };
       }
 
@@ -2438,6 +2710,17 @@
 
         galleryPrevBtn.addEventListener('click', () => moveGallery(-1));
         galleryNextBtn.addEventListener('click', () => moveGallery(1));
+      }
+
+      function initGalleryInteractions() {
+        if (!galleryGrid) return;
+
+        galleryGrid.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-gallery-index]');
+          if (!button || !galleryGrid.contains(button)) return;
+          renderLightbox(Number(button.getAttribute('data-gallery-index')));
+          openLightbox();
+        });
       }
 
       function initHeroReserveReveal() {
