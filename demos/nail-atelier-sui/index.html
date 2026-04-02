@@ -3318,14 +3318,16 @@
 
       function closeLightbox() {
         const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-        document.documentElement.style.scrollBehavior = 'auto';
-        window.scrollTo(0, modalScrollY);
         lightbox.classList.remove('show');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
         document.body.style.top = '';
+        document.documentElement.style.scrollBehavior = 'auto';
         requestAnimationFrame(() => {
-          document.documentElement.style.scrollBehavior = previousScrollBehavior;
+          window.scrollTo(0, modalScrollY);
+          requestAnimationFrame(() => {
+            document.documentElement.style.scrollBehavior = previousScrollBehavior;
+          });
         });
       }
 
