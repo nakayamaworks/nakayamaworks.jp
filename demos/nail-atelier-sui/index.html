@@ -566,7 +566,7 @@
     }
 
     @media (min-width: 821px) {
-      .hero h1 {
+      html[lang="ja"] .hero h1 {
         white-space: nowrap;
       }
     }
@@ -1927,6 +1927,10 @@
       }
 
       .hero-title-row h1 {
+        white-space: normal;
+      }
+
+      html[lang="ja"] .hero-title-row h1 {
         white-space: nowrap;
       }
 
@@ -2660,6 +2664,7 @@
           document.body.classList.remove('welcome-play');
           document.body.classList.remove('booting');
           document.body.classList.remove('welcome-lock');
+          resetAllMobileLoopingCarousels();
           updateHeroScrollCueState();
         }, visibleDuration);
       }
@@ -2697,7 +2702,7 @@
         syncMobileCarouselStatus(menuGrid, '.menu-card', menuCarouselStatus);
         syncMobileCarouselStatus(flowGrid, '.flow-card', flowCarouselStatus);
         syncMobileCarouselStatus(infoGrid, '.info-grid__item', infoCarouselStatus);
-        resetCarouselToFirstItem(infoGrid, '.info-grid__item');
+        resetAllMobileLoopingCarousels();
         updateHeroScrollCueState();
         if (lightbox.classList.contains('show')) {
           renderLightbox(lightboxIndex);
@@ -3001,6 +3006,20 @@
 
         requestAnimationFrame(() => requestAnimationFrame(setStart));
         window.setTimeout(setStart, 140);
+      }
+
+      function resetAllMobileLoopingCarousels() {
+        if (!window.matchMedia('(max-width: 640px)').matches) return;
+
+        [
+          [galleryGrid, '.gallery-card'],
+          [storyCards, '.story-card'],
+          [menuGrid, '.menu-card'],
+          [flowGrid, '.flow-card'],
+          [infoGrid, '.info-grid__item']
+        ].forEach(([track, selector]) => {
+          resetCarouselToFirstItem(track, selector);
+        });
       }
 
       function initGalleryDesktopControls() {
