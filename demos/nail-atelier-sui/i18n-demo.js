@@ -18,6 +18,7 @@ window.DEMO_I18N = {
     hero_panel_value_2: '60 - 120 min',
     hero_panel_label_3: 'Place',
     hero_panel_value_3: '表参道の小さなアトリエ',
+    hero_scroll_hint: 'scroll',
 
     lang_label: 'Language',
     lang_gate_title: '言語を選択',
@@ -106,6 +107,7 @@ window.DEMO_I18N = {
     hero_panel_value_2: '60 - 120 min',
     hero_panel_label_3: 'Place',
     hero_panel_value_3: 'A small atelier in Omotesando',
+    hero_scroll_hint: 'scroll',
 
     lang_label: 'Language',
     lang_gate_title: 'Choose Your Language',
@@ -194,6 +196,7 @@ window.DEMO_I18N = {
     hero_panel_value_2: '60 - 120 min',
     hero_panel_label_3: 'Place',
     hero_panel_value_3: '表參道的小型工作室',
+    hero_scroll_hint: 'scroll',
 
     lang_label: 'Language',
     lang_gate_title: '選擇語言',
@@ -282,6 +285,7 @@ window.DEMO_I18N = {
     hero_panel_value_2: '60 - 120 min',
     hero_panel_label_3: 'Place',
     hero_panel_value_3: 'Un pequeno atelier en Omotesando',
+    hero_scroll_hint: 'scroll',
 
     lang_label: 'Language',
     lang_gate_title: 'Elegir idioma',
@@ -370,6 +374,7 @@ window.DEMO_I18N = {
     hero_panel_value_2: '60 - 120 min',
     hero_panel_label_3: 'Place',
     hero_panel_value_3: '오모테산도의 작은 아틀리에',
+    hero_scroll_hint: 'scroll',
 
     lang_label: 'Language',
     lang_gate_title: '언어 선택',
