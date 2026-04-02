@@ -1535,8 +1535,12 @@
     }
 
     body.modal-open {
+      position: fixed;
+      inset: 0;
+      width: 100%;
       overflow: hidden;
       touch-action: none;
+      overscroll-behavior: none;
     }
 
     .lightbox {
@@ -1569,6 +1573,45 @@
       background: rgba(251, 247, 241, 0.97);
       border: 1px solid rgba(95, 71, 58, 0.08);
       box-shadow: var(--shadow-lg);
+    }
+
+    .lightbox-card.is-switching .lightbox-visual,
+    .lightbox-card.is-switching .lightbox-copy {
+      animation-duration: .34s;
+      animation-timing-function: cubic-bezier(.2,.75,.25,1);
+      animation-fill-mode: both;
+    }
+
+    .lightbox-card.is-switching.is-next .lightbox-visual,
+    .lightbox-card.is-switching.is-next .lightbox-copy {
+      animation-name: lightboxSwitchNext;
+    }
+
+    .lightbox-card.is-switching.is-prev .lightbox-visual,
+    .lightbox-card.is-switching.is-prev .lightbox-copy {
+      animation-name: lightboxSwitchPrev;
+    }
+
+    @keyframes lightboxSwitchNext {
+      from {
+        opacity: 0;
+        transform: translateX(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes lightboxSwitchPrev {
+      from {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .lightbox-close {
@@ -2458,6 +2501,7 @@
       let currentLang = getInitialLang();
       let lightboxIndex = 0;
       let touchStartX = 0;
+      let modalScrollY = 0;
 
       const langGate = document.getElementById('langGate');
       const langGrid = document.getElementById('langGrid');
@@ -3089,8 +3133,8 @@
         lightbox.addEventListener('click', (event) => {
           if (event.target === lightbox) closeLightbox();
         });
-        lightboxPrev.addEventListener('click', () => renderLightbox(lightboxIndex - 1));
-        lightboxNext.addEventListener('click', () => renderLightbox(lightboxIndex + 1));
+        lightboxPrev.addEventListener('click', () => renderLightbox(lightboxIndex - 1, { direction: 'prev', animate: true }));
+        lightboxNext.addEventListener('click', () => renderLightbox(lightboxIndex + 1, { direction: 'next', animate: true }));
 
         lightbox.addEventListener('touchstart', (event) => {
           touchStartX = event.changedTouches[0].clientX;
@@ -3099,18 +3143,20 @@
         lightbox.addEventListener('touchend', (event) => {
           const deltaX = event.changedTouches[0].clientX - touchStartX;
           if (Math.abs(deltaX) < 40) return;
-          renderLightbox(lightboxIndex + (deltaX < 0 ? 1 : -1));
+          renderLightbox(lightboxIndex + (deltaX < 0 ? 1 : -1), { direction: deltaX < 0 ? 'next' : 'prev', animate: true });
         });
 
         document.addEventListener('keydown', (event) => {
           if (!lightbox.classList.contains('show')) return;
           if (event.key === 'Escape') closeLightbox();
-          if (event.key === 'ArrowRight') renderLightbox(lightboxIndex + 1);
-          if (event.key === 'ArrowLeft') renderLightbox(lightboxIndex - 1);
+          if (event.key === 'ArrowRight') renderLightbox(lightboxIndex + 1, { direction: 'next', animate: true });
+          if (event.key === 'ArrowLeft') renderLightbox(lightboxIndex - 1, { direction: 'prev', animate: true });
         });
       }
 
       function openLightbox() {
+        modalScrollY = window.scrollY || window.pageYOffset || 0;
+        document.body.style.top = '-' + modalScrollY + 'px';
         lightbox.classList.add('show');
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
@@ -3120,9 +3166,11 @@
         lightbox.classList.remove('show');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, modalScrollY);
       }
 
-      function renderLightbox(index) {
+      function renderLightbox(index, options = {}) {
         const items = dataFor(galleryData).slice(0, galleryImages.length);
         if (!items.length) return;
         lightboxIndex = (index + items.length) % items.length;
@@ -3135,6 +3183,18 @@
         lightboxPrev.textContent = '←';
         lightboxNext.textContent = '→';
         lightboxClose.setAttribute('aria-label', t('lightbox_close'));
+
+        if (options.animate && lightbox.classList.contains('show')) {
+          lightbox.querySelector('.lightbox-card')?.classList.remove('is-switching', 'is-next', 'is-prev');
+          void lightbox.offsetWidth;
+          const card = lightbox.querySelector('.lightbox-card');
+          if (card) {
+            card.classList.add('is-switching', options.direction === 'prev' ? 'is-prev' : 'is-next');
+            window.setTimeout(() => {
+              card.classList.remove('is-switching', 'is-next', 'is-prev');
+            }, 360);
+          }
+        }
       }
 
       function escapeHtml(value) {
