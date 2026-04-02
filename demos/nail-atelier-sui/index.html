@@ -1890,9 +1890,8 @@
       .hero-scroll-cue {
         align-items: center;
         justify-content: center;
-        gap: 0;
+        gap: 0.18rem;
         transform: none;
-        animation: none;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -1906,8 +1905,9 @@
         display: inline-flex;
         position: absolute;
         top: 0.22rem;
-        right: -0.1rem;
+        right: 0.9rem;
         --hero-cue-shift-x: 0;
+        animation: heroCueFloatMobile 2.4s ease-in-out infinite;
       }
 
       .hero-scroll-cue .icon {
@@ -1925,14 +1925,19 @@
         top: 8px;
       }
 
-      .hero-scroll-label {
-        display: none;
-      }
-
       body.hero-scroll-cue-needed .hero-scroll-cue {
         opacity: 0.78;
         visibility: visible;
         pointer-events: auto;
+      }
+
+      @keyframes heroCueFloatMobile {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(8px);
+        }
       }
 
       .story-stage::before {
