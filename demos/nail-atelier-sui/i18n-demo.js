@@ -66,7 +66,7 @@ window.DEMO_I18N = {
     menu_price_label: '料金',
 
     flow_kicker: 'Flow',
-    flow_title: '予約からお帰りまで、急がせない流れ。',
+    flow_title: 'ご来店の流れ',
 
     access_kicker: 'Access',
     access_title: '表参道の路地裏にある、小さなアトリエ。',
@@ -155,7 +155,7 @@ window.DEMO_I18N = {
     menu_price_label: 'Price',
 
     flow_kicker: 'Flow',
-    flow_title: 'A relaxed rhythm from booking to departure.',
+    flow_title: 'Your Visit Flow',
 
     access_kicker: 'Access',
     access_title: 'A small atelier tucked into an Omotesando side street.',
@@ -244,7 +244,7 @@ window.DEMO_I18N = {
     menu_price_label: '價格',
 
     flow_kicker: 'Flow',
-    flow_title: '從預約到離店，都保持從容節奏。',
+    flow_title: '來店流程',
 
     access_kicker: 'Access',
     access_title: '藏在表參道巷弄裡的小型工作室。',
@@ -333,7 +333,7 @@ window.DEMO_I18N = {
     menu_price_label: 'Precio',
 
     flow_kicker: 'Flow',
-    flow_title: 'Un ritmo sin prisa desde la reserva hasta la salida.',
+    flow_title: 'Flujo de la visita',
 
     access_kicker: 'Access',
     access_title: 'Un pequeno atelier escondido en una calle de Omotesando.',
@@ -422,7 +422,7 @@ window.DEMO_I18N = {
     menu_price_label: '요금',
 
     flow_kicker: 'Flow',
-    flow_title: '예약부터 귀가까지 서두르지 않는 흐름.',
+    flow_title: '방문 순서',
 
     access_kicker: 'Access',
     access_title: '오모테산도 골목 안쪽의 작은 아틀리에.',
