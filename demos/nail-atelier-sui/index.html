@@ -1775,6 +1775,36 @@
         order: 1;
       }
 
+      .hero-title-row {
+        max-height: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(16px);
+        pointer-events: none;
+        transition:
+          max-height .72s cubic-bezier(.2,.75,.25,1),
+          margin-bottom .48s ease,
+          opacity .72s ease,
+          transform .88s cubic-bezier(.2,.75,.25,1);
+      }
+
+      body.hero-cta-visible .hero-title-row {
+        max-height: 12rem;
+        margin-bottom: 1rem;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      body.booting .hero-title-row,
+      body.booting.welcome-play .hero-copy h1 {
+        max-height: 0;
+        margin-bottom: 0;
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
       .nav-link {
         font-size: 0.76rem;
         letter-spacing: 0.02em;
