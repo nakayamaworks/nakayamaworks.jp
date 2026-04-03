@@ -35,7 +35,7 @@ window.DEMO_I18N = {
     nav_reserve: '予約',
 
     concept_kicker: 'Concept',
-    concept_title: '整えることが、いちばん美しい。',
+    concept_title: 'SUIのコンセプト',
     concept_body: '肌から浮かない色、指先が長く見える形、気持ちまでゆるむ時間。\nSUI は、目立つためのデザインよりも、暮らしに静かになじむ美しさを提案します。',
 
     lineup_kicker: 'Design Lineup',
@@ -57,10 +57,10 @@ window.DEMO_I18N = {
     story_card_3_body: '木・布・紙など、視覚的にやわらかな素材で統一しています。',
 
     stylist_kicker: 'Stylist',
-    stylist_title: 'つくり込みすぎない上品さを、手元から。',
+    stylist_title: '担当ネイリスト',
 
     menu_kicker: 'Menu',
-    menu_title: '定番だけを、静かに磨く。',
+    menu_title: 'メニューのご案内',
     menu_note: 'ニュアンス、ワンカラー、ケアを中心にご案内しています。',
     menu_time_label: '所要時間',
     menu_price_label: '料金',
