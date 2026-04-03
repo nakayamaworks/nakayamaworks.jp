@@ -1765,6 +1765,17 @@
     }
 
     @media (min-width: 641px) and (max-width: 1024px) {
+      .nav-link {
+        font-size: 0.76rem;
+        letter-spacing: 0.02em;
+        padding: 0.44rem 0.58rem;
+      }
+
+      .nav-reserve {
+        font-size: 0.75rem;
+        padding: 0.46rem 0.72rem;
+      }
+
       .hero {
         padding-top: 1.7rem;
       }
@@ -2547,6 +2558,9 @@
       let lightboxIndex = 0;
       let touchStartX = 0;
       let modalScrollY = 0;
+      let welcomeTimer = 0;
+      let welcomeFrameA = 0;
+      let welcomeFrameB = 0;
 
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
@@ -2692,10 +2706,21 @@
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const visibleDuration = reduce ? 700 : 1650;
 
+        window.clearTimeout(welcomeTimer);
+        window.cancelAnimationFrame(welcomeFrameA);
+        window.cancelAnimationFrame(welcomeFrameB);
+        document.body.classList.add('booting');
         document.body.classList.add('welcome-lock');
-        document.body.classList.add('welcome-play');
+        document.body.classList.remove('welcome-play');
+        void document.body.offsetWidth;
 
-        window.setTimeout(() => {
+        welcomeFrameA = window.requestAnimationFrame(() => {
+          welcomeFrameB = window.requestAnimationFrame(() => {
+            document.body.classList.add('welcome-play');
+          });
+        });
+
+        welcomeTimer = window.setTimeout(() => {
           document.body.classList.remove('welcome-play');
           document.body.classList.remove('booting');
           document.body.classList.remove('welcome-lock');
