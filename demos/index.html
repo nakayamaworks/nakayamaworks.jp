@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo Sites | Nakayama Works</title>
+  <meta name="description" content="Nakayama Works が制作したサロン向けデモサイト一覧。エステ、美容室、ネイルのサンプルをまとめて確認できます。" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Demo Sites | Nakayama Works" />
+  <meta property="og:description" content="サロン向けデモサイト一覧。エステ、美容室、ネイルの3パターンを掲載。" />
+  <meta name="theme-color" content="#1f3d31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest-deep: #1f3d31;
+      --forest-main: #2f5a47;
+      --moss-soft: #b4c8a8;
+      --moss-light: #d2e0c8;
+      --mist-white: #f7faf6;
+      --header-bg: #f2f6f3;
+      --kinari: #f3ede1;
+      --charcoal: #2f3432;
+      --charcoal-soft: #4b5350;
+      --line-soft: rgba(47, 90, 71, 0.16);
+      --card-shadow: 0 12px 36px rgba(12, 24, 19, 0.1);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: min(1160px, calc(100vw - 32px));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--charcoal);
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(168, 188, 157, 0.32) 0%, rgba(168, 188, 157, 0) 35%),
+        radial-gradient(circle at 88% 14%, rgba(243, 237, 225, 0.5) 0%, rgba(243, 237, 225, 0) 32%),
+        var(--mist-white);
+      min-height: 100vh;
+    }
+
+    @keyframes pageFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .site-header,
+    main,
+    .site-footer {
+      animation: pageFadeIn 0.48s cubic-bezier(0.22, 0.72, 0.2, 1) both;
+    }
+
+    main {
+      animation-delay: 0.04s;
+    }
+
+    .site-footer {
+      animation-delay: 0.08s;
+    }
+
+    body.page-leaving .site-header,
+    body.page-leaving main,
+    body.page-leaving .site-footer {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.28s ease, transform 0.34s cubic-bezier(0.22, 0.72, 0.2, 1);
+      pointer-events: none;
+      animation: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .shell {
+      width: var(--max);
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: var(--header-bg);
+      border-bottom: 1px solid rgba(31, 63, 49, 0.18);
+      box-shadow: 0 8px 20px rgba(28, 41, 35, 0.12);
+    }
+
+    .site-header-inner {
+      width: var(--max);
+      margin: 0 auto;
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      width: auto;
+      height: clamp(30px, 4vw, 42px);
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--forest-deep);
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .header-link:hover,
+    .header-link:focus-visible,
+    .card-link:hover,
+    .card-link:focus-visible {
+      transform: translateY(-2px);
+      color: var(--forest-deep);
+      border-color: rgba(47, 90, 71, 0.24);
+    }
+
+    main {
+      padding: 48px 0 88px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(36px, 6vw, 72px);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(140deg, rgba(247, 250, 246, 0.95) 0%, rgba(243, 237, 225, 0.94) 100%);
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--card-shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -18% auto;
+      width: min(420px, 50vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(47, 90, 71, 0.15) 0%, rgba(180, 200, 168, 0.12) 46%, rgba(47, 90, 71, 0) 72%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--forest-main);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+
+    h1 {
+      margin: 16px 0 14px;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--forest-deep);
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      color: var(--charcoal-soft);
+      font-size: 1rem;
+    }
+
+    .section-head {
+      margin: 34px 0 18px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.45;
+      font-weight: 800;
+      color: var(--forest-deep);
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--charcoal-soft);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .mobile-carousel-status {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mobile-carousel-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .mobile-carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(47, 90, 71, 0.18);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .mobile-carousel-dot.is-active {
+      background: rgba(47, 90, 71, 0.82);
+      transform: scale(1.18);
+    }
+
+    .mobile-carousel-count {
+      color: var(--forest-main);
+      font-family: "Inter", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-width: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .card-link {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-media {
+      position: relative;
+      aspect-ratio: 1.25 / 1;
+      overflow: hidden;
+      background: var(--moss-light);
+    }
+
+    .card-media img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .card-link:hover .card-media img,
+    .card-link:focus-visible .card-media img {
+      transform: scale(1.04);
+    }
+
+    .card-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(31, 63, 49, 0.04), rgba(31, 63, 49, 0.24));
+      pointer-events: none;
+    }
+
+    .card-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--charcoal-soft);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(47, 90, 71, 0.1);
+      color: var(--forest-deep);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.25rem;
+      line-height: 1.45;
+      color: var(--forest-deep);
+    }
+
+    .card-subtitle {
+      margin: -8px 0 0;
+      color: var(--forest-main);
+      font-size: 0.95rem;
+    }
+
+    .card-desc {
+      margin: 0;
+      color: var(--charcoal-soft);
+      font-size: 0.95rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line-soft);
+      background: rgba(247, 250, 246, 0.9);
+      color: var(--forest-main);
+      font-size: 0.82rem;
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      align-self: center;
+      margin-top: auto;
+      min-width: min(100%, 220px);
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: var(--forest-main);
+      box-shadow: 0 10px 24px rgba(26, 41, 34, 0.18);
+      color: var(--forest-deep);
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: #fff;
+      text-align: center;
+      transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-link:hover .card-cta,
+    .card-link:focus-visible .card-cta {
+      background: #274b3b;
+      box-shadow: 0 14px 28px rgba(26, 41, 34, 0.24);
+    }
+
+    .site-footer {
+      padding: 28px 0 56px;
+      color: var(--charcoal-soft);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .site-header-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: min(84vw, 340px);
+        gap: 14px;
+        overflow-x: auto;
+        overflow-y: visible;
+        width: 100vw;
+        padding: 0 16px 6px;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 16px;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .card {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+      }
+
+      .mobile-carousel-status {
+        display: flex;
+      }
+
+      main {
+        padding-top: 28px;
+      }
+
+      .hero {
+        padding: 28px 22px;
+      }
+
+      .card-body {
+        padding: 18px 18px 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-header,
+      main,
+      .site-footer {
+        animation: none;
+      }
+
+      body.page-leaving .site-header,
+      body.page-leaving main,
+      body.page-leaving .site-footer {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../" aria-label="Nakayama Works トップページへ戻る">
+        <img src="../assets/images/common/brand-logo.png" alt="Nakayama Works" />
+      </a>
+      <a class="header-link" href="../">TOPに戻る</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">Demo Lineup</div>
+      <h1>Salon Demo<br />Collection</h1>
+      <p>業種ごとのトーンや導線の違いが見えるように、サロン向けデモサイトをまとめた一覧です。気になる業種をそのまま開いて、世界観と構成を確認できます。</p>
+    </section>
+
+    <section aria-labelledby="demo-list-heading">
+      <div class="section-head">
+        <div>
+          <h2 id="demo-list-heading">掲載デモ</h2>
+        </div>
+      </div>
+
+      <div class="grid" id="demoCarousel">
+        <article class="card">
+          <a class="card-link" href="./salon-de-eclat/">
+            <div class="card-media">
+              <img src="./salon-de-eclat/images/salon-concept-optimized/waiting-lounge.webp" alt="Salon de ÉCLAT の店内イメージ" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="pill">Esthetic</span>
+                <span>エステ</span>
+              </div>
+              <h3 class="card-title">Salon de ÉCLAT</h3>
+              <p class="card-subtitle">上質感を前面に出したエステサロン向けデモ</p>
+              <p class="card-desc">黒とゴールドを軸に、高級感と予約導線を両立させた構成です。ラグジュアリー系の打ち出しを確認できます。</p>
+              <div class="chip-row" aria-label="特徴">
+                <span class="chip">高級感</span>
+                <span class="chip">予約導線</span>
+                <span class="chip">多言語対応</span>
+              </div>
+              <span class="card-cta">デモを見る</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="card">
+          <a class="card-link" href="./organic-hair-salon-lino/">
+            <div class="card-media">
+              <img src="./organic-hair-salon-lino/images/salon-space/space-01.jpg" alt="Organic Hair Salon LINO の店内イメージ" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="pill">Hair Salon</span>
+                <span>美容室</span>
+              </div>
+              <h3 class="card-title">Organic Hair Salon LINO</h3>
+              <p class="card-subtitle">ナチュラル志向の美容室向けデモ</p>
+              <p class="card-desc">やわらかい配色と自然素材の空気感で、オーガニック系サロンの世界観を伝える構成にしています。</p>
+              <div class="chip-row" aria-label="特徴">
+                <span class="chip">ナチュラル</span>
+                <span class="chip">世界観訴求</span>
+                <span class="chip">店舗案内</span>
+              </div>
+              <span class="card-cta">デモを見る</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="card">
+          <a class="card-link" href="./nail-atelier-sui/">
+            <div class="card-media">
+              <img src="./nail-atelier-sui/images/web/gallery-sample-1.webp" alt="Nail Atelier SUI のネイルサンプル" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="pill">Nail Salon</span>
+                <span>ネイル</span>
+              </div>
+              <h3 class="card-title">Nail Atelier SUI</h3>
+              <p class="card-subtitle">繊細さと静けさを意識したネイルサロン向けデモ</p>
+              <p class="card-desc">余白を活かしたデザインで、ニュアンスネイルやプライベートサロンの雰囲気が伝わる見せ方にしています。</p>
+              <div class="chip-row" aria-label="特徴">
+                <span class="chip">上品</span>
+                <span class="chip">作品訴求</span>
+                <span class="chip">やわらかい導線</span>
+              </div>
+              <span class="card-cta">デモを見る</span>
+            </div>
+          </a>
+        </article>
+      </div>
+
+      <div class="mobile-carousel-status" id="demoCarouselStatus" aria-hidden="true">
+        <div class="mobile-carousel-dots"></div>
+        <div class="mobile-carousel-count">01 / 03</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    Demo listing page for Nakayama Works
+  </footer>
+  <script>
+    (function () {
+      const clearPageLeavingState = function () {
+        document.body.classList.remove("page-leaving");
+      };
+
+      window.addEventListener("pageshow", clearPageLeavingState);
+
+      function shouldHandlePageTransition(link) {
+        if (!link) {
+          return false;
+        }
+
+        const rawHref = link.getAttribute("href");
+        if (!rawHref || rawHref.startsWith("#")) {
+          return false;
+        }
+
+        if (link.target && link.target !== "_self") {
+          return false;
+        }
+
+        if (link.hasAttribute("download")) {
+          return false;
+        }
+
+        const nextUrl = new URL(link.href, window.location.href);
+        return nextUrl.origin === window.location.origin;
+      }
+
+      document.addEventListener("click", function (event) {
+        if (event.defaultPrevented || event.button !== 0) {
+          return;
+        }
+
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+
+        const link = event.target.closest("a[href]");
+        if (!shouldHandlePageTransition(link)) {
+          return;
+        }
+
+        event.preventDefault();
+        document.body.classList.add("page-leaving");
+        window.setTimeout(function () {
+          window.location.href = link.href;
+        }, 220);
+      }, true);
+
+      const track = document.getElementById("demoCarousel");
+      const statusEl = document.getElementById("demoCarouselStatus");
+
+      if (!track || !statusEl) return;
+
+      const itemSelector = ".card";
+      const mobileQuery = window.matchMedia("(max-width: 720px)");
+
+      function formatCarouselCount(current, total) {
+        return String(current).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+      }
+
+      function setupMobileLoopingCarousel() {
+        if (typeof track._loopCleanup === "function") {
+          track._loopCleanup();
+          track._loopCleanup = null;
+        }
+
+        const items = Array.from(track.querySelectorAll(':scope > ' + itemSelector + ':not([data-loop-clone])'));
+        const dotsEl = statusEl.querySelector(".mobile-carousel-dots");
+        const countEl = statusEl.querySelector(".mobile-carousel-count");
+        if (!dotsEl || !countEl || !items.length) return;
+
+        items.forEach((item, index) => {
+          item.dataset.loopIndex = String(index);
+        });
+
+        dotsEl.innerHTML = items.map((_, index) => (
+          '<span class="mobile-carousel-dot' + (index === 0 ? ' is-active' : '') + '"></span>'
+        )).join("");
+        countEl.textContent = formatCarouselCount(1, items.length);
+
+        const dots = Array.from(dotsEl.children);
+        const isMobileViewport = () => mobileQuery.matches;
+        const queryVisibleItems = () => Array.from(track.querySelectorAll(':scope > ' + itemSelector));
+        const queryRealItems = () => Array.from(track.querySelectorAll(':scope > ' + itemSelector + ':not([data-loop-clone])'));
+
+        function nearestItem(visibleItems) {
+          const viewportCenter = track.scrollLeft + track.clientWidth / 2;
+          let activeItem = visibleItems[0] || null;
+          let activeDistance = Number.POSITIVE_INFINITY;
+
+          visibleItems.forEach((item) => {
+            const center = item.offsetLeft + item.offsetWidth / 2;
+            const distance = Math.abs(center - viewportCenter);
+            if (distance < activeDistance) {
+              activeDistance = distance;
+              activeItem = item;
+            }
+          });
+
+          return activeItem;
+        }
+
+        function update(visibleItems) {
+          const item = nearestItem(visibleItems || queryVisibleItems());
+          if (!item) return;
+          const logicalIndex = Number(item.dataset.loopIndex || 0);
+          dots.forEach((dot, index) => {
+            dot.classList.toggle("is-active", index === logicalIndex);
+          });
+          countEl.textContent = formatCarouselCount(logicalIndex + 1, items.length);
+        }
+
+        function centerOffset(item) {
+          return item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+        }
+
+        let isAdjusting = false;
+        function positionAt(item, behavior) {
+          if (!item) return;
+          isAdjusting = true;
+          track.scrollTo({ left: centerOffset(item), behavior: behavior || "auto" });
+          window.setTimeout(() => {
+            isAdjusting = false;
+          }, 48);
+        }
+
+        function setupLoopClones() {
+          if (!isMobileViewport() || items.length <= 1) return;
+
+          const headClone = items[items.length - 1].cloneNode(true);
+          headClone.setAttribute("data-loop-clone", "head");
+          headClone.dataset.loopIndex = String(items.length - 1);
+          headClone.setAttribute("aria-hidden", "true");
+          track.insertBefore(headClone, items[0]);
+
+          const tailClone = items[0].cloneNode(true);
+          tailClone.setAttribute("data-loop-clone", "tail");
+          tailClone.dataset.loopIndex = "0";
+          tailClone.setAttribute("aria-hidden", "true");
+          track.appendChild(tailClone);
+        }
+
+        function normalizeLoop() {
+          if (!isMobileViewport() || items.length <= 1) return;
+          const visibleItems = queryVisibleItems();
+          const item = nearestItem(visibleItems);
+          if (!item) return;
+
+          if (item.getAttribute("data-loop-clone") === "head") {
+            const realItems = queryRealItems();
+            positionAt(realItems[realItems.length - 1], "auto");
+            requestAnimationFrame(() => update(queryVisibleItems()));
+            return;
+          }
+
+          if (item.getAttribute("data-loop-clone") === "tail") {
+            const realItems = queryRealItems();
+            positionAt(realItems[0], "auto");
+            requestAnimationFrame(() => update(queryVisibleItems()));
+            return;
+          }
+
+          update(visibleItems);
+        }
+
+        let settleTimer = 0;
+        let resizeTimer = 0;
+        let touchSettleTimer = 0;
+        let touchActive = false;
+        let lastMobileViewport = isMobileViewport();
+
+        setupLoopClones();
+
+        function onScroll() {
+          const visibleItems = queryVisibleItems();
+          requestAnimationFrame(() => update(visibleItems));
+          if (!isMobileViewport() || items.length <= 1 || isAdjusting) return;
+          clearTimeout(settleTimer);
+          settleTimer = window.setTimeout(normalizeLoop, touchActive ? 140 : 96);
+        }
+
+        function onTouchStart() {
+          if (!isMobileViewport() || items.length <= 1) return;
+          touchActive = true;
+          clearTimeout(settleTimer);
+        }
+
+        function onTouchEnd() {
+          if (!isMobileViewport() || items.length <= 1) return;
+          touchActive = false;
+          clearTimeout(touchSettleTimer);
+          touchSettleTimer = window.setTimeout(normalizeLoop, 108);
+        }
+
+        function onResize() {
+          const nextMobileViewport = isMobileViewport();
+          if (nextMobileViewport !== lastMobileViewport) {
+            lastMobileViewport = nextMobileViewport;
+            setupMobileLoopingCarousel();
+            return;
+          }
+
+          clearTimeout(resizeTimer);
+          resizeTimer = window.setTimeout(() => {
+            if (isMobileViewport() && items.length > 1) {
+              normalizeLoop();
+            } else {
+              update(queryRealItems());
+            }
+          }, 80);
+        }
+
+        track.addEventListener("scroll", onScroll, { passive: true });
+        track.addEventListener("touchstart", onTouchStart, { passive: true });
+        track.addEventListener("touchend", onTouchEnd, { passive: true });
+        track.addEventListener("touchcancel", onTouchEnd, { passive: true });
+        window.addEventListener("resize", onResize);
+
+        requestAnimationFrame(() => {
+          if (isMobileViewport() && items.length > 1) {
+            positionAt(queryRealItems()[0], "auto");
+            requestAnimationFrame(() => update(queryVisibleItems()));
+            return;
+          }
+          update(items);
+        });
+
+        track._loopCleanup = function () {
+          clearTimeout(settleTimer);
+          clearTimeout(resizeTimer);
+          clearTimeout(touchSettleTimer);
+          track.removeEventListener("scroll", onScroll);
+          track.removeEventListener("touchstart", onTouchStart);
+          track.removeEventListener("touchend", onTouchEnd);
+          track.removeEventListener("touchcancel", onTouchEnd);
+          window.removeEventListener("resize", onResize);
+          track.querySelectorAll("[data-loop-clone]").forEach((node) => node.remove());
+        };
+      }
+
+      setupMobileLoopingCarousel();
+    })();
+  </script>
+</body>
+</html>
