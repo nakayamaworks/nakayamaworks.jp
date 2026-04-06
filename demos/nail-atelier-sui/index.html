@@ -2514,7 +2514,7 @@
                 loading="lazy"
                 allowfullscreen
                 referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%8B%E8%B0%B7%E5%8C%BA%E7%A5%9E%E5%AE%AE%E5%89%8D4-18-6&z=18&output=embed"></iframe>
+                src="about:blank"></iframe>
             </div>
           </div>
         </div>
@@ -2608,7 +2608,8 @@
       document.body.scrollTop = 0;
       window.addEventListener('pageshow', () => {
         window.scrollTo(0, 0);
-      }, { once: true });
+        ensureMapEmbed(true);
+      });
 
       const langGate = document.getElementById('langGate');
       const langGrid = document.getElementById('langGrid');
@@ -2901,8 +2902,20 @@
         }
 
         if (mapEmbed) {
-          mapEmbed.src = 'https://www.google.com/maps?q=' + encodeURIComponent(MAP_QUERY) + '&z=18&output=embed';
+          ensureMapEmbed();
         }
+      }
+
+      function buildMapEmbedUrl() {
+        return 'https://maps.google.com/maps?hl=ja&q=' + encodeURIComponent(MAP_QUERY) + '&t=&z=18&ie=UTF8&iwloc=B&output=embed';
+      }
+
+      function ensureMapEmbed(force = false) {
+        if (!mapEmbed) return;
+        const nextSrc = buildMapEmbedUrl();
+        const currentSrc = mapEmbed.getAttribute('src') || '';
+        if (!force && currentSrc === nextSrc) return;
+        mapEmbed.setAttribute('src', nextSrc);
       }
 
       function updateReserveLinks() {
