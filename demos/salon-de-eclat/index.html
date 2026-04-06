@@ -707,6 +707,7 @@
       ctaTitle:'cta_title',ctaBody:'cta_body',footerAddress:'footer_address',footerCredit:'footer_credit','lang-copy':'lang_copy'
     };
     const LANG_SHORT = { ja:'JP', en:'EN', 'zh-TW':'繁中', es:'ES', ko:'KO' };
+    const DEMO_LANG_STORAGE_KEY = 'demo_lang_salon_de_eclat';
     const RESERVE_BASE_URL = 'https://misemaru.cloud/jp/beauty_salon_misemaru_cloud/';
     function applyReserveLinks(lang) {
       const ids = ['navReserve', 'heroReserve', 'ctaReserve'];
@@ -1039,7 +1040,7 @@
       let swipeStartY = 0;
       let swipeTracking = false;
       let swapping = false;
-      const currentLang = () => document.documentElement.lang || localStorage.getItem('demo_lang') || 'ja';
+      const currentLang = () => document.documentElement.lang || localStorage.getItem(DEMO_LANG_STORAGE_KEY) || 'ja';
 
       const listHtml = (arr) => `<ul>${arr.map((item) => `<li>${item}</li>`).join('')}</ul>`;
       const priceListHtml = (arr) => `<ul class="price-list">${
@@ -1294,7 +1295,7 @@
       const gate = document.getElementById('langGate');
       const gateCloseBtn = document.getElementById('langGateClose');
       const lightbox = document.getElementById('imageLightbox');
-      const saved = localStorage.getItem('demo_lang');
+      const saved = localStorage.getItem(DEMO_LANG_STORAGE_KEY);
       const lang = saved || 'ja';
       const url = new URL(location.href);
       const skipByQuery = url.searchParams.get('skipWelcome') === '1';
@@ -1452,7 +1453,7 @@
             b.classList.toggle('is-selecting', b === btn);
           });
           const next = btn.dataset.lang;
-          localStorage.setItem('demo_lang', next);
+          localStorage.setItem(DEMO_LANG_STORAGE_KEY, next);
           applyLang(next);
           if (mode === 'initial' && !shouldSkipWelcome) {
             await playWelcome({ instant: true });
