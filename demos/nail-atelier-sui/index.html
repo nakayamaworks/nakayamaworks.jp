@@ -87,6 +87,15 @@
       touch-action: none;
     }
 
+    body.page-leaving .top-nav,
+    body.page-leaving main,
+    body.page-leaving footer {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .34s ease, transform .42s cubic-bezier(.2,.75,.25,1);
+      pointer-events: none;
+    }
+
     body.booting {
       height: 100dvh;
       overflow: hidden;
@@ -1335,6 +1344,19 @@
     .menu-card {
       display: grid;
       gap: 0.82rem;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .menu-card:hover,
+    .menu-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .menu-card:focus-visible {
+      outline: 2px solid rgba(97, 71, 59, 0.24);
+      outline-offset: 2px;
     }
 
     .menu-card__top {
@@ -1593,6 +1615,108 @@
       visibility: visible;
       pointer-events: auto;
       transition: opacity .24s ease;
+    }
+
+    .menu-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 219;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(66, 50, 40, 0.42);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .24s ease, visibility 0s linear .24s;
+    }
+
+    .menu-modal.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity .24s ease;
+    }
+
+    .menu-modal-card {
+      width: min(560px, 100%);
+      border-radius: 28px;
+      background: rgba(251, 247, 241, 0.97);
+      border: 1px solid rgba(95, 71, 58, 0.08);
+      box-shadow: var(--shadow-lg);
+      padding: 1.35rem 1.35rem 1.25rem;
+      opacity: 0;
+      transform: translateY(12px) scale(0.985);
+      transition: opacity .28s ease, transform .4s cubic-bezier(.2,.75,.25,1);
+    }
+
+    .menu-modal.show .menu-modal-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .menu-modal-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(95, 71, 58, 0.1);
+      background: rgba(255, 252, 247, 0.94);
+      color: var(--accent-deep);
+      cursor: pointer;
+    }
+
+    .menu-modal-kicker {
+      margin: 0 0 0.34rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(63, 51, 43, 0.62);
+    }
+
+    .menu-modal-title {
+      margin: 0;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 1.3rem;
+      line-height: 1.5;
+    }
+
+    .menu-modal-body {
+      margin: 0.95rem 0 1rem;
+      color: var(--muted);
+      line-height: 1.82;
+    }
+
+    .menu-modal-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .menu-modal-meta-item {
+      padding: 0.9rem 0.95rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(95, 71, 58, 0.08);
+    }
+
+    .menu-modal-meta-label {
+      display: block;
+      margin-bottom: 0.28rem;
+      color: rgba(63, 51, 43, 0.58);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .menu-modal-meta-value {
+      display: block;
+      color: var(--accent-deep);
+      font-weight: 700;
     }
 
     .lightbox-card {
@@ -2292,6 +2416,21 @@
         z-index: 230;
         box-shadow: var(--shadow-sm);
       }
+
+      .menu-modal {
+        place-items: end center;
+        padding: max(0.5rem, env(safe-area-inset-top)) 0.5rem max(0.5rem, env(safe-area-inset-bottom));
+      }
+
+      .menu-modal-card {
+        width: 100%;
+        border-radius: 20px;
+        padding: 1.12rem 1rem 1rem;
+      }
+
+      .menu-modal-meta {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -2563,6 +2702,25 @@
     </div>
   </div>
 
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-modal-card">
+      <button class="menu-modal-close" id="menuModalClose" type="button" aria-label="Close">×</button>
+      <p class="menu-modal-kicker" data-i18n="menu_kicker">Menu</p>
+      <h3 class="menu-modal-title" id="menuModalTitle">ニュアンスデザイン</h3>
+      <p class="menu-modal-body" id="menuModalBody">くすみカラーや透け感を使った定番デザイン。</p>
+      <div class="menu-modal-meta">
+        <div class="menu-modal-meta-item">
+          <span class="menu-modal-meta-label" data-i18n="menu_time_label">所要時間</span>
+          <span class="menu-modal-meta-value" id="menuModalTime">90分</span>
+        </div>
+        <div class="menu-modal-meta-item">
+          <span class="menu-modal-meta-label" data-i18n="menu_price_label">料金</span>
+          <span class="menu-modal-meta-value" id="menuModalPrice">¥8,800</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="./i18n-demo.js"></script>
   <script>
     (() => {
@@ -2607,6 +2765,7 @@
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
       window.addEventListener('pageshow', () => {
+        document.body.classList.remove('page-leaving');
         window.scrollTo(0, 0);
         ensureMapEmbed(true);
       });
@@ -2640,6 +2799,12 @@
       const paymentValue = document.getElementById('paymentValue');
       const paymentLogo = document.getElementById('paymentLogo');
       const mapEmbed = document.getElementById('mapEmbed');
+      const menuModal = document.getElementById('menuModal');
+      const menuModalClose = document.getElementById('menuModalClose');
+      const menuModalTitle = document.getElementById('menuModalTitle');
+      const menuModalBody = document.getElementById('menuModalBody');
+      const menuModalTime = document.getElementById('menuModalTime');
+      const menuModalPrice = document.getElementById('menuModalPrice');
       const lightbox = document.getElementById('galleryLightbox');
       const lightboxClose = document.getElementById('lightboxClose');
       const lightboxVisual = document.getElementById('lightboxVisual');
@@ -2656,10 +2821,12 @@
       initNavigation();
       initReveal();
       initLightbox();
+      initMenuModal();
       initGalleryInteractions();
       initGalleryDesktopControls();
       initHeroScrollCue();
       initHeroReserveReveal();
+      initReserveTransitions();
       initRubberBandSuppression();
       initEntryFlow();
 
@@ -2854,8 +3021,8 @@
       }
 
       function renderMenu() {
-        menuGrid.innerHTML = dataFor(menuData).map((item) => (
-          '<article class="menu-card">' +
+        menuGrid.innerHTML = dataFor(menuData).map((item, index) => (
+          '<article class="menu-card" role="button" tabindex="0" data-menu-index="' + index + '">' +
             '<div class="menu-card__top">' +
               '<h3>' + escapeHtml(item.title) + '</h3>' +
               '<span class="menu-pill">' + escapeHtml(item.price) + '</span>' +
@@ -2867,6 +3034,64 @@
             '</div>' +
           '</article>'
         )).join('');
+      }
+
+      function initMenuModal() {
+        if (!menuGrid || !menuModal) return;
+
+        menuGrid.addEventListener('click', (event) => {
+          const card = event.target.closest('[data-menu-index]');
+          if (!card || !menuGrid.contains(card)) return;
+          openMenuModal(Number(card.getAttribute('data-menu-index')));
+        });
+
+        menuGrid.addEventListener('keydown', (event) => {
+          const card = event.target.closest('[data-menu-index]');
+          if (!card || !menuGrid.contains(card)) return;
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          openMenuModal(Number(card.getAttribute('data-menu-index')));
+        });
+
+        menuModalClose.addEventListener('click', closeMenuModal);
+        menuModal.addEventListener('click', (event) => {
+          if (event.target === menuModal) closeMenuModal();
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (!menuModal.classList.contains('show')) return;
+          if (event.key === 'Escape') closeMenuModal();
+        });
+      }
+
+      function openMenuModal(index) {
+        const items = dataFor(menuData);
+        const item = items[index];
+        if (!item) return;
+        modalScrollY = window.scrollY || window.pageYOffset || 0;
+        document.body.style.top = '-' + modalScrollY + 'px';
+        menuModalTitle.textContent = item.title || '';
+        menuModalBody.textContent = item.body || '';
+        menuModalTime.textContent = item.time || '';
+        menuModalPrice.textContent = item.price || '';
+        menuModal.classList.add('show');
+        menuModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeMenuModal() {
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        menuModal.classList.remove('show');
+        menuModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        document.documentElement.style.scrollBehavior = 'auto';
+        requestAnimationFrame(() => {
+          window.scrollTo(0, modalScrollY);
+          requestAnimationFrame(() => {
+            document.documentElement.style.scrollBehavior = previousScrollBehavior;
+          });
+        });
       }
 
       function renderFlow() {
@@ -2925,6 +3150,28 @@
           url.searchParams.set('lang', currentLang);
           url.searchParams.set('return', pageUrl);
           link.setAttribute('href', url.toString());
+        });
+      }
+
+      function initReserveTransitions() {
+        document.querySelectorAll('.reserve-link').forEach((link) => {
+          link.addEventListener('click', (event) => {
+            if (
+              event.defaultPrevented ||
+              event.button !== 0 ||
+              event.metaKey ||
+              event.ctrlKey ||
+              event.shiftKey ||
+              event.altKey
+            ) return;
+            const href = link.getAttribute('href') || '';
+            if (!href || href === '#') return;
+            event.preventDefault();
+            document.body.classList.add('page-leaving');
+            window.setTimeout(() => {
+              window.location.href = href;
+            }, 260);
+          });
         });
       }
 
