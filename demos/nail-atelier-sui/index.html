@@ -3474,29 +3474,30 @@
         if (!cues.length) return;
 
         const isMobileHeroCue = () => window.matchMedia('(max-width: 640px)').matches;
-        const navOffset = () => {
-          if (!topNav) return 0;
-          return topNav.getBoundingClientRect().height || 0;
-        };
-        const scrollToWithOffset = (element) => {
-          if (!element) return;
-          const offset = navOffset() + 12;
-          const top = element.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-        };
 
         cues.forEach((cue) => cue.addEventListener('click', () => {
           if (isMobileHeroCue()) {
-            scrollToWithOffset(heroTitle);
+            scrollToElementWithHeaderOffset(heroTitle);
             return;
           }
 
           const concept = document.getElementById('concept');
-          scrollToWithOffset(concept);
+          scrollToElementWithHeaderOffset(concept);
         }));
 
         updateHeroScrollCueState();
         window.addEventListener('resize', updateHeroScrollCueState, { passive: true });
+      }
+
+      function getHeaderScrollOffset() {
+        if (!topNav) return 0;
+        return topNav.getBoundingClientRect().height || 0;
+      }
+
+      function scrollToElementWithHeaderOffset(element, extraOffset = 12) {
+        if (!element) return;
+        const top = element.getBoundingClientRect().top + window.scrollY - getHeaderScrollOffset() - extraOffset;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }
 
       function updateHeroScrollCueState() {
@@ -3531,7 +3532,7 @@
         document.querySelectorAll('[data-target]').forEach((button) => {
           button.addEventListener('click', () => {
             const target = document.querySelector(button.getAttribute('data-target'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            scrollToElementWithHeaderOffset(target);
             navPanel.classList.remove('open');
             menuToggle.setAttribute('aria-expanded', 'false');
           });
