@@ -227,7 +227,7 @@
       inset: 0;
       background-image:
         linear-gradient(120deg, rgba(18, 49, 66, .82) 0%, rgba(18, 49, 66, .42) 48%, rgba(31, 41, 55, .18) 100%),
-        url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1800&q=82");
+        url("assets/shop/optimized/gallery-chair-detail.webp");
       background-size: cover;
       background-position: center;
       transform: scale(1.03);
@@ -580,12 +580,14 @@
     .menu-grid {
       display: flex;
       gap: .85rem;
+      align-items: stretch;
     }
     .menu-grid > * { flex-basis: clamp(270px, 32vw, 360px); }
     .menu-card {
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      height: 100%;
     }
     .menu-card img {
       aspect-ratio: 4 / 3;
@@ -596,6 +598,9 @@
       flex-direction: column;
       flex: 1;
       padding: .9rem;
+    }
+    .menu-card-body > p:not(.menu-price) {
+      min-height: 2.9em;
     }
     .menu-price {
       margin: auto 0 0;
@@ -1024,7 +1029,7 @@
   <main>
     <section id="concept" class="section">
       <div class="welcome-grid">
-        <img class="welcome-photo will-reveal" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=82" alt="理容室の施術チェア" loading="lazy" decoding="async" />
+        <img class="welcome-photo will-reveal" src="assets/shop/optimized/shop-welcome.webp" alt="レンガ壁とバーバーチェアのある店内" loading="lazy" decoding="async" />
         <div class="welcome-copy will-reveal">
           <p class="label">Welcome</p>
           <h2 class="title">カジュアルな<br>西海岸の雰囲気</h2>
@@ -1084,7 +1089,7 @@
           </div>
         </article>
         <article class="menu-card will-reveal">
-          <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=900&q=82" alt="シェービング" loading="lazy" decoding="async" />
+          <img src="assets/shop/optimized/menu-shaving.webp" alt="シェービング" loading="lazy" decoding="async" />
           <div class="menu-card-body">
             <h3>シェービング</h3>
             <p>顔まわり、眉、ひげを整えるリラックスメニュー。</p>
@@ -1093,7 +1098,7 @@
           </div>
         </article>
         <article class="menu-card will-reveal">
-          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=900&q=82" alt="ヘッドスパ" loading="lazy" decoding="async" />
+          <img src="assets/shop/optimized/menu-headspa.webp" alt="ヘッドスパ" loading="lazy" decoding="async" />
           <div class="menu-card-body">
             <h3>頭皮ケア / ヘッドスパ</h3>
             <p>頭皮をほぐして、カット後の仕上がりも軽く。</p>
@@ -1113,11 +1118,11 @@
         <p>一人でも、親子でも入りやすいカジュアルな店内です。</p>
       </div>
       <div class="gallery-track carousel-track">
-        <button class="gallery-item will-reveal" type="button"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=82" alt="理容室の店内" loading="lazy" decoding="async" /><span class="gallery-cap">Clean interior</span></button>
-        <button class="gallery-item will-reveal" type="button"><img src="https://images.unsplash.com/photo-1593702288056-7927b442d363?auto=format&fit=crop&w=900&q=82" alt="バーバーツール" loading="lazy" decoding="async" /><span class="gallery-cap">Tools</span></button>
-        <button class="gallery-item will-reveal" type="button"><img src="https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?auto=format&fit=crop&w=900&q=82" alt="カット施術" loading="lazy" decoding="async" /><span class="gallery-cap">Cut work</span></button>
-        <button class="gallery-item will-reveal" type="button"><img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=900&q=82" alt="親子で来店できる理容室" loading="lazy" decoding="async" /><span class="gallery-cap">Family friendly</span></button>
-        <button class="gallery-item will-reveal" type="button"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=82" alt="バーバーチェア" loading="lazy" decoding="async" /><span class="gallery-cap">Barber chair</span></button>
+        <button class="gallery-item will-reveal" type="button"><img src="assets/shop/optimized/gallery-lounge.webp" alt="ソファとバーバーチェアのある店内" loading="lazy" decoding="async" /><span class="gallery-cap">Lounge</span></button>
+        <button class="gallery-item will-reveal" type="button"><img src="assets/shop/optimized/gallery-tools.webp" alt="シザーとクリッパーを並べたワークスペース" loading="lazy" decoding="async" /><span class="gallery-cap">Tools</span></button>
+        <button class="gallery-item will-reveal" type="button"><img src="assets/shop/optimized/gallery-chairs.webp" alt="カット席が並ぶバーバー店内" loading="lazy" decoding="async" /><span class="gallery-cap">Cut stations</span></button>
+        <button class="gallery-item will-reveal" type="button"><img src="assets/shop/optimized/gallery-sofa.webp" alt="待合ソファとバーバーチェア" loading="lazy" decoding="async" /><span class="gallery-cap">Waiting sofa</span></button>
+        <button class="gallery-item will-reveal" type="button"><img src="assets/shop/optimized/gallery-chair-detail.webp" alt="レンガ壁とバーバーチェア" loading="lazy" decoding="async" /><span class="gallery-cap">Barber chair</span></button>
       </div>
     </section>
 
@@ -1290,13 +1295,13 @@
       shave: {
         title: 'シェービング',
         lead: '顔まわりをすっきり整えたい日に。',
-        image: 'https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=1200&q=82',
+        image: 'assets/shop/optimized/menu-shaving.webp',
         items: ['顔剃り、眉まわり、保湿仕上げ', 'カットへの追加可', '所要時間 30分']
       },
       spa: {
         title: '頭皮ケア / ヘッドスパ',
         lead: '頭皮の重さやにおいが気になる方に。',
-        image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=1200&q=82',
+        image: 'assets/shop/optimized/menu-headspa.webp',
         items: ['クレンジング、頭皮マッサージ、シャンプー', 'カットへの追加可', '所要時間 25分']
       }
     };
@@ -1589,8 +1594,37 @@
       });
     }
 
+    let bodyLockDepth = 0;
+    let bodyLockScrollY = 0;
     function lockBody(lock) {
-      document.body.style.overflow = lock ? 'hidden' : '';
+      if (lock) {
+        if (bodyLockDepth === 0) {
+          bodyLockScrollY = window.scrollY || window.pageYOffset || 0;
+          document.body.style.position = 'fixed';
+          document.body.style.top = `-${bodyLockScrollY}px`;
+          document.body.style.left = '0';
+          document.body.style.right = '0';
+          document.body.style.width = '100%';
+          document.body.style.overflow = 'hidden';
+        }
+        bodyLockDepth += 1;
+        return;
+      }
+      if (bodyLockDepth === 0) return;
+      bodyLockDepth -= 1;
+      if (bodyLockDepth > 0) return;
+      const top = parseInt(document.body.style.top || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      const restoreY = Number.isNaN(top) ? bodyLockScrollY : Math.abs(top);
+      const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({ top: restoreY, left: 0, behavior: 'auto' });
+      document.documentElement.style.scrollBehavior = prevScrollBehavior;
     }
 
     function setupMenuModal() {
