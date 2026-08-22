@@ -48,6 +48,7 @@
   const form = document.getElementById("portfolioContactForm");
   const submit = document.getElementById("portfolioContactSubmit");
   const status = document.getElementById("portfolioContactStatus");
+  const consent = document.getElementById("contactAgree");
   const endpoint = window.NAKAYAMA_WORKS && window.NAKAYAMA_WORKS.CONTACT_ENDPOINT;
 
   if (!form || !submit || !status) return;
@@ -86,30 +87,39 @@
       type: typeMap[subject] || "other",
       subject,
       name,
-      salon: organization,
+      organization,
       email,
       message,
-      privacyAccepted: true,
+      privacyAccepted: Boolean(consent && consent.checked),
       lang: "ja",
-      source: "nakayama_works_lp/index-portfolio.html",
+      source: "nakayama_works_lp/index.html",
       website
     };
 
     submit.disabled = true;
     submit.innerHTML = "送信しています…";
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 25000);
     try {
+      if (!endpoint) throw new Error("missing_endpoint");
       const response = await fetch(endpoint, {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
+        credentials: "omit",
+        redirect: "follow",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
-      if (!(response.ok || response.type === "opaque")) throw new Error("send_failed");
+      if (!response.ok) throw new Error("send_failed");
+      const result = await response.json();
+      if (!result || result.ok !== true) throw new Error("rejected");
       form.reset();
       showStatus("送信しました。通常1〜2営業日以内にご連絡します。", "success");
     } catch (_) {
       showStatus("送信できませんでした。LINEまたは contact@nakayamaworks.jp へご連絡ください。", "error");
     } finally {
+      window.clearTimeout(timeoutId);
       submit.disabled = false;
       submit.innerHTML = "相談内容を送信する <span aria-hidden=\"true\">→</span>";
     }
