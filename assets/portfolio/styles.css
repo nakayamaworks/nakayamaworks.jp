@@ -186,7 +186,7 @@ img { display: block; max-width: 100%; }
 .approach-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .approach-grid li { min-height: 430px; padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .approach-grid span { display: inline-grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; font-family: Manrope, sans-serif; font-size: .65rem; font-weight: 800; }
-.approach-art { width: min(174px, 100%); aspect-ratio: 1; margin: 12px auto 18px; background-image: url("images/approach-sprite.png"); background-repeat: no-repeat; background-size: 200% auto; }
+.approach-art { width: min(174px, 100%); aspect-ratio: 1; margin: 12px auto 18px; background-image: url("images/approach-sprite.webp"); background-repeat: no-repeat; background-size: 200% auto; }
 .approach-grid li:nth-child(1) .approach-art { background-position: 0 0; }
 .approach-grid li:nth-child(2) .approach-art { background-position: 100% 0; }
 .approach-grid li:nth-child(3) .approach-art { background-position: 0 100%; }
