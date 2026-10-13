@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ほっほリーダーは、Excelやテスト管理ツールの結果を取り込み、テスト進捗と日報・期間報告を整理するローカルデスクトップアプリです。">
+  <meta name="theme-color" content="#163f34">
+  <title>ほっほリーダー | テスト結果の集計・進捗・日報を、ひとつに。</title>
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="styles.css?v=25">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="ほっほリーダー トップへ">
+        <img src="assets/icon.png" alt="" width="42" height="42">
+        <span><b>ほっほ</b>リーダー</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">メニューを開く</span><span aria-hidden="true">≡</span>
+      </button>
+      <nav id="site-nav" aria-label="ページ内リンク">
+        <a href="#features">できること</a>
+        <a href="#screens">画面を見る</a>
+        <a href="#local">ローカル保存</a>
+        <a class="header-contact" href="https://nakayamaworks.jp/#contact" target="_blank" rel="noopener noreferrer">お問い合わせ <span aria-hidden="true">↗</span></a>
+        <a class="header-download" href="#download">ダウンロード</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-label">ローカル環境で使う、無料のテスト進捗管理アプリ</p>
+          <h1 id="hero-title">テスト結果の<br><em>集計・進捗・日報</em>を、<br>ひとつに。</h1>
+          <p class="hero-lead">Excel・CSV・テスト管理ツールから結果を取り込み、計画、進捗、日報まで。ほっほリーダーは、テストリーダーの日々の集計作業を整理します。</p>
+          <div class="hero-actions">
+            <a class="button button-lime" href="#download">無料でダウンロード <span aria-hidden="true">↓</span></a>
+          </div>
+          <ul class="hero-facts" aria-label="ほっほリーダーの特徴">
+            <li>Windows版</li>
+            <li>Mac版</li>
+            <li>無料で利用</li>
+          </ul>
+        </div>
+        <figure class="hero-screen">
+          <button class="image-surface" type="button" data-lightbox-src="assets/screenshots/results.png" data-lightbox-alt="ほっほリーダーの進捗画面。結果の内訳とデータ・シート・サイクル別の集計を表示している" aria-label="進捗画面を拡大表示">
+            <img src="assets/screenshots/results.png" alt="ほっほリーダーの進捗画面。結果の内訳とデータ・シート・サイクル別の集計を表示している" width="2720" height="1622" fetchpriority="high">
+          </button>
+          <button class="image-zoom" type="button" data-lightbox-src="assets/screenshots/results.png" data-lightbox-alt="ほっほリーダーの進捗画面。結果の内訳とデータ・シート・サイクル別の集計を表示している" aria-label="進捗画面を拡大表示">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4M11 8v6M8 11h6"/></svg>
+          </button>
+          <figcaption>結果の内訳と、データ・シート・サイクルごとの進捗を一覧で確認</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="feature-section" id="features" aria-labelledby="features-title">
+      <div class="container">
+        <div class="section-heading feature-heading">
+          <div><h2 id="features-title">必要な情報を、<br>報告までの流れに整える。</h2></div>
+          <p class="bubble-note">既存のExcelや課題管理ツールを置き換えるのではなく、テスト進捗と報告に必要な情報を、ひとつの流れで扱います。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><svg class="feature-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M12 10v7m-3-3 3 3 3-3"/></svg><div><h3>取り込む</h3><p>Excel・CSV・QualityForward API・TestRail APIの結果を取り込み、列と結果の対応も保存できます。</p></div></article>
+          <article class="feature-card"><svg class="feature-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="7" cy="18" r="2"/></svg><div><h3>整える</h3><p>現場の結果表記を変換し、使う結果と表示名をプロジェクトごとに設定できます。</p></div></article>
+          <article class="feature-card"><svg class="feature-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19V5m0 14h16"/><path d="m7 15 4-4 3 2 5-6"/><path d="M16 7h3v3"/></svg><div><h3>見える化する</h3><p>複数計画の日別目標、実績、累計、推移グラフを同じ画面で確認できます。</p></div></article>
+          <article class="feature-card"><svg class="feature-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 8h8a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3Z"/><path d="m8 12 2 2 4-4M19 9h2M19 15h2"/></svg><div><h3>チケットとつなぐ</h3><p>Redmine・Jira Cloudの不具合やQAを、テストケースとあわせて確認できます。</p></div></article>
+          <article class="feature-card feature-card-wide"><svg class="feature-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5Z"/><path d="M15 3v5h5M8 13h8M8 17h5"/><path d="m8 9 1.5 1.5L12 8"/></svg><div><h3>報告する</h3><p>日報・期間報告を作成し、進捗はテキスト・画像でコピーして共有できます。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="screens-section" id="screens" aria-labelledby="screens-title">
+      <div class="container">
+        <div class="section-heading screens-heading">
+          <div><h2 id="screens-title">画面で見る、日々の進捗管理。</h2></div>
+          <p class="bubble-note">計画、テストケース、日報を、同じアプリの中で確認。実務で扱う情報を、見たい粒度で追えます。</p>
+        </div>
+        <div class="screen-gallery">
+          <figure class="screen-card screen-plan"><button class="image-surface" type="button" data-lightbox-src="assets/screenshots/plan.png" data-lightbox-alt="目標と実績の画面。日別目標、実績、累計進捗を計画ごとに表示している" aria-label="計画と進捗の画面を拡大表示"><img src="assets/screenshots/plan.png" alt="目標と実績の画面。日別目標、実績、累計進捗を計画ごとに表示している" width="2720" height="1622" loading="lazy" decoding="async"></button><button class="image-zoom" type="button" data-lightbox-src="assets/screenshots/plan.png" data-lightbox-alt="目標と実績の画面。日別目標、実績、累計進捗を計画ごとに表示している" aria-label="計画と進捗の画面を拡大表示"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4M11 8v6M8 11h6"/></svg></button><figcaption><strong>計画と進捗</strong><span>日別目標・実績・累計を同じ画面で確認</span></figcaption></figure>
+          <figure class="screen-card screen-cases"><button class="image-surface" type="button" data-lightbox-src="assets/screenshots/cases.png" data-lightbox-alt="テストケース一覧。結果、実行者、実施日、バージョン、不具合番号、QA番号を確認する画面" aria-label="テストケースの画面を拡大表示"><img src="assets/screenshots/cases.png" alt="テストケース一覧。結果、実行者、実施日、バージョン、不具合番号、QA番号を確認する画面" width="2720" height="1622" loading="lazy" decoding="async"></button><button class="image-zoom" type="button" data-lightbox-src="assets/screenshots/cases.png" data-lightbox-alt="テストケース一覧。結果、実行者、実施日、バージョン、不具合番号、QA番号を確認する画面" aria-label="テストケースの画面を拡大表示"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4M11 8v6M8 11h6"/></svg></button><figcaption><strong>テストケース</strong><span>結果・実行者・チケット番号で絞り込み</span></figcaption></figure>
+          <figure class="screen-card screen-report"><button class="image-surface" type="button" data-lightbox-src="assets/screenshots/report.png" data-lightbox-alt="日報のプレビュー。テスト進捗、結果の内訳、連絡事項を確認して確定する画面" aria-label="日報・期間報告の画面を拡大表示"><img src="assets/screenshots/report.png" alt="日報のプレビュー。テスト進捗、結果の内訳、連絡事項を確認して確定する画面" width="2720" height="1622" loading="lazy" decoding="async"></button><button class="image-zoom" type="button" data-lightbox-src="assets/screenshots/report.png" data-lightbox-alt="日報のプレビュー。テスト進捗、結果の内訳、連絡事項を確認して確定する画面" aria-label="日報・期間報告の画面を拡大表示"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4M11 8v6M8 11h6"/></svg></button><figcaption><strong>日報・期間報告</strong><span>集計をもとに編集して、履歴として残す</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="local-section" id="local" aria-labelledby="local-title">
+      <div class="container local-layout">
+        <div class="local-mark"><img src="assets/owl-chart.png" alt="グラフを持つほっほリーダーのフクロウ" width="380" height="627"></div>
+        <div class="local-copy"><h2 id="local-title">ローカル環境で管理。<br>必要なときだけ外部と連携。</h2><p>テストデータ、計画、日報はローカル環境に保存します。QualityForward、TestRail、Redmine、Jira Cloudとの通信は、利用者が連携を設定した場合に行われます。</p><div class="local-points"><div><strong>APIキーを保護</strong><p>OSの暗号化機能で保護します。</p></div><div><strong>プロジェクトごとに管理</strong><p>データ・計画・連携設定を分けられます。</p></div></div></div>
+      </div>
+      <div class="container integration-panel" aria-label="外部サービスとの連携の流れ">
+        <div class="integration-group">
+          <p class="integration-label">テスト情報を取り込む</p>
+          <div class="service-logos">
+            <div class="service-logo excel-logo"><span class="service-mark" aria-hidden="true">X</span><span>Excel</span></div>
+            <div class="service-logo csv-logo"><span class="service-mark" aria-hidden="true">CSV</span><span>CSV</span></div>
+            <div class="service-logo quality-logo"><span class="service-mark" aria-hidden="true">QF</span><span>QualityForward</span></div>
+            <div class="service-logo testrail-logo"><span class="service-mark" aria-hidden="true">TR</span><span>TestRail</span></div>
+          </div>
+        </div>
+        <div class="integration-arrow" aria-hidden="true"><span>→</span></div>
+        <div class="integration-core"><img src="assets/icon.png" alt="" width="52" height="52"><strong>ほっほリーダー</strong><span>テスト進捗を整理</span></div>
+        <div class="integration-arrow" aria-hidden="true"><span>←</span></div>
+        <div class="integration-group">
+          <p class="integration-label">チケット情報を取り込む</p>
+          <div class="service-logos service-logos-two">
+            <div class="service-logo redmine-logo"><span class="service-mark" aria-hidden="true">R</span><span>Redmine</span></div>
+            <div class="service-logo jira-logo"><span class="service-mark" aria-hidden="true">J</span><span>Jira Cloud</span></div>
+          </div>
+        </div>
+        <p class="integration-result">テスト結果と関連チケットをもとに、計画・実績・日報をまとめて確認できます。</p>
+        <p class="integration-trademark">Excel、QualityForward、TestRail、Redmine、Jira Cloudは各社の商標または登録商標です。</p>
+      </div>
+    </section>
+
+    <section class="download-section" id="download" aria-labelledby="download-title">
+      <div class="container">
+        <div class="section-heading download-heading"><div><h2 id="download-title">実務で使える進捗管理を、無料で。</h2></div><p class="bubble-note">ほっほリーダー ver 1.0 は無料で利用できます。Windows版のZIPファイルをダウンロードしてください。</p></div>
+        <div class="download-grid">
+          <article class="download-card"><div><h3>Windows版</h3><p>Windows x64</p></div><dl><div><dt>バージョン</dt><dd>1.0.0</dd></div><div><dt>ファイルサイズ</dt><dd>154 MB</dd></div></dl><a class="button button-dark" href="https://hoho-leader-downloads-2026.web.app/hoho-leader-1.0.0-win-x64.zip">Windows版を無料でダウンロード <span aria-hidden="true">↓</span></a></article>
+          <article class="download-card download-card-coming"><div><h3>Mac版</h3><p>Apple Silicon対応</p></div><p class="coming-soon"><strong>公開準備中</strong><span>Appleの配布手続きを完了後に公開予定です。</span></p></article>
+        </div>
+        <p class="download-note">ダウンロードには通信環境によって時間がかかる場合があります。</p>
+      </div>
+    </section>
+
+    <section class="launch-section" aria-labelledby="launch-title">
+      <div class="container">
+        <div class="launch-heading"><div class="launch-title-group"><img class="launch-owl" src="assets/owl-download.png" alt="ダウンロードを案内するほっほリーダーのフクロウ" width="380" height="627"><h2 id="launch-title">初回起動について</h2></div><p class="bubble-note">ほっほリーダーはローカル環境で動作するアプリです。ダウンロードしたZIPファイルを展開してから起動してください。</p></div>
+        <div class="launch-grid launch-grid-single">
+          <article><div><h3>Windows</h3><ol><li>ZIPファイルを展開します</li><li>展開したフォルダ内の「ほっほリーダー.exe」を起動します</li><li>Windows Defender SmartScreenが表示された場合は「詳細情報」→「実行」を選択します</li></ol></div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="image-lightbox" hidden>
+    <button class="lightbox-backdrop" type="button" aria-label="背景をクリックして拡大表示を閉じる"></button>
+    <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="スクリーンショットの拡大表示">
+      <button class="lightbox-close" type="button" aria-label="拡大表示を閉じる"><span aria-hidden="true">×</span></button>
+      <img class="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <footer class="site-footer"><div class="container footer-inner"><a class="brand" href="#top"><img src="assets/icon.png" alt="" width="38" height="38"><span><b>ほっほ</b>リーダー</span></a><p>テスト進捗を、次の判断につなげる。</p><small>© 2026 Nakayama Works</small></div></footer>
+  <script src="script.js?v=15"></script>
+</body>
+</html>
