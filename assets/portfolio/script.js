@@ -10,6 +10,7 @@
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "メニューを開く");
     siteNav.classList.remove("is-open");
+    if (header) header.classList.remove("menu-is-open");
     document.body.classList.remove("menu-open");
   };
 
@@ -19,6 +20,7 @@
       menuToggle.setAttribute("aria-expanded", String(opening));
       menuToggle.setAttribute("aria-label", opening ? "メニューを閉じる" : "メニューを開く");
       siteNav.classList.toggle("is-open", opening);
+      if (header) header.classList.toggle("menu-is-open", opening);
       document.body.classList.toggle("menu-open", opening);
     });
     siteNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));

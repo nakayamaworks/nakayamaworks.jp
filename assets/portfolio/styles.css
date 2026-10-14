@@ -42,6 +42,7 @@ img { display: block; max-width: 100%; height: auto; }
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
+.site-header.menu-is-open { border-bottom-color: transparent; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .header-inner { height: 84px; display: flex; align-items: center; justify-content: space-between; }
 .wordmark { display: inline-flex; align-items: center; gap: 12px; font-family: Manrope, sans-serif; font-weight: 800; }
 .wordmark-mark { display: grid; place-items: center; width: 42px; height: 42px; }
@@ -292,7 +293,7 @@ img { display: block; max-width: 100%; height: auto; }
   .desktop-nav { position: fixed; inset: 0; z-index: 15; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 24px; padding: 24px max(7vw, 32px); visibility: hidden; opacity: 0; color: white; background: rgba(16,24,32,.98); transition: opacity .25s ease, visibility .25s ease; }
   .desktop-nav.is-open { visibility: visible; opacity: 1; }
   .desktop-nav a:not(.nav-cta) { display: block; font-size: 1.8rem; }
-  .desktop-nav .nav-cta { margin-top: 14px; }
+  .desktop-nav .nav-cta { display: inline-flex; align-items: center; justify-content: center; min-width: 238px; min-height: 56px; margin-top: 14px; padding: 0 24px; border-radius: 999px; font-size: 1.05rem; }
   .case-grid, .case-grid-reverse { grid-template-columns: 1fr; }
   .case-copy { max-width: 680px; }
   .case-media { min-height: 620px; }
