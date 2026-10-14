@@ -315,13 +315,13 @@ img { display: block; max-width: 100%; height: auto; }
   .hero-title-primary > span + span { margin-left: 0; }
   .hero-lead { font-size: .94rem; }
   .hero-trust { flex-wrap: wrap; font-size: .74rem; }
-  .hero-products { min-height: 480px; }
+  .hero-products { min-height: 520px; }
   .hero-product-misemaru { grid-template-columns: 132px 1fr; gap: 14px; width: 88%; top: 0; left: 0; padding: 18px; }
   .misemaru-visual { width: 132px; height: 92px; }
   .misemaru-visual img { width: 124px; height: 88px; }
   .hero-product-akamain { grid-template-columns: 100px 1fr; width: 88%; right: 3%; padding: 18px; }
   .akamain-visual { width: 100px; height: 92px; }
-  .hero-product-hoho { grid-template-columns: 100px 1fr; gap: 14px; width: 88%; top: 35%; left: 3%; padding: 18px; }
+  .hero-product-hoho { grid-template-columns: 100px 1fr; gap: 14px; width: 88%; top: 29%; left: 3%; padding: 18px; }
   .hoho-visual { width: 100px; height: 92px; }
   .hoho-visual img { width: 56px; height: 90px; }
   .hero-product-hoho h2 { font-size: 1.35rem; }
