@@ -33,3 +33,20 @@
 @media(max-width:650px){.faq ol{font-size:12px}.session-list-window{border-radius:16px}}
 .session-list-window{overflow:clip}
 .session-list-window>img{position:absolute;top:0;left:0}
+/* Full-width sticky header; preserve anchor clearance below the bar. */
+html{scroll-padding-top:112px}
+.site-header{position:sticky;top:0;z-index:50;display:block;min-height:0;background:rgba(9,17,33,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;gap:40px;min-height:100px}
+/* Native screenshots remain intact inside a single horizontal row. */
+.screens-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:100%;gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;margin-top:36px;padding-block:8px 4px}
+.screens-grid::-webkit-scrollbar{display:none}
+.screens-grid figure{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;scroll-snap-align:center;scroll-snap-stop:always;margin:0;min-width:0}
+.screens-grid figure>img{height:min(62svh,560px);width:auto;max-width:100%;object-fit:contain;border-radius:24px;flex-shrink:0}
+.screens-grid figcaption{width:auto;max-width:100%;margin-top:20px;text-align:center;min-height:56px}
+.gallery-dots{display:flex;justify-content:center;gap:4px;margin-top:12px}
+.gallery-dots button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer}
+.gallery-dots span{display:block;width:8px;height:8px;border-radius:50%;background:#56657b;transition:background .15s,transform .15s}
+.gallery-dots button[aria-current=true] span{background:var(--mint);transform:scale(1.25)}
+@media(max-width:950px){.header-inner{gap:20px}}
+@media(max-width:650px){html{scroll-padding-top:95px}.header-inner{min-height:83px;gap:14px}.screens-grid{gap:16px;margin-top:28px}.screens-grid figure>img{width:auto;height:min(60svh,500px)}.screens-grid figcaption{width:auto}.screens-grid b{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.screens-grid{scroll-behavior:auto}.gallery-dots span{transition:none}}
