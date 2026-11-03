@@ -386,7 +386,7 @@ img { display: block; max-width: 100%; height: auto; }
 .hero-product-dokusouka h2{margin:6px 0;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:1.9rem;letter-spacing:.16em}
 .hero-product-dokusouka span{font-size:.75rem;color:#7de6cb}
 .hero-product-dokusouka:hover{transform:translateY(-6px) rotate(1deg)}
-.dokusouka-wordmark h3{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;letter-spacing:.16em;font-weight:700}
+.dokusouka-wordmark h3{letter-spacing:-.02em;font-weight:700}
 .dokusouka-media{display:flex;flex-direction:column;justify-content:space-between;gap:30px;overflow:hidden;background:radial-gradient(ellipse at 65% 65%,#193c3e 0,transparent 65%),#091121;padding:38px 26px 20px;color:#f5f4ef}
 .dokusouka-platform{font-size:.68rem;letter-spacing:.08em;color:#98cabc}
 .dokusouka-media-title{position:relative;margin:0 12px;font-size:clamp(25px,3vw,42px);line-height:1.65;font-weight:700;letter-spacing:.06em}
@@ -401,9 +401,9 @@ img { display: block; max-width: 100%; height: auto; }
 @media(max-width:600px){.hero-product-misemaru,.hero-product-hoho,.hero-product-akamain,.hero-product-dokusouka{grid-template-columns:90px 1fr;padding:15px;min-height:125px;gap:12px}.misemaru-visual,.hoho-visual,.akamain-visual{width:90px;height:90px}.misemaru-visual img{width:90px;height:80px}.akamain-visual img{width:84px}.hero-product-hoho h2,.hero-product-akamain h2{font-size:1.25rem}.hero-product-dokusouka h2{font-size:1.4rem}}
 /* Use the approved wordmark itself, with no duplicate product name beside it. */
 .dokusouka-logo-frame{position:relative;display:block;aspect-ratio:2.7;overflow:hidden;border-radius:5px;background:#091121}
-.dokusouka-logo-frame>img{position:absolute;display:block;width:155%;max-width:none;height:auto;left:50%;top:50%;transform:translate(-50%,-50%)}
+.dokusouka-logo-frame>img{display:block;width:100%;height:100%;object-fit:contain}
 .hero-product-dokusouka{grid-template-columns:165px 1fr;background:#091121;gap:20px}
 .hero-product-dokusouka>div:last-child{display:grid;gap:12px}
-.dokusouka-media .dokusouka-media-title{width:min(360px,100%);margin:0 12px;flex-shrink:0}
-@media(max-width:600px){.hero-product-dokusouka{grid-template-columns:130px 1fr;gap:12px}.hero-product-dokusouka p{line-height:1.6}.dokusouka-media .dokusouka-media-title{width:min(300px,100%);margin:0}}
-.dokusouka-logo-frame{background:transparent}.dokusouka-logo-frame>img{mix-blend-mode:lighten}
+.dokusouka-media .dokusouka-media-title{width:min(460px,100%);margin:0 auto;flex-shrink:0}
+@media(max-width:600px){.hero-product-dokusouka{grid-template-columns:130px 1fr;gap:12px}.hero-product-dokusouka p{line-height:1.6}.dokusouka-media .dokusouka-media-title{width:min(300px,100%);margin:0 auto}}
+.dokusouka-logo-frame{background:transparent}
