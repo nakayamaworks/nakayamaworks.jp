@@ -23,13 +23,11 @@
   const update = () => {
     frame = undefined;
     if (!mobile.matches) return;
-    const left = track.getBoundingClientRect().left;
-    const maximum = track.scrollWidth - track.clientWidth;
+    const center = track.getBoundingClientRect().left + track.clientWidth / 2;
     let nearest = 0, distance = Infinity;
     slides.forEach((slide, index) => {
       const rect = slide.getBoundingClientRect();
-      const target = Math.min(maximum, Math.max(0, track.scrollLeft + rect.left - left));
-      const delta = Math.abs(target - track.scrollLeft);
+      const delta = Math.abs(rect.left + rect.width / 2 - center);
       if (delta < distance) {distance = delta; nearest = index;}
     });
     current = nearest;
@@ -37,7 +35,8 @@
   };
   const goTo = index => {
     const slide = slides[Math.max(0, Math.min(slides.length - 1, index))];
-    const delta = slide.getBoundingClientRect().left - track.getBoundingClientRect().left;
+    const rect = slide.getBoundingClientRect();
+    const delta = rect.left + rect.width / 2 - (track.getBoundingClientRect().left + track.clientWidth / 2);
     track.scrollTo({left:track.scrollLeft + delta,behavior:reducedMotion.matches ? 'auto' : 'smooth'});
   };
   dots.forEach((dot, index) => dot.addEventListener('click', () => goTo(index)));
