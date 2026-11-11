@@ -407,3 +407,7 @@ img { display: block; max-width: 100%; height: auto; }
 .dokusouka-media .dokusouka-media-title{width:min(460px,100%);margin:0 auto;flex-shrink:0}
 @media(max-width:600px){.hero-product-dokusouka{grid-template-columns:130px 1fr;gap:12px}.hero-product-dokusouka p{line-height:1.6}.dokusouka-media .dokusouka-media-title{width:min(300px,100%);margin:0 auto}}
 .dokusouka-logo-frame{background:transparent}
+
+.dokusouka-media{padding-inline:14px;gap:20px}
+.dokusouka-media .dokusouka-media-title{width:min(540px,100%);aspect-ratio:3}
+@media(max-width:600px){.dokusouka-media{min-height:0;padding:24px 10px 12px}.dokusouka-media .dokusouka-platform{padding-inline:8px}}
