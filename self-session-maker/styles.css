@@ -104,7 +104,10 @@ html{scroll-padding-top:112px}
     .product-page .header-inner{min-height:62px;gap:10px}
     .product-page .header-inner>nav{display:none}
     .product-languages summary{font-size:11px}
-    .product-screens{grid-template-columns:1fr;gap:34px}
+    .product-screens{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(82%,260px);gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:var(--mint) transparent}
+    .product-screens figure{scroll-snap-align:start}
+    .product-screens img{width:auto;max-width:100%;max-height:min(58svh,500px)}
+    .product-screens:focus-visible{outline:2px solid var(--mint);outline-offset:5px}
 }
 @media(min-width:901px){
     .product-hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:clamp(18px,3vw,46px);align-items:center;text-align:left;padding-block:clamp(38px,6vw,82px) 0}
