@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="./assets/app-icon.png?v=9">
-<link rel="stylesheet" href="./styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="./styles.css?v=20261111-dots">
+<script src="./gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">できること</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="./assets/screens/ja/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="６パートに分けて、自分が弾くパートを外せる">
             <figcaption><strong>いつもの曲が、練習用の伴奏に</strong><span>６パートに分けて、自分が弾くパートを外せる</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>弾きやすいキーと速さで</strong><span>音程と再生速度を変えて、苦手な区間を繰り返す</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="いつもの曲が、練習用の伴奏に" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="バンドの音を、自分好みに" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="弾きやすいキーと速さで" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap" id="mix"><div class="section-heading"><div><h2>あなたが入る、<br>余白をつくる。</h2></div><p>ギターを下げて、バッキングに。<br>ベースだけを聴いて、フレーズの確認に。<br>6つのパートから、練習に合うバランスへ。</p></div>
 <div class="parts" aria-label="6パート"><figure><img src="assets/vocals.svg" alt="マイク" loading="lazy"><figcaption>ボーカル</figcaption></figure><figure><img src="assets/guitar.svg" alt="6弦ギター" loading="lazy"><figcaption>ギター</figcaption></figure><figure><img src="assets/bass.svg" alt="4弦ベース" loading="lazy"><figcaption>ベース</figcaption></figure><figure><img src="assets/drums.svg" alt="ドラムセット" loading="lazy"><figcaption>ドラム</figcaption></figure><figure><img src="assets/piano.svg" alt="鍵盤" loading="lazy"><figcaption>ピアノ</figcaption></figure><figure><img src="assets/other.svg" alt="音の波形" loading="lazy"><figcaption>その他</figcaption></figure></div></section>

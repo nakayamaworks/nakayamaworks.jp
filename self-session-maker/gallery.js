@@ -3,25 +3,18 @@
   const track = document.getElementById('screens-carousel');
   if (!track) return;
   const slides = [...track.children];
-  const dots = [...document.querySelectorAll('.gallery-dots button')];
+  const dots = [...document.querySelectorAll('.product-gallery-dots button')];
   const mobile = window.matchMedia('(max-width: 650px)');
-  const gallery = track.closest('section');
   const syncMode = () => {
     if (mobile.matches) {
-      gallery.setAttribute('aria-roledescription', 'カルーセル');
       track.setAttribute('tabindex', '0');
-      track.setAttribute('aria-label', 'アプリ画面。左右キーでも切り替えられます');
       slides.forEach((slide, index) => {
         slide.setAttribute('role', 'group');
-        slide.setAttribute('aria-roledescription', 'スライド');
         slide.setAttribute('aria-label', `${index + 1} / ${slides.length}`);
       });
       update();
     } else {
-      gallery.removeAttribute('aria-roledescription');
-      track.removeAttribute('tabindex');
-      track.removeAttribute('aria-label');
-      slides.forEach(slide => ['role', 'aria-roledescription', 'aria-label'].forEach(attr => slide.removeAttribute(attr)));
+      slides.forEach(slide => ['role', 'aria-label'].forEach(attr => slide.removeAttribute(attr)));
       track.scrollLeft = 0;
     }
   };
@@ -30,11 +23,13 @@
   const update = () => {
     frame = undefined;
     if (!mobile.matches) return;
-    const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+    const left = track.getBoundingClientRect().left;
+    const maximum = track.scrollWidth - track.clientWidth;
     let nearest = 0, distance = Infinity;
     slides.forEach((slide, index) => {
       const rect = slide.getBoundingClientRect();
-      const delta = Math.abs(rect.left + rect.width / 2 - center);
+      const target = Math.min(maximum, Math.max(0, track.scrollLeft + rect.left - left));
+      const delta = Math.abs(target - track.scrollLeft);
       if (delta < distance) {distance = delta; nearest = index;}
     });
     current = nearest;

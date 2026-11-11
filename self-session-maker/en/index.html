@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/en/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">Features</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/en/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="Split a song into six parts and mute the one you play.">
             <figcaption><strong>Turn your songs into backing tracks</strong><span>Split a song into six parts and mute the one you play.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>Find your key and tempo</strong><span>Shift pitch, adjust speed and loop tricky sections.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="Turn your songs into backing tracks" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="Make the mix your own" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="Find your key and tempo" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>Stem separation and music practice for iPhone</h2>
     <p>Separate a song into six parts on your iPhone: vocals, guitar, bass, drums, piano, and other instruments.</p>

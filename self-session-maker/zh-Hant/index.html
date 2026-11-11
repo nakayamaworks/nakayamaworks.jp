@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/zh-Hant/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">功能</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/zh-Hant/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="將歌曲分離成六個音軌，靜音你要演奏的部分。">
             <figcaption><strong>把喜歡的歌曲變成練習伴奏</strong><span>將歌曲分離成六個音軌，靜音你要演奏的部分。</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>用適合你的調性和速度練習</strong><span>調整音高和播放速度，反覆練習較難的段落。</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="把喜歡的歌曲變成練習伴奏" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="依照自己的喜好調整樂團混音" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="用適合你的調性和速度練習" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>iPhone 音軌分離與音樂練習工具</h2>
     <p>音訊分離在裝置上執行，無須帳號。</p>

@@ -104,7 +104,7 @@ html{scroll-padding-top:112px}
     .product-page .header-inner{min-height:62px;gap:10px}
     .product-page .header-inner>nav{display:none}
     .product-languages summary{font-size:11px}
-    .product-screens{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(82%,260px);gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:var(--mint) transparent}
+    .product-screens{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(82%,360px);gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:var(--mint) transparent}
     .product-screens figure{scroll-snap-align:start}
     .product-screens img{width:auto;max-width:100%;max-height:min(58svh,500px)}
     .product-screens:focus-visible{outline:2px solid var(--mint);outline-offset:5px}
@@ -124,4 +124,13 @@ html{scroll-padding-top:112px}
 .product-hero h1 em span{white-space:nowrap}
 @media(min-width:901px){
     .product-page:lang(ja) .product-hero h1{font-size:clamp(26px,2.9vw,44px)}
+}
+
+.product-gallery-dots{display:none}
+@media(max-width:650px){
+    .product-gallery-dots{display:flex;justify-content:center;align-items:center;gap:0;margin:14px auto 0;padding:0;width:max-content}
+    .product-gallery-dots button{display:grid;place-items:center;width:24px;height:32px;padding:0;border:0;background:transparent;cursor:pointer}
+    .product-gallery-dots button span{display:block;width:6px;height:6px;border-radius:50%;background:#647a80}
+    .product-gallery-dots button[aria-current="true"] span{background:var(--mint)}
+    .product-gallery-dots button:focus-visible{outline:2px solid var(--mint);outline-offset:1px;border-radius:5px}
 }

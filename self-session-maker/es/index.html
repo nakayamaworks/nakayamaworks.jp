@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/es/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">Funciones</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/es/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="Separa la canción en seis pistas y silencia la que tú tocas.">
             <figcaption><strong>Convierte tus canciones en pistas de acompañamiento</strong><span>Separa la canción en seis pistas y silencia la que tú tocas.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>Practica en tu tono y a tu ritmo</strong><span>Ajusta el tono y la velocidad y repite los pasajes difíciles.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="Convierte tus canciones en pistas de acompañamiento" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="Mezcla a tu gusto" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="Practica en tu tono y a tu ritmo" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>Separación de pistas y práctica musical para iPhone</h2>
     <p>El audio se separa en tu dispositivo. No necesitas una cuenta.</p>

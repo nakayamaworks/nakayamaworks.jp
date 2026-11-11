@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/th/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">ฟีเจอร์</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/th/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="แยกเพลงเป็น 6 แทร็ก แล้วปิดเสียงพาร์ตที่คุณจะเล่น">
             <figcaption><strong>เปลี่ยนเพลงโปรด เป็นแบ็กกิงแทร็ก</strong><span>แยกเพลงเป็น 6 แทร็ก แล้วปิดเสียงพาร์ตที่คุณจะเล่น</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>ซ้อมในคีย์และ ความเร็วที่ถนัด</strong><span>ปรับระดับเสียงสูงต่ำและความเร็ว แล้ววนซ้ำท่อนที่เล่นยาก</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="เปลี่ยนเพลงโปรด เป็นแบ็กกิงแทร็ก" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="มิกซ์เสียงวง ในแบบของคุณ" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="ซ้อมในคีย์และ ความเร็วที่ถนัด" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>แอปแยกแทร็กเสียงและฝึกดนตรีสำหรับ iPhone</h2>
     <p>การแยกเสียงทำบนอุปกรณ์ ไม่ต้องมีบัญชี</p>

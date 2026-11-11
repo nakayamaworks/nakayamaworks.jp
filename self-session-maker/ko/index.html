@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/ko/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">기능</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/ko/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="곡을 6개 트랙으로 분리하고 내가 연주할 파트를 끄세요.">
             <figcaption><strong>즐겨 듣는 곡을 연습용 반주로</strong><span>곡을 6개 트랙으로 분리하고 내가 연주할 파트를 끄세요.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>나에게 맞는 키와 속도로 연습</strong><span>음정과 재생 속도를 바꾸고 어려운 구간을 반복하세요.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="즐겨 듣는 곡을 연습용 반주로" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="밴드 사운드를 내 취향대로" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="나에게 맞는 키와 속도로 연습" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>iPhone용 음원 분리 및 연습 앱</h2>
     <p>오디오는 기기에서 분리됩니다. 계정이 필요하지 않습니다.</p>

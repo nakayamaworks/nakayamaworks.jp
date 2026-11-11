@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/id/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">Fitur</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/id/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="Pisahkan lagu menjadi enam trek dan bisukan bagian yang kamu mainkan.">
             <figcaption><strong>Ubah lagumu jadi musik pengiring</strong><span>Pisahkan lagu menjadi enam trek dan bisukan bagian yang kamu mainkan.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>Berlatih dengan nada dan tempo pilihan</strong><span>Ubah nada dan kecepatan, lalu ulangi bagian yang sulit.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="Ubah lagumu jadi musik pengiring" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="Atur mix sesuai seleramu" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="Berlatih dengan nada dan tempo pilihan" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>Pemisah trek dan alat latihan musik untuk iPhone</h2>
     <p>Pemisahan audio dilakukan di perangkat. Tidak perlu akun.</p>

@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/de/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">Funktionen</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/de/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="Teile einen Song in sechs Spuren und schalte deine stumm.">
             <figcaption><strong>Mach deine Songs zur Begleitung</strong><span>Teile einen Song in sechs Spuren und schalte deine stumm.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>Übe in deiner Tonart und deinem Tempo</strong><span>Ändere Tonhöhe und Tempo und wiederhole schwierige Stellen.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="Mach deine Songs zur Begleitung" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="Dein Mix, dein Sound" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="Übe in deiner Tonart und deinem Tempo" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>Spurtrennung und Musiktraining fürs iPhone</h2>
     <p>Die Spuren werden auf deinem Gerät getrennt. Ein Konto ist nicht erforderlich.</p>

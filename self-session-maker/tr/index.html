@@ -28,7 +28,8 @@
 <meta property="og:url" content="https://nakayamaworks.jp/self-session-maker/tr/">
 <meta property="og:image" content="https://nakayamaworks.jp/self-session-maker/assets/band-mint-waveforms.jpg">
 <link rel="icon" href="../assets/app-icon.png?v=9">
-<link rel="stylesheet" href="../styles.css?v=20261111-scroll">
+<link rel="stylesheet" href="../styles.css?v=20261111-dots">
+<script src="../gallery.js?v=20261111-dots" defer></script>
 </head>
 <body class="product-page">
 <header class="site-header">
@@ -51,7 +52,7 @@
 </section>
 <section class="section wrap product-features" id="features" aria-labelledby="features-title">
     <h2 id="features-title">Özellikler</h2>
-    <div class="product-screens" tabindex="0" role="group" aria-labelledby="features-title">
+    <div class="product-screens" id="screens-carousel" tabindex="0" role="group" aria-labelledby="features-title">
         <figure>
             <img src="../assets/screens/tr/01-six-parts.webp" width="554" height="1200" loading="lazy" alt="Şarkıyı altı kanala ayır, çalacağın partiyi sustur.">
             <figcaption><strong>Şarkılarını eşlik parçalarına dönüştür</strong><span>Şarkıyı altı kanala ayır, çalacağın partiyi sustur.</span></figcaption>
@@ -65,6 +66,7 @@
             <figcaption><strong>Kendi tonunda ve hızında çalış</strong><span>Tonu ve hızı değiştir, zor bölümleri döngüye al.</span></figcaption>
         </figure>
     </div>
+    <nav class="product-gallery-dots" aria-labelledby="features-title"><button type="button" aria-label="Şarkılarını eşlik parçalarına dönüştür" aria-controls="screens-carousel" aria-current="true"><span></span></button><button type="button" aria-label="Miksi dilediğin gibi ayarla" aria-controls="screens-carousel" aria-current="false"><span></span></button><button type="button" aria-label="Kendi tonunda ve hızında çalış" aria-controls="screens-carousel" aria-current="false"><span></span></button></nav>
 </section>
 <section class="section wrap product-details" id="details"><h2>iPhone için parça ayırma ve müzik çalışma uygulaması</h2>
     <p>Ses ayırma cihazınızda yapılır. Hesap gerekmez.</p>
